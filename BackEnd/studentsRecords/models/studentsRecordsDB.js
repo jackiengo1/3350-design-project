@@ -13,6 +13,9 @@ var studentsSchema = mongoose.Schema(
 );
 studentsSchema.plugin(mongoosePaginate);
 
+
+//TEST TEST TEST
+
 var residencySchema = mongoose.Schema(
     {
         name: String,
