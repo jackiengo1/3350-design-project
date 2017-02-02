@@ -4,9 +4,13 @@ export default Ember.Component.extend({
   store: Ember.inject.service(),
   showAllStudents: false,
   residencyModel: null,
+  advancedStandingModel: null,
   selectedResidency: null,
   selectedGender: null,
   selectedDate: null,
+  selectedScholarships: null,
+  selectedAwards: null,
+  selectedStanding: null,
   studentsRecords: null,
   currentStudent: null,
   currentIndex: null,
@@ -45,7 +49,9 @@ export default Ember.Component.extend({
     this.get('store').findAll('residency').then(function (records) {
       self.set('residencyModel', records);
     });
-
+    this.get('store').findAll('advancedS').then(function (records){
+      self.set('advancedStandingModel', records);
+    });
     // load first page of the students records
     this.set('limit', 10);
     this.set('offset', 0);
@@ -81,9 +87,13 @@ export default Ember.Component.extend({
     saveStudent () {
       var updatedStudent = this.get('currentStudent');
       var res = this.get('store').peekRecord('residency', this.get('selectedResidency'));
+      var standing = this.get('store').peekRecord('advancedS', this.get('selectedStanding'));
       updatedStudent.set('gender', this.get('selectedGender'));
       updatedStudent.set('DOB', new Date(this.get('selectedDate')));
       updatedStudent.set('resInfo', res);
+      updatedStudent.set('advancedStanding', standing);
+      updatedStudent.set('scholarships', this.get('updatedScholarships'));
+      updatedStudent.set('awards', this.get('selectedAwards'));
       updatedStudent.save().then(() => {
         //     this.set('isStudentFormEditing', false);
       });

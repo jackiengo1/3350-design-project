@@ -105,10 +105,18 @@
     <h2>{{currentStudent.number}}</h2>
       <h3> {{currentStudent.firstName}} {{currentStudent.lastName}}</h3>
     <br><br><br>
+    <h2>Advanced Standing</h2>
+    <ul>
+    {{#each advancedStandingModel as |standingItem|}}{{/each}}
+    </ul>
   </div>
   <div class="ui tab" data-tab="others">
     <!-- Others !-->
-    <h2>Other data</h2>
+    <h2>Scholarships and Awards</h2>
+    <label>Awards</label>
+    {{input type="text" value = currentStudent.awards}}<br><br><br>
+    <label>Scholarships</label>
+    {{input type="text" value = currentStudent.scholarships}}<br><br><br>
   </div>
 
 
