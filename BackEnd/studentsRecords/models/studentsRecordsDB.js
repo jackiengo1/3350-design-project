@@ -8,14 +8,14 @@ var studentsSchema = mongoose.Schema(
         gender: Number, // this needs to go
         DOB: Date,
         photo: String,
-        //registrationComments: String,
-        //basisOfAdmission: String,
-        //admissionAverage: String,
-        //admissionComments: String,
-        resInfo: {type: mongoose.Schema.ObjectId, ref: 'Residencies'}
-        //,advInfo: [{type: mongoose.Schema.ObjectId, ref: 'AdvancedStandings'}]
-        //,genderInfo: {type: mongoose.Schema.ObjectId, ref: 'Genders'}
-        //,scholInfo: [{type: mongoose.Schema.ObjectId, ref: 'ScholarshipAwards'}]
+        registrationComments: String,
+        basisOfAdmission: String,
+        admissionAverage: String,
+        admissionComments: String,
+        resInfo: {type: mongoose.Schema.ObjectId, ref: 'Residencies'},
+        advInfo: [{type: mongoose.Schema.ObjectId, ref: 'AdvancedStandings'}],
+        genderInfo: {type: mongoose.Schema.ObjectId, ref: 'Genders'},
+        scholInfo: [{type: mongoose.Schema.ObjectId, ref: 'ScholarshipAwards'}]
     }
 );
 studentsSchema.plugin(mongoosePaginate);
