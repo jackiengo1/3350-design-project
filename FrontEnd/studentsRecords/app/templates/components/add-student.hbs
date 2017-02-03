@@ -1,0 +1,49 @@
+<div class="ui center aligned header">
+    <h2>Add Student</h2>
+</div>
+
+<div class="ui grid">
+    <div class="ui left aligned  seven wide column">
+        <div class="ui form">
+            <div class="inline field">
+                <label>Student Number</label>
+                {{input type="text"  value = studentNum}}
+            </div>
+            <div class="inline field">
+                <label>First Name</label>
+                {{input type="text"  value = fName}}
+            </div>
+            <div class="inline field">
+                <label>Last Name</label>
+                {{input type="text" value = lName }}
+            </div>
+            <div class="inline field">
+                <label>Gender</label>
+                <select onchange={{action 'getGender' value="target.value"}}>
+                  <option value=1 >Male</option>
+                  <option value=2 >Female</option>
+                </select>
+            </div>
+            <div class="inline field">
+                <label>Date of Birth</label>
+                {{input value= DOB type="date" id = "dateInput" maxlength = "10"}}
+            </div>
+            <div class="inline field">
+                <label>Residency</label>
+                <select  id = "resDropDown" onchange={{action 'getResidency' value="target.value"}}>
+
+                    {{#each resModel as |residencyChoice|}}
+                        <option value={{residencyChoice.id}}> {{residencyChoice.name}} </option>
+                    {{/each}}
+                  <option selected="selected" value = null> Select Residence</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ui center aligned header">
+  <button class="ui primary button" {{action 'addStudent'}}>
+    Add Student
+  </button>
+</div>
