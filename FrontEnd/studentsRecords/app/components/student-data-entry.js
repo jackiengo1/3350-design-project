@@ -113,7 +113,9 @@ export default Ember.Component.extend({
         this.set('offset', this.get('offset') + this.get('pageSize'));
       }
     },
-
+    findStudent() {
+      
+    },
     previousStudent() {
       this.set('movingBackword' , true);
       if (this.get('currentIndex') > 0) {
