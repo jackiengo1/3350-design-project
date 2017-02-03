@@ -17,6 +17,7 @@ export default Ember.Component.extend({
   offset: null,
   pageSize: null,
   movingBackword: false,
+
   studentModel: Ember.observer('offset', function () { //observes the offset variable. When it changes run code.
     var self = this;
     this.get('store').query('student', {
@@ -121,6 +122,21 @@ export default Ember.Component.extend({
       this.set('showAllStudents', true);
     },
 
+    deleteStudent(){
+
+      this.get('currentStudent').deleteRecord();
+      this.get('currentStudent').save();
+
+      this.set('movingBackword' , true);
+      if (this.get('currentIndex') > 0) {
+        this.set('currentIndex', this.get('currentIndex') - 1);
+      }
+      else if (this.get('offset') > 0) {
+        this.set('offset', this.get('offset') - this.get('pageSize'));
+      }
+
+
+    },
     selectGender (gender){
       this.set('selectedGender', gender);
     },
