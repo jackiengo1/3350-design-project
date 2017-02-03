@@ -8,14 +8,14 @@ var studentsSchema = mongoose.Schema(
         gender: Number, // this needs to go
         DOB: Date,
         photo: String,
-        //,registrationComments: String
-        //,basisOfAdmission: String
-        //,admissionAverage: String
-        //,admissionComments: String
+        //registrationComments: String,
+        //basisOfAdmission: String,
+        //admissionAverage: String,
+        //admissionComments: String,
         resInfo: {type: mongoose.Schema.ObjectId, ref: 'Residencies'}
         //,advInfo: [{type: mongoose.Schema.ObjectId, ref: 'AdvancedStandings'}]
-        //,resInfo: {type: mongoose.Schema.ObjectId, ref: 'Genders'}
-        //,advInfo: [{type: mongoose.Schema.ObjectId, ref: 'ScholarshipAwards'}]
+        //,genderInfo: {type: mongoose.Schema.ObjectId, ref: 'Genders'}
+        //,scholInfo: [{type: mongoose.Schema.ObjectId, ref: 'ScholarshipAwards'}]
     }
 );
 studentsSchema.plugin(mongoosePaginate);
@@ -58,6 +58,7 @@ var ScholarshipAwards = mongoose.model('scholarshopAward', scholarshipAwardSchem
 var AdvancedStandings = mongoose.model('advancedStanding', advancedStandingSchema);
 var Genders = mongoose.model('gender', genderSchema);
 
+
 ////////////////////////////////////////////////
 
 var Students = mongoose.model('student', studentsSchema);
@@ -72,6 +73,8 @@ db.once('open', function() {
     exports.Students = Students;
     exports.Residencies = Residencies;
     exports.Genders = Genders;
+    exports.AdvancedStandings = AdvancedStandings;
+    exports.ScholarshipAwards = ScholarshipAwards;
 
 });
 
