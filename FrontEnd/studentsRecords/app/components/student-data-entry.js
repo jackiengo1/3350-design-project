@@ -17,6 +17,7 @@ export default Ember.Component.extend({
   offset: null,
   pageSize: null,
   movingBackword: false,
+  undoStack: Ember.A(),
 
   studentModel: Ember.observer('offset', function () { //observes the offset variable. When it changes run code.
     var self = this;
@@ -104,7 +105,7 @@ export default Ember.Component.extend({
       }
     },
     findStudent() {
-      
+
     },
     previousStudent() {
       this.set('movingBackword' , true);
@@ -130,7 +131,11 @@ export default Ember.Component.extend({
       this.get('currentStudent').save();
 
       this.set('movingBackword' , true);
-      if (this.get('currentIndex') > 0) {
+      if(this.get("currentIndex") == this.get("firstIndex")){
+        this.set('movingBackword' , false);
+        this.set('currentIndex', this.get('currentIndex') + 1);
+      }
+      else if (this.get('currentIndex') > 0) {
         this.set('currentIndex', this.get('currentIndex') - 1);
       }
       else if (this.get('offset') > 0) {
