@@ -33,7 +33,7 @@
                 <select  id = "resDropDown" onchange={{action 'getResidency' value="target.value"}}>
 
                     {{#each resModel as |residencyChoice|}}
-                        <option value={{residencyChoice.id}}> {{residencyChoice.name}} </option>
+                        <option value={{residencyChoice.resid}}> {{residencyChoice.resname}} </option>
                     {{/each}}
                   <option selected="selected" value = null> Select Residence</option>
                 </select>

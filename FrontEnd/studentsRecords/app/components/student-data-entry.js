@@ -49,9 +49,9 @@ export default Ember.Component.extend({
     this.get('store').findAll('residency').then(function (records) {
       self.set('residencyModel', records);
     });
-    this.get('store').findAll('advancedS').then(function (records){
-      self.set('advancedStandingModel', records);
-    });
+    // this.get('store').findAll('advancedS').then(function (records){
+    //   self.set('advancedStandingModel', records);
+    // });
     // load first page of the students records
     this.set('limit', 10);
     this.set('offset', 0);
@@ -114,7 +114,7 @@ export default Ember.Component.extend({
       }
     },
     findStudent() {
-      
+
     },
     previousStudent() {
       this.set('movingBackword' , true);
