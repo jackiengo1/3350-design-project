@@ -17,7 +17,6 @@ export default Ember.Component.extend({
   offset: null,
   pageSize: null,
   movingBackword: false,
-
   studentModel: Ember.observer('offset', function () { //observes the offset variable. When it changes run code.
     var self = this;
     this.get('store').query('student', {

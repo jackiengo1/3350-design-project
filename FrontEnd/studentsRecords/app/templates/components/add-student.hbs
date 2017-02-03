@@ -7,36 +7,43 @@
         <div class="ui form">
             <div class="inline field">
                 <label>Student Number</label>
-                {{input type="text"  value = 0}}
+                {{input type="text"  value = studentNum}}
             </div>
             <div class="inline field">
                 <label>First Name</label>
-                {{input type="text"  value = 0}}
+                {{input type="text"  value = firstName}}
             </div>
             <div class="inline field">
                 <label>Last Name</label>
-                {{input type="text" value = 0 }}
+                {{input type="text" value = lastName }}
             </div>
             <div class="inline field">
                 <label>Gender</label>
-                <select>
-                    <option value=1>Male</option>
-                    <option value=2>Female</option>
+                <select onchange={{action 'getGender' value="target.value"}}>
+                  <option value=1 >Male</option>
+                  <option value=2 >Female</option>
                 </select>
             </div>
             <div class="inline field">
                 <label>Date of Birth</label>
-                <input type="date">
+                <input value={{DOB}} type="date" >
             </div>
             <div class="inline field">
                 <label>Residency</label>
-                <select>
-                    {{#each residencyModel as |residencyChoice|}}
-                        <option value={{residencyChoice.id}} selected={{eq currentStudent.resInfo.id
-                                                                           residencyChoice.id}}>{{residencyChoice.name}} </option>
+                <select  id = "resDropDown" onchange={{action 'getResidency' value="target.value"}}>
+
+                    {{#each resModel as |residencyChoice|}}
+                        <option value={{residencyChoice.id}}> {{residencyChoice.name}} </option>
                     {{/each}}
+                  <option selected="selected"> Select Residence</option>
                 </select>
             </div>
         </div>
     </div>
+</div>
+
+<div class="ui center aligned header">
+  <button class="ui primary button" {{action 'addStudent'}}>
+    Add Student
+  </button>
 </div>
