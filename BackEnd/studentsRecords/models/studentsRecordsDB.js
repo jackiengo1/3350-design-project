@@ -5,9 +5,13 @@ var studentsSchema = mongoose.Schema(
         number: String,
         firstName: String,
         lastName: String,
-        gender: Number,
+        gender: Number, // this needs to go
         DOB: Date,
         photo: String,
+        //,registrationComments: String
+        //,basisOfAdmission: String
+        //,admissionAverage: String
+        //,admissionComments: String
         resInfo: {type: mongoose.Schema.ObjectId, ref: 'Residencies'}
         //,advInfo: [{type: mongoose.Schema.ObjectId, ref: 'AdvancedStandings'}]
         //,resInfo: {type: mongoose.Schema.ObjectId, ref: 'Genders'}
@@ -51,9 +55,9 @@ var scholarshipAwardSchema = mongoose.Schema(
 );
 
 var ScholarshipAwards = mongoose.model('scholarshopAward', scholarshipAwardSchema);
-
 var AdvancedStandings = mongoose.model('advancedStanding', advancedStandingSchema);
 var Genders = mongoose.model('gender', genderSchema);
+
 ////////////////////////////////////////////////
 
 var Students = mongoose.model('student', studentsSchema);
@@ -67,6 +71,7 @@ db.once('open', function() {
 
     exports.Students = Students;
     exports.Residencies = Residencies;
+    exports.Genders = Genders;
 
 });
 
