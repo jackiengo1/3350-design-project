@@ -1,0 +1,42 @@
+<div class="ui center aligned header">
+    <h2>Add Student</h2>
+</div>
+
+<div class="ui grid">
+    <div class="ui left aligned  seven wide column">
+        <div class="ui form">
+            <div class="inline field">
+                <label>Student Number</label>
+                {{input type="text"  value = 0}}
+            </div>
+            <div class="inline field">
+                <label>First Name</label>
+                {{input type="text"  value = 0}}
+            </div>
+            <div class="inline field">
+                <label>Last Name</label>
+                {{input type="text" value = 0 }}
+            </div>
+            <div class="inline field">
+                <label>Gender</label>
+                <select>
+                    <option value=1>Male</option>
+                    <option value=2>Female</option>
+                </select>
+            </div>
+            <div class="inline field">
+                <label>Date of Birth</label>
+                <input type="date">
+            </div>
+            <div class="inline field">
+                <label>Residency</label>
+                <select>
+                    {{#each residencyModel as |residencyChoice|}}
+                        <option value={{residencyChoice.id}} selected={{eq currentStudent.resInfo.id
+                                                                           residencyChoice.id}}>{{residencyChoice.name}} </option>
+                    {{/each}}
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
