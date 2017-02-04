@@ -31,11 +31,11 @@
                 {{input value= DOB type="date" id = "dateInput" maxlength = "10"}}
             </div>
             <div class="inline field">
-                <label>Residency</label>
+                <label>Residency</label>option>
                 <select  id = "resDropDown" onchange={{action 'getResidency' value="target.value"}}>
 
                     {{#each resModel as |residencyChoice|}}
-                        <option value={{residencyChoice.id}}> {{residencyChoice.name}} </option>
+                      <option value={{residencyChoice.id}}> {{residencyChoice.name}}</option>
                     {{/each}}
                   <option selected="selected" value = null> Select Residence</option>
                 </select>

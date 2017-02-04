@@ -56,7 +56,7 @@ router.route('/:student_id')
                 student.number = request.body.student.number;
                 student.firstName = request.body.student.firstName;
                 student.lastName = request.body.student.lastName;
-              //  student.gender = request.body.student.gender;
+                student.gender = request.body.student.gender;
                 student.DOB = request.body.student.DOB;
                 student.photo = request.body.student.photo;
 

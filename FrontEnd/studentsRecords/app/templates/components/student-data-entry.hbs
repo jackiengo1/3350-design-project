@@ -78,7 +78,7 @@
             <label>Gender</label>
             <select onchange={{action 'selectGender' value="target.value"}}>
               {{#each genderModel as |genderChoice|}}
-                <option value={{residencyChoice.id}} selected={{eq currentStudent.genderInfo.id
+                <option value={{genderChoice.id}} selected={{eq currentStudent.genderInfo.id
                                                                    genderChoice.id}}>{{genderChoice.name}} </option>
               {{/each}}
             </select>
