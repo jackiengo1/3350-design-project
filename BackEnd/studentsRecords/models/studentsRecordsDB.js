@@ -5,7 +5,7 @@ var studentsSchema = mongoose.Schema(
         number: String,
         firstName: String,
         lastName: String,
-        gender: Number, // this needs to go
+    //    gender: Number, // this needs to go
         DOB: Date,
         photo: String,
         registrationComments: String,
@@ -77,6 +77,3 @@ db.once('open', function() {
     exports.ScholarshipAwards = ScholarshipAwards;
 
 });
-
-
-

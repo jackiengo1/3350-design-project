@@ -26,6 +26,7 @@ export default Ember.Component.extend({
       offset: self.get('offset')
     }).then(function (records) {
       self.set('studentsRecords', records);
+      //console.log(this.get('studentsRecords').objectAt(2).get('resInfo'));
       self.set('firstIndex', records.indexOf(records.get("firstObject")));
       self.set('lastIndex', records.indexOf(records.get("lastObject")));
       if (self.get('movingBackword')) {
@@ -45,6 +46,7 @@ export default Ember.Component.extend({
     // load Residency data model
     this.get('store').findAll('residency').then(function (records) {
       self.set('residencyModel', records);
+      console.log(Ember.inspect(records));
     });
 
     // load first page of the students records

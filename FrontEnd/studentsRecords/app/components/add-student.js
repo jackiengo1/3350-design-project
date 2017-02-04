@@ -49,10 +49,17 @@ export default Ember.Component.extend({
           number: this.get('studentNum'),
           firstName: this.get('fName'),
           lastName: this.get('lName'),
-          gender: this.get('gender'),
+          //gender: this.get('gender'),
           DOB: new Date(this.get('DOB')),
           photo: this.get('photoPath'),
-          resInfo: res
+          registrationComments: this.get('fName'),
+          basisOfAdmission: this.get('fName'),
+          admissionAverage: this.get('fName'),
+          admissionComments: this.get('fName'),
+          resInfo: res,
+          advInfo: null,
+          genderInfo: null,
+          scholInfo: null
         });
         newStudent.save();
       }
