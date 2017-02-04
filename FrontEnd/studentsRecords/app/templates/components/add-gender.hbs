@@ -1,1 +1,20 @@
-{{yield}}
+<div class="ui center aligned header">
+  <h2>Add Residency</h2>
+</div>
+
+<div class="ui grid">
+  <div class="ui left aligned  seven wide column">
+    <div class="ui form">
+      <div class="inline field">
+        <label>Gender</label>
+        {{input type="text"  value = genderName}}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="ui center aligned header">
+  <button class="ui primary button" {{action 'addGender'}}>
+    Add Gender
+  </button>
+</div>

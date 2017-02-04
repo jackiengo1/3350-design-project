@@ -4,6 +4,7 @@ export default Ember.Component.extend({
   store: Ember.inject.service(),
   showAllStudents: false,
   residencyModel: null,
+  genderModel: null,
   selectedResidency: null,
   selectedGender: null,
   selectedDate: null,
@@ -47,6 +48,11 @@ export default Ember.Component.extend({
     this.get('store').findAll('residency').then(function (records) {
       self.set('residencyModel', records);
       console.log(Ember.inspect(records));
+    });
+
+    this.get('store').findAll('gender').then(function(records){
+      self.set('genderModel', records);
+
     });
 
     // load first page of the students records

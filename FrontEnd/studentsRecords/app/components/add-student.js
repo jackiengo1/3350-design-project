@@ -8,6 +8,7 @@ export default Ember.Component.extend({
   gender: 1,
   DOB: null,
   resModel: null,
+  genderModel: null,
   residency: null,
   photoPath: null,
 
@@ -17,6 +18,9 @@ export default Ember.Component.extend({
     var self = this;
     this.get('store').findAll('residency').then(function (records) {
       self.set('resModel', records);
+    });
+    this.get('store').findAll('gender').then(function (records) {
+      self.set('genderModel', records);
     });
 
 
