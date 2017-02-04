@@ -57,6 +57,14 @@ router.route('/:gender_id')
                 });
             }
         })
+    })
+    .delete(parseUrlencoded, parseJSON, function (request, response) {
+        models.Genders.findByIdAndRemove(request.params.gender_id,
+            function (error, deleted) {
+                if (!error) {
+                    response.json({gender: deleted});
+                }
+            }
+        );
     });
-
 module.exports = router;
