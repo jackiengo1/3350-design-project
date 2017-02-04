@@ -32,6 +32,13 @@ router.route('/')
             models.Students.find({"residency": request.query.residency}, function (error, students) {
                 if (error) response.send(error);
                 response.json({student: students});
+
+            });
+
+            models.Students.find({"gender": request.query.gender}, function (error, students) {
+                if (error) response.send(error);
+                response.json({student: students});
+
             });
         }
     });
