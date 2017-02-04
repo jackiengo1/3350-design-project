@@ -135,19 +135,20 @@ export default Ember.Component.extend({
     },
 
     deleteStudent(){
+      var a = confirm('Are you sure you would like to delete this record?');
+      if (a == true) {
+        this.get('currentStudent').deleteRecord();
+        this.get('currentStudent').save();
 
-      this.get('currentStudent').deleteRecord();
-      this.get('currentStudent').save();
+        this.set('movingBackword', true);
+        if (this.get('currentIndex') > 0) {
+          this.set('currentIndex', this.get('currentIndex') - 1);
+        }
+        else if (this.get('offset') > 0) {
+          this.set('offset', this.get('offset') - this.get('pageSize'));
+        }
 
-      this.set('movingBackword' , true);
-      if (this.get('currentIndex') > 0) {
-        this.set('currentIndex', this.get('currentIndex') - 1);
       }
-      else if (this.get('offset') > 0) {
-        this.set('offset', this.get('offset') - this.get('pageSize'));
-      }
-
-
     },
     selectGender (gender){
       this.set('selectedGender', gender);

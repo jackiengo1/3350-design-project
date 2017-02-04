@@ -23,11 +23,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="student-data-entry.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="student-data-entry.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/components/student-data-entry.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="53" column="10" lean-forward="true" selection-start-line="53" selection-start-column="10" selection-end-line="53" selection-end-column="10" />
+            <state relative-caret-position="674">
+              <caret line="150" column="7" lean-forward="false" selection-start-line="150" selection-start-column="7" selection-end-line="150" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -85,7 +85,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="add-student.hbs" pinned="false" current-in-tab="true">
+      <file leaf-file-name="add-student.hbs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/components/add-student.hbs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="451">
@@ -190,13 +190,13 @@
         <option value="$PROJECT_DIR$/app/models/student.js" />
         <option value="$PROJECT_DIR$/app/models/advancedS.js" />
         <option value="$PROJECT_DIR$/app/templates/components/student-data-entry.hbs" />
-        <option value="$PROJECT_DIR$/app/components/student-data-entry.js" />
         <option value="$PROJECT_DIR$/app/templates/components/home-page.hbs" />
         <option value="$PROJECT_DIR$/app/components/home-page.js" />
         <option value="$PROJECT_DIR$/app/components/add-residency.js" />
         <option value="$PROJECT_DIR$/app/models/residency.js" />
         <option value="$PROJECT_DIR$/app/templates/components/add-residency.hbs" />
         <option value="$PROJECT_DIR$/app/templates/components/add-student.hbs" />
+        <option value="$PROJECT_DIR$/app/components/student-data-entry.js" />
       </list>
     </option>
   </component>
@@ -484,12 +484,12 @@
       <workItem from="1484437442175" duration="623000" />
       <workItem from="1484445403362" duration="2895000" />
       <workItem from="1486061183440" duration="4126000" />
-      <workItem from="1486152643146" duration="2489000" />
+      <workItem from="1486152643146" duration="3433000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="182265000" />
+    <option name="totallyTimeSpent" value="183209000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -741,14 +741,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/components/student-data-entry.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="53" column="10" lean-forward="true" selection-start-line="53" selection-start-column="10" selection-end-line="53" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/advancedS.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="189">
@@ -819,6 +811,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="451">
           <caret line="35" column="86" lean-forward="false" selection-start-line="35" selection-start-column="86" selection-end-line="35" selection-end-column="86" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/components/student-data-entry.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="674">
+          <caret line="150" column="7" lean-forward="false" selection-start-line="150" selection-start-column="7" selection-end-line="150" selection-end-column="7" />
           <folding />
         </state>
       </provider>
