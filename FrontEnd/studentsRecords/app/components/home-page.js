@@ -45,6 +45,13 @@ export default Ember.Component.extend({
             this.set('isStudentsRecordsDataEntry', false);
             this.set('isAboutShowing', false);
             this.set('isAddStudentShowing', true);
+        },
+
+        addResidency(){
+            this.set('isHomeShowing', false);
+            this.set('isStudentsRecordsDataEntry', false);
+            this.set('isAboutShowing', false);
+            this.set('isAddResidencyShowing', true);
         }
     }
 });
