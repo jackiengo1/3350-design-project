@@ -54,6 +54,7 @@ router.route('/:residency_id')
                 });
             }
         })
+    })
     .delete(parseUrlencoded, parseJSON, function (request, response) {
         models.Residencies.findByIdAndRemove(request.params.residency_id,
             function (error, deleted) {
