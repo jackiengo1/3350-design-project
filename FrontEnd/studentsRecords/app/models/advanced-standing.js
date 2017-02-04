@@ -5,8 +5,6 @@ export default DS.Model.extend({
   description: DS.attr(),
   units: DS.attr(),
   grade: DS.attr(),
-  from: DS.attr()
-
-});/**
- * Created by Ciaran on 2017-02-02.
- */
+  from: DS.attr(), // the school that this course is from
+  studentInfo:  DS.belongsTo('student')
+});

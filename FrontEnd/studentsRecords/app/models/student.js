@@ -10,5 +10,5 @@ export default DS.Model.extend({
   resInfo: DS.belongsTo('residency'),
   scholarships: DS.attr(),
   awards: DS.attr(),
-  advancedStanding: DS.belongsTo('advancedS')
+  advancedStanding: DS.belongsTo('advancedStanding')
 });

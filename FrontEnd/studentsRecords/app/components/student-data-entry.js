@@ -21,6 +21,7 @@ export default Ember.Component.extend({
   offset: null,
   pageSize: null,
   movingBackword: false,
+  undoStack: Ember.A(),
 
   studentModel: Ember.observer('offset', function () { //observes the offset variable. When it changes run code.
     var self = this;
@@ -29,6 +30,7 @@ export default Ember.Component.extend({
       offset: self.get('offset')
     }).then(function (records) {
       self.set('studentsRecords', records);
+      //console.log(this.get('studentsRecords').objectAt(2).get('resInfo'));
       self.set('firstIndex', records.indexOf(records.get("firstObject")));
       self.set('lastIndex', records.indexOf(records.get("lastObject")));
       if (self.get('movingBackword')) {
@@ -48,6 +50,7 @@ export default Ember.Component.extend({
     // load Residency data model
     this.get('store').findAll('residency').then(function (records) {
       self.set('residencyModel', records);
+      console.log(Ember.inspect(records));
     });
     // this.get('store').findAll('advancedS').then(function (records){
     //   self.set('advancedStandingModel', records);
@@ -137,17 +140,19 @@ export default Ember.Component.extend({
     deleteStudent(){
       var a = confirm('Are you sure you would like to delete this record?');
       if (a == true) {
+
         this.get('currentStudent').deleteRecord();
         this.get('currentStudent').save();
 
         this.set('movingBackword', true);
-        if (this.get('currentIndex') > 0) {
+        if (this.get("currentIndex") == this.get("firstIndex")) {
+          this.set('movingBackword', false);
+          this.set('currentIndex', this.get('currentIndex') + 1);
+        }
+        else if (this.get('currentIndex') > 0) {
           this.set('currentIndex', this.get('currentIndex') - 1);
-        }
-        else if (this.get('offset') > 0) {
-          this.set('offset', this.get('offset') - this.get('pageSize'));
-        }
 
+        }
       }
     },
     selectGender (gender){
