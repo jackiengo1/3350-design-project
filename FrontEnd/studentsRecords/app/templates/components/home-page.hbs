@@ -20,6 +20,10 @@
                 <i class="large add user icon"></i>
                 Add Residency
             </a>
+            <a class="item " {{action "addAward"}}>
+            <i class="large add user icon"></i>
+            Add Award
+            </a>
             <a class="item " {{action "about"}}>
                 <i class="large user icon"></i>
                 About
@@ -47,6 +51,9 @@
             {{#if isAddResidencyShowing}}
               {{add-residency}}
             {{/if}}
+          {{#if isAddAwardShowing}}
+            {{add-award}}
+          {{/if}}
         </div>
     </div>
 </div>

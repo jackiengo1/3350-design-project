@@ -17,6 +17,7 @@ export default Ember.Component.extend({
     isAboutShowing: false,
     isAddStudentShowing: false,
     isAddResidencyShowing: false,
+    isAddAwardShowing: false,
 
     actions: {
         home () {
@@ -25,6 +26,7 @@ export default Ember.Component.extend({
             this.set('isAboutShowing', false);
             this.set('isAddStudentShowing', false);
           this.set('isAddResidencyShowing', false);
+          this.set('isAddAwardShowing', false);
         },
 
         studentsDataEntry (){
@@ -33,6 +35,7 @@ export default Ember.Component.extend({
             this.set('isAboutShowing', false);
             this.set('isAddStudentShowing', false);
           this.set('isAddResidencyShowing', false);
+          this.set('isAddAwardShowing', false);
         },
 
         about (){
@@ -41,6 +44,7 @@ export default Ember.Component.extend({
             this.set('isAboutShowing', true);
             this.set('isAddStudentShowing', false);
           this.set('isAddResidencyShowing', false);
+          this.set('isAddAwardShowing', false);
         },
 
         addStudent(){
@@ -49,6 +53,7 @@ export default Ember.Component.extend({
             this.set('isAboutShowing', false);
             this.set('isAddStudentShowing', true);
           this.set('isAddResidencyShowing', false);
+          this.set('isAddAwardShowing', false);
         },
 
       addResidency(){
@@ -57,6 +62,16 @@ export default Ember.Component.extend({
         this.set('isAboutShowing', false);
         this.set('isAddStudentShowing', false);
         this.set('isAddResidencyShowing', true);
+        this.set('isAddAwardShowing', false);
+      },
+
+      addAward(){
+        this.set('isHomeShowing', false);
+        this.set('isStudentsRecordsDataEntry', false);
+        this.set('isAboutShowing', false);
+        this.set('isAddStudentShowing', false);
+        this.set('isAddResidencyShowing', false);
+        this.set('isAddAwardShowing', true);
       }
     }
 });

@@ -14,9 +14,9 @@ export default Ember.Component.extend({
   actions: {
     addResidency(){
       var newResidency = this.get('store').createRecord('residency', {
-        resname: this.get('residencyName'),
-        resid: this.get('residencyId')
+        name: this.get('residencyName'),
       });
+      newResidency.save();
     }
   }
 });
