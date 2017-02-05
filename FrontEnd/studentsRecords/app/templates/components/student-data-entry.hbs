@@ -141,7 +141,7 @@
 
   <!-- Advanced Standing Tab -->
   <div class = "ui tab" data-tab="advancedStanding">
-
+    <br>
     <div class="ui form">
       <div class="inline field">
         <label>Course name</label>
@@ -188,11 +188,12 @@
           From: {{userListAS.from}}</label><br />
       </div>
     {{/each}}
+    <br>
     <button class="ui button" onclick={{action 'deleteAS'}}>Delete</button>
   </div>
 
   <div class = "ui tab" data-tab="scholarshipAndAward">
-
+    <br>
     <div class="ui form">
       <div class="inline field">
         <label>Note</label>
@@ -214,6 +215,7 @@
           <label>Note: {{userScholarShipAndAwardList.note}}</label> <br />
       </div>
     {{/each}}
+    <br>
     <button class="ui button" onclick={{action 'deleteScholarshipAward'}}>Delete</button>
   </div>
 
