@@ -66,7 +66,9 @@
     <!-- Basic Info Form -->
 
     <div class="ui grid" style="padding-right: 14px; background-color: #EEE3FD;">
-      <div class="ui eleven wide column">
+
+      <div class="row" style="padding-bottom: 0;">
+        <div class="ui eleven wide column">
           <form class="ui form">
             <div class="field">
               <label>Student Number</label>
@@ -109,16 +111,45 @@
               </select>        
             </div>
           </form>
+        </div>
+        <div class="ui center aligned five wide column segment" style="margin-bottom: 14px;">
+          <img  src={{studentPhoto}}>
+        </div>
       </div>
-      <div class="ui center aligned five wide column segment" style="margin-bottom: 14px;">
-        <img  src={{studentPhoto}}>
+
+      <div class="row" style="padding-top: 0;">
+        <div class="ui sixteen wide column" style="padding-right: 0;">
+          <form class="ui form">
+            <div class="two fields">
+              <div class="field">
+                <label>Basis of Admission</label>
+                {{input type="text"  value=""}}
+              </div>
+              <div class="field">
+                <label>Admission Average</label>
+                {{input type="number" max=100 min=0 value=0}}
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Admission Comments</label>
+              <textarea rows="2"></textarea>
+            </div>
+
+            <div class="field">
+              <label>Registration Comments</label>
+              <textarea rows="2"></textarea>
+            </div>
+          </form>
+        </div>
       </div>
-      </div>
+
+    </div>
 
   </div>
 
   <!-- start of the delete residency tab -->
-  <div class="ui tab" data-tab="others">
+  <div class="ui tab" data-tab="others" style="background-color: #eee3fd; padding: 14px;">
     {{#each residencyModel as |oneResidency|}}
     <div class="ui radio checkbox">
       <input type="radio" name ="residency" onchange={{action 'getResidence' oneResidency}}>
@@ -129,7 +160,7 @@
   </div>
 
 <!-- start of delte gender tab -->
-  <div class="ui tab" data-tab="summary">
+  <div class="ui tab" data-tab="summary" style="background-color: #eee3fd; padding: 14px;">
     {{#each genderModel as |oneGender|}}
     <div class="ui radio checkbox">
       <input type="radio" name ="gender" onchange={{action 'getGender' oneGender}}>
@@ -140,7 +171,7 @@
   </div>
 
   <!-- Advanced Standing Tab -->
-  <div class = "ui tab" data-tab="advancedStanding">
+  <div class = "ui tab" data-tab="advancedStanding" style="background-color: #eee3fd; padding: 14px;">
 
     <div class="ui form">
       <div class="inline field">
@@ -186,12 +217,12 @@
 
   </div>
 
-  <div class = "ui tab" data-tab="scholarshipAndAward">
+  <div class = "ui tab" data-tab="scholarshipAndAward" style="background-color: #eee3fd; padding: 14px;">
 
     <div class="ui form">
-      <div class="inline field">
+      <div class="field">
         <label>Note</label>
-        {{input size="20" type="text"  value = scholarshipAndAwardNote }}
+        <textarea>{{input type="text" value = scholarshipAndAwardNote}}</textarea>
       </div>
     </div>
 
