@@ -5,6 +5,9 @@ var app = express();
 
 var students = require('./routes/students');
 var residencies = require('./routes/residencies');
+var genders = require('./routes/genders');
+var advancedStandings = require('./routes/advancedStandings');
+var scholarshipAwards = require('./routes/scholarshipAwards');
 
 
 app.use(function (request, response, next) {
@@ -18,6 +21,9 @@ app.use(logger);
 
 app.use('/students', students);
 app.use('/residencies', residencies);
+app.use('/genders', genders);
+app.use('/advancedStandings', advancedStandings);
+app.use('/scholarshipAwards', scholarshipAwards);
 
 
 app.listen(3700, function () {

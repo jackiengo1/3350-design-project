@@ -17,6 +17,20 @@ export default Ember.Component.extend({
   offset: null,
   pageSize: null,
   movingBackword: false,
+
+  //advanced standing
+  listAS: Ember.A(),
+  courseNameAS: null,
+  descriptionAS: null,
+  unitsAS: null,
+  gradeAS: null,
+  fromAS: null,
+  newRecordTempAS: null,
+
+  //scholarship and awards
+  scholarShipAndAwardList: null,
+  scholarshipAndAwardNote: null,
+
   studentModel: Ember.observer('offset', function () { //observes the offset variable. When it changes run code.
     var self = this;
     this.get('store').query('student', {
@@ -24,6 +38,7 @@ export default Ember.Component.extend({
       offset: self.get('offset')
     }).then(function (records) {
       self.set('studentsRecords', records);
+      //console.log(this.get('studentsRecords').objectAt(2).get('resInfo'));
       self.set('firstIndex', records.indexOf(records.get("firstObject")));
       self.set('lastIndex', records.indexOf(records.get("lastObject")));
       if (self.get('movingBackword')) {
@@ -69,6 +84,16 @@ export default Ember.Component.extend({
     var date = this.get('currentStudent').get('DOB');
     var datestring = date.toISOString().substring(0, 10);
     this.set('selectedDate', datestring);
+
+    this.set('listAS', this.get('currentStudent').get('advInfo'));
+    this.get('store').query('advanced-standing',{filter:{studentInfo:this.get('currentStudent').get('id')}});
+    console.log(this.get('currentStudent').get('id'));
+    this.set('scholarShipAndAwardList', this.get('currentStudent').get('scholInfo'));
+    this.get('store').query('scholarship-award',{filter:{studentInfo:this.get('currentStudent').get('id')}});
+
+
+    console.log(this.get('scholarShipAndAwardList'));
+
   },
 
   didRender() {
@@ -96,13 +121,14 @@ export default Ember.Component.extend({
       this.set('movingBackword' , false);
       if (this.get('currentIndex') < this.get('lastIndex')) {
         this.set('currentIndex', this.get('currentIndex') + 1);
-        //     console.log(JSON.stringify(this.get('currentStudent')));
       }
       else {
         this.set('offset', this.get('offset') + this.get('pageSize'));
       }
     },
+    findStudent() {
 
+    },
     previousStudent() {
       this.set('movingBackword' , true);
       if (this.get('currentIndex') > 0) {
@@ -121,6 +147,25 @@ export default Ember.Component.extend({
       this.set('showAllStudents', true);
     },
 
+    deleteStudent(){
+
+      this.get('currentStudent').deleteRecord();
+      this.get('currentStudent').save();
+
+      this.set('movingBackword' , true);
+      if(this.get("currentIndex") == this.get("firstIndex")){
+        this.set('movingBackword' , false);
+        this.set('currentIndex', this.get('currentIndex') + 1);
+      }
+      else if (this.get('currentIndex') > 0) {
+        this.set('currentIndex', this.get('currentIndex') - 1);
+      }
+      else if (this.get('offset') > 0) {
+        this.set('offset', this.get('offset') - this.get('pageSize'));
+      }
+
+
+    },
     selectGender (gender){
       this.set('selectedGender', gender);
     },
@@ -131,6 +176,35 @@ export default Ember.Component.extend({
 
     assignDate (date){
       this.set('selectedDate', date);
+    },
+
+    addAS(){
+      console.log(this.get('courseNameAS'));
+      console.log(this.get('descriptionAS'));
+      console.log(this.get('unitsAS'));
+      console.log(this.get('gradeAS'));
+      console.log(this.get('fromAS'));
+
+      var newASRecord = this.get('store').createRecord('advanced-standing', {
+        course: this.get('courseNameAS'),
+        description: this.get('descriptionAS'),
+        units: this.get('unitsAS'),
+        grade: this.get('gradeAS'),
+        from: this.get('fromAS'),
+        studentInfo: this.get('currentStudent'),
+      });
+      newASRecord.save();
+
+    },
+
+    addScholarShipAndAward(){
+      console.log(this.get('scholarshipAndAwardNote'));
+
+      var newScholarShipAndAward = this.get('store').createRecord('scholarship-award',{
+        note: this.get('scholarshipAndAwardNote'),
+        studentInfo: this.get('currentStudent'),
+      });
+      newScholarShipAndAward.save();
     },
   }
 });
