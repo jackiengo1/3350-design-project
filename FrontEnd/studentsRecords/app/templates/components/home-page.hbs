@@ -48,10 +48,14 @@
                 <i class="large add user icon"></i>
                 Add Student
             </a>
-            <a class="item " {{action "about"}}>
+            <a class="item " {{action "addResidency"}}>
                 <i class="large add user icon"></i>
                 Add Residency
             </a>
+          <a class="item " {{action "addGender"}}>
+            <i class="large add user icon"></i>
+            Add Gender
+          </a>
             <a class="item " {{action "about"}}>
                 <i class="large user icon"></i>
                 About
@@ -77,6 +81,12 @@
             {{#if isAddStudentShowing}}
                 {{add-student}}
             {{/if}}
+            {{#if isAddResidencyShowing}}
+                {{add-residency}}
+            {{/if}}
+          {{#if isAddGenderShowing}}
+            {{add-gender}}
+          {{/if}}
         </div>
     </div>
 </div>
