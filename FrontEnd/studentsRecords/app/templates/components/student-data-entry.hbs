@@ -3,7 +3,7 @@
 </div>
 
 <!-- Show the menu bar-->
-<div class="ui inverted menu">
+<div class="ui inverted menu" style="background-color: #4e2683;">
   <a class="item" {{action 'saveStudent'}}>
     <i class="save icon"></i>
     Save
@@ -53,20 +53,17 @@
 
   <div class="ui top attached tabular menu">
 
-    <div class="item" data-tab="advancedStanding">Advanced Standings</div>
-    <div class="item" data-tab="scholarshipAndAward">Scholarships and Awards</div>
     <div class="active item" data-tab="basics" style="background-color: #EEE3FD;">Basic Info</div>
-    <div class="item" data-tab="program" style="background-color: #EEE3FD;">Program Record</div>
-    <div class="item" data-tab="others" style="background-color: #EEE3FD;">Other tabs</div>
-    <!-- added new tab -->
-    <div class="item" data-tab="others">Delete Residency</div>
-    <div class="item" data-tab="summary">Delete Gender</div>
+    <div class="item" data-tab="scholarshipAndAward" style="background-color: #EEE3FD;">Scholarships and Awards</div>
+    <div class="item" data-tab="advancedStanding" style="background-color: #EEE3FD;">Advanced Standings</div>
+    <div class="item" data-tab="others" style="background-color: #EEE3FD;">Delete Residency</div>
+    <div class="item" data-tab="summary" style="background-color: #EEE3FD;">Delete Gender</div>
 
   </div>
 
-  <div class="ui bottom attached active tab segment"data-tab="basics">
+  <div class="ui bottom attached active tab segment" data-tab="basics">
 
-    <!-- NEW FORM -->
+    <!-- Basic Info Form -->
 
     <div class="ui grid" style="padding-right: 14px; background-color: #EEE3FD;">
       <div class="ui eleven wide column">
@@ -117,39 +114,15 @@
         <img  src={{studentPhoto}}>
       </div>
     </div>
-
-  </div>
-
-  <div class="ui tab" data-tab="program" style="padding-left: 14px; background-color: #EEE3FD;">
-    <!-- Program records, courses and grades !-->
-    <br>
-    <h2>{{currentStudent.number}}</h2>
-      <h3> {{currentStudent.firstName}} {{currentStudent.lastName}}</h3>
-    <br><br><br>
-  </div>
+</div>
 
   <!-- start of the delete residency tab -->
   <div class="ui tab" data-tab="others">
     {{#each residencyModel as |oneResidency|}}
-      <div class="ui grid">
-        <div class="ten wide column">
-          <div class="actions">
-            <div class="ui form">
-              <div class="grouped fields">
-                <div class="field">
-                  <div class="ui radio checkbox">
-                    <input type="radio" name ="residency"
-                           onchange={{action 'getResidence' oneResidency}}>
-                           <label>{{oneResidency.name}}</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="six wide column">
-        </div>
-      </div>
+    <div class="ui radio checkbox">
+      <input type="radio" name ="residency" onchange={{action 'getResidence' oneResidency}}>
+      <label>{{oneResidency.name}}</label>
+    </div>
     {{/each}}
     <button class="ui button" onclick={{action 'deleteResidency'}}>Delete</button>
   </div>
@@ -157,31 +130,16 @@
 <!-- start of delte gender tab -->
   <div class="ui tab" data-tab="summary">
     {{#each genderModel as |oneGender|}}
-      <div class="ui grid">
-        <div class="ten wide column">
-          <div class="actions">
-            <div class="ui form">
-              <div class="grouped fields">
-                <div class="field">
-                  <div class="ui radio checkbox">
-                    <input type="radio" name ="gender"
-                           onchange={{action 'getGender' oneGender}}>
-                           <label>{{oneGender.name}}</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="six wide column">
-        </div>
-      </div>
+    <div class="ui radio checkbox">
+      <input type="radio" name ="gender" onchange={{action 'getGender' oneGender}}>
+      <label>{{oneGender.name}}</label>
+    </div>
     {{/each}}
     <button class="ui button" onclick={{action 'deleteGender'}}>Delete</button>
   </div>
 
+  <!-- Advanced Standing Tab -->
   <div class = "ui tab" data-tab="advancedStanding">
-    <h1>Advanced Standing</h1>
 
     <div class="ui form">
       <div class="inline field">
@@ -218,18 +176,21 @@
 
     {{#each listAS as |userListAS|}}
       <br />
-      <label>Course: {{userListAS.course}}</label> <br />
-      <label>Description: {{userListAS.description}}</label><br />
-      <label>Units: {{userListAS.units}}</label><br />
-      <label>Grade: {{userListAS.grade}}</label><br />
-      <label>From: {{userListAS.from}}</label><br />
-    {{/each}}
+      <div class="ui radio checkbox">
+        <input type="radio" name="advStandingRadio"
+          onchange={{action 'getAdvancedStanding' userListAS}}>
 
+          <label>Course: {{userListAS.course}} <br />
+          Description: {{userListAS.description}}<br />
+          Units: {{userListAS.units}}<br />
+          Grade: {{userListAS.grade}}<br />
+          From: {{userListAS.from}}</label><br />
+      </div>
+    {{/each}}
+    <button class="ui button" onclick={{action 'deleteAS'}}>Delete</button>
   </div>
 
   <div class = "ui tab" data-tab="scholarshipAndAward">
-
-    <h1>Scholarships and Awards</h1>
 
     <div class="ui form">
       <div class="inline field">
@@ -243,16 +204,17 @@
     <button class="ui primary button" {{action 'addScholarShipAndAward'}}>
       Add
     </button>
-
+      <br />
     {{#each scholarShipAndAwardList as |userScholarShipAndAwardList|}}
       <br />
-      <label>Note: {{userScholarShipAndAwardList.note}}</label> <br />
+      <div class="ui radio checkbox">
+        <input type="radio" name="advStandingRadio"
+          onchange={{action 'getScholarshipAward' userScholarShipAndAwardList}}>
+          <label>Note: {{userScholarShipAndAwardList.note}}</label> <br />
+      </div>
     {{/each}}
-
+    <button class="ui button" onclick={{action 'deleteScholarshipAward'}}>Delete</button>
   </div>
-
-
-
 
 
 {{/if}}
