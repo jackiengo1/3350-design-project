@@ -52,16 +52,75 @@
   <!-- Show data entry form -->
 
   <div class="ui top attached tabular menu">
-    <div class="active item" data-tab="basics">Basic Info</div>
-    <div class="item" data-tab="program">Program Record</div>
-    <div class="item" data-tab="others">Other tabs</div>
+
     <div class="item" data-tab="advancedStanding">Advanced Standings</div>
     <div class="item" data-tab="scholarshipAndAward">Scholarships and Awards</div>
+    <div class="active item" data-tab="basics" style="background-color: #EEE3FD;">Basic Info</div>
+    <div class="item" data-tab="program" style="background-color: #EEE3FD;">Program Record</div>
+    <div class="item" data-tab="others" style="background-color: #EEE3FD;">Other tabs</div>
+
   </div>
+
   <div class="ui bottom attached active tab segment"data-tab="basics">
+
+    <!-- NEW FORM -->
+
+    <div class="ui grid" style="padding-right: 14px; background-color: #EEE3FD;">
+      <div class="ui eleven wide column">
+          <form class="ui form">
+            <div class="field">
+              <label>Student Number</label>
+              <div class="field">
+                {{input size="10" type="text"  value = currentStudent.number}}
+              </div>
+            </div>
+
+            <div class="two fields">
+              <div class="field">
+                <label>First Name</label>
+                {{input type="text"  value = currentStudent.firstName}}
+              </div>
+              <div class="field">
+                <label>Last Name</label>
+                {{input type="text"  value = currentStudent.lastName}}
+              </div>
+            </div>
+
+            <div class="two fields">
+              <div class="field">
+                <label>Gender</label>
+                <select onchange={{action 'selectGender' value="target.value"}}>
+                  <option value=1 selected={{eq 1 currentStudent.gender}}>Male</option>
+                  <option value=2 selected={{eq 2 currentStudent.gender}}>Female</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Date of Birth</label>
+                <input value={{selectedDate}} type="date" onchange={{action 'assignDate' value="target.value"}}>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Residency</label>
+              <select onchange={{action 'selectResidency' value="target.value"}}>
+                {{#each residencyModel as |residencyChoice|}}
+                  <option value={{residencyChoice.id}} selected={{eq currentStudent.resInfo.id residencyChoice.id}}>{{residencyChoice.name}}</option>
+                {{/each}}
+              </select>        
+            </div>
+          </form>
+      </div>
+      <div class="ui center aligned five wide column segment" style="margin-bottom: 14px;">
+        <img  src={{studentPhoto}}>
+      </div>
+    </div>
+
+
+
+    
     <!-- student basic information !-->
 
-    <div class="ui grid">
+    <!--<div class="ui grid">
       <div class="ui right aligned  seven wide column">
         <div class="ui form">
           <div class="inline field">
@@ -97,15 +156,18 @@
             </select>
           </div>
         </div>
-      </div>
+      </div>-->
+
       <!-- Show student photo -->
-      <div class="ui center aligned  seven wide column segment">
+
+      <!--<div class="ui center aligned  seven wide column segment">
         <img  src={{studentPhoto}}>
       </div>
-    </div>
+    </div>-->
 
   </div>
-  <div class="ui tab" data-tab="program">
+
+  <div class="ui tab" data-tab="program" style="padding-left: 14px; background-color: #EEE3FD;">
     <!-- Program records, courses and grades !-->
     <br>
     <h2>{{currentStudent.number}}</h2>
