@@ -94,11 +94,12 @@ export default Ember.Component.extend({
     var datestring = date.toISOString().substring(0, 10);
     this.set('selectedDate', datestring);
 
-    this.set('listAS', this.get('currentStudent').get('advInfo'));
+
     this.get('store').query('advanced-standing',{filter:{studentInfo:this.get('currentStudent').get('id')}});
-    console.log(this.get('currentStudent').get('id'));
-    this.set('scholarShipAndAwardList', this.get('currentStudent').get('scholInfo'));
+    this.set('listAS', this.get('currentStudent').get('advInfo'));
+
     this.get('store').query('scholarship-award',{filter:{studentInfo:this.get('currentStudent').get('id')}});
+    this.set('scholarShipAndAwardList', this.get('currentStudent').get('scholInfo'));
 
 
     console.log(this.get('scholarShipAndAwardList'));
