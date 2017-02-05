@@ -3,7 +3,7 @@
 </div>
 
 <!-- Show the menu bar-->
-<div class="ui inverted menu">
+<div class="ui inverted menu" style="background-color: #4e2683;">
   <a class="item" {{action 'saveStudent'}}>
     <i class="save icon"></i>
     Save
@@ -53,17 +53,17 @@
 
   <div class="ui top attached tabular menu">
 
-    <div class="item" data-tab="advancedStanding">Advanced Standings</div>
-    <div class="item" data-tab="scholarshipAndAward">Scholarships and Awards</div>
     <div class="active item" data-tab="basics" style="background-color: #EEE3FD;">Basic Info</div>
-    <div class="item" data-tab="program" style="background-color: #EEE3FD;">Program Record</div>
-    <div class="item" data-tab="others" style="background-color: #EEE3FD;">Other tabs</div>
+    <div class="item" data-tab="scholarshipAndAward" style="background-color: #EEE3FD;">Scholarships and Awards</div>
+    <div class="item" data-tab="advancedStanding" style="background-color: #EEE3FD;">Advanced Standings</div>
+    <div class="item" data-tab="others" style="background-color: #EEE3FD;">Delete Residency</div>
+    <div class="item" data-tab="summary" style="background-color: #EEE3FD;">Delete Gender</div>
 
   </div>
 
-  <div class="ui bottom attached active tab segment"data-tab="basics">
+  <div class="ui bottom attached active tab segment" data-tab="basics">
 
-    <!-- NEW FORM -->
+    <!-- Basic Info Form -->
 
     <div class="ui grid" style="padding-right: 14px; background-color: #EEE3FD;">
       <div class="ui eleven wide column">
@@ -162,26 +162,36 @@
 
       <!--<div class="ui center aligned  seven wide column segment">
         <img  src={{studentPhoto}}>
+=======
+>>>>>>> b5d74015f159e92cb2c9de3bcc560cfae9fc17fc
       </div>
-    </div>-->
 
   </div>
 
-  <div class="ui tab" data-tab="program" style="padding-left: 14px; background-color: #EEE3FD;">
-    <!-- Program records, courses and grades !-->
-    <br>
-    <h2>{{currentStudent.number}}</h2>
-      <h3> {{currentStudent.firstName}} {{currentStudent.lastName}}</h3>
-    <br><br><br>
-  </div>
+  <!-- start of the delete residency tab -->
   <div class="ui tab" data-tab="others">
-    <!-- Others !-->
-    <h2>Other data</h2>
+    {{#each residencyModel as |oneResidency|}}
+    <div class="ui radio checkbox">
+      <input type="radio" name ="residency" onchange={{action 'getResidence' oneResidency}}>
+      <label>{{oneResidency.name}}</label>
+    </div>
+    {{/each}}
+    <button class="ui button" onclick={{action 'deleteResidency'}}>Delete</button>
   </div>
 
+<!-- start of delte gender tab -->
+  <div class="ui tab" data-tab="summary">
+    {{#each genderModel as |oneGender|}}
+    <div class="ui radio checkbox">
+      <input type="radio" name ="gender" onchange={{action 'getGender' oneGender}}>
+      <label>{{oneGender.name}}</label>
+    </div>
+    {{/each}}
+    <button class="ui button" onclick={{action 'deleteGender'}}>Delete</button>
+  </div>
 
+  <!-- Advanced Standing Tab -->
   <div class = "ui tab" data-tab="advancedStanding">
-    <h1>Advanced Standing</h1>
 
     <div class="ui form">
       <div class="inline field">
@@ -234,8 +244,6 @@
 
   <div class = "ui tab" data-tab="scholarshipAndAward">
 
-    <h1>Scholarships and Awards</h1>
-
     <div class="ui form">
       <div class="inline field">
         <label>Note</label>
@@ -259,9 +267,6 @@
     {{/each}}
     <button class="ui button" onclick={{action 'deleteScholarshipAward'}}>Delete</button>
   </div>
-
-
-
 
 
 {{/if}}

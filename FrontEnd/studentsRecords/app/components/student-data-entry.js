@@ -4,6 +4,9 @@ export default Ember.Component.extend({
   store: Ember.inject.service(),
   showAllStudents: false,
   residencyModel: null,
+  residencyIndex:null,
+  genderModel: null,
+  genderIndex:null,
   selectedResidency: null,
   selectedGender: null,
   selectedDate: null,
@@ -76,6 +79,11 @@ export default Ember.Component.extend({
       console.log(Ember.inspect(records));
     });
 
+    this.get('store').findAll('gender').then(function(records){
+      self.set('genderModel', records);
+
+    });
+
     // load first page of the students records
     this.set('limit', 10);
     this.set('offset', 0);
@@ -121,9 +129,14 @@ export default Ember.Component.extend({
     saveStudent () {
       var updatedStudent = this.get('currentStudent');
       var res = this.get('store').peekRecord('residency', this.get('selectedResidency'));
-      updatedStudent.set('gender', this.get('selectedGender'));
+      var gen = this.get('store').peekRecord('gender', this.get('selectedGender'));
+      if (gen != null) {
+        updatedStudent.set('genderInfo', gen);
+      }
       updatedStudent.set('DOB', new Date(this.get('selectedDate')));
-      updatedStudent.set('resInfo', res);
+      if (res != null) {
+        updatedStudent.set('resInfo', res);
+      }
       updatedStudent.save().then(() => {
         //     this.set('isStudentFormEditing', false);
       });
@@ -182,16 +195,51 @@ export default Ember.Component.extend({
 
 
     },
+
+    //delete residency
+    deleteResidency(){
+      var indextemp = this.get('residencyIndex');
+      var restemp = this.get('residencyModel').objectAt(indextemp);
+      console.log(restemp);
+      restemp.deleteRecord();
+      restemp.save();
+    },
+
+    //delete gender
+    deleteGender(){
+      var indextemp = this.get('genderIndex');
+      var restemp = this.get('genderModel').objectAt(indextemp);
+      console.log(restemp);
+      restemp.deleteRecord();
+      restemp.save();
+    },
+
+
     selectGender (gender){
       this.set('selectedGender', gender);
+      console.log(gender);
     },
 
     selectResidency (residency){
       this.set('selectedResidency', residency);
+      console.log(residency);
     },
 
     assignDate (date){
       this.set('selectedDate', date);
+    },
+
+
+    //used to show the list of residency for delete function
+    getResidence: function (residency) {
+      var index = this.get('residencyModel').indexOf(residency);
+      this.set('residencyIndex', index);
+    },
+
+    //used to show the list of gender for delete function
+    getGender: function (gender) {
+      var index = this.get('genderModel').indexOf(gender);
+      this.set('genderIndex', index);
     },
 
     addAS(){

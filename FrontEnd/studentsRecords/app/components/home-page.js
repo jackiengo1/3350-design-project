@@ -16,7 +16,8 @@ export default Ember.Component.extend({
     isStudentsRecordsDataEntry: false,
     isAboutShowing: false,
     isAddStudentShowing: false,
-
+    isAddGenderShowing: false,
+    isAddResidencyShowing: false,
 
     actions: {
         home () {
@@ -24,6 +25,8 @@ export default Ember.Component.extend({
             this.set('isStudentsRecordsDataEntry', false);
             this.set('isAboutShowing', false);
             this.set('isAddStudentShowing', false);
+            this.set('isAddResidencyShowing', false);
+          this.set('isAddGenderShowing', false);
         },
 
         studentsDataEntry (){
@@ -31,6 +34,8 @@ export default Ember.Component.extend({
             this.set('isStudentsRecordsDataEntry', true);
             this.set('isAboutShowing', false);
             this.set('isAddStudentShowing', false);
+          this.set('isAddResidencyShowing', false);
+          this.set('isAddGenderShowing', false);
         },
 
         about (){
@@ -38,6 +43,8 @@ export default Ember.Component.extend({
             this.set('isStudentsRecordsDataEntry', false);
             this.set('isAboutShowing', true);
             this.set('isAddStudentShowing', false);
+          this.set('isAddResidencyShowing', false);
+          this.set('isAddGenderShowing', false);
         },
 
         addStudent(){
@@ -45,6 +52,25 @@ export default Ember.Component.extend({
             this.set('isStudentsRecordsDataEntry', false);
             this.set('isAboutShowing', false);
             this.set('isAddStudentShowing', true);
+          this.set('isAddResidencyShowing', false);
+          this.set('isAddGenderShowing', false);
+        },
+
+        addResidency(){
+            this.set('isHomeShowing', false);
+            this.set('isStudentsRecordsDataEntry', false);
+            this.set('isAboutShowing', false);
+            this.set('isAddResidencyShowing', true);
+          this.set('isAddGenderShowing', false);
+          this.set('isAddStudentShowing', false);
+        },
+        addGender(){
+          this.set('isHomeShowing', false);
+          this.set('isStudentsRecordsDataEntry', false);
+          this.set('isAboutShowing', false);
+          this.set('isAddResidencyShowing', false);
+          this.set('isAddGenderShowing', true);
+          this.set('isAddStudentShowing', false);
         }
     }
 });
