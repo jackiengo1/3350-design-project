@@ -12,11 +12,11 @@ export default Ember.Component.extend({
   },
 
   actions: {
-    addResidency(){
-      var newResidency = this.get('store').createRecord('residency', {
-        name: this.get('residencyName'),
+    addGender(){
+      var newGender = this.get('store').createRecord('gender', {
+        name: this.get('genderName'),
       });
-      newResidency.save();
+      newGender.save();
     }
   }
 });

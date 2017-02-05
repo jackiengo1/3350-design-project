@@ -32,6 +32,13 @@ router.route('/')
             models.Students.find({"residency": request.query.residency}, function (error, students) {
                 if (error) response.send(error);
                 response.json({student: students});
+
+            });
+
+            models.Students.find({"gender": request.query.gender}, function (error, students) {
+                if (error) response.send(error);
+                response.json({student: students});
+
             });
         }
     });
@@ -56,7 +63,7 @@ router.route('/:student_id')
                 student.number = request.body.student.number;
                 student.firstName = request.body.student.firstName;
                 student.lastName = request.body.student.lastName;
-              //  student.gender = request.body.student.gender;
+                student.gender = request.body.student.gender;
                 student.DOB = request.body.student.DOB;
                 student.photo = request.body.student.photo;
 
