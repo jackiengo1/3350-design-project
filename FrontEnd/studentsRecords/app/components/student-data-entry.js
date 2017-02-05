@@ -157,10 +157,13 @@ export default Ember.Component.extend({
     },
 
     //delete residency
-    deleteResidency(residency){
-      var res = this.get('store').peekRecord('residency', this.get('selectedResidency'));
-      res.deleteRecord();
-      res.save();
+    deleteResidency(){
+      var indextemp = this.get('residencyIndex');
+      var restemp = this.get('residencyModel').objectAt(indextemp);
+      //var res = this.get('store').peekRecord('residency', restemp);
+      console.log(restemp);
+      restemp.deleteRecord();
+      restemp.save();
     },
 
 
