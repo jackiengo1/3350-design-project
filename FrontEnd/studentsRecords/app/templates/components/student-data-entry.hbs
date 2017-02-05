@@ -89,10 +89,12 @@
             <div class="two fields">
               <div class="field">
                 <label>Gender</label>
-                <select onchange={{action 'selectGender' value="target.value"}}>
-                  <option value=1 selected={{eq 1 currentStudent.gender}}>Male</option>
-                  <option value=2 selected={{eq 2 currentStudent.gender}}>Female</option>
-                </select>
+                <select onchange={{action 'selectGender' value="target.value"}} >
+                  {{#each genderModel as |genderChoice|}}
+                    <option value={{genderChoice.id}} selected={{eq currentStudent.genderInfo.id
+                                                                   genderChoice.id}}>{{genderChoice.name}} </option>
+                  {{/each}}
+            </select>
               </div>
               <div class="field">
                 <label>Date of Birth</label>
@@ -106,7 +108,7 @@
                 {{#each residencyModel as |residencyChoice|}}
                   <option value={{residencyChoice.id}} selected={{eq currentStudent.resInfo.id residencyChoice.id}}>{{residencyChoice.name}}</option>
                 {{/each}}
-              </select>        
+              </select>
             </div>
           </form>
         </div>
@@ -114,6 +116,7 @@
           <img  src={{studentPhoto}}>
         </div>
       </div>
+
 
       <div class="row" style="padding-top: 0;">
         <div class="ui sixteen wide column" style="padding-right: 0;">
@@ -146,6 +149,13 @@
 
   </div>
 
+    <!--  <div class="ui center aligned five wide column segment" style="margin-bottom: 14px;">
+        <img  src={{studentPhoto}}>
+      </div>
+    </div>
+</div> -->
+
+
   <!-- start of the delete residency tab -->
   <div class="ui tab" data-tab="others" style="background-color: #eee3fd; padding: 14px;">
     {{#each residencyModel as |oneResidency|}}
@@ -158,7 +168,9 @@
   </div>
 
 <!-- start of delte gender tab -->
+
   <div class="ui tab" data-tab="summary" style="background-color: #eee3fd; padding: 14px;">
+
     {{#each genderModel as |oneGender|}}
     <div class="ui radio checkbox">
       <input type="radio" name ="gender" onchange={{action 'getGender' oneGender}}>
@@ -203,6 +215,10 @@
     </div>
 
     <!--<div class="ui form">
+    <br>
+  <h2>Advanced Standing Information</h2>
+    <div class="ui form">
+
       <div class="inline field">
         <label>Course name</label>
         {{input size="20" type="text"  value = courseNameAS }}
@@ -239,17 +255,25 @@
 
     {{#each listAS as |userListAS|}}
       <br />
-      <label>Course: {{userListAS.course}}</label> <br />
-      <label>Description: {{userListAS.description}}</label><br />
-      <label>Units: {{userListAS.units}}</label><br />
-      <label>Grade: {{userListAS.grade}}</label><br />
-      <label>From: {{userListAS.from}}</label><br />
-    {{/each}}
+      <div class="ui radio checkbox">
+        <input type="radio" name="advStandingRadio"
+          onchange={{action 'getAdvancedStanding' userListAS}}>
 
+          <label>Course: {{userListAS.course}} <br />
+          Description: {{userListAS.description}}<br />
+          Units: {{userListAS.units}}<br />
+          Grade: {{userListAS.grade}}<br />
+          From: {{userListAS.from}}</label><br />
+      </div>
+    {{/each}}
+    <br>
+    <button class="ui button" onclick={{action 'deleteAS'}}>Delete</button>
   </div>
 
   <div class = "ui tab" data-tab="scholarshipAndAward" style="background-color: #eee3fd; padding: 14px;">
 
+    <br>
+  <h2>Add a Scholarship/Award</h2>
     <div class="ui form">
       <div class="field">
         <label>Note</label>
@@ -262,13 +286,17 @@
     <button class="ui primary button" {{action 'addScholarShipAndAward'}}>
       Add
     </button>
-
+      <br />
     {{#each scholarShipAndAwardList as |userScholarShipAndAwardList|}}
       <br />
-      <label>Note: {{userScholarShipAndAwardList.note}}</label> <br />
+      <div class="ui radio checkbox">
+        <input type="radio" name="advStandingRadio"
+          onchange={{action 'getScholarshipAward' userScholarShipAndAwardList}}>
+          <label>Note: {{userScholarShipAndAwardList.note}}</label> <br />
+      </div>
     {{/each}}
-
+    <br>
+    <button class="ui button" onclick={{action 'deleteScholarshipAward'}}>Delete</button>
   </div>
-
 
 {{/if}}
