@@ -89,10 +89,12 @@
             <div class="two fields">
               <div class="field">
                 <label>Gender</label>
-                <select onchange={{action 'selectGender' value="target.value"}}>
-                  <option value=1 selected={{eq 1 currentStudent.gender}}>Male</option>
-                  <option value=2 selected={{eq 2 currentStudent.gender}}>Female</option>
-                </select>
+                <select onchange={{action 'selectGender' value="target.value"}} >
+                  {{#each genderModel as |genderChoice|}}
+                    <option value={{genderChoice.id}} selected={{eq currentStudent.genderInfo.id
+                                                                   genderChoice.id}}>{{genderChoice.name}} </option>
+                  {{/each}}
+            </select>
               </div>
               <div class="field">
                 <label>Date of Birth</label>
