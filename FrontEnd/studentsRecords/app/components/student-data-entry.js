@@ -4,6 +4,7 @@ export default Ember.Component.extend({
   store: Ember.inject.service(),
   showAllStudents: false,
   residencyModel: null,
+  residencyIndex:null,
   genderModel: null,
   selectedResidency: null,
   selectedGender: null,
@@ -54,6 +55,7 @@ export default Ember.Component.extend({
       self.set('genderModel', records);
 
     });
+
 
     // load first page of the students records
     this.set('limit', 10);
@@ -153,16 +155,33 @@ export default Ember.Component.extend({
 
 
     },
+
+    //delete residency
+    deleteResidency(residency){
+      var res = this.get('store').peekRecord('residency', this.get('selectedResidency'));
+      res.deleteRecord();
+      res.save();
+    },
+
+
     selectGender (gender){
       this.set('selectedGender', gender);
+      console.log(gender);
     },
 
     selectResidency (residency){
       this.set('selectedResidency', residency);
+      console.log(residency);
     },
 
     assignDate (date){
       this.set('selectedDate', date);
+    },
+
+    //used to show the list of residency for delete function
+    getResidence: function (residency) {
+      var index = this.get('residencyModel').indexOf(residency);
+      this.set('residencyIndex', index);
     },
   }
 });
