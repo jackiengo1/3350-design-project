@@ -6,6 +6,7 @@ export default Ember.Component.extend({
   residencyModel: null,
   residencyIndex:null,
   genderModel: null,
+  genderIndex:null,
   selectedResidency: null,
   selectedGender: null,
   selectedDate: null,
@@ -160,7 +161,15 @@ export default Ember.Component.extend({
     deleteResidency(){
       var indextemp = this.get('residencyIndex');
       var restemp = this.get('residencyModel').objectAt(indextemp);
-      //var res = this.get('store').peekRecord('residency', restemp);
+      console.log(restemp);
+      restemp.deleteRecord();
+      restemp.save();
+    },
+
+    //delete gender
+    deleteGender(){
+      var indextemp = this.get('genderIndex');
+      var restemp = this.get('genderModel').objectAt(indextemp);
       console.log(restemp);
       restemp.deleteRecord();
       restemp.save();
@@ -185,6 +194,12 @@ export default Ember.Component.extend({
     getResidence: function (residency) {
       var index = this.get('residencyModel').indexOf(residency);
       this.set('residencyIndex', index);
+    },
+
+    //used to show the list of gender for delete function
+    getGender: function (gender) {
+      var index = this.get('genderModel').indexOf(gender);
+      this.set('genderIndex', index);
     },
   }
 });
