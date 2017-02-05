@@ -17,7 +17,15 @@ export default Ember.Component.extend({
   offset: null,
   pageSize: null,
   movingBackword: false,
-  undoStack: Ember.A(),
+
+  //advanced standing
+  listAS: Ember.A(),
+  courseNameAS: null,
+  descriptionAS: null,
+  unitsAS: null,
+  gradeAS: null,
+  fromAS: null,
+  newRecordTempAS: null,
 
   studentModel: Ember.observer('offset', function () { //observes the offset variable. When it changes run code.
     var self = this;
@@ -46,7 +54,6 @@ export default Ember.Component.extend({
     // load Residency data model
     this.get('store').findAll('residency').then(function (records) {
       self.set('residencyModel', records);
-      console.log(Ember.inspect(records));
     });
 
     // load first page of the students records
@@ -73,6 +80,26 @@ export default Ember.Component.extend({
     var date = this.get('currentStudent').get('DOB');
     var datestring = date.toISOString().substring(0, 10);
     this.set('selectedDate', datestring);
+
+    /*this.set('listAS', this.get('store').query('advanced-standing',{
+      studentInfo: this.get('currentStudent')
+    }));*/
+
+    this.set('listAS', this.get('currentStudent').get('advInfo'));
+    var self2 = this;
+    this.get('store').query('advanced-standing',{filter:{studentInfo:this.get('currentStudent').get('id')}})
+    .then(function(records123){
+      console.log('found', records123);
+      //self2.set('listAS', records123);
+    });
+
+    // this.get('store').findAll('advanced-standing').then(function(records123){
+    //   console.log(records123);
+    //   console.log(Ember.inspect(records123));
+    //   self2.set('listAS', records123);
+    // });
+
+
   },
 
   didRender() {
@@ -156,6 +183,34 @@ export default Ember.Component.extend({
 
     assignDate (date){
       this.set('selectedDate', date);
+    },
+
+    addAS(){
+      console.log(this.get('courseNameAS'));
+      console.log(this.get('descriptionAS'));
+      console.log(this.get('unitsAS'));
+      console.log(this.get('gradeAS'));
+      console.log(this.get('fromAS'));
+
+      var newASRecord = this.get('store').createRecord('advanced-standing', {
+        course: this.get('courseNameAS'),
+        description: this.get('descriptionAS'),
+        units: this.get('unitsAS'),
+        //gender: this.get('gender'),
+        grade: this.get('gradeAS'),
+        from: this.get('fromAS'),
+        studentInfo: this.get('currentStudent'),
+      });
+      newASRecord.save();
+
+      //  console.log(updatedStudent.get('advInfo'));
+
+
+    //  console.log(newASRecord.get('_id'));
+      //this.get('currentStudent').get('advInfo').set()
+//test
+
+
     },
   }
 });

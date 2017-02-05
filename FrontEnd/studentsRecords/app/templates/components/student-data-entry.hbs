@@ -55,6 +55,7 @@
     <div class="active item" data-tab="basics">Basic Info</div>
     <div class="item" data-tab="program">Program Record</div>
     <div class="item" data-tab="others">Other tabs</div>
+    <div class="item" data-tab="advancedStanding">Advanced Standings</div>
   </div>
   <div class="ui bottom attached active tab segment"data-tab="basics">
     <!-- student basic information !-->
@@ -113,6 +114,54 @@
   <div class="ui tab" data-tab="others">
     <!-- Others !-->
     <h2>Other data</h2>
+  </div>
+
+
+  <div class = "ui tab" data-tab="advancedStanding">
+    <h1>Advanced Standing</h1>
+
+    <div class="ui form">
+      <div class="inline field">
+        <label>Course name</label>
+        {{input size="20" type="text"  value = courseNameAS }}
+      </div>
+
+      <div class="inline field">
+        <label>Description</label>
+        {{input size="20" type="text"  value = descriptionAS}}
+      </div>
+
+      <div class="inline field">
+        <label>Units</label>
+        {{input size="10" type="text"  value = unitsAS}}
+      </div>
+
+      <div class="inline field">
+        <label>Grade</label>
+        {{input size="10" type="text"  value = gradeAS}}
+      </div>
+
+      <div class="inline field">
+        <label>From</label>
+        {{input size="20" type="text"  value = fromAS}}
+      </div>
+    </div>
+    <br />
+    <button class="ui primary button" {{action 'addAS'}}>
+      Add advanced standing
+    </button>
+
+    {{#each listAS as |userListAS|}}
+      <label>Course: {{userListAS.course}}</label>
+      <label>Description: {{userListAS.description}}</label>
+      <label>Units: {{userListAS.units}}</label>
+      <label>Grade: {{userListAS.grade}}</label>
+      <label>From: {{userListAS.from}}</label>
+    {{/each}}
+
+
+
+
   </div>
 
 

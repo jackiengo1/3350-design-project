@@ -12,8 +12,8 @@ export default DS.Model.extend({
   basisOfAdmission: DS.attr(),
   admissionAverage: DS.attr(),
   admissionComments: DS.attr(),
-  advInfo: DS.belongsTo('advancedStanding'),
+  advInfo: DS.hasMany('advancedStanding'),
   genderInfo: DS.belongsTo('gender'),
-  scholInfo: DS.belongsTo('scholarshipAward')
+  scholInfo: DS.hasMany('scholarshipAward')
 
 });
