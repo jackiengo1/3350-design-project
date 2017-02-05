@@ -56,6 +56,7 @@
     <div class="item" data-tab="program">Program Record</div>
     <div class="item" data-tab="others">Other tabs</div>
     <div class="item" data-tab="advancedStanding">Advanced Standings</div>
+    <div class="item" data-tab="scholarshipAndAward">Scholarships and Awards</div>
   </div>
   <div class="ui bottom attached active tab segment"data-tab="basics">
     <!-- student basic information !-->
@@ -151,16 +152,40 @@
       Add advanced standing
     </button>
 
+    <br />
+
     {{#each listAS as |userListAS|}}
-      <label>Course: {{userListAS.course}}</label>
-      <label>Description: {{userListAS.description}}</label>
-      <label>Units: {{userListAS.units}}</label>
-      <label>Grade: {{userListAS.grade}}</label>
-      <label>From: {{userListAS.from}}</label>
+      <br />
+      <label>Course: {{userListAS.course}}</label> <br />
+      <label>Description: {{userListAS.description}}</label><br />
+      <label>Units: {{userListAS.units}}</label><br />
+      <label>Grade: {{userListAS.grade}}</label><br />
+      <label>From: {{userListAS.from}}</label><br />
     {{/each}}
 
+  </div>
 
+  <div class = "ui tab" data-tab="scholarshipAndAward">
 
+    <h1>Scholarships and Awards</h1>
+
+    <div class="ui form">
+      <div class="inline field">
+        <label>Note</label>
+        {{input size="20" type="text"  value = scholarshipAndAwardNote }}
+      </div>
+    </div>
+
+    <br />
+
+    <button class="ui primary button" {{action 'addScholarShipAndAward'}}>
+      Add
+    </button>
+
+    {{#each scholarShipAndAwardList as |userScholarShipAndAwardList|}}
+      <br />
+      <label>Note: {{userScholarShipAndAwardList.note}}</label> <br />
+    {{/each}}
 
   </div>
 

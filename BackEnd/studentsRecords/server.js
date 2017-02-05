@@ -22,7 +22,7 @@ app.use(logger);
 app.use('/students', students);
 app.use('/residencies', residencies);
 app.use('/genders', genders);
-app.use('/advanceStandings', advancedStandings);
+app.use('/advancedStandings', advancedStandings);
 app.use('/scholarshipAwards', scholarshipAwards);
 
 

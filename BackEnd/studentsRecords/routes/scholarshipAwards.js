@@ -20,21 +20,16 @@ router.route('/')
         });
     })
     .get(parseUrlencoded, parseJSON, function (request, response) {
-        //var l = parseInt(request.query.limit);
-        //var o = parseInt(request.query.offset);
-        var ScholarshipAward = request.query.scholarshipAward;
-        if (!ScholarshipAward) {
+
+        var scholarshipAwardFilter = request.query.filter;
+        if (!scholarshipAwardFilter) {
             models.ScholarshipAwards.find(function (error, scholarshipAwards) {
                 if (error) response.send(error);
                 response.json({scholarshipAward: scholarshipAwards});
             });
-            //models.AdvancedStandings.paginate({}, { offset: o, limit: l },
-            //    function (error, students) {
-            //        if (error) response.send(error);
-            //        response.json({advancedStanding: advancedStandings.docs});
-            //    });
+            console.log("no filter");
         } else {
-            //        if (Student == "residency")
+          console.log("filter");
             models.ScholarshipAwards.find({"student": request.query.student}, function (error, scholarshipAwards) {
                 if (error) response.send(error);
                 response.json({scholarshipAward: scholarshipAwards});

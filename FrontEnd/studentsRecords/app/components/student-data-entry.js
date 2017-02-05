@@ -27,6 +27,10 @@ export default Ember.Component.extend({
   fromAS: null,
   newRecordTempAS: null,
 
+  //scholarship and awards
+  scholarShipAndAwardList: null,
+  scholarshipAndAwardNote: null,
+
   studentModel: Ember.observer('offset', function () { //observes the offset variable. When it changes run code.
     var self = this;
     this.get('store').query('student', {
@@ -83,6 +87,12 @@ export default Ember.Component.extend({
 
     this.set('listAS', this.get('currentStudent').get('advInfo'));
     this.get('store').query('advanced-standing',{filter:{studentInfo:this.get('currentStudent').get('id')}});
+    console.log(this.get('currentStudent').get('id'));
+    this.set('scholarShipAndAwardList', this.get('currentStudent').get('scholInfo'));
+    this.get('store').query('scholarship-award',{filter:{studentInfo:this.get('currentStudent').get('id')}});
+
+
+    console.log(this.get('scholarShipAndAwardList'));
 
   },
 
@@ -185,6 +195,16 @@ export default Ember.Component.extend({
       });
       newASRecord.save();
 
+    },
+
+    addScholarShipAndAward(){
+      console.log(this.get('scholarshipAndAwardNote'));
+
+      var newScholarShipAndAward = this.get('store').createRecord('scholarship-award',{
+        note: this.get('scholarshipAndAwardNote'),
+        studentInfo: this.get('currentStudent'),
+      });
+      newScholarShipAndAward.save();
     },
   }
 });

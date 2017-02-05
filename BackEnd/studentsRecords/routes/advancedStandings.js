@@ -13,28 +13,25 @@ router.route('/')
         var advancedStanding = new models.AdvancedStandings(request.body.advancedStanding);
         advancedStanding.save(function (error) {
             if (error) response.send(error);
-            response.json({advancedStanding: advancedStanding});
+            console.log( advancedStanding);
+            response.json({advancedStandings: advancedStanding});
         });
     })
     .get(parseUrlencoded, parseJSON, function (request, response) {
-        //var l = parseInt(request.query.limit);
-        //var o = parseInt(request.query.offset);
-        var AdvancedStanding = request.query.advancedStanding;
+        var AdvancedStanding = request.query.filter;
         if (!AdvancedStanding) {
             models.AdvancedStandings.find(function (error, advancedStandings) {
                 if (error) response.send(error);
                 response.json({advancedStanding: advancedStandings});
             });
-            //models.AdvancedStandings.paginate({}, { offset: o, limit: l },
-            //    function (error, students) {
-            //        if (error) response.send(error);
-            //        response.json({advancedStanding: advancedStandings.docs});
-            //    });
+
         } else {
-            //        if (Student == "residency")
-            models.AdvancedStandings.find({"student": request.query.student}, function (error, advancedStandings) {
+
+            models.AdvancedStandings.find({"studentInfo": AdvancedStanding.studentInfo}, function (error, advancedStandings) {
                 if (error) response.send(error);
-                response.json({advancedStudent: advancedStandings});
+                console.log(advancedStandings);
+                response.json({advancedStanding: advancedStandings});
+
             });
         }
     });
