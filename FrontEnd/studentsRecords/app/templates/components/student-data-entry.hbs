@@ -126,22 +126,22 @@
             <div class="two fields">
               <div class="field">
                 <label>Basis of Admission</label>
-                {{input type="text"  value=""}}
+                {{input type="text"  value= currentStudent.basisOfAdmission}}
               </div>
               <div class="field">
                 <label>Admission Average</label>
-                {{input type="number" max=100 min=0 value=0}}
+                {{input type="number" max=100 min=0 value=currentStudent.admissionAverage}}
               </div>
             </div>
 
             <div class="field">
               <label>Admission Comments</label>
-              <textarea rows="2"></textarea>
+              {{textarea rows="2" type="text"  value= currentStudent.admissionComments}}
             </div>
 
             <div class="field">
               <label>Registration Comments</label>
-              <textarea rows="2"></textarea>
+                {{textarea rows="2" type="text"  value= currentStudent.registrationComments}}
             </div>
           </form>
         </div>
