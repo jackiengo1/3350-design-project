@@ -11,6 +11,10 @@ export default Ember.Component.extend({
   genderModel: null,  //all the genders in the db
   selectedResidency: null,    //the resdiency of the student to be added
   photoPath: null,    //photo path of the student photo
+  basisOfAdmissionInput: null,
+  admissionAvg: null,
+  admissionComment: null,
+  regComment: null,
 
   init() {
     this._super(...arguments);
@@ -32,17 +36,14 @@ export default Ember.Component.extend({
       //validates that the fields entered are correct
       if (validateFields(this.get('studentNum'), this.get('fName'), this.get('lName'), this.get('DOB'), this.get('selectedResidency'),this.get('selectedGender'))) {
 
-        // if (this.get('gender') == 1) {                                //checks for female or male
-        //   this.set('photoPath', "/assets/studentsPhotos/male.png");
-        //   console.log("male");
-        // }
-        // else if (this.get('gender') == 2) {
-        //   this.set('photoPath', "/assets/studentsPhotos/female.png");
-        //   console.log("female");
-        // }
 
         var res = this.get('store').peekRecord('residency', this.get('selectedResidency')); //get the students residency object
         var gen = this.get('store').peekRecord('gender', this.get('selectedGender')); //get the students gender object
+
+        console.log(this.get('basisOfAdmissionInput'));
+        console.log(this.get('admissionAvg'));
+        console.log(this.get('admissionComment'));
+        console.log(this.get('regComment'));
 
         var newStudent = this.get('store').createRecord('student', { //create a new student record
           number: this.get('studentNum'),
@@ -50,14 +51,12 @@ export default Ember.Component.extend({
           lastName: this.get('lName'),
           DOB: new Date(this.get('DOB')),
           photo: this.get('photoPath'),
-          registrationComments: this.get('fName'),
-          basisOfAdmission: this.get('fName'),
-          admissionAverage: this.get('fName'),
-          admissionComments: this.get('fName'),
+          registrationComments: this.get('regComment'),
+          basisOfAdmission: this.get('basisOfAdmissionInput'),
+          admissionAverage: this.get('admissionAvg'),
+          admissionComments: this.get('admissionComment'),
           resInfo: res,
-          //advInfo: null,
           genderInfo: gen,
-          //scholInfo: null
         });
         newStudent.save(); //commit the student record to db
       }

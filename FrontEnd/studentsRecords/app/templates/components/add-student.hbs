@@ -56,22 +56,23 @@
             <div class="two fields">
               <div class="field">
                 <label>Basis of Admission</label>
-                {{input type="text"  value=""}}
+                {{input type="text"  value= basisOfAdmissionInput}}
               </div>
               <div class="field">
                 <label>Admission Average</label>
-                {{input type="number" max=100 min=0 value=0}}
+                {{input type="number" max=100 min=0 value= admissionAvg}}
               </div>
             </div>
 
             <div class="field">
               <label>Admission Comments</label>
-              <textarea rows="2"></textarea>
+
+              {{textarea rows="2" value = admissionComment}}
             </div>
 
             <div class="field">
               <label>Registration Comments</label>
-              <textarea rows="2"></textarea>
+              {{textarea rows="2" value = regComment}}
             </div>
           </form>
         </div>
