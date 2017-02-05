@@ -20,7 +20,19 @@ export default Ember.Component.extend({
   offset: null,
   pageSize: null,
   movingBackword: false,
-  undoStack: Ember.A(),
+
+  //advanced standing
+  listAS: Ember.A(),
+  courseNameAS: null,
+  descriptionAS: null,
+  unitsAS: null,
+  gradeAS: null,
+  fromAS: null,
+  newRecordTempAS: null,
+
+  //scholarship and awards
+  scholarShipAndAwardList: null,
+  scholarshipAndAwardNote: null,
 
   studentModel: Ember.observer('offset', function () { //observes the offset variable. When it changes run code.
     var self = this;
@@ -49,7 +61,6 @@ export default Ember.Component.extend({
     // load Residency data model
     this.get('store').findAll('residency').then(function (records) {
       self.set('residencyModel', records);
-      console.log(Ember.inspect(records));
     });
 
     this.get('store').findAll('gender').then(function(records){
@@ -82,6 +93,16 @@ export default Ember.Component.extend({
     var date = this.get('currentStudent').get('DOB');
     var datestring = date.toISOString().substring(0, 10);
     this.set('selectedDate', datestring);
+
+    this.set('listAS', this.get('currentStudent').get('advInfo'));
+    this.get('store').query('advanced-standing',{filter:{studentInfo:this.get('currentStudent').get('id')}});
+    console.log(this.get('currentStudent').get('id'));
+    this.set('scholarShipAndAwardList', this.get('currentStudent').get('scholInfo'));
+    this.get('store').query('scholarship-award',{filter:{studentInfo:this.get('currentStudent').get('id')}});
+
+
+    console.log(this.get('scholarShipAndAwardList'));
+
   },
 
   didRender() {
@@ -114,7 +135,6 @@ export default Ember.Component.extend({
       this.set('movingBackword' , false);
       if (this.get('currentIndex') < this.get('lastIndex')) {
         this.set('currentIndex', this.get('currentIndex') + 1);
-        //     console.log(JSON.stringify(this.get('currentStudent')));
       }
       else {
         this.set('offset', this.get('offset') + this.get('pageSize'));
@@ -194,6 +214,7 @@ export default Ember.Component.extend({
       this.set('selectedDate', date);
     },
 
+
     //used to show the list of residency for delete function
     getResidence: function (residency) {
       var index = this.get('residencyModel').indexOf(residency);
@@ -204,6 +225,35 @@ export default Ember.Component.extend({
     getGender: function (gender) {
       var index = this.get('genderModel').indexOf(gender);
       this.set('genderIndex', index);
+    },
+
+    addAS(){
+      console.log(this.get('courseNameAS'));
+      console.log(this.get('descriptionAS'));
+      console.log(this.get('unitsAS'));
+      console.log(this.get('gradeAS'));
+      console.log(this.get('fromAS'));
+
+      var newASRecord = this.get('store').createRecord('advanced-standing', {
+        course: this.get('courseNameAS'),
+        description: this.get('descriptionAS'),
+        units: this.get('unitsAS'),
+        grade: this.get('gradeAS'),
+        from: this.get('fromAS'),
+        studentInfo: this.get('currentStudent'),
+      });
+      newASRecord.save();
+
+    },
+
+    addScholarShipAndAward(){
+      console.log(this.get('scholarshipAndAwardNote'));
+
+      var newScholarShipAndAward = this.get('store').createRecord('scholarship-award',{
+        note: this.get('scholarshipAndAwardNote'),
+        studentInfo: this.get('currentStudent'),
+      });
+      newScholarShipAndAward.save();
     },
   }
 });

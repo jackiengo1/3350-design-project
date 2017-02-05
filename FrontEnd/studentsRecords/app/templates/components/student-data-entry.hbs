@@ -52,15 +52,78 @@
   <!-- Show data entry form -->
 
   <div class="ui top attached tabular menu">
-    <div class="active item" data-tab="basics">Basic Info</div>
-    <div class="item" data-tab="program">Program Record</div>
+
+    <div class="item" data-tab="advancedStanding">Advanced Standings</div>
+    <div class="item" data-tab="scholarshipAndAward">Scholarships and Awards</div>
+    <div class="active item" data-tab="basics" style="background-color: #EEE3FD;">Basic Info</div>
+    <div class="item" data-tab="program" style="background-color: #EEE3FD;">Program Record</div>
+    <div class="item" data-tab="others" style="background-color: #EEE3FD;">Other tabs</div>
+    <!-- added new tab -->
     <div class="item" data-tab="others">Delete Residency</div>
     <div class="item" data-tab="summary">Delete Gender</div>
+    
   </div>
+
   <div class="ui bottom attached active tab segment"data-tab="basics">
+
+    <!-- NEW FORM -->
+
+    <div class="ui grid" style="padding-right: 14px; background-color: #EEE3FD;">
+      <div class="ui eleven wide column">
+          <form class="ui form">
+            <div class="field">
+              <label>Student Number</label>
+              <div class="field">
+                {{input size="10" type="text"  value = currentStudent.number}}
+              </div>
+            </div>
+
+            <div class="two fields">
+              <div class="field">
+                <label>First Name</label>
+                {{input type="text"  value = currentStudent.firstName}}
+              </div>
+              <div class="field">
+                <label>Last Name</label>
+                {{input type="text"  value = currentStudent.lastName}}
+              </div>
+            </div>
+
+            <div class="two fields">
+              <div class="field">
+                <label>Gender</label>
+                <select onchange={{action 'selectGender' value="target.value"}}>
+                  <option value=1 selected={{eq 1 currentStudent.gender}}>Male</option>
+                  <option value=2 selected={{eq 2 currentStudent.gender}}>Female</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Date of Birth</label>
+                <input value={{selectedDate}} type="date" onchange={{action 'assignDate' value="target.value"}}>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Residency</label>
+              <select onchange={{action 'selectResidency' value="target.value"}}>
+                {{#each residencyModel as |residencyChoice|}}
+                  <option value={{residencyChoice.id}} selected={{eq currentStudent.resInfo.id residencyChoice.id}}>{{residencyChoice.name}}</option>
+                {{/each}}
+              </select>        
+            </div>
+          </form>
+      </div>
+      <div class="ui center aligned five wide column segment" style="margin-bottom: 14px;">
+        <img  src={{studentPhoto}}>
+      </div>
+    </div>
+
+
+
+    
     <!-- student basic information !-->
 
-    <div class="ui grid">
+    <!--<div class="ui grid">
       <div class="ui right aligned  seven wide column">
         <div class="ui form">
           <div class="inline field">
@@ -98,15 +161,18 @@
             </select>
           </div>
         </div>
-      </div>
+      </div>-->
+
       <!-- Show student photo -->
-      <div class="ui center aligned  seven wide column segment">
+
+      <!--<div class="ui center aligned  seven wide column segment">
         <img  src={{studentPhoto}}>
       </div>
-    </div>
+    </div>-->
 
   </div>
-  <div class="ui tab" data-tab="program">
+
+  <div class="ui tab" data-tab="program" style="padding-left: 14px; background-color: #EEE3FD;">
     <!-- Program records, courses and grades !-->
     <br>
     <h2>{{currentStudent.number}}</h2>
@@ -165,6 +231,78 @@
     {{/each}}
     <button class="ui button" onclick={{action 'deleteGender'}}>Delete</button>
   </div>
+
+  <div class = "ui tab" data-tab="advancedStanding">
+    <h1>Advanced Standing</h1>
+
+    <div class="ui form">
+      <div class="inline field">
+        <label>Course name</label>
+        {{input size="20" type="text"  value = courseNameAS }}
+      </div>
+
+      <div class="inline field">
+        <label>Description</label>
+        {{input size="20" type="text"  value = descriptionAS}}
+      </div>
+
+      <div class="inline field">
+        <label>Units</label>
+        {{input size="10" type="text"  value = unitsAS}}
+      </div>
+
+      <div class="inline field">
+        <label>Grade</label>
+        {{input size="10" type="text"  value = gradeAS}}
+      </div>
+
+      <div class="inline field">
+        <label>From</label>
+        {{input size="20" type="text"  value = fromAS}}
+      </div>
+    </div>
+    <br />
+    <button class="ui primary button" {{action 'addAS'}}>
+      Add advanced standing
+    </button>
+
+    <br />
+
+    {{#each listAS as |userListAS|}}
+      <br />
+      <label>Course: {{userListAS.course}}</label> <br />
+      <label>Description: {{userListAS.description}}</label><br />
+      <label>Units: {{userListAS.units}}</label><br />
+      <label>Grade: {{userListAS.grade}}</label><br />
+      <label>From: {{userListAS.from}}</label><br />
+    {{/each}}
+
+  </div>
+
+  <div class = "ui tab" data-tab="scholarshipAndAward">
+
+    <h1>Scholarships and Awards</h1>
+
+    <div class="ui form">
+      <div class="inline field">
+        <label>Note</label>
+        {{input size="20" type="text"  value = scholarshipAndAwardNote }}
+      </div>
+    </div>
+
+    <br />
+
+    <button class="ui primary button" {{action 'addScholarShipAndAward'}}>
+      Add
+    </button>
+
+    {{#each scholarShipAndAwardList as |userScholarShipAndAwardList|}}
+      <br />
+      <label>Note: {{userScholarShipAndAwardList.note}}</label> <br />
+    {{/each}}
+
+  </div>
+
 
 
 
