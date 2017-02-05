@@ -31,7 +31,7 @@
                 {{input value= DOB type="date" id = "dateInput" maxlength = "10"}}
             </div>
             <div class="inline field">
-                <label>Residency</label>option>
+                <label>Residency</label>
                 <select  id = "resDropDown" onchange={{action 'getResidency' value="target.value"}}>
 
                     {{#each resModel as |residencyChoice|}}

@@ -5,11 +5,11 @@ export default Ember.Component.extend({
   studentNum: null, //stores new student number to be added
   fName: null,      //stores new first name to be added
   lName: null,      //stores new last name to be added
-  gender: null,     //stores gender to be added
+  selectedGender: null,     //stores gender to be added
   DOB: null,        //date of birth to be added
   resModel: null,   //all the residencies in the db
   genderModel: null,  //all the genders in the db
-  residency: null,    //the resdiency of the student to be added
+  selectedResidency: null,    //the resdiency of the student to be added
   photoPath: null,    //photo path of the student photo
 
   init() {
@@ -29,11 +29,8 @@ export default Ember.Component.extend({
 
     addStudent() {
 
-      var res = this.get('store').peekRecord('residency', this.get('residency')); //get the students residency object
-      var gen = this.get('store').peekRecord('gender', this.get('gender')); //get the students gender object
-
       //validates that the fields entered are correct
-      if (validateFields(this.get('studentNum'), this.get('fName'), this.get('lName'), this.get('DOB'), this.get('residency'))) {
+      if (validateFields(this.get('studentNum'), this.get('fName'), this.get('lName'), this.get('DOB'), this.get('selectedResidency'),this.get('selectedGender'))) {
 
         // if (this.get('gender') == 1) {                                //checks for female or male
         //   this.set('photoPath', "/assets/studentsPhotos/male.png");
@@ -43,6 +40,9 @@ export default Ember.Component.extend({
         //   this.set('photoPath', "/assets/studentsPhotos/female.png");
         //   console.log("female");
         // }
+
+        var res = this.get('store').peekRecord('residency', this.get('selectedResidency')); //get the students residency object
+        var gen = this.get('store').peekRecord('gender', this.get('selectedGender')); //get the students gender object
 
         var newStudent = this.get('store').createRecord('student', { //create a new student record
           number: this.get('studentNum'),
@@ -55,20 +55,20 @@ export default Ember.Component.extend({
           admissionAverage: this.get('fName'),
           admissionComments: this.get('fName'),
           resInfo: res,
-          advInfo: null,
+          //advInfo: null,
           genderInfo: gen,
-          scholInfo: null
+          //scholInfo: null
         });
         newStudent.save(); //commit the student record to db
       }
     },
 
-    getGender(_gender){             //gets the gender from the input box
-      this.set('gender', _gender);
+    getResidency(residency){             //gets the residence from the input box
+      this.set('selectedResidency', residency);
     },
-
-    getResidency(_residency){             //gets the residence from the input box
-      this.set('residency', _residency);
+    getGender (gender){  //gets the gender from the input box
+      this.set('selectedGender', gender);
+      console.log(gender);
     },
 
   }//end actions
