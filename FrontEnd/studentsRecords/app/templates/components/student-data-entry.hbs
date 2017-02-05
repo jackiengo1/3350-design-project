@@ -129,6 +129,7 @@
 
 <!-- start of delte gender tab -->
   <div class="ui tab" data-tab="summary">
+    <h2>Select Gender</h2>
     {{#each genderModel as |oneGender|}}
     <div class="ui radio checkbox">
       <input type="radio" name ="gender" onchange={{action 'getGender' oneGender}}>
@@ -140,7 +141,7 @@
 
   <!-- Advanced Standing Tab -->
   <div class = "ui tab" data-tab="advancedStanding">
-
+  <h2>Advanced Standing Information</h2>
     <div class="ui form">
       <div class="inline field">
         <label>Course name</label>
@@ -191,7 +192,7 @@
   </div>
 
   <div class = "ui tab" data-tab="scholarshipAndAward">
-
+  <h2>Add a Scholarship/Award</h2>
     <div class="ui form">
       <div class="inline field">
         <label>Note</label>
