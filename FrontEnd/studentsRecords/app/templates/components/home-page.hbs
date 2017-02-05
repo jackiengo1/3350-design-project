@@ -21,6 +21,7 @@
 <br/>
 
 <div class="ui grid">
+
     <div class="sixteen wide column" style="background-color: #EEE3FD;">
         <div class="ui segment container" style="background-color: #CEB1F4;">
             {{#if isHomeShowing}}
@@ -35,6 +36,12 @@
             {{#if isAddStudentShowing}}
                 {{add-student}}
             {{/if}}
+            {{#if isAddResidencyShowing}}
+                {{add-residency}}
+            {{/if}}
+          {{#if isAddGenderShowing}}
+            {{add-gender}}
+          {{/if}}
         </div>
     </div>
 </div>

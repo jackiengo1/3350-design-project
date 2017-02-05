@@ -5,9 +5,10 @@ export default Ember.Component.extend({
   studentNum: null,
   fName: null,
   lName: null,
-  gender: 1,
+  gender: null,
   DOB: null,
   resModel: null,
+  genderModel: null,
   residency: null,
   photoPath: null,
 
@@ -17,6 +18,9 @@ export default Ember.Component.extend({
     var self = this;
     this.get('store').findAll('residency').then(function (records) {
       self.set('resModel', records);
+    });
+    this.get('store').findAll('gender').then(function (records) {
+      self.set('genderModel', records);
     });
 
 
@@ -33,7 +37,7 @@ export default Ember.Component.extend({
       console.log("residency: " + this.get('residency'));
 
       var res = this.get('store').peekRecord('residency', this.get('residency'));
-
+      var gen = this.get('store').peekRecord('gender', this.get('gender'));
       if (validateFields(this.get('studentNum'), this.get('fName'), this.get('lName'), this.get('DOB'), this.get('residency'))) {
 
         if (this.get('gender') == 1) {
@@ -49,7 +53,6 @@ export default Ember.Component.extend({
           number: this.get('studentNum'),
           firstName: this.get('fName'),
           lastName: this.get('lName'),
-          //gender: this.get('gender'),
           DOB: new Date(this.get('DOB')),
           photo: this.get('photoPath'),
           registrationComments: this.get('fName'),
@@ -58,7 +61,7 @@ export default Ember.Component.extend({
           admissionComments: this.get('fName'),
           resInfo: res,
           advInfo: null,
-          genderInfo: null,
+          genderInfo: gen,
           scholInfo: null
         });
         newStudent.save();
@@ -78,7 +81,7 @@ export default Ember.Component.extend({
 
 });
 
-function validateFields(_studentNum, _fName, _lName, _dob, _residency) {
+function validateFields(_studentNum, _fName, _lName, _dob, _residency, _gender) {
 
   if (_studentNum === null || _studentNum === undefined || _studentNum.length < 9 || _studentNum.length > 9) {
     alert("Student number must be 9 digits");
@@ -102,6 +105,11 @@ function validateFields(_studentNum, _fName, _lName, _dob, _residency) {
 
   if (_residency === null || _residency === undefined) {
     alert("Must select a residence");
+    return false;
+  }
+
+  if (_gender === null || _gender === undefined){
+    alert('Must select a gender');
     return false;
   }
 
