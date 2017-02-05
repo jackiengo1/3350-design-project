@@ -72,9 +72,7 @@
           <form class="ui form">
             <div class="field">
               <label>Student Number</label>
-              <div class="field">
-                {{input size="10" type="text"  value = currentStudent.number}}
-              </div>
+              {{input size="10" type="text"  value = currentStudent.number}}
             </div>
 
             <div class="two fields">
@@ -184,10 +182,43 @@
 
   <!-- Advanced Standing Tab -->
   <div class = "ui tab" data-tab="advancedStanding" style="background-color: #eee3fd; padding: 14px;">
+    
+    <div class="ui sixteen wide column">
+      <form class="ui form">
+        <div class="field">
+          <label>Course Name</label>
+          {{input size="20" type="text"  value = courseNameAS}}
+        </div>
 
+        <div class="field">
+          <label>Course Description</label>
+          {{input size="20" type="text"  value = descriptionAS}}
+        </div>
+
+        <div class="two fields">
+          <div class="field">
+            <label>Units</label>
+            {{input type="number" value = unitsAS}}
+          </div>
+          <div class="field">
+            <label>Grade</label>
+            {{input type="number" max=100 min=0 value = gradeAS}}
+          </div>
+        </div>
+
+        <div class="field">
+          <label>From</label>
+          {{input size="20" type="text"  value = fromAS}}
+        </div>
+
+      </form>
+    </div>
+
+    <!--<div class="ui form">
     <br>
   <h2>Advanced Standing Information</h2>
     <div class="ui form">
+
       <div class="inline field">
         <label>Course name</label>
         {{input size="20" type="text"  value = courseNameAS }}
@@ -212,10 +243,12 @@
         <label>From</label>
         {{input size="20" type="text"  value = fromAS}}
       </div>
-    </div>
+    </div>-->
+
     <br />
+
     <button class="ui primary button" {{action 'addAS'}}>
-      Add advanced standing
+      Add Advanced Standing
     </button>
 
     <br />
