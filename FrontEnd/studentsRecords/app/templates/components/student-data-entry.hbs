@@ -52,17 +52,17 @@
   <!-- Show data entry form -->
 
   <div class="ui top attached tabular menu">
-    <div class="active item" data-tab="basics">Basic Info</div>
-    <div class="item" data-tab="program">Program Record</div>
-    <div class="item" data-tab="others">Other tabs</div>
+    <div class="active item" data-tab="basics" style="background-color: #EEE3FD;">Basic Info</div>
+    <div class="item" data-tab="program" style="background-color: #EEE3FD;">Program Record</div>
+    <div class="item" data-tab="others" style="background-color: #EEE3FD;">Other tabs</div>
   </div>
 
   <div class="ui bottom attached active tab segment"data-tab="basics">
 
     <!-- NEW FORM -->
 
-    <div class="ui grid" style="padding-right: 14px;">
-      <div class="ui nine wide column">
+    <div class="ui grid" style="padding-right: 14px; background-color: #EEE3FD;">
+      <div class="ui eleven wide column">
           <form class="ui form">
             <div class="field">
               <label>Student Number</label>
@@ -106,7 +106,7 @@
             </div>
           </form>
       </div>
-      <div class="ui center aligned seven wide column segment" style="margin-bottom: 14px;">
+      <div class="ui center aligned five wide column segment" style="margin-bottom: 14px;">
         <img  src={{studentPhoto}}>
       </div>
     </div>
@@ -163,7 +163,7 @@
 
   </div>
 
-  <div class="ui tab" data-tab="program">
+  <div class="ui tab" data-tab="program" style="padding-left: 14px; background-color: #EEE3FD;">
     <!-- Program records, courses and grades !-->
     <br>
     <h2>{{currentStudent.number}}</h2>

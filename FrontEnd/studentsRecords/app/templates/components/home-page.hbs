@@ -1,18 +1,18 @@
-<div class="ui attached stackable menu">
+<div class="ui attached stackable menu" style="background-color: #CEB1F4;">
   <div class="ui container" style="height: 60px;">
-    <a class="item active" {{action "home"}}>
+    <a class="item active" {{action "home"}} style="font-size: 17px; font-weight: bold;">
       <i class="home icon"></i> Home
     </a>
-    <a class="item" {{action "studentsDataEntry"}}>
+    <a class="item" {{action "studentsDataEntry"}} style="font-size: 17px; font-weight: bold;">
       <i class="large leanpub icon"></i> Students Records
     </a>
-    <a class="item " {{action "addStudent"}}>
+    <a class="item " {{action "addStudent"}} style="font-size: 17px; font-weight: bold;">
         <i class="large add user icon"></i> Add Student
     </a>
-    <a class="item " {{action "addResidency"}}>
+    <a class="item " {{action "addResidency"}} style="font-size: 17px; font-weight: bold;">
         <i class="large add user icon"></i> Add Residency
     </a>
-    <a class="item " {{action "about"}}>
+    <a class="item " {{action "about"}} style="font-size: 17px; font-weight: bold;">
         <i class="large user icon"></i> About
     </a>
     <!-- Navbar Dropdown
@@ -25,9 +25,6 @@
         <a class="item"><i class="settings icon"></i> Account Settings</a>
       </div>
     </div>-->
-    <div class="right item">
-      <div class="ui input"><input type="text" placeholder="Search..."></div>
-    </div>
   </div>
 </div>
 
@@ -66,8 +63,8 @@
     </div>-->
     
 
-    <div class="sixteen wide column ">
-        <div class="ui segment container">
+    <div class="sixteen wide column" style="background-color: #EEE3FD;">
+        <div class="ui segment container" style="background-color: #CEB1F4;">
             {{#if isHomeShowing}}
                 {{welcome-page}}
             {{/if}}
