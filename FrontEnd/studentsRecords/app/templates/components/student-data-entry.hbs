@@ -89,10 +89,12 @@
             <div class="two fields">
               <div class="field">
                 <label>Gender</label>
-                <select onchange={{action 'selectGender' value="target.value"}}>
-                  <option value=1 selected={{eq 1 currentStudent.gender}}>Male</option>
-                  <option value=2 selected={{eq 2 currentStudent.gender}}>Female</option>
-                </select>
+                <select onchange={{action 'selectGender' value="target.value"}} >
+                  {{#each genderModel as |genderChoice|}}
+                    <option value={{genderChoice.id}} selected={{eq currentStudent.genderInfo.id
+                                                                   genderChoice.id}}>{{genderChoice.name}} </option>
+                  {{/each}}
+            </select>
               </div>
               <div class="field">
                 <label>Date of Birth</label>
@@ -141,6 +143,8 @@
 
   <!-- Advanced Standing Tab -->
   <div class = "ui tab" data-tab="advancedStanding">
+
+    <br>
   <h2>Advanced Standing Information</h2>
     <div class="ui form">
       <div class="inline field">
@@ -188,10 +192,13 @@
           From: {{userListAS.from}}</label><br />
       </div>
     {{/each}}
+    <br>
     <button class="ui button" onclick={{action 'deleteAS'}}>Delete</button>
   </div>
 
   <div class = "ui tab" data-tab="scholarshipAndAward">
+
+    <br>
   <h2>Add a Scholarship/Award</h2>
     <div class="ui form">
       <div class="inline field">
@@ -214,8 +221,8 @@
           <label>Note: {{userScholarShipAndAwardList.note}}</label> <br />
       </div>
     {{/each}}
+    <br>
     <button class="ui button" onclick={{action 'deleteScholarshipAward'}}>Delete</button>
   </div>
-
 
 {{/if}}
