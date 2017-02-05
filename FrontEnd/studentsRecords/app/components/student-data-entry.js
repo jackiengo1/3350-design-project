@@ -81,24 +81,8 @@ export default Ember.Component.extend({
     var datestring = date.toISOString().substring(0, 10);
     this.set('selectedDate', datestring);
 
-    /*this.set('listAS', this.get('store').query('advanced-standing',{
-      studentInfo: this.get('currentStudent')
-    }));*/
-
     this.set('listAS', this.get('currentStudent').get('advInfo'));
-    var self2 = this;
-    this.get('store').query('advanced-standing',{filter:{studentInfo:this.get('currentStudent').get('id')}})
-    .then(function(records123){
-      console.log('found', records123);
-      //self2.set('listAS', records123);
-    });
-
-    // this.get('store').findAll('advanced-standing').then(function(records123){
-    //   console.log(records123);
-    //   console.log(Ember.inspect(records123));
-    //   self2.set('listAS', records123);
-    // });
-
+    this.get('store').query('advanced-standing',{filter:{studentInfo:this.get('currentStudent').get('id')}});
 
   },
 
@@ -127,7 +111,6 @@ export default Ember.Component.extend({
       this.set('movingBackword' , false);
       if (this.get('currentIndex') < this.get('lastIndex')) {
         this.set('currentIndex', this.get('currentIndex') + 1);
-        //     console.log(JSON.stringify(this.get('currentStudent')));
       }
       else {
         this.set('offset', this.get('offset') + this.get('pageSize'));
@@ -196,20 +179,11 @@ export default Ember.Component.extend({
         course: this.get('courseNameAS'),
         description: this.get('descriptionAS'),
         units: this.get('unitsAS'),
-        //gender: this.get('gender'),
         grade: this.get('gradeAS'),
         from: this.get('fromAS'),
         studentInfo: this.get('currentStudent'),
       });
       newASRecord.save();
-
-      //  console.log(updatedStudent.get('advInfo'));
-
-
-    //  console.log(newASRecord.get('_id'));
-      //this.get('currentStudent').get('advInfo').set()
-//test
-
 
     },
   }
