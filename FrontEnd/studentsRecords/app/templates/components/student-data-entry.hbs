@@ -106,7 +106,7 @@
                 {{#each residencyModel as |residencyChoice|}}
                   <option value={{residencyChoice.id}} selected={{eq currentStudent.resInfo.id residencyChoice.id}}>{{residencyChoice.name}}</option>
                 {{/each}}
-              </select>        
+              </select>
             </div>
           </form>
       </div>
@@ -117,7 +117,7 @@
 
 
 
-    
+
     <!-- student basic information !-->
 
     <!--<div class="ui grid">
@@ -218,13 +218,18 @@
 
     {{#each listAS as |userListAS|}}
       <br />
-      <label>Course: {{userListAS.course}}</label> <br />
-      <label>Description: {{userListAS.description}}</label><br />
-      <label>Units: {{userListAS.units}}</label><br />
-      <label>Grade: {{userListAS.grade}}</label><br />
-      <label>From: {{userListAS.from}}</label><br />
-    {{/each}}
+      <div class="ui radio checkbox">
+        <input type="radio" name="advStandingRadio"
+          onchange={{action 'getAdvancedStanding' userListAS}}>
 
+          <label>Course: {{userListAS.course}} <br />
+          Description: {{userListAS.description}}<br />
+          Units: {{userListAS.units}}<br />
+          Grade: {{userListAS.grade}}<br />
+          From: {{userListAS.from}}</label><br />
+      </div>
+    {{/each}}
+    <button class="ui button" onclick={{action 'deleteAS'}}>Delete</button>
   </div>
 
   <div class = "ui tab" data-tab="scholarshipAndAward">
@@ -243,12 +248,16 @@
     <button class="ui primary button" {{action 'addScholarShipAndAward'}}>
       Add
     </button>
-
+      <br />
     {{#each scholarShipAndAwardList as |userScholarShipAndAwardList|}}
       <br />
-      <label>Note: {{userScholarShipAndAwardList.note}}</label> <br />
+      <div class="ui radio checkbox">
+        <input type="radio" name="advStandingRadio"
+          onchange={{action 'getScholarshipAward' userScholarShipAndAwardList}}>
+          <label>Note: {{userScholarShipAndAwardList.note}}</label> <br />
+      </div>
     {{/each}}
-
+    <button class="ui button" onclick={{action 'deleteScholarshipAward'}}>Delete</button>
   </div>
 
 

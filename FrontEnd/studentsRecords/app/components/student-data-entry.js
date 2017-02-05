@@ -17,6 +17,10 @@ export default Ember.Component.extend({
   offset: null,
   pageSize: null,
   movingBackword: false,
+  advancedStandingModel: null,
+  currentASIndex:null,
+  scholarshipAwardModel:null,
+  currentScholIndex:null,
 
   //advanced standing
   listAS: Ember.A(),
@@ -58,6 +62,18 @@ export default Ember.Component.extend({
     // load Residency data model
     this.get('store').findAll('residency').then(function (records) {
       self.set('residencyModel', records);
+    });
+
+    // load advanced standing model
+    this.get('store').findAll('advanced-standing').then(function (records) {
+      self.set('advancedStandingModel', records);
+      console.log(Ember.inspect(records));
+    });
+
+    //load scholarship Award model
+    this.get('store').findAll('scholarship-award').then(function (records) {
+      self.set('scholarshipAwardModel', records);
+      console.log(Ember.inspect(records));
     });
 
     // load first page of the students records
@@ -195,6 +211,34 @@ export default Ember.Component.extend({
       });
       newASRecord.save();
 
+    },
+    getAdvancedStanding: function(currentAS){
+
+      var index = this.get('advancedStandingModel').indexOf(currentAS);
+      this.set('currentASIndex', index);
+      console.log(index);
+    },
+
+    deleteAS(){
+      var indextemp = this.get('currentASIndex');
+      var temp = this.get('advancedStandingModel').objectAt(indextemp);
+      console.log(temp);
+      temp.deleteRecord();
+      temp.save()
+    },
+    getScholarshipAward: function(scholAward){
+
+      var index = this.get('scholarshipAwardModel').indexOf(scholAward);
+      this.set('currentScholIndex', index);
+      console.log(index);
+    },
+
+    deleteScholarshipAward(){
+      var indextemp = this.get('currentScholIndex');
+      var temp = this.get('scholarshipAwardModel').objectAt(indextemp);
+      console.log(temp);
+      temp.deleteRecord();
+      temp.save()
     },
 
     addScholarShipAndAward(){
