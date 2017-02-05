@@ -162,41 +162,48 @@ export default Ember.Component.extend({
     },
 
     deleteStudent(){
+      var choice = confirm('Are you sure you want to delete this?');
+      if (choice) {
+        this.get('currentStudent').deleteRecord();
+        this.get('currentStudent').save();
 
-      this.get('currentStudent').deleteRecord();
-      this.get('currentStudent').save();
-
-      this.set('movingBackword' , true);
-      if(this.get("currentIndex") == this.get("firstIndex")){
-        this.set('movingBackword' , false);
-        this.set('currentIndex', this.get('currentIndex') + 1);
+        this.set('movingBackword', true);
+        if (this.get("currentIndex") == this.get("firstIndex")) {
+          this.set('movingBackword', false);
+          this.set('currentIndex', this.get('currentIndex') + 1);
+        }
+        else if (this.get('currentIndex') > 0) {
+          this.set('currentIndex', this.get('currentIndex') - 1);
+        }
+        else if (this.get('offset') > 0) {
+          this.set('offset', this.get('offset') - this.get('pageSize'));
+        }
       }
-      else if (this.get('currentIndex') > 0) {
-        this.set('currentIndex', this.get('currentIndex') - 1);
-      }
-      else if (this.get('offset') > 0) {
-        this.set('offset', this.get('offset') - this.get('pageSize'));
-      }
-
 
     },
 
     //delete residency
     deleteResidency(){
-      var indextemp = this.get('residencyIndex');
-      var restemp = this.get('residencyModel').objectAt(indextemp);
-      console.log(restemp);
-      restemp.deleteRecord();
-      restemp.save();
+      var choice = confirm('Are you sure you want to delete this?');
+      if (choice) {
+        var indextemp = this.get('residencyIndex');
+        var restemp = this.get('residencyModel').objectAt(indextemp);
+        console.log(restemp);
+        restemp.deleteRecord();
+        restemp.save();
+      }
     },
 
     //delete gender
     deleteGender(){
-      var indextemp = this.get('genderIndex');
-      var restemp = this.get('genderModel').objectAt(indextemp);
-      console.log(restemp);
-      restemp.deleteRecord();
-      restemp.save();
+      var choice = confirm('Are you sure you want to delete this?');
+      if (choice) {
+        var indextemp = this.get('genderIndex');
+        var restemp = this.get('genderModel').objectAt(indextemp);
+        console.log(restemp);
+        restemp.deleteRecord();
+        restemp.save();
+      }
     },
 
 

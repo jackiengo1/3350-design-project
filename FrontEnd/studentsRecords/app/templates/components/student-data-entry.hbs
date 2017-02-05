@@ -108,7 +108,7 @@
                 {{#each residencyModel as |residencyChoice|}}
                   <option value={{residencyChoice.id}} selected={{eq currentStudent.resInfo.id residencyChoice.id}}>{{residencyChoice.name}}</option>
                 {{/each}}
-              </select>        
+              </select>
             </div>
           </form>
       </div>
@@ -157,6 +157,7 @@
 
 <!-- start of delte gender tab -->
   <div class="ui tab" data-tab="summary">
+    <h2>Select Gender</h2>
     {{#each genderModel as |oneGender|}}
       <div class="ui grid">
         <div class="ten wide column">
@@ -182,7 +183,7 @@
   </div>
 
   <div class = "ui tab" data-tab="advancedStanding">
-
+  <h2>Advanced Standing Information</h2>
     <div class="ui form">
       <div class="inline field">
         <label>Course name</label>
@@ -228,7 +229,7 @@
   </div>
 
   <div class = "ui tab" data-tab="scholarshipAndAward">
-
+  <h2>Add a Scholarship/Award</h2>
     <div class="ui form">
       <div class="inline field">
         <label>Note</label>
