@@ -38,7 +38,7 @@ export default Ember.Component.extend({
 
       var res = this.get('store').peekRecord('residency', this.get('residency'));
       var gen = this.get('store').peekRecord('gender', this.get('gender'));
-      if (validateFields(this.get('studentNum'), this.get('fName'), this.get('lName'), this.get('DOB'), this.get('residency'))) {
+      if (validateFields(this.get('studentNum'), this.get('fName'), this.get('lName'), this.get('DOB'), this.get('residency'), this.get('gender'))); {
 
         if (this.get('gender') == 1) {
           this.set('photoPath', "/assets/studentsPhotos/male.png");
@@ -112,6 +112,7 @@ function validateFields(_studentNum, _fName, _lName, _dob, _residency, _gender) 
     alert('Must select a gender');
     return false;
   }
+
 
   return true;
 
