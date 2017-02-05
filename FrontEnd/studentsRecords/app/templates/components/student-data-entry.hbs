@@ -56,10 +56,8 @@
     <div class="active item" data-tab="basics" style="background-color: #EEE3FD;">Basic Info</div>
     <div class="item" data-tab="scholarshipAndAward" style="background-color: #EEE3FD;">Scholarships and Awards</div>
     <div class="item" data-tab="advancedStanding" style="background-color: #EEE3FD;">Advanced Standings</div>
-
-    <!-- added new tab -->
-    <div class="item" data-tab="others">Delete Residency</div>
-    <div class="item" data-tab="summary">Delete Gender</div>
+    <div class="item" data-tab="others" style="background-color: #EEE3FD;">Delete Residency</div>
+    <div class="item" data-tab="summary" style="background-color: #EEE3FD;">Delete Gender</div>
 
   </div>
 
@@ -115,42 +113,17 @@
       <div class="ui center aligned five wide column segment" style="margin-bottom: 14px;">
         <img  src={{studentPhoto}}>
       </div>
-    </div>
+      </div>
 
-
-
-  </div>
-
-  <div class="ui tab" data-tab="program" style="padding-left: 14px; background-color: #EEE3FD;">
-    <!-- Program records, courses and grades !-->
-    <br>
-    <h2>{{currentStudent.number}}</h2>
-      <h3> {{currentStudent.firstName}} {{currentStudent.lastName}}</h3>
-    <br><br><br>
   </div>
 
   <!-- start of the delete residency tab -->
   <div class="ui tab" data-tab="others">
     {{#each residencyModel as |oneResidency|}}
-      <div class="ui grid">
-        <div class="ten wide column">
-          <div class="actions">
-            <div class="ui form">
-              <div class="grouped fields">
-                <div class="field">
-                  <div class="ui radio checkbox">
-                    <input type="radio" name ="residency"
-                           onchange={{action 'getResidence' oneResidency}}>
-                           <label>{{oneResidency.name}}</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="six wide column">
-        </div>
-      </div>
+    <div class="ui radio checkbox">
+      <input type="radio" name ="residency" onchange={{action 'getResidence' oneResidency}}>
+      <label>{{oneResidency.name}}</label>
+    </div>
     {{/each}}
     <button class="ui button" onclick={{action 'deleteResidency'}}>Delete</button>
   </div>
@@ -158,29 +131,15 @@
 <!-- start of delte gender tab -->
   <div class="ui tab" data-tab="summary">
     {{#each genderModel as |oneGender|}}
-      <div class="ui grid">
-        <div class="ten wide column">
-          <div class="actions">
-            <div class="ui form">
-              <div class="grouped fields">
-                <div class="field">
-                  <div class="ui radio checkbox">
-                    <input type="radio" name ="gender"
-                           onchange={{action 'getGender' oneGender}}>
-                           <label>{{oneGender.name}}</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="six wide column">
-        </div>
-      </div>
+    <div class="ui radio checkbox">
+      <input type="radio" name ="gender" onchange={{action 'getGender' oneGender}}>
+      <label>{{oneGender.name}}</label>
+    </div>
     {{/each}}
     <button class="ui button" onclick={{action 'deleteGender'}}>Delete</button>
   </div>
 
+  <!-- Advanced Standing Tab -->
   <div class = "ui tab" data-tab="advancedStanding">
 
     <div class="ui form">
