@@ -254,17 +254,18 @@
     <br />
 
     {{#each listAS as |userListAS|}}
-      <br />
-      <div class="ui radio checkbox">
-        <input type="radio" name="advStandingRadio"
-          onchange={{action 'getAdvancedStanding' userListAS}}>
+      {{#unless userListAS.isDeleted}}
+        <br />
+        <div class="ui radio checkbox">
+          <input type="radio" name="advStandingRadio" onchange={{action 'getAdvancedStanding' userListAS}}>
 
           <label>Course: {{userListAS.course}} <br />
           Description: {{userListAS.description}}<br />
           Units: {{userListAS.units}}<br />
           Grade: {{userListAS.grade}}<br />
           From: {{userListAS.from}}</label><br />
-      </div>
+        </div>
+      {{/unless}}
     {{/each}}
     <br>
     <button class="ui button" onclick={{action 'deleteAS'}}>Delete</button>
@@ -288,12 +289,13 @@
     </button>
       <br />
     {{#each scholarShipAndAwardList as |userScholarShipAndAwardList|}}
-      <br />
-      <div class="ui radio checkbox">
-        <input type="radio" name="advStandingRadio"
-          onchange={{action 'getScholarshipAward' userScholarShipAndAwardList}}>
-          <label>Note: {{userScholarShipAndAwardList.note}}</label> <br />
-      </div>
+        {{#unless userScholarShipAndAwardList.isDeleted}}
+          <br />
+          <div class="ui radio checkbox">
+            <input type="radio" name="advStandingRadio" onchange={{action 'getScholarshipAward' userScholarShipAndAwardList}}>
+              <label>Note: {{userScholarShipAndAwardList.note}}</label> <br />
+          </div>
+        {{/unless}}
     {{/each}}
     <br>
     <button class="ui button" onclick={{action 'deleteScholarshipAward'}}>Delete</button>
