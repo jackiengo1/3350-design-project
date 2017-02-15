@@ -280,7 +280,7 @@ export default Ember.Component.extend({
       var temp = this.get('advancedStandingModel').objectAt(indextemp);
       console.log(temp);
       temp.deleteRecord();
-      temp.save()
+      temp.save();
     },
     getScholarshipAward: function(scholAward){
 
@@ -294,7 +294,7 @@ export default Ember.Component.extend({
       var temp = this.get('scholarshipAwardModel').objectAt(indextemp);
       console.log(temp);
       temp.deleteRecord();
-      temp.save()
+      temp.save();
     },
 
     addScholarShipAndAward(){
