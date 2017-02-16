@@ -25,6 +25,27 @@ export default Ember.Component.extend({
   scholarshipAwardModel:null,
   currentScholIndex:null,
 
+  //undo
+  //the stack store the data
+  undoStack: Ember.A(),
+  //the stack store the action name, e.g. student,name...
+  undoNameStack:Ember.A(),
+  //temp data shown on the main page, these should not be bind with the currentStudent, thus currentStudent value will not change unless saved
+  tempFN: null,
+  tempLN:null,
+  tempDOB:null,
+  tempPhoto:null,
+  tempNumber:null,
+  tempRest:null,
+  tempRegistrationComments:null,
+  tempBasisOfAdmission:null,
+  tempAdmissionAverage:null,
+  tempAdmissionComments:null,
+  tempAdvInfo:null,
+  tempGenderInfo:null,
+  tempScholInfo:null,
+
+
   //advanced standing
   listAS: Ember.A(),
   courseNameAS: null,
@@ -109,6 +130,7 @@ export default Ember.Component.extend({
     var datestring = date.toISOString().substring(0, 10);
     this.set('selectedDate', datestring);
 
+    console.log(this.get('currentStudent').get('number'));
 
     this.get('store').query('advanced-standing',{filter:{studentInfo:this.get('currentStudent').get('id')}});
     this.set('listAS', this.get('currentStudent').get('advInfo'));
@@ -125,8 +147,28 @@ export default Ember.Component.extend({
     Ember.$('.menu .item').tab();
   },
 
+  //the observer function for the currentStudent, it will update the tmpValue shown on the page on change
+  currentStudentChanged:function(){
+    var studenthold = this.get('currentStudent');
+    var studentFN = studenthold.get('firstName');
+    var studentLN = studenthold.get('lastName');
+    var studentNumber = studenthold.get('number');
+    var dob = studenthold.get('DOB');
+    var studentDOB = dob.toISOString().substring(0, 10);
+    var studentPhoto = studenthold.get('photo');
+    //var studentRest = studenthold.get('resInfo');
+    this.set('tempFN',studentFN);
+    this.set('tempLN',studentLN);
+    this.set('tempNumber',studentNumber);
+    this.set('tempDOB',studentDOB);
+    this.set('tempPhoto',studentPhoto);
+    //this.set('temp')
+  }.observes('currentStudent'),
 
   actions: {
+
+    //functions used for undo function
+
     saveStudent () {
       var updatedStudent = this.get('currentStudent');
       var res = this.get('store').peekRecord('residency', this.get('selectedResidency'));
@@ -198,30 +240,6 @@ export default Ember.Component.extend({
 
     },
 
-    //delete residency
-    deleteResidency(){
-      var choice = confirm('Are you sure you want to delete this?');
-      if (choice) {
-        var indextemp = this.get('residencyIndex');
-        var restemp = this.get('residencyModel').objectAt(indextemp);
-        console.log(restemp);
-        restemp.deleteRecord();
-        restemp.save();
-      }
-    },
-
-    //delete gender
-    deleteGender(){
-      var choice = confirm('Are you sure you want to delete this?');
-      if (choice) {
-        var indextemp = this.get('genderIndex');
-        var restemp = this.get('genderModel').objectAt(indextemp);
-        console.log(restemp);
-        restemp.deleteRecord();
-        restemp.save();
-      }
-    },
-
 
     selectGender (gender){
       this.set('selectedGender', gender);
@@ -235,19 +253,6 @@ export default Ember.Component.extend({
 
     assignDate (date){
       this.set('selectedDate', date);
-    },
-
-
-    //used to show the list of residency for delete function
-    getResidence: function (residency) {
-      var index = this.get('residencyModel').indexOf(residency);
-      this.set('residencyIndex', index);
-    },
-
-    //used to show the list of gender for delete function
-    getGender: function (gender) {
-      var index = this.get('genderModel').indexOf(gender);
-      this.set('genderIndex', index);
     },
 
     addAS(){
