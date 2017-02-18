@@ -57,39 +57,20 @@
 </div>
 
   <div class="ui middle aligned divided selection list">
-  <div class="item">
-    <div class="content">
-      <div class="header">
-        <h3>
-          Student number: test <br/>
-          First name: test <br/>
-          Last name: test <br/>
-        </h3>
+    {{#each studentRecordResults as |studentRecord|}}
+      <div class="item" {{action 'goToRecord' studentRecord}}>
+        <div class="content">
+          <div class="header">
+            <h3>
+              Student ID: {{studentRecord.number}} <br/>
+              First name: {{studentRecord.firstName}} <br/>
+              Last name: {{studentRecord.lastName}} <br/>
+            </h3>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-  <div class="item">
-    <div class="content">
-      <div class="header">
-        <h3>
-          Student number: test <br/>
-          First name: test <br/>
-          Last name: test <br/>
-        </h3>
-      </div>
-    </div>
-  </div>
-  <div class="item">
-    <div class="content">
-      <div class="header">
-        <h3>
-          Student number: test <br/>
-          First name: test <br/>
-          Last name: test <br/>
-        </h3>
-      </div>
-    </div>
-  </div>
+    {{/each}}
+
 </div>
 
 

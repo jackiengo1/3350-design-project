@@ -167,6 +167,10 @@ export default Ember.Component.extend({
     },
     findStudent() {
       this.set('showFindRecord', true);
+      this.set('findStudentNumber', null);
+      this.set('findStudentFirstName', null);
+      this.set('findStudentLastName', null);
+      this.set('studentRecordResults', null);
     },
     previousStudent() {
       this.set('movingBackword' , true);
@@ -322,11 +326,35 @@ export default Ember.Component.extend({
 
     findRecord(){
       var self = this;
-      console.log("student number find: " + self.get('findStudentNumber'));
+      //console.log("student number find: " + self.get('findStudentNumber'));
 
-      this.get('store').query('student',{filter:{studentFindInfo:this.get('findStudentNumber')}}).then(function(foundStudents){
-        console.log(foundStudents);
+
+      this.get('store').query('student', {
+        findStudentNum: self.get('findStudentNumber'),
+        findStudentFirstName: self.get('findStudentFirstName'),
+        findStudentLastName: self.get('findStudentLastName')
+      }).then(function (students) {
+      //  console.log(students.objectAt(0).get('firstName'));
+          self.set('studentRecordResults', students);
       });
+
+    },
+
+    goToRecord(studentRecord){
+      console.log("clicked: " + studentRecord.get('firstName'));
+      this.set('currentStudent', studentRecord);
+      this.set('studentPhoto', this.get('currentStudent').get('photo'));
+      var date = this.get('currentStudent').get('DOB');
+      var datestring = date.toISOString().substring(0, 10);
+      this.set('selectedDate', datestring);
+
+      this.get('store').query('advanced-standing',{filter:{studentInfo:this.get('currentStudent').get('id')}});
+      this.set('listAS', this.get('currentStudent').get('advInfo'));
+
+      this.get('store').query('scholarship-award',{filter:{studentInfo:this.get('currentStudent').get('id')}});
+      this.set('scholarShipAndAwardList', this.get('currentStudent').get('scholInfo'));
+
+      this.set('showFindRecord', false);
 
     },
   }
