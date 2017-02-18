@@ -3,6 +3,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   store: Ember.inject.service(),
   showAllStudents: false,
+  showFindRecord: false,
   residencyModel: null,
   residencyIndex:null,
   genderModel: null,
@@ -37,6 +38,15 @@ export default Ember.Component.extend({
   //scholarship and awards
   scholarShipAndAwardList: null,
   scholarshipAndAwardNote: null,
+
+
+
+  findStudentNumber: null,
+  findStudentFirstName: null,
+  findStudentLastName: null,
+  studentRecordResults: null,
+
+
 
   studentModel: Ember.observer('offset', function () { //observes the offset variable. When it changes run code.
     var self = this;
@@ -109,7 +119,6 @@ export default Ember.Component.extend({
     var datestring = date.toISOString().substring(0, 10);
     this.set('selectedDate', datestring);
 
-
     this.get('store').query('advanced-standing',{filter:{studentInfo:this.get('currentStudent').get('id')}});
     this.set('listAS', this.get('currentStudent').get('advInfo'));
 
@@ -157,7 +166,7 @@ export default Ember.Component.extend({
       }
     },
     findStudent() {
-
+      this.set('showFindRecord', true);
     },
     previousStudent() {
       this.set('movingBackword' , true);
@@ -305,6 +314,20 @@ export default Ember.Component.extend({
         studentInfo: this.get('currentStudent'),
       });
       newScholarShipAndAward.save();
+    },
+
+    backToEntryForm(){
+      this.set('showFindRecord', false);
+    },
+
+    findRecord(){
+      var self = this;
+      console.log("student number find: " + self.get('findStudentNumber'));
+
+      this.get('store').query('student',{filter:{studentFindInfo:this.get('findStudentNumber')}}).then(function(foundStudents){
+        console.log(foundStudents);
+      });
+
     },
   }
 });
