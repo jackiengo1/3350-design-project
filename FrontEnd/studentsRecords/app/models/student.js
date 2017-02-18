@@ -15,5 +15,4 @@ export default DS.Model.extend({
   advInfo: DS.hasMany('advancedStanding'),
   genderInfo: DS.belongsTo('gender'),
   scholInfo: DS.hasMany('scholarshipAward')
-
 });
