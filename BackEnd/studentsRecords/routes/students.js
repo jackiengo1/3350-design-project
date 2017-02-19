@@ -45,7 +45,7 @@ router.route('/')
           console.log(students);
           response.json({student: students});
       });
-  }
+  } // end if
   else if(firstName && lastName){ //if there was first name and last name in the input field
     console.log("inside finding");
     console.log("student first name: " + request.query.findStudentFirstName);
@@ -60,7 +60,7 @@ router.route('/')
 
     });
 
-  }
+  }// end else if
   else if(firstName){ //if only first name was entered in the input field
     console.log("inside finding");
     console.log("student first name: " + request.query.findStudentFirstName);
@@ -74,7 +74,7 @@ router.route('/')
 
     });
 
-  }
+  } //end else if
   else if(lastName){  //if only last name was entered in the input field
     console.log("inside finding");
     console.log("student last name: " + request.query.findStudentLastName);
@@ -111,11 +111,16 @@ router.route('/')
         models.Students.find({"gender": request.query.gender}, function (error, students) {
           if (error) response.send(error);
           response.json({student: students});
-
         });
-      }
+
     }
-  });
+  }
+});
+
+
+
+
+
 
   router.route('/:student_id')
   .get(parseUrlencoded, parseJSON, function (request, response) {

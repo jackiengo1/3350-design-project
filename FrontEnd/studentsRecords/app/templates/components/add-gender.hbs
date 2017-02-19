@@ -1,6 +1,17 @@
 <div class="ui center aligned header">
-  <h2>Add Gender</h2>
+  <h2>Modify Gender</h2>
 </div>
+
+
+
+    {{#each genderModel as |oneGender|}}
+    <div class="ui radio checkbox">
+      <input type="radio" name ="gender" onchange={{action 'getGender' oneGender}}>
+      <label>{{oneGender.name}}</label>
+    </div>
+    {{/each}}
+    <button class="ui button" onclick={{action 'deleteGender'}}>Delete</button>
+
 
 <div class="ui grid">
   <div class="ui left aligned  seven wide column">

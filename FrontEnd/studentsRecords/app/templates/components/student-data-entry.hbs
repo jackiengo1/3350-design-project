@@ -128,8 +128,6 @@
   <div class="active item" data-tab="basics" style="background-color: #EEE3FD; cursor: pointer;">Basic Info</div>
   <div class="item" data-tab="scholarshipAndAward" style="background-color: #EEE3FD; cursor: pointer;">Scholarships and Awards</div>
   <div class="item" data-tab="advancedStanding" style="background-color: #EEE3FD; cursor: pointer;">Advanced Standings</div>
-  <div class="item" data-tab="others" style="background-color: #EEE3FD; cursor: pointer;">Delete Residency</div>
-  <div class="item" data-tab="summary" style="background-color: #EEE3FD; cursor: pointer;">Delete Gender</div>
 
 </div>
 
@@ -143,28 +141,31 @@
       <div class="ui eleven wide column">
         <form class="ui form">
           <div class="field">
-            <label>Student Number</label>
-            {{input size="10" type="text"  value = currentStudent.number}}
+              <label>Student Number</label>
+              {{input size="10" type="text"  value =tempNumber focus-out='studentNumberStack'}}
+            </div>
+
+            <div class="two fields">
+              <div class="field">
+                <label>First Name</label>
+                {{input type="text"  value = tempFN focus-out='studentFNStack'}}
+              </div>
+              <div class="field">
+                <label>Last Name</label>
+                {{input type="text"  value = tempLN focus-out='studentLNStack'}}
+              </div>
+            </div>
           </div>
 
-          <div class="two fields">
-            <div class="field">
-              <label>First Name</label>
-              {{input type="text"  value = currentStudent.firstName}}
-            </div>
-            <div class="field">
-              <label>Last Name</label>
-              {{input type="text"  value = currentStudent.lastName}}
-            </div>
-          </div>
 
-          <div class="two fields">
-            <div class="field">
-              <label>Gender</label>
-              <select onchange={{action 'selectGender' value="target.value"}} >
-                {{#each genderModel as |genderChoice|}}
-                <option value={{genderChoice.id}} selected={{eq currentStudent.genderInfo.id
-                  genderChoice.id}}>{{genderChoice.name}} </option>
+            <div class="two fields">
+              <div class="field">
+                <label>Gender</label>
+                <select onchange={{action 'selectGender' value="target.value" }} >
+                  {{#each genderModel as |genderChoice|}}
+                    <option value={{genderChoice.id}} selected={{eq selectedGender.id
+                                                                   genderChoice.id}}>{{genderChoice.name}} </option>
+
                   {{/each}}
                 </select>
               </div>
@@ -178,14 +179,18 @@
               <label>Residency</label>
               <select onchange={{action 'selectResidency' value="target.value"}}>
                 {{#each residencyModel as |residencyChoice|}}
-                <option value={{residencyChoice.id}} selected={{eq currentStudent.resInfo.id residencyChoice.id}}>{{residencyChoice.name}}</option>
+
+              <!--  <option value={{residencyChoice.id}} selected={{eq currentStudent.resInfo.id residencyChoice.id}}>{{residencyChoice.name}}</option> -->
+
+                  <option value={{residencyChoice.id}} selected={{eq selectedResidency.id residencyChoice.id}}>{{residencyChoice.name}}</option>
+
                 {{/each}}
               </select>
             </div>
           </form>
         </div>
         <div class="ui center aligned five wide column segment" style="margin-bottom: 14px;">
-          <img  src={{studentPhoto}}>
+          <img  src={{tempPhoto}}>
         </div>
       </div>
 
@@ -196,22 +201,25 @@
             <div class="two fields">
               <div class="field">
                 <label>Basis of Admission</label>
-                {{input type="text"  value= currentStudent.basisOfAdmission}}
+                {{input type="text"  value= tempBasisOfAdmission focus-out='studentBOAStack'}}
               </div>
               <div class="field">
                 <label>Admission Average</label>
-                {{input type="number" max=100 min=0 value=currentStudent.admissionAverage}}
+                {{input type="number" max=100 min=0 value=tempAdmissionAverage focus-out='studentAAStack'}}
               </div>
             </div>
 
             <div class="field">
               <label>Admission Comments</label>
-              {{textarea rows="2" type="text"  value= currentStudent.admissionComments}}
+              {{textarea rows="2" type="text"  value= tempAdmissionComments focus-out='studentACStack'}}
             </div>
 
             <div class="field">
               <label>Registration Comments</label>
-              {{textarea rows="2" type="text"  value= currentStudent.registrationComments}}
+
+              <!--{{textarea rows="2" type="text"  value= currentStudent.registrationComments}} -->
+                {{textarea rows="2" type="text"  value= tempRegistrationComments focus-out='studentRCStack'}}
+
             </div>
           </form>
         </div>
@@ -229,7 +237,7 @@
 
 
 <!-- start of the delete residency tab -->
-<div class="ui tab" data-tab="others" style="background-color: #eee3fd; padding: 14px;">
+<!--<div class="ui tab" data-tab="others" style="background-color: #eee3fd; padding: 14px;">
   {{#each residencyModel as |oneResidency|}}
   <div class="ui radio checkbox">
     <input type="radio" name ="residency" onchange={{action 'getResidence' oneResidency}}>
@@ -237,11 +245,11 @@
   </div>
   {{/each}}
   <button class="ui button" onclick={{action 'deleteResidency'}}>Delete</button>
-</div>
+</div>-->
 
 <!-- start of delte gender tab -->
 
-<div class="ui tab" data-tab="summary" style="background-color: #eee3fd; padding: 14px;">
+<!--<div class="ui tab" data-tab="summary" style="background-color: #eee3fd; padding: 14px;">
 
   {{#each genderModel as |oneGender|}}
   <div class="ui radio checkbox">
@@ -250,7 +258,8 @@
   </div>
   {{/each}}
   <button class="ui button" onclick={{action 'deleteGender'}}>Delete</button>
-</div>
+</div>-->
+
 
 <!-- Advanced Standing Tab -->
 <div class = "ui tab" data-tab="advancedStanding" style="background-color: #eee3fd; padding: 14px;">
@@ -317,7 +326,8 @@
 </div>
 </div>-->
 
-<br />
+    <br />
+
 
 <button class="ui primary button" {{action 'addAS'}}>
   Add Advanced Standing
