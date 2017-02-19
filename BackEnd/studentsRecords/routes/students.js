@@ -18,26 +18,35 @@ router.route('/')
   var l = parseInt(request.query.limit) ;
   var o = parseInt(request.query.offset);
 
-  var studentNum = request.query.findStudentNum;
-  var firstName = request.query.findStudentFirstName;
-  var lastName = request.query.findStudentLastName;
+  var studentNum = request.query.findStudentNum;      // gets the student number to search for
+  var firstName = request.query.findStudentFirstName; //gets the student first name to search for
+  var lastName = request.query.findStudentLastName;   //gets the student last name to search for
 
 
-  if(studentNum){
+  if(studentNum){ //if there was a student number inputted
 
     console.log("inside finding");
     console.log("studentNum: " + request.query.findStudentNum);
 
-    console.log(typeof request.query.findStudentNum);
-    models.Students.find({number: request.query.findStudentNum}, function (error, students) {
+    console.log(typeof request.query.findStudentNum); //checks to make sure it is a string
+
+    //mongodb can't find student record with "number" attribute. However if I change it to "number123", mongodb is able to find the student record.
+    /*models.Students.find({number: request.query.findStudentNum}, function (error, students) { //find by student number
         if (error) response.send(error);
 
         console.log(students);
         response.json({student: students});
 
-    });
+    });*/
+
+    models.Students.find({ "$where": "function() { return this.number == " + studentNum +"; }" }, function (error, students) {
+          if (error) response.send(error);
+
+          console.log(students);
+          response.json({student: students});
+      });
   }
-  else if(firstName && lastName){
+  else if(firstName && lastName){ //if there was first name and last name in the input field
     console.log("inside finding");
     console.log("student first name: " + request.query.findStudentFirstName);
     console.log("student last name: " + request.query.findStudentLastName);
@@ -52,7 +61,7 @@ router.route('/')
     });
 
   }
-  else if(firstName){
+  else if(firstName){ //if only first name was entered in the input field
     console.log("inside finding");
     console.log("student first name: " + request.query.findStudentFirstName);
 
@@ -66,7 +75,7 @@ router.route('/')
     });
 
   }
-  else if(lastName){
+  else if(lastName){  //if only last name was entered in the input field
     console.log("inside finding");
     console.log("student last name: " + request.query.findStudentLastName);
 
@@ -81,7 +90,7 @@ router.route('/')
 
   }
   else{
-    console.log("inisde else");
+    console.log("inside else");
 
     var Student = request.query.student;
     if (!Student) {

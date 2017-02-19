@@ -324,7 +324,7 @@ export default Ember.Component.extend({
       this.set('showFindRecord', false);
     },
 
-    findRecord(){
+    findRecord(){     //-----------------------------------------------------------------finds the student record-------------------------------------------------
       var self = this;
       //console.log("student number find: " + self.get('findStudentNumber'));
 
@@ -340,7 +340,7 @@ export default Ember.Component.extend({
 
     },
 
-    goToRecord(studentRecord){
+    goToRecord(studentRecord){ //---------------------------------------------go to the found record ---------------------------------------------------
       console.log("clicked: " + studentRecord.get('firstName'));
       this.set('currentStudent', studentRecord);
       this.set('studentPhoto', this.get('currentStudent').get('photo'));
