@@ -1,5 +1,6 @@
 import Ember from 'ember';
 //first and last broken
+
 export default Ember.Component.extend({
   store: Ember.inject.service(),
   showAllStudents: false,
@@ -33,16 +34,15 @@ export default Ember.Component.extend({
   //temp data shown on the main page, these should not be bind with the currentStudent, thus currentStudent value will not change unless saved
   tempFN: null,
   tempLN:null,
-  tempDOB:null,
   tempPhoto:null,
   tempNumber:null,
-  tempRest:null,
+  //tempRest:null,
   tempRegistrationComments:null,
   tempBasisOfAdmission:null,
   tempAdmissionAverage:null,
   tempAdmissionComments:null,
   tempAdvInfo:null,
-  tempGenderInfo:null,
+  //tempGenderInfo:null,
   tempScholInfo:null,
 
 
@@ -121,6 +121,7 @@ export default Ember.Component.extend({
       // Show first student data
       self.set('currentIndex', self.get('firstIndex'));
     });
+
   },
 
   showStudentData: function (index) {
@@ -129,8 +130,10 @@ export default Ember.Component.extend({
     var date = this.get('currentStudent').get('DOB');
     var datestring = date.toISOString().substring(0, 10);
     this.set('selectedDate', datestring);
-
-    console.log(this.get('currentStudent').get('number'));
+    var gender = this.get('currentStudent').get('genderInfo');
+    this.set('selectedGender',gender);
+    var res = this.get('currentStudent').get('resInfo');
+    this.set('selectedResidency',res);
 
     this.get('store').query('advanced-standing',{filter:{studentInfo:this.get('currentStudent').get('id')}});
     this.set('listAS', this.get('currentStudent').get('advInfo'));
@@ -149,40 +152,313 @@ export default Ember.Component.extend({
 
   //the observer function for the currentStudent, it will update the tmpValue shown on the page on change
   currentStudentChanged:function(){
+    //a ref to current student
     var studenthold = this.get('currentStudent');
+
+    var studentFN = studenthold.get('firstName');
+    var studentLN = studenthold.get('lastName');
+    var studentNumber = studenthold.get('number');
+    var studentPhoto = studenthold.get('photo');
+    //var studentRest = studenthold.get('resInfo');
+    var studentRegistrationComments = studenthold.get('registrationComments');
+    var studentBasisOfAdmission = studenthold.get('basisOfAdmission');
+    var studentAdmissionAverage = studenthold.get('admissionAverage');
+    var studentAdmissionComments = studenthold.get('admissionComments');
+    var studentAdvInfo = studenthold.get('advInfo');
+    //var studentGenderInfo = studenthold.get('genderInfo');
+    var studentScholInfo = studenthold.get('scholInfo');
+    this.set('tempFN',studentFN);
+    this.set('tempLN',studentLN);
+    this.set('tempNumber',studentNumber);
+    this.set('tempPhoto',studentPhoto);
+    //this.set('tempRest',studentRest);
+    this.set('tempRegistrationComments',studentRegistrationComments);
+    this.set('tempBasisOfAdmission',studentBasisOfAdmission);
+    this.set('tempAdmissionAverage',studentAdmissionAverage);
+    this.set('tempAdmissionComments',studentAdmissionComments);
+    this.set('tempAdvInfo',studentAdvInfo);
+    //this.set('tempGenderInfo',studentGenderInfo);
+    this.set('tempScholInfo',studentScholInfo);
+  }.observes('currentStudent'),
+
+  addCurrentStudentToStack()
+  {
+    var studenthold = this.get('currentStudent');
+
     var studentFN = studenthold.get('firstName');
     var studentLN = studenthold.get('lastName');
     var studentNumber = studenthold.get('number');
     var dob = studenthold.get('DOB');
-    var studentDOB = dob.toISOString().substring(0, 10);
     var studentPhoto = studenthold.get('photo');
-    //var studentRest = studenthold.get('resInfo');
-    this.set('tempFN',studentFN);
-    this.set('tempLN',studentLN);
-    this.set('tempNumber',studentNumber);
-    this.set('tempDOB',studentDOB);
-    this.set('tempPhoto',studentPhoto);
-    //this.set('temp')
-  }.observes('currentStudent'),
+    var studentRest = studenthold.get('resInfo');
+    var studentRegistrationComments = studenthold.get('registrationComments');
+    var studentBasisOfAdmission = studenthold.get('basisOfAdmission');
+    var studentAdmissionAverage = studenthold.get('admissionAverage');
+    var studentAdmissionComments = studenthold.get('admissionComments');
+    var studentAdvInfo = studenthold.get('advInfo');
+    var studentGenderInfo = studenthold.get('genderInfo');
+    var studentScholInfo = studenthold.get('scholInfo');
+
+    //push the unchanged infomation to undo stack
+    this.get('undoNameStack').pushObject("save");
+    this.get('undoStack').pushObject(studentFN);
+    this.get('undoStack').pushObject(studentLN);
+    this.get('undoStack').pushObject(studentNumber);
+    this.get('undoStack').pushObject(dob);
+    this.get('undoStack').pushObject(studentPhoto);
+    this.get('undoStack').pushObject(studentRest);
+    this.get('undoStack').pushObject(studentRegistrationComments);
+    this.get('undoStack').pushObject(studentBasisOfAdmission);
+    this.get('undoStack').pushObject(studentAdmissionAverage);
+    this.get('undoStack').pushObject(studentAdmissionComments);
+    this.get('undoStack').pushObject(studentAdvInfo);
+    this.get('undoStack').pushObject(studentGenderInfo);
+    this.get('undoStack').pushObject(studentScholInfo);
+  },
 
   actions: {
 
+    //undo function
+    undoSave(){
+
+      var category = this.get('undoNameStack').popObject();
+      if(category === "number")
+      {
+        var number = this.get('undoStack').popObject();
+        this.set('tempNumber',number);
+      }
+      else if (category === "firstName")
+      {
+        var fn = this.get('undoStack').popObject();
+        this.set('tempFN',fn);
+      }
+      else if (category === "lastName")
+      {
+        var ln = this.get('undoStack').popObject();
+        this.set('tempLN',ln);
+      }
+      else if (category === "genderInfo")
+      {
+        var gender = this.get('undoStack').popObject();
+        console.log(gender);
+        this.set('selectedGender',gender);
+      }
+      else if (category === "DOB")
+      {
+        var studentdob = this.get('undoStack').popObject();
+        var datestring = studentdob.toISOString().substring(0, 10);
+        this.set('selectedDate',datestring);
+      }
+      else if (category === "resInfo")
+      {
+        var res = this.get('undoStack').popObject();
+        this.set('selectedResidency', res);
+      }
+      else if (category === "basisOfAdmission")
+      {
+        var boa = this.get('undoStack').popObject();
+        this.set('tempBasisOfAdmission',boa);
+      }
+      else if (category === "admissionAverage")
+      {
+        var aa = this.get('undoStack').popObject();
+        this.set('tempAdmissionAverage', aa);
+      }
+      else if (category === "admissionComments")
+      {
+        var ac = this.get('undoStack').popObject();
+        this.set('tempAdmissionComments',ac);
+      }
+      else if (category === "registrationComments")
+      {
+        var rc = this.get('undoStack').popObject();
+        this.set('tempRegistrationComments',rc);
+      }
+      else if(category === "save")
+      {
+        var studentScholInfo =this.get('undoStack').popObject();
+        var studentGenderInfo =this.get('undoStack').popObject();
+        var studentAdvInfo =this.get('undoStack').popObject();
+        var studentAdmissionComments =this.get('undoStack').popObject();
+        var studentAdmissionAverage =this.get('undoStack').popObject();
+        var studentBasisOfAdmission =this.get('undoStack').popObject();
+        var studentRegistrationComments =this.get('undoStack').popObject();
+        var studentRest =this.get('undoStack').popObject();
+        var studentPhoto =this.get('undoStack').popObject();
+        var dob =this.get('undoStack').popObject();
+        var studentNumber =this.get('undoStack').popObject();
+        var studentLN =this.get('undoStack').popObject();
+        var studentFN =this.get('undoStack').popObject();
+
+
+        //set the currentvalue according to the reference and save it
+        var studenthold = this.get('currentStudent');
+
+        studenthold.set('number',studentNumber);
+        studenthold.set('firstName',studentFN);
+        studenthold.set('lastName',studentLN);
+        studenthold.set('DOB',dob);
+        studenthold.set('photo',studentPhoto);
+        studenthold.set('resInfo',studentRest);
+        studenthold.set('registrationComments',studentRegistrationComments);
+        studenthold.set('basisOfAdmission',studentBasisOfAdmission);
+        studenthold.set('admissionAverage',studentAdmissionAverage);
+        studenthold.set('admissionComments',studentAdmissionComments);
+        studenthold.set('advInfo',studentAdvInfo);
+        studenthold.set('genderInfo',studentGenderInfo);
+        studenthold.set('scholInfo',studentScholInfo);
+
+        studenthold.save().then(() => {
+          //     this.set('isStudentFormEditing', false);
+        });
+
+        //update the tempdata shown on the screen, it should auto update since it's observe the current data...
+        //but for some reason the update is not complete, have to mannually update
+
+        //dob string
+        var studentDOB = dob.toISOString().substring(0, 10);
+        this.set('selectedDate',studentDOB);
+        this.set('tempFN',studentFN);
+        this.set('tempLN',studentLN);
+        this.set('tempNumber',studentNumber);
+        this.set('tempPhoto',studentPhoto);
+        this.set('tempRegistrationComments',studentRegistrationComments);
+        this.set('tempBasisOfAdmission',studentBasisOfAdmission);
+        this.set('tempAdmissionAverage',studentAdmissionAverage);
+        this.set('tempAdmissionComments',studentAdmissionComments);
+        this.set('tempAdvInfo',studentAdvInfo);
+        this.set('tempScholInfo',studentScholInfo);
+      }
+    },
     //functions used for undo function
+    //function get called when the focus leave the student number save the value into stack
+    studentNumberStack(){
+      console.log(1);
+      this.get('undoNameStack').pushObject("number");
+      var tempstudentnumber = this.get('currentStudent').get('number');
+      this.get('undoStack').pushObject(tempstudentnumber);
+    },
+
+    //function get called when the focus leave the student first name save the value into stack
+    studentFNStack(){
+      console.log(1);
+      this.get('undoNameStack').pushObject("firstName");
+      var tempstudent = this.get('currentStudent').get('firstName');
+      this.get('undoStack').pushObject(tempstudent);
+    },
+
+    //function get called when the focus leave the student last name save the value into stack
+    studentLNStack(){
+      console.log(1);
+      this.get('undoNameStack').pushObject("lastName");
+      var tempstudent = this.get('currentStudent').get('lastName');
+      this.get('undoStack').pushObject(tempstudent);
+    },
+
+    //function get called when the focus leave the student basis of admission save the value into stack
+    studentBOAStack(){
+      console.log(1);
+      this.get('undoNameStack').pushObject("basisOfAdmission");
+      var tempstudent = this.get('currentStudent').get('basisOfAdmission');
+      this.get('undoStack').pushObject(tempstudent);
+    },
+
+    //function get called when the focus leave the student admission average save the value into stack
+    studentAAStack(){
+      console.log(1);
+      this.get('undoNameStack').pushObject("admissionAverage");
+      var tempstudent = this.get('currentStudent').get('admissionAverage');
+      this.get('undoStack').pushObject(tempstudent);
+    },
+
+    //function get called when the focus leave the student admission comment save the value into stack
+    studentACStack(){
+      console.log(1);
+      this.get('undoNameStack').pushObject("admissionComments");
+      var tempstudent = this.get('currentStudent').get('admissionComments');
+      this.get('undoStack').pushObject(tempstudent);
+    },
+
+    //function get called when the focus leave the student registration comments save the value into stack
+    studentRCStack(){
+      console.log(1);
+      this.get('undoNameStack').pushObject("registrationComments");
+      var tempstudent = this.get('currentStudent').get('registrationComments');
+      this.get('undoStack').pushObject(tempstudent);
+    },
+
 
     saveStudent () {
-      var updatedStudent = this.get('currentStudent');
+
+        var studenthold = this.get('currentStudent');
+
+        var studentFN = studenthold.get('firstName');
+        var studentLN = studenthold.get('lastName');
+        var studentNumber = studenthold.get('number');
+        var dob = studenthold.get('DOB');
+        var studentPhoto = studenthold.get('photo');
+        var studentRest = studenthold.get('resInfo');
+        var studentRegistrationComments = studenthold.get('registrationComments');
+        var studentBasisOfAdmission = studenthold.get('basisOfAdmission');
+        var studentAdmissionAverage = studenthold.get('admissionAverage');
+        var studentAdmissionComments = studenthold.get('admissionComments');
+        var studentAdvInfo = studenthold.get('advInfo');
+        var studentGenderInfo = studenthold.get('genderInfo');
+        var studentScholInfo = studenthold.get('scholInfo');
+
+        //push the unchanged infomation to undo stack
+        this.get('undoNameStack').pushObject("save");
+        this.get('undoStack').pushObject(studentFN);
+        this.get('undoStack').pushObject(studentLN);
+        this.get('undoStack').pushObject(studentNumber);
+        this.get('undoStack').pushObject(dob);
+        this.get('undoStack').pushObject(studentPhoto);
+        this.get('undoStack').pushObject(studentRest);
+        this.get('undoStack').pushObject(studentRegistrationComments);
+        this.get('undoStack').pushObject(studentBasisOfAdmission);
+        this.get('undoStack').pushObject(studentAdmissionAverage);
+        this.get('undoStack').pushObject(studentAdmissionComments);
+        this.get('undoStack').pushObject(studentAdvInfo);
+        this.get('undoStack').pushObject(studentGenderInfo);
+        this.get('undoStack').pushObject(studentScholInfo);
+
+      //update the current student according to the temp value and save it
+
+      var updatestudentnumebr = this.get('tempNumber');
+      var updatestudentFN = this.get('tempFN');
+      var updatestudentLN = this.get('tempLN');
+      var updatestudentPhoto = this.get('tempPhoto');
+      var updatestudentRegistrationComments = this.get('tempRegistrationComments');
+      var updatestudentBasisOfAdmission = this.get('tempBasisOfAdmission');
+      var updatestudentAdmissionAverage = this.get('tempAdmissionAverage');
+      var updatestudentAdmissionComments = this.get('tempAdmissionComments');
+      var updatestudentAdvInfo = this.get('tempAdvInfo');
+      var updatestudentScholInfo = this.get('tempScholInfo');
+
+      //set the current student value to the front end temp value
+      studenthold.set('firstName',updatestudentFN);
+      studenthold.set('lastName',updatestudentLN);
+      studenthold.set('number',updatestudentnumebr);
+      studenthold.set('photo',updatestudentPhoto);
+      studenthold.set('registrationComments',updatestudentRegistrationComments);
+      studenthold.set('basisOfAdmission',updatestudentBasisOfAdmission);
+      studenthold.set('admissionAverage',updatestudentAdmissionAverage);
+      studenthold.set('admissionComments',updatestudentAdmissionComments);
+      studenthold.set('advInfo',updatestudentAdvInfo);
+      studenthold.set('scholInfo',updatestudentScholInfo);
       var res = this.get('store').peekRecord('residency', this.get('selectedResidency'));
       var gen = this.get('store').peekRecord('gender', this.get('selectedGender'));
       if (gen != null) {
-        updatedStudent.set('genderInfo', gen);
+        studenthold.set('genderInfo', gen);
       }
-      updatedStudent.set('DOB', new Date(this.get('selectedDate')));
+      studenthold.set('DOB', new Date(this.get('selectedDate')));
       if (res != null) {
-        updatedStudent.set('resInfo', res);
+        studenthold.set('resInfo', res);
       }
-      updatedStudent.save().then(() => {
+      studenthold.save().then(() => {
         //     this.set('isStudentFormEditing', false);
       });
+
     },
 
     firstStudent() {
@@ -226,7 +502,7 @@ export default Ember.Component.extend({
         this.get('currentStudent').save();
 
         this.set('movingBackword', true);
-        if (this.get("currentIndex") == this.get("firstIndex")) {
+        if (this.get("currentIndex") === this.get("firstIndex")) {
           this.set('movingBackword', false);
           this.set('currentIndex', this.get('currentIndex') + 1);
         }
@@ -244,15 +520,29 @@ export default Ember.Component.extend({
     selectGender (gender){
       this.set('selectedGender', gender);
       console.log(gender);
+      console.log(1);
+      //push the currentStudent gender into stack
+      this.get('undoNameStack').pushObject("genderInfo");
+      var tempstudent = this.get('currentStudent').get('genderInfo');
+      this.get('undoStack').pushObject(tempstudent);
     },
 
     selectResidency (residency){
       this.set('selectedResidency', residency);
       console.log(residency);
+      //push the orignal one into the stack
+      this.get('undoNameStack').pushObject("resInfo");
+      var tempstudent = this.get('currentStudent').get('resInfo');
+      this.get('undoStack').pushObject(tempstudent);
     },
 
     assignDate (date){
       this.set('selectedDate', date);
+      //push the original dob from the current student to undo stack
+      console.log(1);
+      this.get('undoNameStack').pushObject("DOB");
+      var tempstudent = this.get('currentStudent').get('DOB');
+      this.get('undoStack').pushObject(tempstudent);
     },
 
     addAS(){
@@ -311,5 +601,8 @@ export default Ember.Component.extend({
       });
       newScholarShipAndAward.save();
     },
+
+
   }
+
 });

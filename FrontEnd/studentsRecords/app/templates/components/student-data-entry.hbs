@@ -70,33 +70,33 @@
           <form class="ui form">
             <div class="field">
               <label>Student Number</label>
-              {{input size="10" type="text"  value =tempNumber focus-out='testingfocus'}}
+              {{input size="10" type="text"  value =tempNumber focus-out='studentNumberStack'}}
             </div>
 
             <div class="two fields">
               <div class="field">
                 <label>First Name</label>
-                {{input type="text"  value = tempFN}}
+                {{input type="text"  value = tempFN focus-out='studentFNStack'}}
               </div>
               <div class="field">
                 <label>Last Name</label>
-                {{input type="text"  value = tempLN}}
+                {{input type="text"  value = tempLN focus-out='studentLNStack'}}
               </div>
             </div>
 
             <div class="two fields">
               <div class="field">
                 <label>Gender</label>
-                <select onchange={{action 'selectGender' value="target.value"}} >
+                <select onchange={{action 'selectGender' value="target.value" }} >
                   {{#each genderModel as |genderChoice|}}
-                    <option value={{genderChoice.id}} selected={{eq currentStudent.genderInfo.id
+                    <option value={{genderChoice.id}} selected={{eq selectedGender.id
                                                                    genderChoice.id}}>{{genderChoice.name}} </option>
                   {{/each}}
             </select>
               </div>
               <div class="field">
                 <label>Date of Birth</label>
-                <input value={{tempDOB}} type="date" onchange={{action 'assignDate' value="target.value"}}>
+                <input value={{selectedDate}} type="date" onchange={{action 'assignDate' value="target.value"}}>
               </div>
             </div>
 
@@ -104,14 +104,14 @@
               <label>Residency</label>
               <select onchange={{action 'selectResidency' value="target.value"}}>
                 {{#each residencyModel as |residencyChoice|}}
-                  <option value={{residencyChoice.id}} selected={{eq currentStudent.resInfo.id residencyChoice.id}}>{{residencyChoice.name}}</option>
+                  <option value={{residencyChoice.id}} selected={{eq selectedResidency.id residencyChoice.id}}>{{residencyChoice.name}}</option>
                 {{/each}}
               </select>
             </div>
           </form>
         </div>
         <div class="ui center aligned five wide column segment" style="margin-bottom: 14px;">
-          <img  src={{studentPhoto}}>
+          <img  src={{tempPhoto}}>
         </div>
       </div>
 
@@ -122,22 +122,22 @@
             <div class="two fields">
               <div class="field">
                 <label>Basis of Admission</label>
-                {{input type="text"  value= currentStudent.basisOfAdmission}}
+                {{input type="text"  value= tempBasisOfAdmission focus-out='studentBOAStack'}}
               </div>
               <div class="field">
                 <label>Admission Average</label>
-                {{input type="number" max=100 min=0 value=currentStudent.admissionAverage}}
+                {{input type="number" max=100 min=0 value=tempAdmissionAverage focus-out='studentAAStack'}}
               </div>
             </div>
 
             <div class="field">
               <label>Admission Comments</label>
-              {{textarea rows="2" type="text"  value= currentStudent.admissionComments}}
+              {{textarea rows="2" type="text"  value= tempAdmissionComments focus-out='studentACStack'}}
             </div>
 
             <div class="field">
               <label>Registration Comments</label>
-                {{textarea rows="2" type="text"  value= currentStudent.registrationComments}}
+                {{textarea rows="2" type="text"  value= tempRegistrationComments focus-out='studentRCStack'}}
             </div>
           </form>
         </div>

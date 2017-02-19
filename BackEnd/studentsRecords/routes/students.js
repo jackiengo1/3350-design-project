@@ -50,6 +50,7 @@ router.route('/:student_id')
                 response.send({error: error});
             }
             else {
+              console.log(student.number);
                 response.json({student: student});
             }
         });
