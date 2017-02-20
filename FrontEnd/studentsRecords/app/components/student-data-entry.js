@@ -343,7 +343,6 @@ export default Ember.Component.extend({
     //functions used for undo function
     //function get called when the focus leave the student number save the value into stack
     studentNumberStack(){
-      console.log(1);
       this.get('undoNameStack').pushObject("number");
       var tempstudentnumber = this.get('currentStudent').get('number');
       this.get('undoStack').pushObject(tempstudentnumber);
