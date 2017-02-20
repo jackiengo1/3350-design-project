@@ -249,6 +249,43 @@
 <!-- Advanced Standing Tab -->
 <div class = "ui tab" data-tab="advancedStanding" style="background-color: #eee3fd; padding: 14px;">
 
+<div class="ui center aligned header">
+  <h2>Student's Advanced Standings</h2>
+</div>
+
+<br/>
+
+  <div class="ui middle aligned divided list">
+    {{#each listAS as |userListAS|}}
+      {{#unless userListAS.isDeleted}}
+      <div class="item">
+        <div class="content">
+          <div class="header">
+            <h3>
+              <button class="negative ui button" onclick={{action 'deleteAS' userListAS}} style = "float: right;">Delete</button>
+              Course: {{userListAS.course}} <br />
+              Description: {{userListAS.description}}<br />
+              Units: {{userListAS.units}}<br />
+              Grade: {{userListAS.grade}}<br />
+              From: {{userListAS.from}}<br />
+            </h3>
+          </div>
+
+        </div>
+      </div>
+      {{/unless}}
+    {{/each}}
+
+  </div>
+
+  <br/>
+
+  <div class="ui center aligned header">
+    <h2>Add Advanced Standing</h2>
+  </div>
+
+  <br/>
+
   <div class="ui sixteen wide column">
     <form class="ui form">
       <div class="field">
@@ -283,30 +320,22 @@
 
     <br />
 
-
+<div class="ui center aligned header">
 <button class="ui primary button" {{action 'addAS'}}>
   Add Advanced Standing
 </button>
-
-<br />
-
-{{#each listAS as |userListAS|}}
-{{#unless userListAS.isDeleted}}
-<br />
-<div class="ui radio checkbox">
-  <input type="radio" name="advStandingRadio" onchange={{action 'getAdvancedStanding' userListAS}}>
-
-  <label>Course: {{userListAS.course}} <br />
-    Description: {{userListAS.description}}<br />
-    Units: {{userListAS.units}}<br />
-    Grade: {{userListAS.grade}}<br />
-    From: {{userListAS.from}}</label><br />
-  </div>
-  {{/unless}}
-  {{/each}}
-  <br>
-  <button class="ui button" onclick={{action 'deleteAS'}}>Delete</button>
 </div>
+
+<br />
+
+
+</div>
+
+
+
+
+
+<!-- Scholarship and award tab-->
 
 <div class = "ui tab" data-tab="scholarshipAndAward" style="background-color: #eee3fd; padding: 14px;">
 

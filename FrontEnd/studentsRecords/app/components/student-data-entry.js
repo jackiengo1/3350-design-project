@@ -653,14 +653,10 @@ export default Ember.Component.extend({
       newASRecord.save();
 
     },
-    getAdvancedStanding: function(currentAS){
 
+    deleteAS(currentAS){
       var index = this.get('advancedStandingModel').indexOf(currentAS);
       this.set('currentASIndex', index);
-      console.log(index);
-    },
-
-    deleteAS(){
       var indextemp = this.get('currentASIndex');
       var temp = this.get('advancedStandingModel').objectAt(indextemp);
       console.log(temp);
