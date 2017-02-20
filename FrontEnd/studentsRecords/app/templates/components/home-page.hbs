@@ -1,13 +1,10 @@
-<div class="ui six item menu" style="background-color: #CEB1F4;">
+<div class="ui five item menu" style="background-color: #CEB1F4;">
   <div class="ui container" style="height: 60px;">
     <a class="item active" {{action "home"}} style="font-size: 16px; font-weight: bold;">
       <i class="large home icon"></i> Home
     </a>
     <a class="item" {{action "studentsDataEntry"}} style="font-size: 16px; font-weight: bold;">
       <i class="large leanpub icon"></i> Students Records
-    </a>
-    <a class="item " {{action "addStudent"}} style="font-size: 16px; font-weight: bold;">
-        <i class="large add user icon"></i> Add Student
     </a>
     <a class="item " {{action "addResidency"}} style="font-size: 16px; font-weight: bold;">
         <i class="large setting icon"></i> Configure Residency
@@ -35,9 +32,6 @@
             {{/if}}
             {{#if isAboutShowing}}
                 {{about-us}}
-            {{/if}}
-            {{#if isAddStudentShowing}}
-                {{add-student}}
             {{/if}}
             {{#if isAddResidencyShowing}}
                 {{add-residency}}
