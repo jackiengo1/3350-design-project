@@ -27,6 +27,7 @@ export default Ember.Component.extend({
   currentASIndex:null,
   scholarshipAwardModel:null,
   currentScholIndex:null,
+  endOfRecords: false,
 
   //undo
   //the stack store the data
@@ -84,14 +85,21 @@ export default Ember.Component.extend({
       limit: self.get('limit'),
       offset: self.get('offset')
     }).then(function (records) {
-      self.set('studentsRecords', records);
-      //console.log(this.get('studentsRecords').objectAt(2).get('resInfo'));
-      self.set('firstIndex', records.indexOf(records.get("firstObject")));
-      self.set('lastIndex', records.indexOf(records.get("lastObject")));
-      if (self.get('movingBackword')) {
-        self.set('currentIndex', records.indexOf(records.get("lastObject")));
-      } else {
-        self.set('currentIndex', records.indexOf(records.get("firstObject")));
+
+      if(records.get('length') > 0){
+
+        self.set('studentsRecords', records);
+        //console.log(this.get('studentsRecords').objectAt(2).get('resInfo'));
+        self.set('firstIndex', records.indexOf(records.get("firstObject")));
+        self.set('lastIndex', records.indexOf(records.get("lastObject")));
+        if (self.get('movingBackword')) {
+          self.set('currentIndex', records.indexOf(records.get("lastObject")));
+        } else {
+          self.set('currentIndex', records.indexOf(records.get("firstObject")));
+        }
+      }
+      else{
+        self.set('endOfRecords', true);
       }
     });
   }),
@@ -99,7 +107,7 @@ export default Ember.Component.extend({
   fetchStudent: Ember.observer('currentIndex', function () {  //observes changes to the index
     this.showStudentData(this.get('currentIndex'));           //calls function showStudentData with current index
   }),
-
+  
   init() {
     this._super(...arguments);
     // load Residency data model
@@ -150,6 +158,7 @@ export default Ember.Component.extend({
     var datestring = date.toISOString().substring(0, 10);
     this.set('selectedDate', datestring);
     var gender = this.get('currentStudent').get('genderInfo');
+
     this.set('selectedGender',gender);
     var res = this.get('currentStudent').get('resInfo');
     this.set('selectedResidency',res);
@@ -409,37 +418,37 @@ export default Ember.Component.extend({
 
     saveStudent () {
 
-        var studenthold = this.get('currentStudent');
+      var studenthold = this.get('currentStudent');
 
-        var studentFN = studenthold.get('firstName');
-        var studentLN = studenthold.get('lastName');
-        var studentNumber = studenthold.get('number');
-        var dob = studenthold.get('DOB');
-        var studentPhoto = studenthold.get('photo');
-        var studentRest = studenthold.get('resInfo');
-        var studentRegistrationComments = studenthold.get('registrationComments');
-        var studentBasisOfAdmission = studenthold.get('basisOfAdmission');
-        var studentAdmissionAverage = studenthold.get('admissionAverage');
-        var studentAdmissionComments = studenthold.get('admissionComments');
-        var studentAdvInfo = studenthold.get('advInfo');
-        var studentGenderInfo = studenthold.get('genderInfo');
-        var studentScholInfo = studenthold.get('scholInfo');
+      var studentFN = studenthold.get('firstName');
+      var studentLN = studenthold.get('lastName');
+      var studentNumber = studenthold.get('number');
+      var dob = studenthold.get('DOB');
+      var studentPhoto = studenthold.get('photo');
+      var studentRest = studenthold.get('resInfo');
+      var studentRegistrationComments = studenthold.get('registrationComments');
+      var studentBasisOfAdmission = studenthold.get('basisOfAdmission');
+      var studentAdmissionAverage = studenthold.get('admissionAverage');
+      var studentAdmissionComments = studenthold.get('admissionComments');
+      var studentAdvInfo = studenthold.get('advInfo');
+      var studentGenderInfo = studenthold.get('genderInfo');
+      var studentScholInfo = studenthold.get('scholInfo');
 
-        //push the unchanged infomation to undo stack
-        this.get('undoNameStack').pushObject("save");
-        this.get('undoStack').pushObject(studentFN);
-        this.get('undoStack').pushObject(studentLN);
-        this.get('undoStack').pushObject(studentNumber);
-        this.get('undoStack').pushObject(dob);
-        this.get('undoStack').pushObject(studentPhoto);
-        this.get('undoStack').pushObject(studentRest);
-        this.get('undoStack').pushObject(studentRegistrationComments);
-        this.get('undoStack').pushObject(studentBasisOfAdmission);
-        this.get('undoStack').pushObject(studentAdmissionAverage);
-        this.get('undoStack').pushObject(studentAdmissionComments);
-        this.get('undoStack').pushObject(studentAdvInfo);
-        this.get('undoStack').pushObject(studentGenderInfo);
-        this.get('undoStack').pushObject(studentScholInfo);
+      //push the unchanged infomation to undo stack
+      this.get('undoNameStack').pushObject("save");
+      this.get('undoStack').pushObject(studentFN);
+      this.get('undoStack').pushObject(studentLN);
+      this.get('undoStack').pushObject(studentNumber);
+      this.get('undoStack').pushObject(dob);
+      this.get('undoStack').pushObject(studentPhoto);
+      this.get('undoStack').pushObject(studentRest);
+      this.get('undoStack').pushObject(studentRegistrationComments);
+      this.get('undoStack').pushObject(studentBasisOfAdmission);
+      this.get('undoStack').pushObject(studentAdmissionAverage);
+      this.get('undoStack').pushObject(studentAdmissionComments);
+      this.get('undoStack').pushObject(studentAdvInfo);
+      this.get('undoStack').pushObject(studentGenderInfo);
+      this.get('undoStack').pushObject(studentScholInfo);
 
       //update the current student according to the temp value and save it
 
@@ -517,6 +526,8 @@ export default Ember.Component.extend({
 
     allStudents() {
       this.set('showAllStudents', true);
+      this.set('offset', 0);
+      this.set('endOfRecords', false);
     },
 
     deleteStudent(){
@@ -538,6 +549,19 @@ export default Ember.Component.extend({
         }
       }
 
+    },
+
+    allStudentsPrev(){
+      if (this.get('offset') >= this.get('pageSize')) {
+        this.set('offset', this.get('offset') - this.get('pageSize'));
+        this.set('endOfRecords', false);
+      }
+    },
+
+    allStudentsNext(){
+      if(this.get('endOfRecords') === false){
+        this.set('offset', this.get('offset') + this.get('pageSize'));
+      }
     },
 
     addStudent(){
@@ -583,6 +607,7 @@ export default Ember.Component.extend({
         this.set('advancedstandingTabStyles', "");
         this.set('tabInfoText', "Basic Info");
         this.set('backToBasicInfo', true);
+        this.set('endOfRecords', false);
       }//end if
 
     },
@@ -699,6 +724,7 @@ export default Ember.Component.extend({
       this.set('tabInfoText', "Basic Info");
       this.set('backToBasicInfo', true);
       this.set('showFindRecord', false);
+      this.set('showAllStudents', false);
 
       this.set('tempFN',this.get('currentStudent').get('firstName'));
       this.set('tempLN',this.get('currentStudent').get('lastName'));
@@ -734,8 +760,8 @@ export default Ember.Component.extend({
         findStudentFirstName: self.get('findStudentFirstName'),
         findStudentLastName: self.get('findStudentLastName')
       }).then(function (students) {
-      //  console.log(students.objectAt(0).get('firstName'));
-          self.set('studentRecordResults', students);
+        //  console.log(students.objectAt(0).get('firstName'));
+        self.set('studentRecordResults', students);
       });
 
       this.set('searchResultTitle', "Search Results");
@@ -760,7 +786,13 @@ export default Ember.Component.extend({
       this.get('store').query('scholarship-award',{filter:{studentInfo:this.get('currentStudent').get('id')}});
       this.set('scholarShipAndAwardList', this.get('currentStudent').get('scholInfo'));
 
+      var gender = this.get('currentStudent').get('genderInfo');
+      this.set('selectedGender',gender);
+      var res = this.get('currentStudent').get('resInfo');
+      this.set('selectedResidency',res);
+
       this.set('showFindRecord', false);
+      this.set('showAllStudents', false);
 
     },
   }

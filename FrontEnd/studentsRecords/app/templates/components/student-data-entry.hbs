@@ -5,8 +5,45 @@
 
 
 {{#if showAllStudents}}
-<!-- Note that offset is an "in" and "out" parameter !-->
-{{all-students INDEX = currentIndex notDONE = showAllStudents offset = offset studentsModel = studentsRecords}}
+
+<div class="ui inverted menu" style="background-color: #4e2683;">
+  <a class="item" {{action 'backToEntryForm'}}>
+    <i class="back icon"></i>
+    Back
+  </a>
+</div>
+
+<div class="ui center aligned header">
+  <h2>All Student Records</h2>
+</div>
+
+<br/>
+
+<div class="ui middle aligned divided selection list">
+  {{#each studentsRecords as |oneStudent|}}
+  <div class="item" {{action 'goToRecord' oneStudent}}>
+    <div class="content">
+      <div class="header">
+        <h3>
+          Student ID: {{oneStudent.number}} <br/>
+          First name: {{oneStudent.firstName}} <br/>
+          Last name: {{oneStudent.lastName}} <br/>
+        </h3>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+
+  <div class="ui center aligned header">
+    <button class="ui primary button" {{action 'allStudentsPrev'}} >
+      Previous Page
+    </button>
+    <button class="ui primary button" {{action 'allStudentsNext'}} >
+      Next Page
+    </button>
+  </div>
+
+</div>
 
 
 {{else if showFindRecord}}
@@ -23,28 +60,28 @@
 </div>
 
 
-  <div class="row" style="padding-bottom: 0;">
-    <div class="ui sixteen wide column">
-      <form class="ui form">
+<div class="row" style="padding-bottom: 0;">
+  <div class="ui sixteen wide column">
+    <form class="ui form">
+      <div class="field">
+        <label>Student Number</label>
+        {{input size="10" type="text"  value = findStudentNumber}}
+      </div>
+
+      <div class="two fields">
         <div class="field">
-          <label>Student Number</label>
-          {{input size="10" type="text"  value = findStudentNumber}}
+          <label>First Name</label>
+          {{input type="text"  value = findStudentFirstName}}
         </div>
-
-        <div class="two fields">
-          <div class="field">
-            <label>First Name</label>
-            {{input type="text"  value = findStudentFirstName}}
-          </div>
-          <div class="field">
-            <label>Last Name</label>
-            {{input type="text"  value = findStudentLastName}}
-          </div>
+        <div class="field">
+          <label>Last Name</label>
+          {{input type="text"  value = findStudentLastName}}
         </div>
+      </div>
 
-      </form>
-    </div>
+    </form>
   </div>
+</div>
 
 <div class="ui center aligned header">
   <button onclick={{action 'findRecord'}} class="ui button">
@@ -56,39 +93,39 @@
   <h1>{{searchResultTitle}}</h1>
 </div>
 
-  <div class="ui middle aligned divided selection list">
-    {{#each studentRecordResults as |studentRecord|}}
-      <div class="item" {{action 'goToRecord' studentRecord}}>
-        <div class="content">
-          <div class="header">
-            <h3>
-              Student ID: {{studentRecord.number}} <br/>
-              First name: {{studentRecord.firstName}} <br/>
-              Last name: {{studentRecord.lastName}} <br/>
-            </h3>
-          </div>
-        </div>
+<div class="ui middle aligned divided selection list">
+  {{#each studentRecordResults as |studentRecord|}}
+  <div class="item" {{action 'goToRecord' studentRecord}}>
+    <div class="content">
+      <div class="header">
+        <h3>
+          Student ID: {{studentRecord.number}} <br/>
+          First name: {{studentRecord.firstName}} <br/>
+          Last name: {{studentRecord.lastName}} <br/>
+        </h3>
       </div>
-    {{/each}}
+    </div>
+  </div>
+  {{/each}}
 
 </div>
 
 
 {{else}}
 
-  {{#if addingStudent}}
-  <div class="ui inverted menu" style="background-color: #4e2683;">
-    <a class="item" {{action 'backToEntryForm'}}>
-      <i class="back icon"></i>
-      Back
-    </a>
-    <a class="item" {{action 'addStudent'}}>
-      <i class="add user icon"></i>
-      Add Student
-    </a>
-  </div>
+{{#if addingStudent}}
+<div class="ui inverted menu" style="background-color: #4e2683;">
+  <a class="item" {{action 'backToEntryForm'}}>
+    <i class="back icon"></i>
+    Back
+  </a>
+  <a class="item" {{action 'addStudent'}}>
+    <i class="add user icon"></i>
+    Add Student
+  </a>
+</div>
 
-  {{else}}
+{{else}}
 <!-- Show the menu bar-->
 <div class="ui inverted menu" style="background-color: #4e2683;">
   <a class="item" {{action 'saveStudent'}}>
@@ -158,29 +195,29 @@
       <div class="ui eleven wide column">
         <form class="ui form">
           <div class="field">
-              <label>Student Number</label>
-              {{input size="10" type="text"  value =tempNumber focus-out='studentNumberStack'}}
+            <label>Student Number</label>
+            {{input size="10" type="text"  value =tempNumber focus-out='studentNumberStack'}}
+          </div>
+
+          <div class="two fields">
+            <div class="field">
+              <label>First Name</label>
+              {{input type="text"  value = tempFN focus-out='studentFNStack'}}
             </div>
-
-            <div class="two fields">
-              <div class="field">
-                <label>First Name</label>
-                {{input type="text"  value = tempFN focus-out='studentFNStack'}}
-              </div>
-              <div class="field">
-                <label>Last Name</label>
-                {{input type="text"  value = tempLN focus-out='studentLNStack'}}
-              </div>
+            <div class="field">
+              <label>Last Name</label>
+              {{input type="text"  value = tempLN focus-out='studentLNStack'}}
             </div>
+          </div>
 
 
-            <div class="two fields">
-              <div class="field">
-                <label>Gender</label>
-                <select onchange={{action 'selectGender' value="target.value" }} >
-                  {{#each genderModel as |genderChoice|}}
-                    <option value={{genderChoice.id}} selected={{eq selectedGender.id
-                                                                   genderChoice.id}}>{{genderChoice.name}} </option>
+          <div class="two fields">
+            <div class="field">
+              <label>Gender</label>
+              <select onchange={{action 'selectGender' value="target.value" }} >
+                {{#each genderModel as |genderChoice|}}
+                <option value={{genderChoice.id}} selected={{eq selectedGender.id
+                  genderChoice.id}}>{{genderChoice.name}} </option>
 
                   {{/each}}
                 </select>
@@ -196,9 +233,9 @@
               <select onchange={{action 'selectResidency' value="target.value"}}>
                 {{#each residencyModel as |residencyChoice|}}
 
-              <!--  <option value={{residencyChoice.id}} selected={{eq currentStudent.resInfo.id residencyChoice.id}}>{{residencyChoice.name}}</option> -->
+                <!--  <option value={{residencyChoice.id}} selected={{eq currentStudent.resInfo.id residencyChoice.id}}>{{residencyChoice.name}}</option> -->
 
-                  <option value={{residencyChoice.id}} selected={{eq selectedResidency.id residencyChoice.id}}>{{residencyChoice.name}}</option>
+                <option value={{residencyChoice.id}} selected={{eq selectedResidency.id residencyChoice.id}}>{{residencyChoice.name}}</option>
 
                 {{/each}}
               </select>
@@ -233,7 +270,7 @@
             <div class="field">
               <label>Registration Comments</label>
 
-                {{textarea rows="2" type="text"  value= tempRegistrationComments focus-out='studentRCStack'}}
+              {{textarea rows="2" type="text"  value= tempRegistrationComments focus-out='studentRCStack'}}
 
             </div>
           </form>
@@ -246,17 +283,17 @@
 
 
 
-<!-- Advanced Standing Tab -->
-<div class = "ui tab" data-tab="advancedStanding" style="background-color: #eee3fd; padding: 14px;">
+  <!-- Advanced Standing Tab -->
+  <div class = "ui tab" data-tab="advancedStanding" style="background-color: #eee3fd; padding: 14px;">
 
-<div class="ui center aligned header">
-  <h2>Student's Advanced Standings</h2>
-</div>
+    <div class="ui center aligned header">
+      <h2>Student's Advanced Standings</h2>
+    </div>
 
-<br/>
+    <br/>
 
-  <div class="ui middle aligned divided list">
-    {{#each listAS as |userListAS|}}
+    <div class="ui middle aligned divided list">
+      {{#each listAS as |userListAS|}}
       {{#unless userListAS.isDeleted}}
       <div class="item">
         <div class="content">
@@ -274,77 +311,77 @@
         </div>
       </div>
       {{/unless}}
-    {{/each}}
+      {{/each}}
 
-  </div>
+    </div>
 
-  <br/>
+    <br/>
 
-  <div class="ui center aligned header">
-    <h2>Add Advanced Standing</h2>
-  </div>
+    <div class="ui center aligned header">
+      <h2>Add Advanced Standing</h2>
+    </div>
 
-  <br/>
+    <br/>
 
-  <div class="ui sixteen wide column">
-    <form class="ui form">
-      <div class="field">
-        <label>Course Name</label>
-        {{input disabled = addingStudent size="20" type="text"  value = courseNameAS}}
-      </div>
-
-      <div class="field">
-        <label>Course Description</label>
-        {{input disabled = addingStudent size="20" type="text"  value = descriptionAS}}
-      </div>
-
-      <div class="two fields">
+    <div class="ui sixteen wide column">
+      <form class="ui form">
         <div class="field">
-          <label>Units</label>
-          {{input disabled = addingStudent type="number" value = unitsAS}}
+          <label>Course Name</label>
+          {{input disabled = addingStudent size="20" type="text"  value = courseNameAS}}
         </div>
+
         <div class="field">
-          <label>Grade</label>
-          {{input disabled = addingStudent type="number" max=100 min=0 value = gradeAS}}
+          <label>Course Description</label>
+          {{input disabled = addingStudent size="20" type="text"  value = descriptionAS}}
         </div>
-      </div>
 
-      <div class="field">
-        <label>From</label>
-        {{input  disabled = addingStudent size="20" type="text"  value = fromAS}}
-      </div>
+        <div class="two fields">
+          <div class="field">
+            <label>Units</label>
+            {{input disabled = addingStudent type="number" value = unitsAS}}
+          </div>
+          <div class="field">
+            <label>Grade</label>
+            {{input disabled = addingStudent type="number" max=100 min=0 value = gradeAS}}
+          </div>
+        </div>
 
-    </form>
-  </div>
+        <div class="field">
+          <label>From</label>
+          {{input  disabled = addingStudent size="20" type="text"  value = fromAS}}
+        </div>
+
+      </form>
+    </div>
 
 
     <br />
 
-<div class="ui center aligned header">
-<button class="ui primary button" {{action 'addAS'}} disabled = {{addingStudent}}>
-  Add Advanced Standing
-</button>
-</div>
+    <div class="ui center aligned header">
+      <button class="ui primary button" {{action 'addAS'}} disabled = {{addingStudent}}>
+        Add Advanced Standing
+      </button>
+    </div>
 
-<br />
-
-
-</div>
+    <br />
 
 
-
-
-
-<!-- Scholarship and award tab-->
-
-<div class = "ui tab" data-tab="scholarshipAndAward" style="background-color: #eee3fd; padding: 14px;">
-
-  <div class="ui center aligned header">
-    <h2>Student's Scholarships and Awards</h2>
   </div>
 
-  <div class="ui middle aligned divided list">
-    {{#each scholarShipAndAwardList as |userScholarShipAndAwardList|}}
+
+
+
+
+  <!-- Scholarship and award tab-->
+
+  <div class = "ui tab" data-tab="scholarshipAndAward" style="background-color: #eee3fd; padding: 14px;">
+
+    <div class="ui center aligned header">
+      <h2>Student's Scholarships and Awards</h2>
+    </div>
+
+    <div class="ui middle aligned divided list">
+      {{#each scholarShipAndAwardList as |userScholarShipAndAwardList|}}
       {{#unless userScholarShipAndAwardList.isDeleted}}
       <div class="item">
         <div class="content">
@@ -358,9 +395,9 @@
         </div>
       </div>
       {{/unless}}
-    {{/each}}
+      {{/each}}
 
-  </div>
+    </div>
 
     <br/>
 
@@ -370,23 +407,23 @@
 
     <br/>
 
-  <div class="ui form">
-    <div class="field">
-      <label>Note</label>
+    <div class="ui form">
+      <div class="field">
+        <label>Note</label>
 
-      {{textarea  disabled = addingStudent type="text" value = scholarshipAndAwardNote}}
+        {{textarea  disabled = addingStudent type="text" value = scholarshipAndAwardNote}}
 
+      </div>
     </div>
+
+    <br/>
+
+    <div class="ui center aligned header">
+      <button class="ui primary button" {{action 'addScholarShipAndAward'}} disabled = {{addingStudent}}>
+        Add
+      </button>
+    </div>
+
   </div>
 
-  <br/>
-
-  <div class="ui center aligned header">
-  <button class="ui primary button" {{action 'addScholarShipAndAward'}} disabled = {{addingStudent}}>
-    Add
-  </button>
-</div>
-
-</div>
-
-{{/if}}
+  {{/if}}
