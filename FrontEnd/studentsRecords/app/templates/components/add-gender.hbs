@@ -3,14 +3,21 @@
 </div>
 
 
+<div class="ui middle aligned divided list">
+  {{#each genderModel as |oneGender|}}
+    <div class="item">
+      <div class="content">
+        <div class="header">
+          <h3>
+            {{oneGender.name}} <button class="negative ui button" onclick={{action 'deleteGender' oneGender}} style = "float: right;">Delete</button>
+          </h3>
+        </div>
 
-    {{#each genderModel as |oneGender|}}
-    <div class="ui radio checkbox">
-      <input type="radio" name ="gender" onchange={{action 'getGender' oneGender}}>
-      <label>{{oneGender.name}}</label>
+      </div>
     </div>
-    {{/each}}
-    <button class="ui button" onclick={{action 'deleteGender'}}>Delete</button>
+  {{/each}}
+
+</div>
 
 
 <div class="ui grid">
@@ -25,7 +32,7 @@
 </div>
 
 <div class="ui center aligned header">
-  <button class="ui primary button" {{action 'addGender'}}>
+  <button class="positive ui button" {{action 'addGender'}}>
     Add Gender
   </button>
 </div>

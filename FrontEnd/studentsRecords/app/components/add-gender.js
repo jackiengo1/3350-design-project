@@ -28,9 +28,11 @@ export default Ember.Component.extend({
     },
 
     //delete gender
-    deleteGender(){
+    deleteGender(gender){
       var choice = confirm('Are you sure you want to delete this?');
       if (choice) {
+        var index = this.get('genderModel').indexOf(gender);
+        this.set('genderIndex', index);
         var indextemp = this.get('genderIndex');
         var restemp = this.get('genderModel').objectAt(indextemp);
         console.log(restemp);

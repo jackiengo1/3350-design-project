@@ -26,9 +26,11 @@ export default Ember.Component.extend({
     },
 
     //delete residency
-    deleteResidency(){
+    deleteResidency( residency){
       var choice = confirm('Are you sure you want to delete this?');
       if (choice) {
+        var index = this.get('residencyModel').indexOf(residency);
+        this.set('residencyIndex', index);
         var indextemp = this.get('residencyIndex');
         var restemp = this.get('residencyModel').objectAt(indextemp);
         console.log(restemp);
