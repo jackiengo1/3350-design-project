@@ -61,7 +61,7 @@ export default Ember.Component.extend({
   scholarShipAndAwardList: null,
   scholarshipAndAwardNote: null,
 
-
+  searchResultTitle: null,
   findStudentNumber: null,
   findStudentFirstName: null,
   findStudentLastName: null,
@@ -499,6 +499,7 @@ export default Ember.Component.extend({
       this.set('findStudentFirstName', null);
       this.set('findStudentLastName', null);
       this.set('studentRecordResults', null);
+      this.set('searchResultTitle', null);
     },
     previousStudent() {
       this.set('movingBackword' , true);
@@ -595,6 +596,9 @@ export default Ember.Component.extend({
       this.set('backToBasicInfo', true);
       this.set('addingStudent', true);
 
+      this.set('listAS', null);
+      this.set('scholarShipAndAwardList', null);
+
       this.set('tempNumber', null);
       this.set('tempFN', null);
       this.set('tempLN', null);
@@ -663,14 +667,10 @@ export default Ember.Component.extend({
       temp.deleteRecord();
       temp.save();
     },
-    getScholarshipAward: function(scholAward){
 
+    deleteScholarshipAward(scholAward){
       var index = this.get('scholarshipAwardModel').indexOf(scholAward);
       this.set('currentScholIndex', index);
-      console.log(index);
-    },
-
-    deleteScholarshipAward(){
       var indextemp = this.get('currentScholIndex');
       var temp = this.get('scholarshipAwardModel').objectAt(indextemp);
       console.log(temp);
@@ -686,6 +686,8 @@ export default Ember.Component.extend({
         studentInfo: this.get('currentStudent'),
       });
       newScholarShipAndAward.save();
+
+      this.set('scholarshipAndAwardNote', null);
     },
 
     backToEntryForm(){
@@ -715,6 +717,9 @@ export default Ember.Component.extend({
       var res = this.get('currentStudent').get('resInfo');
       this.set('selectedResidency',res);
 
+      this.set('listAS', this.get('currentStudent').get('advInfo'));
+      this.set('scholarShipAndAwardList', this.get('currentStudent').get('scholInfo'));
+
 
 
     },
@@ -732,6 +737,8 @@ export default Ember.Component.extend({
       //  console.log(students.objectAt(0).get('firstName'));
           self.set('studentRecordResults', students);
       });
+
+      this.set('searchResultTitle', "Search Results");
 
     },
 

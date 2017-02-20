@@ -53,7 +53,7 @@
 </div>
 
 <div class="ui center aligned header">
-  <h1>Search Results</h1>
+  <h1>{{searchResultTitle}}</h1>
 </div>
 
   <div class="ui middle aligned divided selection list">
@@ -290,28 +290,28 @@
     <form class="ui form">
       <div class="field">
         <label>Course Name</label>
-        {{input size="20" type="text"  value = courseNameAS}}
+        {{input disabled = addingStudent size="20" type="text"  value = courseNameAS}}
       </div>
 
       <div class="field">
         <label>Course Description</label>
-        {{input size="20" type="text"  value = descriptionAS}}
+        {{input disabled = addingStudent size="20" type="text"  value = descriptionAS}}
       </div>
 
       <div class="two fields">
         <div class="field">
           <label>Units</label>
-          {{input type="number" value = unitsAS}}
+          {{input disabled = addingStudent type="number" value = unitsAS}}
         </div>
         <div class="field">
           <label>Grade</label>
-          {{input type="number" max=100 min=0 value = gradeAS}}
+          {{input disabled = addingStudent type="number" max=100 min=0 value = gradeAS}}
         </div>
       </div>
 
       <div class="field">
         <label>From</label>
-        {{input size="20" type="text"  value = fromAS}}
+        {{input  disabled = addingStudent size="20" type="text"  value = fromAS}}
       </div>
 
     </form>
@@ -321,7 +321,7 @@
     <br />
 
 <div class="ui center aligned header">
-<button class="ui primary button" {{action 'addAS'}}>
+<button class="ui primary button" {{action 'addAS'}} disabled = {{addingStudent}}>
   Add Advanced Standing
 </button>
 </div>
@@ -339,32 +339,54 @@
 
 <div class = "ui tab" data-tab="scholarshipAndAward" style="background-color: #eee3fd; padding: 14px;">
 
+  <div class="ui center aligned header">
+    <h2>Student's Scholarships and Awards</h2>
+  </div>
+
+  <div class="ui middle aligned divided list">
+    {{#each scholarShipAndAwardList as |userScholarShipAndAwardList|}}
+      {{#unless userScholarShipAndAwardList.isDeleted}}
+      <div class="item">
+        <div class="content">
+          <div class="header">
+            <h3>
+              <button class="negative ui button" onclick={{action 'deleteScholarshipAward' userScholarShipAndAwardList}} style = "float: right;">Delete</button>
+              Note: {{userScholarShipAndAwardList.note}}
+            </h3>
+          </div>
+
+        </div>
+      </div>
+      {{/unless}}
+    {{/each}}
+
+  </div>
+
+    <br/>
+
+    <div class="ui center aligned header">
+      <h2>Add Scholarships and Awards</h2>
+    </div>
+
+    <br/>
+
   <div class="ui form">
     <div class="field">
       <label>Note</label>
 
-      {{textarea type="text" value = scholarshipAndAwardNote}}
+      {{textarea  disabled = addingStudent type="text" value = scholarshipAndAwardNote}}
 
     </div>
   </div>
 
-  <br />
+  <br/>
 
-  <button class="ui primary button" {{action 'addScholarShipAndAward'}}>
+  <div class="ui center aligned header">
+  <button class="ui primary button" {{action 'addScholarShipAndAward'}} disabled = {{addingStudent}}>
     Add
   </button>
-  <br />
-  {{#each scholarShipAndAwardList as |userScholarShipAndAwardList|}}
-  {{#unless userScholarShipAndAwardList.isDeleted}}
-  <br />
-  <div class="ui radio checkbox">
-    <input type="radio" name="advStandingRadio" onchange={{action 'getScholarshipAward' userScholarShipAndAwardList}}>
-    <label>Note: {{userScholarShipAndAwardList.note}}</label> <br />
-  </div>
-  {{/unless}}
-  {{/each}}
-  <br>
-  <button class="ui button" onclick={{action 'deleteScholarshipAward'}}>Delete</button>
+</div>
+
 </div>
 
 {{/if}}
