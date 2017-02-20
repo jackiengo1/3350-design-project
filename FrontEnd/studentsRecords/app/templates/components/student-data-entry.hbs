@@ -215,8 +215,6 @@
 
             <div class="field">
               <label>Registration Comments</label>
-
-              <!--{{textarea rows="2" type="text"  value= currentStudent.registrationComments}} -->
                 {{textarea rows="2" type="text"  value= tempRegistrationComments focus-out='studentRCStack'}}
 
             </div>
@@ -227,37 +225,6 @@
     </div>
 
   </div>
-
-  <!--  <div class="ui center aligned five wide column segment" style="margin-bottom: 14px;">
-  <img  src={{studentPhoto}}>
-</div>
-</div>
-</div> -->
-
-
-<!-- start of the delete residency tab -->
-<!--<div class="ui tab" data-tab="others" style="background-color: #eee3fd; padding: 14px;">
-  {{#each residencyModel as |oneResidency|}}
-  <div class="ui radio checkbox">
-    <input type="radio" name ="residency" onchange={{action 'getResidence' oneResidency}}>
-    <label>{{oneResidency.name}}</label>
-  </div>
-  {{/each}}
-  <button class="ui button" onclick={{action 'deleteResidency'}}>Delete</button>
-</div>-->
-
-<!-- start of delte gender tab -->
-
-<!--<div class="ui tab" data-tab="summary" style="background-color: #eee3fd; padding: 14px;">
-
-  {{#each genderModel as |oneGender|}}
-  <div class="ui radio checkbox">
-    <input type="radio" name ="gender" onchange={{action 'getGender' oneGender}}>
-    <label>{{oneGender.name}}</label>
-  </div>
-  {{/each}}
-  <button class="ui button" onclick={{action 'deleteGender'}}>Delete</button>
-</div>-->
 
 
 <!-- Advanced Standing Tab -->
