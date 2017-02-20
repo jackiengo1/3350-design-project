@@ -76,6 +76,19 @@
 
 {{else}}
 
+  {{#if addingStudent}}
+  <div class="ui inverted menu" style="background-color: #4e2683;">
+    <a class="item" {{action 'backToEntryForm'}}>
+      <i class="back icon"></i>
+      Back
+    </a>
+    <a class="item" {{action 'addStudent'}}>
+      <i class="add user icon"></i>
+      Add Student
+    </a>
+  </div>
+
+  {{else}}
 <!-- Show the menu bar-->
 <div class="ui inverted menu" style="background-color: #4e2683;">
   <a class="item" {{action 'saveStudent'}}>
@@ -85,6 +98,10 @@
   <a class="item" {{action 'undoSave'}}>
     <i class="undo icon"></i>
     Undo
+  </a>
+  <a class="item" {{action 'goToAddStudent'}}>
+    <i class="add user icon"></i>
+    Add Student
   </a>
   <a class="item" {{action 'deleteStudent'}}>
     <i class="remove user icon"></i>
@@ -119,15 +136,15 @@
   </a>
 </div>
 
-
+{{/if}}
 
 <!-- Show data entry form -->
 
-<div class="ui top attached tabular menu">
+<div class="ui pointing secondary menu">
 
-  <div class="active item" data-tab="basics" style="background-color: #EEE3FD; cursor: pointer;">Basic Info</div>
-  <div class="item" data-tab="scholarshipAndAward" style="background-color: #EEE3FD; cursor: pointer;">Scholarships and Awards</div>
-  <div class="item" data-tab="advancedStanding" style="background-color: #EEE3FD; cursor: pointer;">Advanced Standings</div>
+  <a class=" active item {{if backToBasicInfo 'active'}}" data-tab="basics" >{{tabInfoText}}</a>
+  <a class=" item {{if scholarshipTabIsDisabled 'disabled'}}" data-tab="scholarshipAndAward" style = "{{scholarshipTabStyles}}">Scholarships and Awards</a>
+  <a class="item {{if scholarshipTabIsDisabled 'disabled'}}" data-tab="advancedStanding" style = "{{advancedstandingTabStyles}}">Advanced Standings</a>
 
 </div>
 
@@ -227,36 +244,6 @@
 
   </div>
 
-  <!--  <div class="ui center aligned five wide column segment" style="margin-bottom: 14px;">
-  <img  src={{studentPhoto}}>
-</div>
-</div>
-</div> -->
-
-
-<!-- start of the delete residency tab -->
-<!--<div class="ui tab" data-tab="others" style="background-color: #eee3fd; padding: 14px;">
-  {{#each residencyModel as |oneResidency|}}
-  <div class="ui radio checkbox">
-    <input type="radio" name ="residency" onchange={{action 'getResidence' oneResidency}}>
-    <label>{{oneResidency.name}}</label>
-  </div>
-  {{/each}}
-  <button class="ui button" onclick={{action 'deleteResidency'}}>Delete</button>
-</div>-->
-
-<!-- start of delte gender tab -->
-
-<!--<div class="ui tab" data-tab="summary" style="background-color: #eee3fd; padding: 14px;">
-
-  {{#each genderModel as |oneGender|}}
-  <div class="ui radio checkbox">
-    <input type="radio" name ="gender" onchange={{action 'getGender' oneGender}}>
-    <label>{{oneGender.name}}</label>
-  </div>
-  {{/each}}
-  <button class="ui button" onclick={{action 'deleteGender'}}>Delete</button>
-</div>-->
 
 
 <!-- Advanced Standing Tab -->
