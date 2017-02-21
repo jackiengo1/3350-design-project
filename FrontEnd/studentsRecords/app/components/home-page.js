@@ -15,7 +15,6 @@ export default Ember.Component.extend({
     isHomeShowing: true,
     isStudentsRecordsDataEntry: false,
     isAboutShowing: false,
-    isAddStudentShowing: false,
     isAddGenderShowing: false,
     isAddResidencyShowing: false,
 
@@ -43,15 +42,6 @@ export default Ember.Component.extend({
             this.set('isStudentsRecordsDataEntry', false);
             this.set('isAboutShowing', true);
             this.set('isAddStudentShowing', false);
-          this.set('isAddResidencyShowing', false);
-          this.set('isAddGenderShowing', false);
-        },
-
-        addStudent(){
-            this.set('isHomeShowing', false);
-            this.set('isStudentsRecordsDataEntry', false);
-            this.set('isAboutShowing', false);
-            this.set('isAddStudentShowing', true);
           this.set('isAddResidencyShowing', false);
           this.set('isAddGenderShowing', false);
         },
