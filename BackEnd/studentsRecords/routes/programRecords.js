@@ -7,65 +7,69 @@ var parseJSON = bodyParser.json();
 
 router.route('/')
     .post(parseUrlencoded, parseJSON, function (request, response) {
-        var secondarySchool = new models.SecondarySchools(request.body.secondarySchool);
-        secondarySchool.save(function (error) {
+        var programRecord = new models.ProgramRecords(request.body.programRecord);
+        programRecord.save(function (error) {
             if (error) response.send(error);
-            response.json({secondarySchool: secondarySchool});
+            response.json({programRecord: programRecord});
         });
     })
     .get(parseUrlencoded, parseJSON, function (request, response) {
 
-        var secondarySchoolFilter = request.query.filter;
-        if (!secondarySchoolFilter) {
-            models.SecondarySchool.find(function (error, secondarySchools) {
+        var programRecordFilter = request.query.filter;
+        if (!programRecordFilter) {
+            models.ProgramRecords.find(function (error, programRecords) {
                 if (error) response.send(error);
-                response.json({secondarySchool: secondarySchools});
+                response.json({programRecord: programRecord});
             });
             console.log("no filter");
         } else {
           console.log("filter");
-            models.SecondarySchools.find({"secondarySchool": request.query.secondarySchool}, function (error, secondarySchools) {
+            models.ProgramRecords.find({"programRecord": request.query.programRecord}, function (error, programRecords) {
                 if (error) response.send(error);
-                response.json({secondarySchool: secondarySchools});
+                response.json({programRecord: programRecords});
             });
         }
     });
 
-router.route('/:secondarySchool_id')
+router.route('/:programRecord_id')
     .get(parseUrlencoded, parseJSON, function (request, response) {
-        models.SecondarySchools.findById(request.params.secondarySchool_id, function (error, secondarySchool) {
+        models.ProgramRecords.findById(request.params.programRecord_id, function (error, programRecord) {
             if (error) {
                 response.send({error: error});
             }
             else {
-                response.json({secondarySchool: secondarySchool});
+                response.json({programRecord: programRecord});
             }
         });
     })
     .put(parseUrlencoded, parseJSON, function (request, response) {
-        models.SecondarySchools.findById(request.params.secondarySchool_id, function (error, secondarySchool) {
+        models.ProgramRecords.findById(request.params.programRecord_id, function (error, programRecord) {
             if (error) {
                 response.send({error: error});
             }
             else {
-                secondarySchool.name = request.secondarySchool.name;
+                programRecord.name = request.programRecord.name;
+                programRecord.level = request.programRecord.level;
+                programRecord.load = request.programRecord.load;
+                programRecord.status = request.programRecord.status;
+                programRecord.plan = request.programRecord.plan;
 
-                secondarySchool.save(function (error) {
+                programRecord.save(function (error) {
                     if (error) {
                         response.send({error: error});
                     }
                     else {
-                        response.json({secondarySchool: secondarySchool});
+                        response.json({programRecord: programRecord});
                     }
                 });
             }
         });
     })
     .delete(parseUrlencoded, parseJSON, function (request, response) {
-        models.SecondarySchools.findByIdAndRemove(request.params.secondarySchool_id,
+        models.ProgramRecords.findByIdAndRemove(request.params.programRecord_id,
             function (error, deleted) {
                 if (!error) {
-                    response.json({secondarySchool: deleted});
+                    response.json({programRecord: deleted});
                 }
             }
         );

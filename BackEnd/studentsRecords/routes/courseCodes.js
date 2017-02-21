@@ -7,65 +7,69 @@ var parseJSON = bodyParser.json();
 
 router.route('/')
     .post(parseUrlencoded, parseJSON, function (request, response) {
-        var secondarySchool = new models.SecondarySchools(request.body.secondarySchool);
-        secondarySchool.save(function (error) {
+        var courseCode = new models.CourseCodes(request.body.courseCode);
+        courseCode.save(function (error) {
             if (error) response.send(error);
-            response.json({secondarySchool: secondarySchool});
+            response.json({courseCode: courseCode});
         });
     })
     .get(parseUrlencoded, parseJSON, function (request, response) {
 
-        var secondarySchoolFilter = request.query.filter;
-        if (!secondarySchoolFilter) {
-            models.SecondarySchool.find(function (error, secondarySchools) {
+        var courseCodeFilter = request.query.filter;
+        if (!scholarshipAwardFilter) {
+            models.CourseCodes.find(function (error, courseCodes) {
                 if (error) response.send(error);
-                response.json({secondarySchool: secondarySchools});
+                response.json({courseCode: courseCodes});
             });
             console.log("no filter");
         } else {
           console.log("filter");
-            models.SecondarySchools.find({"secondarySchool": request.query.secondarySchool}, function (error, secondarySchools) {
+            models.CourseCodes.find({"courseCode": request.query.courseCode}, function (error, courseCodes) {
                 if (error) response.send(error);
-                response.json({secondarySchool: secondarySchools});
+                response.json({courseCode: courseCodes});
             });
         }
     });
 
-router.route('/:secondarySchool_id')
+router.route('/:courseCode_id')
     .get(parseUrlencoded, parseJSON, function (request, response) {
-        models.SecondarySchools.findById(request.params.secondarySchool_id, function (error, secondarySchool) {
+        models.CourseCodes.findById(request.params.courseCode_id, function (error, courseCode) {
             if (error) {
                 response.send({error: error});
             }
             else {
-                response.json({secondarySchool: secondarySchool});
+                response.json({courseCode: courseCode});
             }
         });
     })
     .put(parseUrlencoded, parseJSON, function (request, response) {
-        models.SecondarySchools.findById(request.params.secondarySchool_id, function (error, secondarySchool) {
+        models.CourseCodes.findById(request.params.courseCode_id, function (error, courseCode) {
             if (error) {
                 response.send({error: error});
             }
             else {
-                secondarySchool.name = request.secondarySchool.name;
+                courseCode.courseLetter = request.courseCode.courseLetter;
+                courseCode.courseNumber = request.courseCode.courseNumber;
+                courseCode.name = request.courseCode.name;
+                courseCode.unit = request.courseCode.unit;
+                courseCode.mark = request.courseCode.mark;
 
-                secondarySchool.save(function (error) {
+                courseCode.save(function (error) {
                     if (error) {
                         response.send({error: error});
                     }
                     else {
-                        response.json({secondarySchool: secondarySchool});
+                        response.json({courseCode: courseCode});
                     }
                 });
             }
         });
     })
     .delete(parseUrlencoded, parseJSON, function (request, response) {
-        models.SecondarySchools.findByIdAndRemove(request.params.secondarySchool_id,
+        models.CourseCodes.findByIdAndRemove(request.params.courseCode_id,
             function (error, deleted) {
                 if (!error) {
-                    response.json({secondarySchool: deleted});
+                    response.json({courseCode: deleted});
                 }
             }
         );

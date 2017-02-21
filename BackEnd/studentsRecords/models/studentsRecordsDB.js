@@ -16,7 +16,8 @@ var studentsSchema = mongoose.Schema(
         advInfo: [{type: mongoose.Schema.ObjectId, ref: 'AdvancedStandings'}],
         genderInfo: {type: mongoose.Schema.ObjectId, ref: 'Genders'},
         scholInfo: [{type: mongoose.Schema.ObjectId, ref: 'ScholarshipAwards'}],
-        highSchoolCourse: [{type: mongoose.Schema.ObjectId, ref: 'HsCourseGrades'}]
+        highSchoolCourse: [{type: mongoose.Schema.ObjectId, ref: 'HsCourseGrades'}],
+        semester: [{type: mongoose.Schema.ObjectId, ref: 'TermCodes'}]
     }
 );
 studentsSchema.plugin(mongoosePaginate);
@@ -83,6 +84,47 @@ var highSchoolSubjectSchema = mongoose.Schema(
   }
 );
 
+var programRecordSchema = mongoose.Schema(
+  {
+    name: String,
+    level: String,
+    load: String,
+    status: String,
+    plan : {type: mongoose.Schema.ObjectId, ref: 'PlanCodes'}
+  }
+);
+
+var termCodeSchema = mongoose.Schema(
+  {
+    name: String,
+    courseInfo: [{type: mongoose.Schema.ObjectId, ref: 'CourseCodes'}],
+    program: [{type: mongoose.Schema.ObjectId, ref: 'ProgramRecords'}]
+  }
+);
+
+var planCodeSchema = mongoose.Schema(
+  {
+    name: String
+  }
+);
+
+var courseCodeSchema = mongoose.Schema(
+  {
+    courseLetter: String,
+    courseNumber: String,
+    name: String,
+    unit: String,
+    mark: {type: mongoose.Schema.ObjectId, ref: 'Grades'}
+  }
+);
+
+var gradeSchema = mongoose.Schema(
+  {
+    mark: String,
+    note: String
+  }
+);
+
 var ScholarshipAwards = mongoose.model('scholarshopAward', scholarshipAwardSchema);
 var AdvancedStandings = mongoose.model('advancedStanding', advancedStandingSchema);
 var Genders = mongoose.model('gender', genderSchema);
@@ -93,6 +135,12 @@ var HsCourseGrades = mongoose.model('hsCourseGrade', hsCourseGradeSchema);
 var HighSchoolCourses = mongoose.model('highSchoolCourse', highSchoolCourseSchema);
 var HighSchoolSubjects = mongoose.model('highSchoolSubject', highSchoolSubjectSchema);
 var SecondarySchools = mongoose.model('secondarySchool', secondarySchoolSchema);
+//
+var ProgramRecords = mongoose.model('programRecord', programRecordSchema);
+var TermCodes = mongoose.model('termCode', termCodeSchema);
+var PlanCodes = mongoose.model('planCode', planCodeSchema);
+var CourseCodes = mongoose.model('courseCode', courseCodeSchema);
+var Grades = mongoose.model('grade', gradeSchema);
 
 mongoose.connect('mongodb://localhost/studentsRecords');
 var db = mongoose.connection;
@@ -109,5 +157,11 @@ db.once('open', function() {
     exports.HighSchoolCourses = HighSchoolCourses;
     exports.HighSchoolSubjects = HighSchoolSubjects;
     exports.SecondarySchools = SecondarySchools;
+    //
+    exports.ProgramRecords = ProgramRecords;
+    exports.TermCodes = TermCodes;
+    exports.PlanCodes = PlanCodes;
+    exports.CourseCodes = CourseCodes;
+    exports.Grades = Grades;
 
 });

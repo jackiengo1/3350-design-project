@@ -7,65 +7,66 @@ var parseJSON = bodyParser.json();
 
 router.route('/')
     .post(parseUrlencoded, parseJSON, function (request, response) {
-        var secondarySchool = new models.SecondarySchools(request.body.secondarySchool);
-        secondarySchool.save(function (error) {
+        var grade = new models.Grades(request.body.grade);
+        grade.save(function (error) {
             if (error) response.send(error);
-            response.json({secondarySchool: secondarySchool});
+            response.json({grade: grade});
         });
     })
     .get(parseUrlencoded, parseJSON, function (request, response) {
 
-        var secondarySchoolFilter = request.query.filter;
-        if (!secondarySchoolFilter) {
-            models.SecondarySchool.find(function (error, secondarySchools) {
+        var gradeFilter = request.query.filter;
+        if (!gradeFilter) {
+            models.Grades.find(function (error, grades) {
                 if (error) response.send(error);
-                response.json({secondarySchool: secondarySchools});
+                response.json({grade: grades});
             });
             console.log("no filter");
         } else {
           console.log("filter");
-            models.SecondarySchools.find({"secondarySchool": request.query.secondarySchool}, function (error, secondarySchools) {
+            models.Grades.find({"grade": request.query.grade}, function (error, grades) {
                 if (error) response.send(error);
-                response.json({secondarySchool: secondarySchools});
+                response.json({grade: grades});
             });
         }
     });
 
-router.route('/:secondarySchool_id')
+router.route('/:grade_id')
     .get(parseUrlencoded, parseJSON, function (request, response) {
-        models.SecondarySchools.findById(request.params.secondarySchool_id, function (error, secondarySchool) {
+        models.Grades.findById(request.params.grade_id, function (error, grade) {
             if (error) {
                 response.send({error: error});
             }
             else {
-                response.json({secondarySchool: secondarySchool});
+                response.json({grade: grade});
             }
         });
     })
     .put(parseUrlencoded, parseJSON, function (request, response) {
-        models.SecondarySchools.findById(request.params.secondarySchool_id, function (error, secondarySchool) {
+        models.Grades.findById(request.params.grade_id, function (error, grade) {
             if (error) {
                 response.send({error: error});
             }
             else {
-                secondarySchool.name = request.secondarySchool.name;
+                grade.mark = request.grade.mark;
+                grade.note = request.grade.note;
 
-                secondarySchool.save(function (error) {
+                grade.save(function (error) {
                     if (error) {
                         response.send({error: error});
                     }
                     else {
-                        response.json({secondarySchool: secondarySchool});
+                        response.json({grade: grade});
                     }
                 });
             }
         });
     })
     .delete(parseUrlencoded, parseJSON, function (request, response) {
-        models.SecondarySchools.findByIdAndRemove(request.params.secondarySchool_id,
+        models.grade.findByIdAndRemove(request.params.grade_id,
             function (error, deleted) {
                 if (!error) {
-                    response.json({secondarySchool: deleted});
+                    response.json({grade: deleted});
                 }
             }
         );

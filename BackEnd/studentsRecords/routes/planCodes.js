@@ -7,65 +7,65 @@ var parseJSON = bodyParser.json();
 
 router.route('/')
     .post(parseUrlencoded, parseJSON, function (request, response) {
-        var secondarySchool = new models.SecondarySchools(request.body.secondarySchool);
-        secondarySchool.save(function (error) {
+        var planCode = new models.PlanCodes(request.body.planCode);
+        planCode.save(function (error) {
             if (error) response.send(error);
-            response.json({secondarySchool: secondarySchool});
+            response.json({planCode: planCode});
         });
     })
     .get(parseUrlencoded, parseJSON, function (request, response) {
 
-        var secondarySchoolFilter = request.query.filter;
-        if (!secondarySchoolFilter) {
-            models.SecondarySchool.find(function (error, secondarySchools) {
+        var planCodeFilter = request.query.filter;
+        if (!planCodeFilter) {
+            models.PlanCodes.find(function (error, planCodes) {
                 if (error) response.send(error);
-                response.json({secondarySchool: secondarySchools});
+                response.json({planCode: planCodes});
             });
             console.log("no filter");
         } else {
           console.log("filter");
-            models.SecondarySchools.find({"secondarySchool": request.query.secondarySchool}, function (error, secondarySchools) {
+            models.PlanCodes.find({"planCode": request.query.planCode}, function (error, planCodes) {
                 if (error) response.send(error);
-                response.json({secondarySchool: secondarySchools});
+                response.json({planCode: planCodes});
             });
         }
     });
 
-router.route('/:secondarySchool_id')
+router.route('/:planCode_id')
     .get(parseUrlencoded, parseJSON, function (request, response) {
-        models.SecondarySchools.findById(request.params.secondarySchool_id, function (error, secondarySchool) {
+        models.PlanCodes.findById(request.params.planCode_id, function (error, planCode) {
             if (error) {
                 response.send({error: error});
             }
             else {
-                response.json({secondarySchool: secondarySchool});
+                response.json({planCode: planCode});
             }
         });
     })
     .put(parseUrlencoded, parseJSON, function (request, response) {
-        models.SecondarySchools.findById(request.params.secondarySchool_id, function (error, secondarySchool) {
+        models.PlanCodes.findById(request.params.planCode_id, function (error, planCode) {
             if (error) {
                 response.send({error: error});
             }
             else {
-                secondarySchool.name = request.secondarySchool.name;
+                planCode.name = request.planCode.name;
 
-                secondarySchool.save(function (error) {
+                planCode.save(function (error) {
                     if (error) {
                         response.send({error: error});
                     }
                     else {
-                        response.json({secondarySchool: secondarySchool});
+                        response.json({planCode: planCode});
                     }
                 });
             }
         });
     })
     .delete(parseUrlencoded, parseJSON, function (request, response) {
-        models.SecondarySchools.findByIdAndRemove(request.params.secondarySchool_id,
+        models.PlanCodes.findByIdAndRemove(request.params.planCode_id,
             function (error, deleted) {
                 if (!error) {
-                    response.json({secondarySchool: deleted});
+                    response.json({planCode: deleted});
                 }
             }
         );

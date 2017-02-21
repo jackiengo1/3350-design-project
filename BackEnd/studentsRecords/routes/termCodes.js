@@ -7,65 +7,67 @@ var parseJSON = bodyParser.json();
 
 router.route('/')
     .post(parseUrlencoded, parseJSON, function (request, response) {
-        var secondarySchool = new models.SecondarySchools(request.body.secondarySchool);
-        secondarySchool.save(function (error) {
+        var termCode = new models.TermCodes(request.body.termCode);
+        termCode.save(function (error) {
             if (error) response.send(error);
-            response.json({secondarySchool: secondarySchool});
+            response.json({termCode: termCode});
         });
     })
     .get(parseUrlencoded, parseJSON, function (request, response) {
 
-        var secondarySchoolFilter = request.query.filter;
-        if (!secondarySchoolFilter) {
-            models.SecondarySchool.find(function (error, secondarySchools) {
+        var termCodeFilter = request.query.filter;
+        if (!termCodeFilter) {
+            models.TermCodes.find(function (error, termCodes) {
                 if (error) response.send(error);
-                response.json({secondarySchool: secondarySchools});
+                response.json({termCode: termCodes});
             });
             console.log("no filter");
         } else {
           console.log("filter");
-            models.SecondarySchools.find({"secondarySchool": request.query.secondarySchool}, function (error, secondarySchools) {
+            models.TermCodes.find({"student": request.query.student}, function (error, termCodes) {
                 if (error) response.send(error);
-                response.json({secondarySchool: secondarySchools});
+                response.json({termCode: termCodes});
             });
         }
     });
 
-router.route('/:secondarySchool_id')
+router.route('/:termCode_id')
     .get(parseUrlencoded, parseJSON, function (request, response) {
-        models.SecondarySchools.findById(request.params.secondarySchool_id, function (error, secondarySchool) {
+        models.TermCodes.findById(request.params.termCode_id, function (error, termCode) {
             if (error) {
                 response.send({error: error});
             }
             else {
-                response.json({secondarySchool: secondarySchool});
+                response.json({termCode: termCode});
             }
         });
     })
     .put(parseUrlencoded, parseJSON, function (request, response) {
-        models.SecondarySchools.findById(request.params.secondarySchool_id, function (error, secondarySchool) {
+        models.TermCodes.findById(request.params.termCode_id, function (error, termCode) {
             if (error) {
                 response.send({error: error});
             }
             else {
-                secondarySchool.name = request.secondarySchool.name;
+                termCode.name = request.termCode.name;
+                termCode.courseInfo = request.termCode.courseInfo;
+                termCode.program = request.termCode.program;
 
-                secondarySchool.save(function (error) {
+                termCode.save(function (error) {
                     if (error) {
                         response.send({error: error});
                     }
                     else {
-                        response.json({secondarySchool: secondarySchool});
+                        response.json({termCode: termCode});
                     }
                 });
             }
         });
     })
     .delete(parseUrlencoded, parseJSON, function (request, response) {
-        models.SecondarySchools.findByIdAndRemove(request.params.secondarySchool_id,
+        models.TermCodes.findByIdAndRemove(request.params.termCode_id,
             function (error, deleted) {
                 if (!error) {
-                    response.json({secondarySchool: deleted});
+                    response.json({termCode: deleted});
                 }
             }
         );
