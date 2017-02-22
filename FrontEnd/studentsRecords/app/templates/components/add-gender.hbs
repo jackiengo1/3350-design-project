@@ -1,6 +1,24 @@
 <div class="ui center aligned header">
-  <h2>Add Gender</h2>
+  <h2>Modify Gender</h2>
 </div>
+
+
+<div class="ui middle aligned divided list">
+  {{#each genderModel as |oneGender|}}
+    <div class="item">
+      <div class="content">
+        <div class="header">
+          <h3>
+            {{oneGender.name}} <button class="negative ui button" onclick={{action 'deleteGender' oneGender}} style = "float: right;">Delete</button>
+          </h3>
+        </div>
+
+      </div>
+    </div>
+  {{/each}}
+
+</div>
+
 
 <div class="ui grid">
   <div class="ui left aligned  seven wide column">
@@ -14,7 +32,7 @@
 </div>
 
 <div class="ui center aligned header">
-  <button class="ui primary button" {{action 'addGender'}}>
+  <button class="positive ui button" {{action 'addGender'}}>
     Add Gender
   </button>
 </div>
