@@ -8,6 +8,16 @@ var residencies = require('./routes/residencies');
 var genders = require('./routes/genders');
 var advancedStandings = require('./routes/advancedStandings');
 var scholarshipAwards = require('./routes/scholarshipAwards');
+//
+var courseCodes = require('./routes/courseCodes');
+var termCodes = require('./routes/termCodes');
+var planCodes = require('./routes/planCodes');
+var highSchoolCourses = require('./routes/highSchoolCourses');
+var highSchoolSubjects = require('./routes/highSchoolSubjects');
+var hsCourseGrades = require('./routes/hsCourseGrades');
+var secondarySchools = require('./routes/secondarySchools');
+var programRecords = require('./routes/programRecords');
+var grades = require('./routes/grades');
 
 
 app.use(function (request, response, next) {
