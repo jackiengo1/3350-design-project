@@ -74,6 +74,7 @@ var highSchoolCourseSchema = mongoose.Schema(
 var secondarySchoolSchema = mongoose.Schema(
   {
     name: String,
+    highSchoolCoursesInfo: [{type: mongoose.Schema.ObjectId, ref: ('HighSchoolCourses')}],
   }
 );
 

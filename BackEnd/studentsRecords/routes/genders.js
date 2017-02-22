@@ -11,10 +11,12 @@ var parseJSON = bodyParser.json();
 router.route('/')
     .post(parseUrlencoded, parseJSON, function (request, response) {
         var gender = new models.Genders(request.body.gender);
+        console.log(request.body);
         gender.save(function (error) {
             if (error) response.send(error);
             response.json({gender: gender});
         });
+
     })
     .get(parseUrlencoded, parseJSON, function (request, response) {
         var Student = request.query.filter;
