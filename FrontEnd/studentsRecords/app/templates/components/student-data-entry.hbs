@@ -2,6 +2,130 @@
   <h2>Students Records Data Entry</h2>
 </div>
 
+
+
+{{#if showAllStudents}}
+
+<div class="ui inverted menu" style="background-color: #4e2683;">
+  <a class="item" {{action 'backToEntryForm'}}>
+    <i class="back icon"></i>
+    Back
+  </a>
+</div>
+
+<div class="ui center aligned header">
+  <h2>All Student Records</h2>
+</div>
+
+<br/>
+
+<div class="ui middle aligned divided selection list">
+  {{#each studentsRecords as |oneStudent|}}
+  <div class="item" {{action 'goToRecord' oneStudent}}>
+    <div class="content">
+      <div class="header">
+        <h3>
+          Student ID: {{oneStudent.number}} <br/>
+          First name: {{oneStudent.firstName}} <br/>
+          Last name: {{oneStudent.lastName}} <br/>
+        </h3>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+
+  <div class="ui center aligned header">
+    <button class="ui primary button" {{action 'allStudentsPrev'}} >
+      Previous Page
+    </button>
+    <button class="ui primary button" {{action 'allStudentsNext'}} >
+      Next Page
+    </button>
+  </div>
+
+</div>
+
+
+{{else if showFindRecord}}
+<!-- Show the menu bar-->
+<div class="ui inverted menu" style="background-color: #4e2683;">
+  <a class="item" {{action 'backToEntryForm'}}>
+    <i class="back icon"></i>
+    Back
+  </a>
+</div>
+
+<div class="ui center aligned header">
+  <h1>Find Student Record</h1>
+</div>
+
+
+<div class="row" style="padding-bottom: 0;">
+  <div class="ui sixteen wide column">
+    <form class="ui form">
+      <div class="field">
+        <label>Student Number</label>
+        {{input size="10" type="text"  value = findStudentNumber}}
+      </div>
+
+      <div class="two fields">
+        <div class="field">
+          <label>First Name</label>
+          {{input type="text"  value = findStudentFirstName}}
+        </div>
+        <div class="field">
+          <label>Last Name</label>
+          {{input type="text"  value = findStudentLastName}}
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<div class="ui center aligned header">
+  <button onclick={{action 'findRecord'}} class="ui button">
+    Find
+  </button>
+</div>
+
+<div class="ui center aligned header">
+  <h1>{{searchResultTitle}}</h1>
+</div>
+
+<div class="ui middle aligned divided selection list">
+  {{#each studentRecordResults as |studentRecord|}}
+  <div class="item" {{action 'goToRecord' studentRecord}}>
+    <div class="content">
+      <div class="header">
+        <h3>
+          Student ID: {{studentRecord.number}} <br/>
+          First name: {{studentRecord.firstName}} <br/>
+          Last name: {{studentRecord.lastName}} <br/>
+        </h3>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+
+</div>
+
+
+{{else}}
+
+{{#if addingStudent}}
+<div class="ui inverted menu" style="background-color: #4e2683;">
+  <a class="item" {{action 'backToEntryForm'}}>
+    <i class="back icon"></i>
+    Back
+  </a>
+  <a class="item" {{action 'addStudent'}}>
+    <i class="add user icon"></i>
+    Add Student
+  </a>
+</div>
+
+{{else}}
 <!-- Show the menu bar-->
 <div class="ui inverted menu" style="background-color: #4e2683;">
   <a class="item" {{action 'saveStudent'}}>
@@ -12,10 +136,14 @@
     <i class="undo icon"></i>
     Undo
   </a>
-    <a class="item" {{action 'deleteStudent'}}>
-        <i class="remove user icon"></i>
-        Delete
-    </a>
+  <a class="item" {{action 'goToAddStudent'}}>
+    <i class="add user icon"></i>
+    Add Student
+  </a>
+  <a class="item" {{action 'deleteStudent'}}>
+    <i class="remove user icon"></i>
+    Delete
+  </a>
   <a class="item" {{action 'firstStudent'}}>
     <i class="step backward icon"></i>
     First
@@ -45,56 +173,54 @@
   </a>
 </div>
 
-{{#if showAllStudents}}
-  <!-- Note that offset is an "in" and "out" parameter !-->
- {{all-students INDEX = currentIndex notDONE = showAllStudents offset = offset studentsModel = studentsRecords}}
-{{else}}
-  <!-- Show data entry form -->
+{{/if}}
 
-  <div class="ui top attached tabular menu">
+<!-- Show data entry form -->
 
-    <div class="active item" data-tab="basics" style="background-color: #EEE3FD;">Basic Info</div>
-    <div class="item" data-tab="scholarshipAndAward" style="background-color: #EEE3FD;">Scholarships and Awards</div>
-    <div class="item" data-tab="advancedStanding" style="background-color: #EEE3FD;">Advanced Standings</div>
-    <div class="item" data-tab="others" style="background-color: #EEE3FD;">Delete Residency</div>
-    <div class="item" data-tab="summary" style="background-color: #EEE3FD;">Delete Gender</div>
+<div class="ui pointing secondary menu">
 
-  </div>
+  <a class=" active item {{if backToBasicInfo 'active'}}" data-tab="basics" >{{tabInfoText}}</a>
+  <a class=" item {{if scholarshipTabIsDisabled 'disabled'}}" data-tab="scholarshipAndAward" style = "{{scholarshipTabStyles}}">Scholarships and Awards</a>
+  <a class="item {{if scholarshipTabIsDisabled 'disabled'}}" data-tab="advancedStanding" style = "{{advancedstandingTabStyles}}">Advanced Standings</a>
 
-  <div class="ui bottom attached active tab segment" data-tab="basics">
+</div>
 
-    <!-- Basic Info Form -->
+<div class="ui bottom attached active tab segment" data-tab="basics">
 
-    <div class="ui grid" style="padding-right: 14px; background-color: #EEE3FD;">
+  <!-- Basic Info Form -->
 
-      <div class="row" style="padding-bottom: 0;">
-        <div class="ui eleven wide column">
-          <form class="ui form">
+  <div class="ui grid" style="padding-right: 14px; background-color: #EEE3FD;">
+
+    <div class="row" style="padding-bottom: 0;">
+      <div class="ui eleven wide column">
+        <form class="ui form">
+          <div class="field">
+            <label>Student Number</label>
+            {{input size="10" type="text"  value =tempNumber focus-out='studentNumberStack'}}
+          </div>
+
+          <div class="two fields">
             <div class="field">
-              <label>Student Number</label>
-              {{input size="10" type="text"  value = currentStudent.number}}
+              <label>First Name</label>
+              {{input type="text"  value = tempFN focus-out='studentFNStack'}}
             </div>
-
-            <div class="two fields">
-              <div class="field">
-                <label>First Name</label>
-                {{input type="text"  value = currentStudent.firstName}}
-              </div>
-              <div class="field">
-                <label>Last Name</label>
-                {{input type="text"  value = currentStudent.lastName}}
-              </div>
+            <div class="field">
+              <label>Last Name</label>
+              {{input type="text"  value = tempLN focus-out='studentLNStack'}}
             </div>
+          </div>
 
-            <div class="two fields">
-              <div class="field">
-                <label>Gender</label>
-                <select onchange={{action 'selectGender' value="target.value"}} >
-                  {{#each genderModel as |genderChoice|}}
-                    <option value={{genderChoice.id}} selected={{eq currentStudent.genderInfo.id
-                                                                   genderChoice.id}}>{{genderChoice.name}} </option>
+
+          <div class="two fields">
+            <div class="field">
+              <label>Gender</label>
+              <select onchange={{action 'selectGender' value="target.value" }} >
+                {{#each genderModel as |genderChoice|}}
+                <option value={{genderChoice.id}} selected={{eq selectedGender.id
+                  genderChoice.id}}>{{genderChoice.name}} </option>
+
                   {{/each}}
-            </select>
+                </select>
               </div>
               <div class="field">
                 <label>Date of Birth</label>
@@ -106,14 +232,18 @@
               <label>Residency</label>
               <select onchange={{action 'selectResidency' value="target.value"}}>
                 {{#each residencyModel as |residencyChoice|}}
-                  <option value={{residencyChoice.id}} selected={{eq currentStudent.resInfo.id residencyChoice.id}}>{{residencyChoice.name}}</option>
+
+                <!--  <option value={{residencyChoice.id}} selected={{eq currentStudent.resInfo.id residencyChoice.id}}>{{residencyChoice.name}}</option> -->
+
+                <option value={{residencyChoice.id}} selected={{eq selectedResidency.id residencyChoice.id}}>{{residencyChoice.name}}</option>
+
                 {{/each}}
               </select>
             </div>
           </form>
         </div>
         <div class="ui center aligned five wide column segment" style="margin-bottom: 14px;">
-          <img  src={{studentPhoto}}>
+          <img  src={{tempPhoto}}>
         </div>
       </div>
 
@@ -124,22 +254,24 @@
             <div class="two fields">
               <div class="field">
                 <label>Basis of Admission</label>
-                {{input type="text"  value= currentStudent.basisOfAdmission}}
+                {{input type="text"  value= tempBasisOfAdmission focus-out='studentBOAStack'}}
               </div>
               <div class="field">
                 <label>Admission Average</label>
-                {{input type="number" max=100 min=0 value=currentStudent.admissionAverage}}
+                {{input type="number" max=100 min=0 value=tempAdmissionAverage focus-out='studentAAStack'}}
               </div>
             </div>
 
             <div class="field">
               <label>Admission Comments</label>
-              {{textarea rows="2" type="text"  value= currentStudent.admissionComments}}
+              {{textarea rows="2" type="text"  value= tempAdmissionComments focus-out='studentACStack'}}
             </div>
 
             <div class="field">
               <label>Registration Comments</label>
-                {{textarea rows="2" type="text"  value= currentStudent.registrationComments}}
+
+              {{textarea rows="2" type="text"  value= tempRegistrationComments focus-out='studentRCStack'}}
+
             </div>
           </form>
         </div>
@@ -149,156 +281,149 @@
 
   </div>
 
-    <!--  <div class="ui center aligned five wide column segment" style="margin-bottom: 14px;">
-        <img  src={{studentPhoto}}>
-      </div>
-    </div>
-</div> -->
 
-
-  <!-- start of the delete residency tab -->
-  <div class="ui tab" data-tab="others" style="background-color: #eee3fd; padding: 14px;">
-    {{#each residencyModel as |oneResidency|}}
-    <div class="ui radio checkbox">
-      <input type="radio" name ="residency" onchange={{action 'getResidence' oneResidency}}>
-      <label>{{oneResidency.name}}</label>
-    </div>
-    {{/each}}
-    <button class="ui button" onclick={{action 'deleteResidency'}}>Delete</button>
-  </div>
-
-<!-- start of delte gender tab -->
-
-  <div class="ui tab" data-tab="summary" style="background-color: #eee3fd; padding: 14px;">
-
-    {{#each genderModel as |oneGender|}}
-    <div class="ui radio checkbox">
-      <input type="radio" name ="gender" onchange={{action 'getGender' oneGender}}>
-      <label>{{oneGender.name}}</label>
-    </div>
-    {{/each}}
-    <button class="ui button" onclick={{action 'deleteGender'}}>Delete</button>
-  </div>
 
   <!-- Advanced Standing Tab -->
   <div class = "ui tab" data-tab="advancedStanding" style="background-color: #eee3fd; padding: 14px;">
+
+    <div class="ui center aligned header">
+      <h2>Student's Advanced Standings</h2>
+    </div>
+
+    <br/>
+
+    <div class="ui middle aligned divided list">
+      {{#each listAS as |userListAS|}}
+      {{#unless userListAS.isDeleted}}
+      <div class="item">
+        <div class="content">
+          <div class="header">
+            <h3>
+              <button class="negative ui button" onclick={{action 'deleteAS' userListAS}} style = "float: right;">Delete</button>
+              Course: {{userListAS.course}} <br />
+              Description: {{userListAS.description}}<br />
+              Units: {{userListAS.units}}<br />
+              Grade: {{userListAS.grade}}<br />
+              From: {{userListAS.from}}<br />
+            </h3>
+          </div>
+
+        </div>
+      </div>
+      {{/unless}}
+      {{/each}}
+
+    </div>
+
+    <br/>
+
+    <div class="ui center aligned header">
+      <h2>Add Advanced Standing</h2>
+    </div>
+
+    <br/>
 
     <div class="ui sixteen wide column">
       <form class="ui form">
         <div class="field">
           <label>Course Name</label>
-          {{input size="20" type="text"  value = courseNameAS}}
+          {{input disabled = addingStudent size="20" type="text"  value = courseNameAS}}
         </div>
 
         <div class="field">
           <label>Course Description</label>
-          {{input size="20" type="text"  value = descriptionAS}}
+          {{input disabled = addingStudent size="20" type="text"  value = descriptionAS}}
         </div>
 
         <div class="two fields">
           <div class="field">
             <label>Units</label>
-            {{input type="number" value = unitsAS}}
+            {{input disabled = addingStudent type="number" value = unitsAS}}
           </div>
           <div class="field">
             <label>Grade</label>
-            {{input type="number" max=100 min=0 value = gradeAS}}
+            {{input disabled = addingStudent type="number" max=100 min=0 value = gradeAS}}
           </div>
         </div>
 
         <div class="field">
           <label>From</label>
-          {{input size="20" type="text"  value = fromAS}}
+          {{input  disabled = addingStudent size="20" type="text"  value = fromAS}}
         </div>
 
       </form>
     </div>
 
-    <!--<div class="ui form">
-    <br>
-  <h2>Advanced Standing Information</h2>
-    <div class="ui form">
-
-      <div class="inline field">
-        <label>Course name</label>
-        {{input size="20" type="text"  value = courseNameAS }}
-      </div>
-
-      <div class="inline field">
-        <label>Description</label>
-        {{input size="20" type="text"  value = descriptionAS}}
-      </div>
-
-      <div class="inline field">
-        <label>Units</label>
-        {{input size="10" type="text"  value = unitsAS}}
-      </div>
-
-      <div class="inline field">
-        <label>Grade</label>
-        {{input size="10" type="text"  value = gradeAS}}
-      </div>
-
-      <div class="inline field">
-        <label>From</label>
-        {{input size="20" type="text"  value = fromAS}}
-      </div>
-    </div>-->
 
     <br />
 
-    <button class="ui primary button" {{action 'addAS'}}>
-      Add Advanced Standing
-    </button>
+    <div class="ui center aligned header">
+      <button class="ui primary button" {{action 'addAS'}} disabled = {{addingStudent}}>
+        Add Advanced Standing
+      </button>
+    </div>
 
     <br />
 
-    {{#each listAS as |userListAS|}}
-      {{#unless userListAS.isDeleted}}
-        <br />
-        <div class="ui radio checkbox">
-          <input type="radio" name="advStandingRadio" onchange={{action 'getAdvancedStanding' userListAS}}>
 
-          <label>Course: {{userListAS.course}} <br />
-          Description: {{userListAS.description}}<br />
-          Units: {{userListAS.units}}<br />
-          Grade: {{userListAS.grade}}<br />
-          From: {{userListAS.from}}</label><br />
-        </div>
-      {{/unless}}
-    {{/each}}
-    <br>
-    <button class="ui button" onclick={{action 'deleteAS'}}>Delete</button>
   </div>
 
+
+
+
+
+  <!-- Scholarship and award tab-->
+
   <div class = "ui tab" data-tab="scholarshipAndAward" style="background-color: #eee3fd; padding: 14px;">
+
+    <div class="ui center aligned header">
+      <h2>Student's Scholarships and Awards</h2>
+    </div>
+
+    <div class="ui middle aligned divided list">
+      {{#each scholarShipAndAwardList as |userScholarShipAndAwardList|}}
+      {{#unless userScholarShipAndAwardList.isDeleted}}
+      <div class="item">
+        <div class="content">
+          <div class="header">
+            <h3>
+              <button class="negative ui button" onclick={{action 'deleteScholarshipAward' userScholarShipAndAwardList}} style = "float: right;">Delete</button>
+              Note: {{userScholarShipAndAwardList.note}}
+            </h3>
+          </div>
+
+        </div>
+      </div>
+      {{/unless}}
+      {{/each}}
+
+    </div>
+
+    <br/>
+
+    <div class="ui center aligned header">
+      <h2>Add Scholarships and Awards</h2>
+    </div>
+
+    <br/>
 
     <div class="ui form">
       <div class="field">
         <label>Note</label>
 
-      {{textarea type="text" value = scholarshipAndAwardNote}}
+        {{textarea  disabled = addingStudent type="text" value = scholarshipAndAwardNote}}
 
       </div>
     </div>
 
-    <br />
+    <br/>
 
-    <button class="ui primary button" {{action 'addScholarShipAndAward'}}>
-      Add
-    </button>
-      <br />
-    {{#each scholarShipAndAwardList as |userScholarShipAndAwardList|}}
-        {{#unless userScholarShipAndAwardList.isDeleted}}
-          <br />
-          <div class="ui radio checkbox">
-            <input type="radio" name="advStandingRadio" onchange={{action 'getScholarshipAward' userScholarShipAndAwardList}}>
-              <label>Note: {{userScholarShipAndAwardList.note}}</label> <br />
-          </div>
-        {{/unless}}
-    {{/each}}
-    <br>
-    <button class="ui button" onclick={{action 'deleteScholarshipAward'}}>Delete</button>
+    <div class="ui center aligned header">
+      <button class="ui primary button" {{action 'addScholarShipAndAward'}} disabled = {{addingStudent}}>
+        Add
+      </button>
+    </div>
+
   </div>
 
-{{/if}}
+  {{/if}}
