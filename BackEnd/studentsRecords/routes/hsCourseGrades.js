@@ -7,65 +7,66 @@ var parseJSON = bodyParser.json();
 
 router.route('/')
     .post(parseUrlencoded, parseJSON, function (request, response) {
-        var scholarshipAward = new models.ScholarshipAwards(request.body.scholarshipAward);
-        scholarshipAward.save(function (error) {
+        var hsCourseGrade = new models.HsCourseGrades(request.body.hsCourseGrade);
+        hsCourseGrade.save(function (error) {
             if (error) response.send(error);
-            response.json({scholarshipAward: scholarshipAward});
+            response.json({hsCourseGrade: hsCourseGrade});
         });
     })
     .get(parseUrlencoded, parseJSON, function (request, response) {
 
-        var scholarshipAwardFilter = request.query.filter;
-        if (!scholarshipAwardFilter) {
-            models.ScholarshipAwards.find(function (error, scholarshipAwards) {
+        var hsCourseGradeFilter = request.query.filter;
+        if (!hsCourseGradeFilter) {
+            models.HsCourseGrades.find(function (error, hsCourseGrades) {
                 if (error) response.send(error);
-                response.json({scholarshipAward: scholarshipAwards});
+                response.json({hsCourseGrade: hsCourseGrades});
             });
             console.log("no filter");
         } else {
           console.log("filter");
-            models.ScholarshipAwards.find({"student": request.query.student}, function (error, scholarshipAwards) {
+            models.HsCourseGrades.find({"student": request.query.student}, function (error, hsCourseGrades) {
                 if (error) response.send(error);
-                response.json({scholarshipAward: scholarshipAwards});
+                response.json({hsCourseGrade: hsCourseGrades});
             });
         }
     });
 
-router.route('/:scholarshipAward_id')
+router.route('/:hsCourseGrade_id')
     .get(parseUrlencoded, parseJSON, function (request, response) {
-        models.ScholarshipAwards.findById(request.params.scholarshipAward_id, function (error, scholarshipAward) {
+        models.HsCourseGrades.findById(request.params.hsCourseGrade_id, function (error, hsCourseGrade) {
             if (error) {
                 response.send({error: error});
             }
             else {
-                response.json({scholarshipAward: scholarshipAward});
+                response.json({hsCourseGrade: hsCourseGrade});
             }
         });
     })
     .put(parseUrlencoded, parseJSON, function (request, response) {
-        models.ScholarshipAwards.findById(request.params.scholarshipAward_id, function (error, scholarshipAward) {
+        models.HsCourseGrades.findById(request.params.hsCourseGrade_id, function (error, hsCourseGrade) {
             if (error) {
                 response.send({error: error});
             }
             else {
-                scholarshipAward.note = request.scholarshipAward.note;
+                hsCourseGrade.mark = request.hsCourseGrade.mark;
+                hsCourseGrade.source = request.hsCourseGrade.source;
 
-                scholarshipAward.save(function (error) {
+                hsCourseGrade.save(function (error) {
                     if (error) {
                         response.send({error: error});
                     }
                     else {
-                        response.json({scholarshipAward: scholarshipAward});
+                        response.json({hsCourseGrade: hsCourseGrade});
                     }
                 });
             }
         });
     })
     .delete(parseUrlencoded, parseJSON, function (request, response) {
-        models.ScholarshipAwards.findByIdAndRemove(request.params.scholarshipAward_id,
+        models.HsCourseGrades.findByIdAndRemove(request.params.hsCourseGrade_id,
             function (error, deleted) {
                 if (!error) {
-                    response.json({scholarshipAward: deleted});
+                    response.json({hsCourseGrade: deleted});
                 }
             }
         );

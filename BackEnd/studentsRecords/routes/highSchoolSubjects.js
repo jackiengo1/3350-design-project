@@ -7,65 +7,66 @@ var parseJSON = bodyParser.json();
 
 router.route('/')
     .post(parseUrlencoded, parseJSON, function (request, response) {
-        var scholarshipAward = new models.ScholarshipAwards(request.body.scholarshipAward);
-        scholarshipAward.save(function (error) {
+        var highSchoolSubject = new models.HighSchoolSubjects(request.body.highSchoolSubject);
+        highSchoolSubject.save(function (error) {
             if (error) response.send(error);
-            response.json({scholarshipAward: scholarshipAward});
+            response.json({highSchoolSubject: highSchoolSubject});
         });
     })
     .get(parseUrlencoded, parseJSON, function (request, response) {
 
-        var scholarshipAwardFilter = request.query.filter;
-        if (!scholarshipAwardFilter) {
-            models.ScholarshipAwards.find(function (error, scholarshipAwards) {
+        var highSchoolSubjectFilter = request.query.filter;
+        if (!highSchoolSubjectFilter) {
+            models.HighSchoolSubjects.find(function (error, highSchoolSubjects) {
                 if (error) response.send(error);
-                response.json({scholarshipAward: scholarshipAwards});
+                response.json({highSchoolSubject: highSchoolSubjects});
             });
             console.log("no filter");
         } else {
           console.log("filter");
-            models.ScholarshipAwards.find({"student": request.query.student}, function (error, scholarshipAwards) {
+            models.HighSchoolSubjects.find({"highSchoolSubject": request.query.highSchoolSubject}, function (error, highSchoolSubjects) {
                 if (error) response.send(error);
-                response.json({scholarshipAward: scholarshipAwards});
+                response.json({highSchoolSubject: highSchoolSubjects});
             });
         }
     });
 
-router.route('/:scholarshipAward_id')
+router.route('/:highSchoolSubject_id')
     .get(parseUrlencoded, parseJSON, function (request, response) {
-        models.ScholarshipAwards.findById(request.params.scholarshipAward_id, function (error, scholarshipAward) {
+        models.HighSchoolSubjects.findById(request.params.highSchoolSubject_id, function (error, highSchoolSubject) {
             if (error) {
                 response.send({error: error});
             }
             else {
-                response.json({scholarshipAward: scholarshipAward});
+                response.json({highSchoolSubject: highSchoolSubject});
             }
         });
     })
     .put(parseUrlencoded, parseJSON, function (request, response) {
-        models.ScholarshipAwards.findById(request.params.scholarshipAward_id, function (error, scholarshipAward) {
+        models.HighSchoolSubjects.findById(request.params.highSchoolSubject_id, function (error, highSchoolSubject) {
             if (error) {
                 response.send({error: error});
             }
             else {
-                scholarshipAward.note = request.scholarshipAward.note;
+                highSchoolSubject.name = request.highSchoolSubject.name;
+                highSchoolSubject.description = request.highSchoolSubject.description;
 
-                scholarshipAward.save(function (error) {
+                highSchoolSubject.save(function (error) {
                     if (error) {
                         response.send({error: error});
                     }
                     else {
-                        response.json({scholarshipAward: scholarshipAward});
+                        response.json({highSchoolSubject: highSchoolSubject});
                     }
                 });
             }
         });
     })
     .delete(parseUrlencoded, parseJSON, function (request, response) {
-        models.ScholarshipAwards.findByIdAndRemove(request.params.scholarshipAward_id,
+        models.HighSchoolSubjects.findByIdAndRemove(request.params.highSchoolSubject_id,
             function (error, deleted) {
                 if (!error) {
-                    response.json({scholarshipAward: deleted});
+                    response.json({highSchoolSubject: deleted});
                 }
             }
         );

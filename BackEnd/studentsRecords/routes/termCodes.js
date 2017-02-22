@@ -7,65 +7,67 @@ var parseJSON = bodyParser.json();
 
 router.route('/')
     .post(parseUrlencoded, parseJSON, function (request, response) {
-        var scholarshipAward = new models.ScholarshipAwards(request.body.scholarshipAward);
-        scholarshipAward.save(function (error) {
+        var termCode = new models.TermCodes(request.body.termCode);
+        termCode.save(function (error) {
             if (error) response.send(error);
-            response.json({scholarshipAward: scholarshipAward});
+            response.json({termCode: termCode});
         });
     })
     .get(parseUrlencoded, parseJSON, function (request, response) {
 
-        var scholarshipAwardFilter = request.query.filter;
-        if (!scholarshipAwardFilter) {
-            models.ScholarshipAwards.find(function (error, scholarshipAwards) {
+        var termCodeFilter = request.query.filter;
+        if (!termCodeFilter) {
+            models.TermCodes.find(function (error, termCodes) {
                 if (error) response.send(error);
-                response.json({scholarshipAward: scholarshipAwards});
+                response.json({termCode: termCodes});
             });
             console.log("no filter");
         } else {
           console.log("filter");
-            models.ScholarshipAwards.find({"student": request.query.student}, function (error, scholarshipAwards) {
+            models.TermCodes.find({"student": request.query.student}, function (error, termCodes) {
                 if (error) response.send(error);
-                response.json({scholarshipAward: scholarshipAwards});
+                response.json({termCode: termCodes});
             });
         }
     });
 
-router.route('/:scholarshipAward_id')
+router.route('/:termCode_id')
     .get(parseUrlencoded, parseJSON, function (request, response) {
-        models.ScholarshipAwards.findById(request.params.scholarshipAward_id, function (error, scholarshipAward) {
+        models.TermCodes.findById(request.params.termCode_id, function (error, termCode) {
             if (error) {
                 response.send({error: error});
             }
             else {
-                response.json({scholarshipAward: scholarshipAward});
+                response.json({termCode: termCode});
             }
         });
     })
     .put(parseUrlencoded, parseJSON, function (request, response) {
-        models.ScholarshipAwards.findById(request.params.scholarshipAward_id, function (error, scholarshipAward) {
+        models.TermCodes.findById(request.params.termCode_id, function (error, termCode) {
             if (error) {
                 response.send({error: error});
             }
             else {
-                scholarshipAward.note = request.scholarshipAward.note;
+                termCode.name = request.termCode.name;
+                termCode.courseInfo = request.termCode.courseInfo;
+                termCode.program = request.termCode.program;
 
-                scholarshipAward.save(function (error) {
+                termCode.save(function (error) {
                     if (error) {
                         response.send({error: error});
                     }
                     else {
-                        response.json({scholarshipAward: scholarshipAward});
+                        response.json({termCode: termCode});
                     }
                 });
             }
         });
     })
     .delete(parseUrlencoded, parseJSON, function (request, response) {
-        models.ScholarshipAwards.findByIdAndRemove(request.params.scholarshipAward_id,
+        models.TermCodes.findByIdAndRemove(request.params.termCode_id,
             function (error, deleted) {
                 if (!error) {
-                    response.json({scholarshipAward: deleted});
+                    response.json({termCode: deleted});
                 }
             }
         );

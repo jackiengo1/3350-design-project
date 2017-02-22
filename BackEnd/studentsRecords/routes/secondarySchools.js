@@ -7,65 +7,65 @@ var parseJSON = bodyParser.json();
 
 router.route('/')
     .post(parseUrlencoded, parseJSON, function (request, response) {
-        var scholarshipAward = new models.ScholarshipAwards(request.body.scholarshipAward);
-        scholarshipAward.save(function (error) {
+        var secondarySchool = new models.SecondarySchools(request.body.secondarySchool);
+        secondarySchool.save(function (error) {
             if (error) response.send(error);
-            response.json({scholarshipAward: scholarshipAward});
+            response.json({secondarySchool: secondarySchool});
         });
     })
     .get(parseUrlencoded, parseJSON, function (request, response) {
 
-        var scholarshipAwardFilter = request.query.filter;
-        if (!scholarshipAwardFilter) {
-            models.ScholarshipAwards.find(function (error, scholarshipAwards) {
+        var secondarySchoolFilter = request.query.filter;
+        if (!secondarySchoolFilter) {
+            models.SecondarySchools.find(function (error, secondarySchools) {
                 if (error) response.send(error);
-                response.json({scholarshipAward: scholarshipAwards});
+                response.json({secondarySchool: secondarySchools});
             });
             console.log("no filter");
         } else {
           console.log("filter");
-            models.ScholarshipAwards.find({"student": request.query.student}, function (error, scholarshipAwards) {
+            models.SecondarySchools.find({"secondarySchool": request.query.secondarySchool}, function (error, secondarySchools) {
                 if (error) response.send(error);
-                response.json({scholarshipAward: scholarshipAwards});
+                response.json({secondarySchool: secondarySchools});
             });
         }
     });
 
-router.route('/:scholarshipAward_id')
+router.route('/:secondarySchool_id')
     .get(parseUrlencoded, parseJSON, function (request, response) {
-        models.ScholarshipAwards.findById(request.params.scholarshipAward_id, function (error, scholarshipAward) {
+        models.SecondarySchools.findById(request.params.secondarySchool_id, function (error, secondarySchool) {
             if (error) {
                 response.send({error: error});
             }
             else {
-                response.json({scholarshipAward: scholarshipAward});
+                response.json({secondarySchool: secondarySchool});
             }
         });
     })
     .put(parseUrlencoded, parseJSON, function (request, response) {
-        models.ScholarshipAwards.findById(request.params.scholarshipAward_id, function (error, scholarshipAward) {
+        models.SecondarySchools.findById(request.params.secondarySchool_id, function (error, secondarySchool) {
             if (error) {
                 response.send({error: error});
             }
             else {
-                scholarshipAward.note = request.scholarshipAward.note;
+                secondarySchool.name = request.secondarySchool.name;
 
-                scholarshipAward.save(function (error) {
+                secondarySchool.save(function (error) {
                     if (error) {
                         response.send({error: error});
                     }
                     else {
-                        response.json({scholarshipAward: scholarshipAward});
+                        response.json({secondarySchool: secondarySchool});
                     }
                 });
             }
         });
     })
     .delete(parseUrlencoded, parseJSON, function (request, response) {
-        models.ScholarshipAwards.findByIdAndRemove(request.params.scholarshipAward_id,
+        models.SecondarySchools.findByIdAndRemove(request.params.secondarySchool_id,
             function (error, deleted) {
                 if (!error) {
-                    response.json({scholarshipAward: deleted});
+                    response.json({secondarySchool: deleted});
                 }
             }
         );
