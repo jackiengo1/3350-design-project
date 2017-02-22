@@ -15,6 +15,9 @@
     <a class="item " {{action "addHighSchoolInfo"}} style="font-size: 16px; font-weight: bold;">
       <i class="large setting icon"></i> Configure High School Information
     </a>
+    <a class="item " {{action "addProgramRecord"}} style="font-size: 16px; font-weight: bold;">
+      <i class="large setting icon"></i> Configure Program Record Information
+    </a>
     <a class="item " {{action "about"}} style="font-size: 16px; font-weight: bold;">
         <i class="large user icon"></i> About
     </a>
@@ -44,6 +47,9 @@
           {{/if}}
           {{#if isAddHighSchoolInfoShowing}}
             {{add-highschoolrecord}}
+          {{/if}}
+          {{#if isAddProgramRecordShowing}}
+            {{add-program-record}}
           {{/if}}
         </div>
     </div>
