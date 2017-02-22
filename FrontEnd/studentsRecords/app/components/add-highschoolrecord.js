@@ -8,13 +8,13 @@ export default Ember.Component.extend({
 
   init() {
     this._super(...arguments);
-
+    var self = this;
     // load gender data model
     this.get('store').findAll('secondarySchool').then(function(records){
       self.set('secondarySchoolModel', records);
     });
+    console.log(this.get('secondarySchoolModel'));
 
-      var self = this;
 
   },
 

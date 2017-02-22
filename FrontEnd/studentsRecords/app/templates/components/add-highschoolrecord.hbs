@@ -20,12 +20,12 @@
 
 
 <div class="ui middle aligned divided list">
-  {{#each secondarySchoolModel as |secondarySchoolModel|}}
+  {{#each secondarySchoolModel as |oneSecondarySchool|}}
     <div class="item">
       <div class="content">
         <div class="header">
           <h3>
-            {{secondarySchoolModel.name}} <button class="negative ui button" onclick={{action 'deleteSecondarySchool' secondarySchoolModel}} style = "float: right;">Delete</button>
+            {{oneSecondarySchool.name}} <button class="negative ui button" onclick={{action 'deleteSecondarySchool' oneSecondarySchool}} style = "float: right;">Delete</button>
           </h3>
         </div>
 
