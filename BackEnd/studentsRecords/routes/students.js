@@ -156,8 +156,10 @@ router.route('/')
         student.genderInfo = request.body.student.genderInfo;
         student.scholInfo = request.body.student.scholInfo;
         //
-
         student.resInfo = request.body.student.resInfo;
+
+        student.highSchoolCourse = request.body.student.highSchoolCourse;
+        student.semester = request.body.student.semester;
 
         student.save(function (error) {
           if (error) {

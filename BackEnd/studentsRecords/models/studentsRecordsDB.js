@@ -90,7 +90,7 @@ var programRecordSchema = mongoose.Schema(
     level: String,
     load: String,
     status: String,
-    plan : {type: mongoose.Schema.ObjectId, ref: 'PlanCodes'}
+    plan : [{type: mongoose.Schema.ObjectId, ref: 'PlanCodes'}]
   }
 );
 
@@ -114,7 +114,7 @@ var courseCodeSchema = mongoose.Schema(
     courseNumber: String,
     name: String,
     unit: String,
-    mark: {type: mongoose.Schema.ObjectId, ref: 'Grades'}
+    mark: [{type: mongoose.Schema.ObjectId, ref: 'Grades'}]
   }
 );
 
