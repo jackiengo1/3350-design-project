@@ -24,6 +24,16 @@ app.use('/residencies', residencies);
 app.use('/genders', genders);
 app.use('/advancedStandings', advancedStandings);
 app.use('/scholarshipAwards', scholarshipAwards);
+//
+app.use('/grades', grades);
+app.use('/courseCodes', courseCodes);
+app.use('/termCodes', termCodes);
+app.use('/planCodes', planCodes);
+app.use('/highSchoolCourses', highSchoolCourses);
+app.use('/highSchoolSubjects', highSchoolSubjects);
+app.use('/hsCourseGrades', hsCourseGrades);
+app.use('/secondarySchools', secondarySchools);
+app.use('/programRecords', programRecords);
 
 
 app.listen(3700, function () {
