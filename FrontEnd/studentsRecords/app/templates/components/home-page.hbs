@@ -12,6 +12,9 @@
     <a class="item " {{action "addGender"}} style="font-size: 16px; font-weight: bold;">
         <i class="large setting icon"></i> Configure Gender
     </a>
+    <a class="item " {{action "addHighSchoolInfo"}} style="font-size: 16px; font-weight: bold;">
+      <i class="large setting icon"></i> Configure High School Information
+    </a>
     <a class="item " {{action "about"}} style="font-size: 16px; font-weight: bold;">
         <i class="large user icon"></i> About
     </a>
@@ -38,6 +41,9 @@
             {{/if}}
           {{#if isAddGenderShowing}}
             {{add-gender}}
+          {{/if}}
+          {{#if isAddHighSchoolInfoShowing}}
+            {{add-highschoolrecord}}
           {{/if}}
         </div>
     </div>
