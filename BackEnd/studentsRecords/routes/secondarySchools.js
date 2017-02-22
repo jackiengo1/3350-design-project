@@ -17,7 +17,7 @@ router.route('/')
 
         var secondarySchoolFilter = request.query.filter;
         if (!secondarySchoolFilter) {
-            models.SecondarySchool.find(function (error, secondarySchools) {
+            models.SecondarySchools.find(function (error, secondarySchools) {
                 if (error) response.send(error);
                 response.json({secondarySchool: secondarySchools});
             });

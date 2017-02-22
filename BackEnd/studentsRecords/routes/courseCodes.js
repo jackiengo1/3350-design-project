@@ -16,7 +16,7 @@ router.route('/')
     .get(parseUrlencoded, parseJSON, function (request, response) {
 
         var courseCodeFilter = request.query.filter;
-        if (!scholarshipAwardFilter) {
+        if (!courseCodeFilter) {
             models.CourseCodes.find(function (error, courseCodes) {
                 if (error) response.send(error);
                 response.json({courseCode: courseCodes});

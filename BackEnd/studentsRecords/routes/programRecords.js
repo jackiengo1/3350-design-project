@@ -19,7 +19,7 @@ router.route('/')
         if (!programRecordFilter) {
             models.ProgramRecords.find(function (error, programRecords) {
                 if (error) response.send(error);
-                response.json({programRecord: programRecord});
+                response.json({programRecord: programRecords});
             });
             console.log("no filter");
         } else {

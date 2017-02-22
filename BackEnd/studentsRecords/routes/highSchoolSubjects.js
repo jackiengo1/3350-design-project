@@ -17,7 +17,7 @@ router.route('/')
 
         var highSchoolSubjectFilter = request.query.filter;
         if (!highSchoolSubjectFilter) {
-            models.HighSchoolSubject.find(function (error, highSchoolSubjects) {
+            models.HighSchoolSubjects.find(function (error, highSchoolSubjects) {
                 if (error) response.send(error);
                 response.json({highSchoolSubject: highSchoolSubjects});
             });
