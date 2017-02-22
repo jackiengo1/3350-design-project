@@ -13,5 +13,7 @@ export default DS.Model.extend({
   admissionComments: DS.attr(),
   advInfo: DS.hasMany('advancedStanding'),
   genderInfo: DS.belongsTo('gender'),
-  scholInfo: DS.hasMany('scholarshipAward')
+  scholInfo: DS.hasMany('scholarshipAward'),
+  hsCourseGrade: DS.hasMany('hscourse-grade'),
+  gradeInfo:DS.hasMany('grade'),
 });
