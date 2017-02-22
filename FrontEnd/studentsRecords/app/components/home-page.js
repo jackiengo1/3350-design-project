@@ -17,7 +17,7 @@ export default Ember.Component.extend({
     isAboutShowing: false,
     isAddGenderShowing: false,
     isAddResidencyShowing: false,
-
+    isAddHighSchoolInfoShowing: false,
     actions: {
         home () {
             this.set('isHomeShowing', true);
@@ -26,6 +26,7 @@ export default Ember.Component.extend({
             this.set('isAddStudentShowing', false);
             this.set('isAddResidencyShowing', false);
           this.set('isAddGenderShowing', false);
+          this.set('isAddHighSchoolInfoShowing', false);
         },
 
         studentsDataEntry (){
@@ -35,6 +36,7 @@ export default Ember.Component.extend({
             this.set('isAddStudentShowing', false);
           this.set('isAddResidencyShowing', false);
           this.set('isAddGenderShowing', false);
+          this.set('isAddHighSchoolInfoShowing', false);
         },
 
         about (){
@@ -44,6 +46,7 @@ export default Ember.Component.extend({
             this.set('isAddStudentShowing', false);
           this.set('isAddResidencyShowing', false);
           this.set('isAddGenderShowing', false);
+          this.set('isAddHighSchoolInfoShowing', false);
         },
 
         addResidency(){
@@ -53,6 +56,7 @@ export default Ember.Component.extend({
             this.set('isAddResidencyShowing', true);
           this.set('isAddGenderShowing', false);
           this.set('isAddStudentShowing', false);
+          this.set('isAddHighSchoolInfoShowing', false);
         },
         addGender(){
           this.set('isHomeShowing', false);
@@ -61,6 +65,16 @@ export default Ember.Component.extend({
           this.set('isAddResidencyShowing', false);
           this.set('isAddGenderShowing', true);
           this.set('isAddStudentShowing', false);
+          this.set('isAddHighSchoolInfoShowing', false);
+        },
+        addHighSchoolInfo(){
+          this.set('isHomeShowing', false);
+          this.set('isStudentsRecordsDataEntry', false);
+          this.set('isAboutShowing', false);
+          this.set('isAddResidencyShowing', false);
+          this.set('isAddGenderShowing', false);
+          this.set('isAddStudentShowing', false);
+          this.set('isAddHighSchoolInfoShowing', true);
         }
     }
 });
