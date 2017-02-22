@@ -18,6 +18,23 @@
 
 </div>
 
+
+<div class="ui middle aligned divided list">
+  {{#each secondarySchoolModel as |secondarySchoolModel|}}
+    <div class="item">
+      <div class="content">
+        <div class="header">
+          <h3>
+            {{secondarySchoolModel.name}} <button class="negative ui button" onclick={{action 'deleteSecondarySchool' secondarySchoolModel}} style = "float: right;">Delete</button>
+          </h3>
+        </div>
+
+      </div>
+    </div>
+  {{/each}}
+
+</div>
+
 <div class="ui grid">
   <div class="ui middle aligned sixteen wide column">
     <div class="ui form">

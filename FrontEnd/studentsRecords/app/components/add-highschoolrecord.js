@@ -1,6 +1,24 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+
+  store: Ember.inject.service(),
+  secondarySchoolModel: null,
+
+
+  init() {
+    this._super(...arguments);
+
+    // load gender data model
+    this.get('store').findAll('secondarySchool').then(function(records){
+      self.set('secondarySchoolModel', records);
+    });
+
+      var self = this;
+
+  },
+
+
   actions: {
     //Add a high-school mark
     addhsMark(){
@@ -26,17 +44,15 @@ export default Ember.Component.extend({
 
     //Add a secondary school
     addSecondarySchool(){
-      var newSecondarySchool = this.get('store').createRecord('sschool', {
-
-        name: this.get('ssName'),
-        highSchoolCoursesInfo: this.get('highSchoolCoursesInfo'),
+      var newSecondarySchool = this.get('store').createRecord('secondary-school', {
+        name: this.get('ssName')
       });
       newSecondarySchool.save();
     },
 
     //Add a high-school subject
     addhsSubject(){
-      var newhsSubject = this.get('store').createRecord('hsSubject', {
+      var newhsSubject = this.get('store').createRecord('high-school-subject', {
         name: this.get('subjectName'),
         description: this.get('description'),
         highSchoolCourses: this.get('courses'),
@@ -71,13 +87,11 @@ export default Ember.Component.extend({
     },
 
     //Add a secondary school
-    deleteSecondarySchool(){
+    deleteSecondarySchool( secondarySchool){
       var choice = confirm('Are you sure you want to delete this?');
       if (choice) {
-        var index = this.get('ssModel').indexOf(secondary-school);
-        this.set('ssIndex', index);
-        var indextemp = this.get('ssIndex');
-        var restemp = this.get('ssModel').objectAt(indextemp);
+        var index = this.get('secondarySchoolModel').indexOf(secondarySchool);
+        var restemp = this.get('secondarySchoolModel').objectAt(index);
         console.log(restemp);
         restemp.deleteRecord();
         restemp.save();
