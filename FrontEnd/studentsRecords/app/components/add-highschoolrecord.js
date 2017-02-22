@@ -28,8 +28,8 @@ export default Ember.Component.extend({
     addSecondarySchool(){
       var newSecondarySchool = this.get('store').createRecord('sschool', {
 
-        name: this.get('schoolName'),
-        highSchoolCoursesInfo: this.get('schoolCourseInfo'),
+        name: this.get('ssName'),
+        highSchoolCoursesInfo: this.get('highSchoolCoursesInfo'),
       });
       newSecondarySchool.save();
     },
