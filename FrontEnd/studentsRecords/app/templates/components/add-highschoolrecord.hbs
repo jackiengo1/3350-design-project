@@ -17,3 +17,22 @@
   {{/each}}
 
 </div>
+
+<div class="ui grid">
+  <div class="ui middle aligned sixteen wide column">
+    <div class="ui form">
+      <div class="inline field">
+        <label style= "font-size: 20px;">Secondary School</label>
+        {{input type="text"  value = ssName}}
+        <label style= "font-size: 20px;">Courses Info</label>
+        {{input type="text"  value = highSchoolCoursesInfo}}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="ui center aligned header">
+  <button class="positive ui button" {{action 'addSecondarySchool'}}>
+    Add Secondary School
+  </button>
+</div>
