@@ -1,4 +1,72 @@
-<div class="ui center aligned header">
+  <div class="ui grid">
+
+    <div class="six wide column" style="padding-right: 20px;">
+      <div class="ui center aligned header" style="margin-bottom: 30px;">
+        <h2>Delete Secondary School</h2>
+      </div>
+
+      <div class="ui middle aligned divided list" style="margin-top: 22px; margin-bottom: 22px;">
+        {{#each secondarySchoolModel as |oneSecondarySchool|}}
+        <div class="item">
+          <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
+            <div class="negative ui button" onclick={{action 'deleteSecondarySchool' oneSecondarySchool}}>Delete</div>
+          </div>
+          <div class="content" style="padding-top: 10px; font-size: 16px;">
+            {{oneSecondarySchool.name}}
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+
+
+    <div class="six wide column" style="padding-right: 20px;">
+      <div class="ui center aligned header" style="margin-bottom: 30px;">
+        <h2>Delete Course Info</h2>
+      </div>
+
+      <div class="ui middle aligned divided list" style="margin-top: 22px; margin-bottom: 22px;">
+        {{#each hsSubjectModel as |onehsSubject|}}
+        <div class="item">
+          <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
+            <div class="negative ui button" onclick={{action 'deletehsSubject' onehsSubject}}>Delete</div>
+          </div>
+          <div class="content" style="padding-top: 10px; font-size: 16px;">
+            {{onehsSubject.name}}
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+
+    <div class="four wide column" style="padding-left: 20px;">
+      <div class="ui center aligned header" style="margin-bottom: 30px;">
+        <h2>Add High School Info</h2>
+      </div>
+
+      <div class="ui form">
+        <div class="field">
+          <label>Secondary School</label>
+          {{input type="text"  value = ssName}}
+        </div>
+        <div class="field">
+          <label>Course Info</label>
+          {{input type="text"  value = highSchoolCoursesInfo}}
+        </div>
+      </div>
+
+      <div class="ui center aligned header">
+        <button class="positive ui button" {{action 'addSecondarySchool'}}>
+          Add Secondary School
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+
+
+{{!--<div class="ui center aligned header">
   <h2>High School Subjects</h2>
 </div>
 
@@ -52,4 +120,4 @@
   <button class="positive ui button" {{action 'addSecondarySchool'}}>
     Add Secondary School
   </button>
-</div>
+</div>--}}
