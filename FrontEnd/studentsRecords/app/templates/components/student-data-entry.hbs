@@ -148,7 +148,7 @@
   <div class="ui icon button" data-tooltip="Previous Student" {{action 'previousStudent'}}>
     <i class="arrow left large icon"></i>
   </div>
-  
+
   <div class="ui icon button" data-tooltip="Next Student" {{action 'nextStudent'}}>
     <i class="arrow right large icon"></i>
   </div>
@@ -274,6 +274,7 @@
             <div class="field">
               <label>Residency</label>
               <select onchange={{action 'selectResidency' value="target.value"}}>
+                
                 {{#each residencyModel as |residencyChoice|}}
 
                 <option value={{residencyChoice.id}} selected={{eq selectedResidency.id residencyChoice.id}}>{{residencyChoice.name}}</option>
@@ -329,7 +330,7 @@
 
     <div class="ui grid">
       <div class="eight wide column" style="padding-right: 20px;">
-        
+
         <div class="ui center aligned header" style="margin-bottom: 30px;">
           <h2>Student's Advanced Standings</h2>
         </div>
@@ -372,9 +373,9 @@
         {{/ui-accordion}}
 
       </div>
-      
+
       <div class="eight wide column" style="padding-left: 20px;">
-        
+
         <div class="ui center aligned header" style="margin-bottom: 30px;">
           <h2>Add Advanced Standing</h2>
         </div>
