@@ -21,6 +21,7 @@ export default Ember.Component.extend({
   currentStudent:null,
   currentHighSchool:null,
   currentHighSchoolSubject:null,
+  currentTerm:null,
 
   init() {
     this._super(...arguments);
@@ -659,6 +660,120 @@ export default Ember.Component.extend({
        }
      });
   }
+  else if(file.name === "AdmissionAverage.xlsx")
+  {
+    sheet_name_list.forEach(function (sheetName) {
+      var worksheet = workbook.Sheets[sheetName];
+
+      // //get the range of the worksheet
+        var range = XLSX.utils.decode_range(worksheet["!ref"]);
+      // //loop from start of the range to the end of the range
+      var lastStudentNum;
+       for(var R = (range.s.r+1); R <= range.e.r; R++)
+       {
+         var studentnum =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})];
+         var note =  worksheet[XLSX.utils.encode_cell({c: 1, r:R})].v;
+         if(studentnum == null)
+         {
+           studentnum =  lastStudentNum;
+         }
+         else{
+           //when student number is not null, record the student number
+           lastStudentNum = studentnum;
+         }
+         studentnum = studentnum.v;
+         self.send('findStudent',studentnum);
+         var studenttemp = self.get('currentStudent');
+         var updatednote;
+         if(studenttemp.get('admissionAverage') == null)
+         {
+            updatednote = note;
+         }
+         //else append the not into that
+         else{
+             updatednote = studenttemp.get('admissionAverage')+"\n"+note;
+         }
+
+         studenttemp.set('admissionAverage',updatednote);
+         //how to walk around here except ajax
+         studenttemp.save().then(() => {
+           //     this.set('isStudentFormEditing', false);
+         });
+       }
+     });
+  }
+
+  else if(file.name ==="UndergraduateRecordPlans.xlsx")
+  {
+    sheet_name_list.forEach(function (sheetName) {
+      var worksheet = workbook.Sheets[sheetName];
+
+      // //get the range of the worksheet
+      var range = XLSX.utils.decode_range(worksheet["!ref"]);
+      // //loop from start of the range to the end of the range
+      var lastterm,lastprogram,lastlevel,lastload;
+       for(var R = (range.s.r+1); R <= range.e.r; R++)
+       {
+         //student number not useful in this case
+         var term =  worksheet[XLSX.utils.encode_cell({c: 1, r:R})];
+         var program = worksheet[XLSX.utils.encode_cell({c: 2, r:R})];
+         var level = worksheet[XLSX.utils.encode_cell({c: 3, r:R})];
+         var load = worksheet[XLSX.utils.encode_cell({c: 4, r:R})];
+
+         if(term == null)
+         {
+           term = lastterm;
+           program = lastprogram;
+           
+         }
+         else{
+           lastterm = term;
+           lastprogram = program;
+           lastlevel = level;
+           lastload = load;
+         }
+
+         term = term.v;
+
+         var studentnum =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})].v;
+         var plan = worksheet[XLSX.utils.encode_cell({c: 5, r:R})].v;
+
+         self.send('findterm',term);
+         self.send('findstudent',studentnum);
+         var termobj = self.get('currentTerm');
+         var tempstudent = self.get('currentStudent');
+
+         //set the term code with student info
+         termobj.get('studentInfo',tempstudent);
+         termobj.save();
+
+         //create new plan code
+         var newplancode = self.get('store').createRecord('plan-code',{
+           name: plan,
+         });
+         var plancodearray = self.get('store').peekRecord('plan-code',newplancode);
+         if(plancodearray == null)
+         {
+           //if none same plan code is found, save it
+           newplancode.save();
+         }
+
+         //create a new program record
+         var newprogramRecord = self.get('store').createRecord('program-recorde', {
+           name: program,
+           level: level,
+           load: load,
+         });
+         var programrecordarray = self.get('store').peekRecord('program-recorde',newprogramRecord);
+         if(programrecordarray == null)
+         {
+           //if none same program record is found, save it
+           newprogramRecord.save();
+         }
+
+       }
+     });
+  }
 
 
 
@@ -707,8 +822,22 @@ findhighschool:function(highschool){
       self.set('currentHighSchool',temphighschool);
     }
   }
-}
+},
 
+findterm:function(term){
+  var self = this;
+  var length = self.get('termCodeModel').get('length');
+  for (var i=0;i<length;i++)
+  {
+    let temptermobj = self.get('termCodeModel').objectAt(i);
+    let tempterm = temptermobj.get('name');
+    //console.log(tempnum)
+    if(tempterm == term)
+    {
+      self.set('currentTerm',temptermobj);
+    }
+  }
+},
 
 
 }
