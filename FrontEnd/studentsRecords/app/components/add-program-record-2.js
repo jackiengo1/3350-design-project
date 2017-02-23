@@ -162,8 +162,8 @@ export default Ember.Component.extend({
     deleteProgramRecord(programRecord){
       var choice = confirm('Are you sure you want to delete this?');
       if (choice) {
-        var index = this.get('programrecordModel').indexOf(programRecord);
-        var restemp = this.get('programrecordModel').objectAt(index);
+        var index = this.get('programRecordModel').indexOf(programRecord);
+        var restemp = this.get('programRecordModel').objectAt(index);
         console.log(restemp);
         restemp.deleteRecord();
         restemp.save();
