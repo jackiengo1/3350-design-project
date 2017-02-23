@@ -98,9 +98,9 @@ export default Ember.Component.extend({
           load: this.get('programRecordLoad'),
           status: this.get('programRecordStatus'),
           courseCodeInfo: this.get('programRecordCourseCode'),
-          termCodeInfo: this.get('programRecordTermCode'),
+          semester: this.get('programRecordTermCode'),
           //plan code is a many to many relation, currently not sure if this correct
-          planCodeInfo: this.get('programRecordPlanCode'),
+          plan: this.get('programRecordPlanCode'),
         });
         newPgRecord.save();
         console.log(this.get('programRecordPlanCode').get('length'));
