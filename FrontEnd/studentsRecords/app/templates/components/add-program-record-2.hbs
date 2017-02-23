@@ -76,12 +76,12 @@
                   {{onePlanCode.name}}
                 </div>
                 <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
-                  <div class="negative ui button" onclick={{action 'deletePlanCode' onePlanCode}}>Delete</div>
+                  <div class="negative ui button" onclick={{action 'deleteFromPlanCodeArray' onePlanCode}}>Delete</div>
                 </div>
 
               </div>
               {{else}}
-              hello
+              You have not added any plan codes
               {{/each}}
 
 
@@ -106,6 +106,23 @@
           </div>
 
           <div class="ui eight wide column">
+            <div class="ui middle aligned divided list" style="margin-top: 22px; margin-bottom: 22px;">
+              {{#each programRecordTermCode as |oneTermCode|}}
+              <div class="item">
+                <div class="content" style="padding-top: 10px; font-size: 16px;">
+                  {{oneTermCode.name}}
+                </div>
+                <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
+                  <div class="negative ui button" onclick={{action 'deleteFromTermCodeArray' oneTermCode}}>Delete</div>
+                </div>
+
+              </div>
+              {{else}}
+              You have not added any term codes
+              {{/each}}
+
+
+            </div>
             <div class="field">
               <label>Term Code</label>
               <select onchange={{action 'selectTermCode' value="target.value"}}>
@@ -117,6 +134,10 @@
                 {{/each}}
               </select>
             </div>
+
+            <button class="positive ui button" {{action 'addToTermCodeArray'}}>
+              Add Term Code
+            </button>
           </div>
         </div>
 

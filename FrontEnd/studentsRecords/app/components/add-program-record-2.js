@@ -21,10 +21,13 @@ export default Ember.Component.extend({
   programRecordLoad: null,
   programRecordStatus: null,
   programRecordModel: null,
-  programRecordPlanCode: Ember.A([]),
+  programRecordPlanCode: Ember.A(),
   planCodeTemp: null,
-  programRecordTermCode: null,
+  programRecordTermCode: Ember.A(),
+  termCodeTemp: null,
   programRecordCourseCode: null,
+
+
 
 
   init() {
@@ -173,21 +176,31 @@ export default Ember.Component.extend({
     selectPlanCode(planCode){
       var planCodeObj = this.get('store').peekRecord('plan-code', planCode);
       this.set('planCodeTemp', planCodeObj);
-      console.log(this.get('planCodeTemp'));
+    //  console.log(this.get('planCodeTemp'));
     },
     selectTermCode(termCode){
-      this.set('programRecordTermCode', termCode);
+      var termCodeObj = this.get('store').peekRecord('term-code', termCode);
+      this.set('termCodeTemp', termCodeObj);
     },
     selectCourseCode(courseCode){
       this.set('programRecordCourseCode', courseCode);
     },
 
     addToPlanCodeArray(){
-      this.get('programRecordPlanCode').push(this.get('planCodeTemp'));
+      this.get('programRecordPlanCode').pushObject(this.get('planCodeTemp'));
+    },
 
-      for(var i = 0; i < this.get('programRecordPlanCode').length; i++){
-        console.log((this.get('programRecordPlanCode')[i]).get('name'));
-      }
+    deleteFromPlanCodeArray(planCode){
+      this.get('programRecordPlanCode').removeObject(planCode);
+
+    },
+    addToTermCodeArray(){
+      this.get('programRecordTermCode').pushObject(this.get('termCodeTemp'));
+    },
+
+    deleteFromTermCodeArray(termCode){
+      this.get('programRecordTermCode').removeObject(termCode);
+
     }
 
   }
