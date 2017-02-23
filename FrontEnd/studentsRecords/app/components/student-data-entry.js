@@ -69,7 +69,8 @@ export default Ember.Component.extend({
   studentRecordResults: null,
 
   tabInfoText: "Basic Info",
-  addStudentStyles: "",
+  scholarshipTabStyles: "",
+  advancedstandingTabStyles: "",
 
   addingStudent: false,
   backToBasicInfo: true,
@@ -106,7 +107,7 @@ export default Ember.Component.extend({
   fetchStudent: Ember.observer('currentIndex', function () {  //observes changes to the index
     this.showStudentData(this.get('currentIndex'));           //calls function showStudentData with current index
   }),
-
+  
   init() {
     this._super(...arguments);
     // load Residency data model
@@ -601,7 +602,8 @@ export default Ember.Component.extend({
         this.set('addingStudent', false);
         this.set('scholarshipTabIsDisabled', false);
         this.set('advancedstandingTabIsDisabled', false);
-        this.set('addStudentStyles', "");
+        this.set('scholarshipTabStyles', "");
+        this.set('advancedstandingTabStyles', "");
         this.set('tabInfoText', "Basic Info");
         this.set('backToBasicInfo', true);
         this.set('endOfRecords', false);
@@ -612,7 +614,8 @@ export default Ember.Component.extend({
     goToAddStudent(){
       this.set('scholarshipTabIsDisabled', true);
       this.set('advancedstandingTabIsDisabled', true);
-      this.set('addStudentStyles', "pointer-events: none;");
+      this.set('scholarshipTabStyles', "pointer-events: none;");
+      this.set('advancedstandingTabStyles', "pointer-events: none;");
       this.set('tabInfoText', "Add Student");
       this.set('backToBasicInfo', true);
       this.set('addingStudent', true);
@@ -715,7 +718,8 @@ export default Ember.Component.extend({
       this.set('addingStudent', false);
       this.set('scholarshipTabIsDisabled', false);
       this.set('advancedstandingTabIsDisabled', false);
-      this.set('addStudentStyles', "");
+      this.set('scholarshipTabStyles', "");
+      this.set('advancedstandingTabStyles', "");
       this.set('tabInfoText', "Basic Info");
       this.set('backToBasicInfo', true);
       this.set('showFindRecord', false);

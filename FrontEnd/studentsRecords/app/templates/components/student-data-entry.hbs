@@ -180,10 +180,8 @@
 <div class="ui pointing secondary menu">
 
   <a class=" active item {{if backToBasicInfo 'active'}}" data-tab="basics" >{{tabInfoText}}</a>
-  <a class=" item {{if scholarshipTabIsDisabled 'disabled'}}" data-tab="scholarshipAndAward" style = "{{addStudentStyles}}">Scholarships and Awards</a>
-  <a class="item {{if scholarshipTabIsDisabled 'disabled'}}" data-tab="advancedStanding" style = "{{addStudentStyles}}">Advanced Standings</a>
-  <a class="item {{if scholarshipTabIsDisabled 'disabled'}}" data-tab="HSCourses" style = "{{addStudentStyles}}"> High School Courses</a>
-  <a class="item {{if scholarshipTabIsDisabled 'disabled'}}" data-tab="programRecord" style = "{{addStudentStyles}}"> High School Courses</a>
+  <a class=" item {{if scholarshipTabIsDisabled 'disabled'}}" data-tab="scholarshipAndAward" style = "{{scholarshipTabStyles}}">Scholarships and Awards</a>
+  <a class="item {{if scholarshipTabIsDisabled 'disabled'}}" data-tab="advancedStanding" style = "{{advancedstandingTabStyles}}">Advanced Standings</a>
 
 </div>
 
@@ -426,14 +424,5 @@
     </div>
 
   </div>
-
-
-<!-- HS record tab-->
-    <div class = "ui tab" data-tab="HSCourses" style="background-color: #eee3fd; padding: 14px;">
-    </div>
-
-    <!-- program record tab-->
-        <div class = "ui tab" data-tab="programRecord" style="background-color: #eee3fd; padding: 14px;">
-        </div>
 
   {{/if}}
