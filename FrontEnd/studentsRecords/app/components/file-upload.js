@@ -461,7 +461,7 @@ export default Ember.Component.extend({
          var courseLetter =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})].v;
          var courseNumber =  worksheet[XLSX.utils.encode_cell({c: 1, r:R})].v;
          var name = worksheet[XLSX.utils.encode_cell({c: 2, r:R})].v;
-         var unit = worksheet[XLSX.utils.encode_cell({c: 2, r:R})].v;
+         var unit = worksheet[XLSX.utils.encode_cell({c: 3, r:R})].v;
          var newCourseCodeRecord = self.get('store').createRecord('course-code', {
            courseLetter: courseLetter,
            courseNumber: courseNumber,
@@ -649,37 +649,41 @@ export default Ember.Component.extend({
 
          self.send('findStudent',studentnum);
          var studenttemp = self.get('currentStudent');
-         var level = worksheet[XLSX.utils.encode_cell({c: 2, r:R})];
-         var subject = worksheet[XLSX.utils.encode_cell({c: 3, r:R})];
-         var description = worksheet[XLSX.utils.encode_cell({c: 4, r:R})];
-         var source = worksheet[XLSX.utils.encode_cell({c: 5, r:R})];
-         var units = worksheet[XLSX.utils.encode_cell({c: 6, r:R})];
-         var grade = worksheet[XLSX.utils.encode_cell({c: 7, r:R})];
+         var level = worksheet[XLSX.utils.encode_cell({c: 2, r:R})].v;
+         var subject = worksheet[XLSX.utils.encode_cell({c: 3, r:R})].v;
+         var description = worksheet[XLSX.utils.encode_cell({c: 4, r:R})].v;
+         var source = worksheet[XLSX.utils.encode_cell({c: 5, r:R})].v;
+         var units = worksheet[XLSX.utils.encode_cell({c: 6, r:R})].v;
+         var grade = worksheet[XLSX.utils.encode_cell({c: 7, r:R})].v;
 
          //create high school subject
          var newhssubject = self.get('store').createRecord('high-school-subject',{
            name: subject,
-           description: description,
+           description: description
          });
          newhssubject.save();
 
          //create high school course
-         var
+         self.send('findhighschool',schoolname);
+         //self.send('findsubject',subject,description);
+         var temphighschool = self.get('currentHighSchool');
+         //var tempsubject = this.get('currentHighSchoolSubject');
          var newhscoures = self.get('store').createRecord('high-school-course',{
            level:level,
            source:source,
            unit:units,
-           SecondSchoolInfo:DS.belongsTo('secondary-school'),
-           HighSchoolSubjectInfo:DS.belongsTo('high-school-subject'),
+           SecondSchoolInfo:temphighschool,
+           HighSchoolSubjectInfo:newhssubject,
          });
+         newhscoures.save();
 
          //create hs course grade record
          var newhsCourseGrade = self.get('store').createRecord('hscourse-grade', {
            mark:grade,
            studentInfo:  studenttemp,
-           HighSchoolCoursesInfo: DS.belongsTo('high-school-courses'),
+           HighSchoolCoursesInfo: newhscoures,
          });
-         newCourseCodeRecord.save();
+         newhsCourseGrade.save();
 
        }
      });
