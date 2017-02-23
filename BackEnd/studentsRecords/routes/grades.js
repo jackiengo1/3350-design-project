@@ -50,6 +50,7 @@ router.route('/:grade_id')
             else {
                 grade.mark = request.grade.mark;
                 grade.note = request.grade.note;
+                grade.courseInfo = request.grade.courseInfo;
 
                 grade.save(function (error) {
                     if (error) {

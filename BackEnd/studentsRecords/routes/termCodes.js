@@ -51,6 +51,7 @@ router.route('/:termCode_id')
                 termCode.name = request.termCode.name;
                 termCode.courseInfo = request.termCode.courseInfo;
                 termCode.program = request.termCode.program;
+                termCode.studentInfo = request.termCode.studentInfo;
 
                 termCode.save(function (error) {
                     if (error) {

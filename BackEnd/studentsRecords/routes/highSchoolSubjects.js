@@ -50,6 +50,7 @@ router.route('/:highSchoolSubject_id')
             else {
                 highSchoolSubject.name = request.highSchoolSubject.name;
                 highSchoolSubject.description = request.highSchoolSubject.description;
+                highSchoolSubject.highSchoolCoursesInfo = request.highSchoolSubject.highSchoolCoursesInfo;
 
                 highSchoolSubject.save(function (error) {
                     if (error) {

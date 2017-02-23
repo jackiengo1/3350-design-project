@@ -49,6 +49,7 @@ router.route('/:secondarySchool_id')
             }
             else {
                 secondarySchool.name = request.secondarySchool.name;
+                secondarySchool.highSchoolCoursesInfo = request.secondarySchool.highSchoolCoursesInfo;
 
                 secondarySchool.save(function (error) {
                     if (error) {

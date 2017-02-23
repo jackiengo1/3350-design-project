@@ -50,6 +50,7 @@ router.route('/:planCode_id')
             }
             else {
                 planCode.name = request.planCode.name;
+                planCode.program = request.planCode.program;
 
                 planCode.save(function (error) {
                     if (error) {

@@ -157,7 +157,6 @@ router.route('/')
         student.scholInfo = request.body.student.scholInfo;
         //
         student.resInfo = request.body.student.resInfo;
-
         student.highSchoolCourse = request.body.student.highSchoolCourse;
         student.semester = request.body.student.semester;
 
