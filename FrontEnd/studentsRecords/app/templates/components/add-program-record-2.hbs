@@ -1,0 +1,58 @@
+<div class="ui center aligned header">
+  <h2>Program Records</h2>
+</div>
+
+<div class="ui middle aligned divided list">
+  {{#each programRecordModel as |oneprogramRecord|}}
+    <div class="item">
+      <div class="content">
+        <div class="header">
+          <h3>
+            {{oneprogramRecord.name}} <button class="negative ui button" onclick={{action 'deleteProgramRecord' oneprogramRecord}} style = "float: right;">Delete</button>
+          </h3>
+        </div>
+
+      </div>
+    </div>
+  {{/each}}
+</div>
+
+<div class="ui grid">
+  <div class="ui middle aligned sixteen wide column">
+    <div class="ui form">
+      <div class="inline field">
+        <label style= "font-size: 20px;">Program Record Name</label>
+        {{input type="text"  value = programRecordName}}
+        <br>
+        <label style= "font-size: 20px;">Level</label>
+        {{input type="text"  value = programRecrdLevel}}
+        <br>
+        <label style= "font-size: 20px;">Load</label>
+        {{input type="text"  value = programRecordLoad}}
+        <br>
+        <label style= "font-size: 20px;">Status</label>
+        {{input type="text"  value = programRecordStatus}}
+        <br>
+        <label style= "font-size: 20px;">Grade Info</label>
+        {{input type="text"  value = programRecordGradeInfo}}
+        <br>
+        <label style= "font-size: 20px;">Course Code Info</label>
+        {{input type="text"  value = courseCodeInfo}}
+        <br>
+        <label style= "font-size: 20px;">Term Code Info</label>
+        {{input type="text"  value = termCodeInfo}}
+        <br>
+        <label style= "font-size: 20px;">Plan Code Info</label>
+        {{input type="text"  value = planCodeInfo}}
+        <br>
+      </div>
+    </div>
+  </div>
+</div>
+<!---->
+<div class="ui center aligned header">
+  <button class="positive ui button" {{action 'addProgramRecord'}}>
+    Add Program Record
+  </button>
+</div>
+<!---->
