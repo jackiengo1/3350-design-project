@@ -326,33 +326,55 @@
   <!-- Advanced Standing Tab -->
   <div class = "ui tab" data-tab="advancedStanding" style="background-color: #eee3fd; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">
 
+
+<div class="ui grid">
+  <div class="eight wide column">
+    
     <div class="ui center aligned header">
       <h2>Student's Advanced Standings</h2>
     </div>
 
-    <div class="ui middle aligned divided list">
+    {{#ui-accordion class="styled fluid"}}
       {{#each listAS as |userListAS|}}
       {{#unless userListAS.isDeleted}}
-      <div class="item">
-        <div class="content">
-          <div class="header">
-            <h3>
-              <button class="negative ui button" onclick={{action 'deleteAS' userListAS}} style = "float: right;">Delete</button>
-              Course: {{userListAS.course}} <br />
-              Description: {{userListAS.description}}<br />
-              Units: {{userListAS.units}}<br />
-              Grade: {{userListAS.grade}}<br />
-              From: {{userListAS.from}}<br />
-            </h3>
+      <div class="title" style="border-color: #6435c9">
+        Course: {{userListAS.course}}
+      </div>
+      <div class="content">
+        <div class="ui vertically divided grid">
+          <div class="one column row" style="padding-bottom: 0;">
+            <div class="column">
+              <p>Description: {{userListAS.description}}</p>
+            </div>
           </div>
-
+          <div class="two column row" style="padding: 0;">
+            <div class="column">
+              <p>Units: {{userListAS.units}}</p>
+            </div>
+            <div class="column">
+              <p>Grade: {{userListAS.grade}}</p>
+            </div>
+          </div>
+          <div class="one column row" style="padding: 0;">
+            <div class="column">
+              <p>From: {{userListAS.from}}</p>
+            </div>
+          </div>
+          <div class="one column row" style="padding: 0;">
+            <div class="column">
+              <p style="text-align: center;"><button class="negative ui button" onclick={{action 'deleteAS' userListAS}}>Delete</button></p>
+            </div>
+          </div>
         </div>
       </div>
       {{/unless}}
       {{/each}}
+    {{/ui-accordion}}
 
-    </div>
-
+  </div>
+  
+  <div class="eight wide column">
+    
     <div class="ui center aligned header">
       <h2>Add Advanced Standing</h2>
     </div>
@@ -393,6 +415,40 @@
         Add Advanced Standing
       </button>
     </div>
+
+  </div>
+</div>
+
+
+
+    {{!--<div class="ui middle aligned divided list">
+      {{#each listAS as |userListAS|}}
+      {{#unless userListAS.isDeleted}}
+      <div class="item">
+        <div class="content">
+          <div class="header">
+            <h3>
+              <button class="negative ui button" onclick={{action 'deleteAS' userListAS}} style = "float: right;">Delete</button>
+              Course: {{userListAS.course}} <br />
+              Description: {{userListAS.description}}<br />
+              Units: {{userListAS.units}}<br />
+              Grade: {{userListAS.grade}}<br />
+              From: {{userListAS.from}}<br />
+            </h3>
+          </div>
+
+        </div>
+      </div>
+      {{/unless}}
+      {{/each}}
+
+    </div>--}}
+
+
+
+
+
+
 
   </div>
 
