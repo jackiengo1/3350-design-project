@@ -7,65 +7,69 @@ var parseJSON = bodyParser.json();
 
 router.route('/')
     .post(parseUrlencoded, parseJSON, function (request, response) {
-        var scholarshipAward = new models.ScholarshipAwards(request.body.scholarshipAward);
-        scholarshipAward.save(function (error) {
+        var courseCode = new models.CourseCodes(request.body.courseCode);
+        courseCode.save(function (error) {
             if (error) response.send(error);
-            response.json({scholarshipAward: scholarshipAward});
+            response.json({courseCode: courseCode});
         });
     })
     .get(parseUrlencoded, parseJSON, function (request, response) {
 
-        var scholarshipAwardFilter = request.query.filter;
-        if (!scholarshipAwardFilter) {
-            models.ScholarshipAwards.find(function (error, scholarshipAwards) {
+        var courseCodeFilter = request.query.filter;
+        if (!courseCodeFilter) {
+            models.CourseCodes.find(function (error, courseCodes) {
                 if (error) response.send(error);
-                response.json({scholarshipAward: scholarshipAwards});
+                response.json({courseCode: courseCodes});
             });
             console.log("no filter");
         } else {
           console.log("filter");
-            models.ScholarshipAwards.find({"student": request.query.student}, function (error, scholarshipAwards) {
+            models.CourseCodes.find({"courseCode": request.query.courseCode}, function (error, courseCodes) {
                 if (error) response.send(error);
-                response.json({scholarshipAward: scholarshipAwards});
+                response.json({courseCode: courseCodes});
             });
         }
     });
 
-router.route('/:scholarshipAward_id')
+router.route('/:courseCode_id')
     .get(parseUrlencoded, parseJSON, function (request, response) {
-        models.ScholarshipAwards.findById(request.params.scholarshipAward_id, function (error, scholarshipAward) {
+        models.CourseCodes.findById(request.params.courseCode_id, function (error, courseCode) {
             if (error) {
                 response.send({error: error});
             }
             else {
-                response.json({scholarshipAward: scholarshipAward});
+                response.json({courseCode: courseCode});
             }
         });
     })
     .put(parseUrlencoded, parseJSON, function (request, response) {
-        models.ScholarshipAwards.findById(request.params.scholarshipAward_id, function (error, scholarshipAward) {
+        models.CourseCodes.findById(request.params.courseCode_id, function (error, courseCode) {
             if (error) {
                 response.send({error: error});
             }
             else {
-                scholarshipAward.note = request.scholarshipAward.note;
+                courseCode.courseLetter = request.courseCode.courseLetter;
+                courseCode.courseNumber = request.courseCode.courseNumber;
+                courseCode.name = request.courseCode.name;
+                courseCode.unit = request.courseCode.unit;
+                courseCode.mark = request.courseCode.mark;
 
-                scholarshipAward.save(function (error) {
+                courseCode.save(function (error) {
                     if (error) {
                         response.send({error: error});
                     }
                     else {
-                        response.json({scholarshipAward: scholarshipAward});
+                        response.json({courseCode: courseCode});
                     }
                 });
             }
         });
     })
     .delete(parseUrlencoded, parseJSON, function (request, response) {
-        models.ScholarshipAwards.findByIdAndRemove(request.params.scholarshipAward_id,
+        models.CourseCodes.findByIdAndRemove(request.params.courseCode_id,
             function (error, deleted) {
                 if (!error) {
-                    response.json({scholarshipAward: deleted});
+                    response.json({courseCode: deleted});
                 }
             }
         );

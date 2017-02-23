@@ -7,65 +7,69 @@ var parseJSON = bodyParser.json();
 
 router.route('/')
     .post(parseUrlencoded, parseJSON, function (request, response) {
-        var scholarshipAward = new models.ScholarshipAwards(request.body.scholarshipAward);
-        scholarshipAward.save(function (error) {
+        var programRecord = new models.ProgramRecords(request.body.programRecord);
+        programRecord.save(function (error) {
             if (error) response.send(error);
-            response.json({scholarshipAward: scholarshipAward});
+            response.json({programRecord: programRecord});
         });
     })
     .get(parseUrlencoded, parseJSON, function (request, response) {
 
-        var scholarshipAwardFilter = request.query.filter;
-        if (!scholarshipAwardFilter) {
-            models.ScholarshipAwards.find(function (error, scholarshipAwards) {
+        var programRecordFilter = request.query.filter;
+        if (!programRecordFilter) {
+            models.ProgramRecords.find(function (error, programRecords) {
                 if (error) response.send(error);
-                response.json({scholarshipAward: scholarshipAwards});
+                response.json({programRecord: programRecords});
             });
             console.log("no filter");
         } else {
           console.log("filter");
-            models.ScholarshipAwards.find({"student": request.query.student}, function (error, scholarshipAwards) {
+            models.ProgramRecords.find({"programRecord": request.query.programRecord}, function (error, programRecords) {
                 if (error) response.send(error);
-                response.json({scholarshipAward: scholarshipAwards});
+                response.json({programRecord: programRecords});
             });
         }
     });
 
-router.route('/:scholarshipAward_id')
+router.route('/:programRecord_id')
     .get(parseUrlencoded, parseJSON, function (request, response) {
-        models.ScholarshipAwards.findById(request.params.scholarshipAward_id, function (error, scholarshipAward) {
+        models.ProgramRecords.findById(request.params.programRecord_id, function (error, programRecord) {
             if (error) {
                 response.send({error: error});
             }
             else {
-                response.json({scholarshipAward: scholarshipAward});
+                response.json({programRecord: programRecord});
             }
         });
     })
     .put(parseUrlencoded, parseJSON, function (request, response) {
-        models.ScholarshipAwards.findById(request.params.scholarshipAward_id, function (error, scholarshipAward) {
+        models.ProgramRecords.findById(request.params.programRecord_id, function (error, programRecord) {
             if (error) {
                 response.send({error: error});
             }
             else {
-                scholarshipAward.note = request.scholarshipAward.note;
+                programRecord.name = request.programRecord.name;
+                programRecord.level = request.programRecord.level;
+                programRecord.load = request.programRecord.load;
+                programRecord.status = request.programRecord.status;
+                programRecord.plan = request.programRecord.plan;
 
-                scholarshipAward.save(function (error) {
+                programRecord.save(function (error) {
                     if (error) {
                         response.send({error: error});
                     }
                     else {
-                        response.json({scholarshipAward: scholarshipAward});
+                        response.json({programRecord: programRecord});
                     }
                 });
             }
         });
     })
     .delete(parseUrlencoded, parseJSON, function (request, response) {
-        models.ScholarshipAwards.findByIdAndRemove(request.params.scholarshipAward_id,
+        models.ProgramRecords.findByIdAndRemove(request.params.programRecord_id,
             function (error, deleted) {
                 if (!error) {
-                    response.json({scholarshipAward: deleted});
+                    response.json({programRecord: deleted});
                 }
             }
         );

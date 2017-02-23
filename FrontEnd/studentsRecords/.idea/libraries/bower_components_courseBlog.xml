@@ -7,7 +7,6 @@
     </properties>
     <CLASSES>
       <root url="file://$PROJECT_DIR$/bower_components" />
-      <root url="file://$PROJECT_DIR$/bower_components" />
     </CLASSES>
     <SOURCES />
   </library>

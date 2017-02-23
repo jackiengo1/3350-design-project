@@ -14,10 +14,12 @@ router.route('/')
         console.log("test start");
         console.log(request.body);
         var gender = new models.Genders(request.body.gender);
+        console.log(request.body);
         gender.save(function (error) {
             if (error) response.send(error);
             response.json({gender: gender});
         });
+
     })
     .get(parseUrlencoded, parseJSON, function (request, response) {
         var Student = request.query.filter;
