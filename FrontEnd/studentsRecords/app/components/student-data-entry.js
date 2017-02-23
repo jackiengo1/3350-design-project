@@ -69,8 +69,7 @@ export default Ember.Component.extend({
   studentRecordResults: null,
 
   tabInfoText: "Basic Info",
-  scholarshipTabStyles: "",
-  advancedstandingTabStyles: "",
+  addStudentStyles: "",
 
   addingStudent: false,
   backToBasicInfo: true,
@@ -107,7 +106,7 @@ export default Ember.Component.extend({
   fetchStudent: Ember.observer('currentIndex', function () {  //observes changes to the index
     this.showStudentData(this.get('currentIndex'));           //calls function showStudentData with current index
   }),
-  
+
   init() {
     this._super(...arguments);
     // load Residency data model
@@ -596,14 +595,13 @@ export default Ember.Component.extend({
         this.set('currentStudent', newStudent);
         var gender = this.get('currentStudent').get('genderInfo');
         this.set('selectedGender',gender);
-        var res = this.get('currentStudent').get('resInfo');
-        this.set('selectedResidency',res);
+        var res1 = this.get('currentStudent').get('resInfo');
+        this.set('selectedResidency',res1);
 
         this.set('addingStudent', false);
         this.set('scholarshipTabIsDisabled', false);
         this.set('advancedstandingTabIsDisabled', false);
-        this.set('scholarshipTabStyles', "");
-        this.set('advancedstandingTabStyles', "");
+        this.set('addStudentStyles', "");
         this.set('tabInfoText', "Basic Info");
         this.set('backToBasicInfo', true);
         this.set('endOfRecords', false);
@@ -614,8 +612,7 @@ export default Ember.Component.extend({
     goToAddStudent(){
       this.set('scholarshipTabIsDisabled', true);
       this.set('advancedstandingTabIsDisabled', true);
-      this.set('scholarshipTabStyles', "pointer-events: none;");
-      this.set('advancedstandingTabStyles', "pointer-events: none;");
+      this.set('addStudentStyles', "pointer-events: none;");
       this.set('tabInfoText', "Add Student");
       this.set('backToBasicInfo', true);
       this.set('addingStudent', true);
@@ -718,8 +715,7 @@ export default Ember.Component.extend({
       this.set('addingStudent', false);
       this.set('scholarshipTabIsDisabled', false);
       this.set('advancedstandingTabIsDisabled', false);
-      this.set('scholarshipTabStyles', "");
-      this.set('advancedstandingTabStyles', "");
+      this.set('addStudentStyles', "");
       this.set('tabInfoText', "Basic Info");
       this.set('backToBasicInfo', true);
       this.set('showFindRecord', false);

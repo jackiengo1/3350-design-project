@@ -1,6 +1,24 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+
+  store: Ember.inject.service(),
+  secondarySchoolModel: null,
+
+
+  init() {
+    this._super(...arguments);
+    var self = this;
+    // load gender data model
+    this.get('store').findAll('secondarySchool').then(function(records){
+      self.set('secondarySchoolModel', records);
+    });
+    console.log(this.get('secondarySchoolModel'));
+
+
+  },
+
+
   actions: {
     //Add a high-school mark
     addhsMark(){
@@ -27,7 +45,6 @@ export default Ember.Component.extend({
     //Add a secondary school
     addSecondarySchool(){
       var newSecondarySchool = this.get('store').createRecord('secondary-school', {
-
         name: this.get('ssName'),
         highSchoolCoursesInfo: this.get('highSchoolCoursesInfo'),
       });
@@ -36,7 +53,7 @@ export default Ember.Component.extend({
 
     //Add a high-school subject
     addhsSubject(){
-      var newhsSubject = this.get('store').createRecord('hsSubject', {
+      var newhsSubject = this.get('store').createRecord('high-school-subject', {
         name: this.get('subjectName'),
         description: this.get('description'),
         highSchoolCourses: this.get('courses'),
@@ -71,6 +88,7 @@ export default Ember.Component.extend({
     },
 
     //Add a secondary school
+
     deleteSecondarySchool(secondaryschool){
       var choice = confirm('Are you sure you want to delete this?');
       if (choice) {
