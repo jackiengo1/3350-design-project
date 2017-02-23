@@ -96,6 +96,7 @@ export default Ember.Component.extend({
         this.set('ssIndex', index);
         var indextemp = this.get('ssIndex');
         var restemp = this.get('ssModel').objectAt(indextemp);
+
         console.log(restemp);
         restemp.deleteRecord();
         restemp.save();

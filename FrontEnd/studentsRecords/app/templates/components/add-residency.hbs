@@ -1,3 +1,48 @@
+  <div class="ui grid">
+
+    <div class="eight wide column" style="padding-right: 20px;">
+      <div class="ui center aligned header" style="margin-bottom: 30px;">
+        <h2>Delete Residency</h2>
+      </div>
+
+      <div class="ui middle aligned divided list" style="margin-top: 22px; margin-bottom: 22px;">
+        {{#each residencyModel as |oneResidency|}}
+        <div class="item">
+          <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
+            <div class="negative ui button" onclick={{action 'deleteResidency' oneResidency}}>Delete</div>
+          </div>
+          <div class="content" style="padding-top: 10px; font-size: 16px;">
+            {{oneResidency.name}}
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+
+    <div class="eight wide column" style="padding-left: 20px;">
+      <div class="ui center aligned header" style="margin-bottom: 30px;">
+        <h2>Add Residency</h2>
+      </div>
+
+      <div class="ui form">
+        <div class="field">
+          <label>Residency</label>
+          {{input type="text"  value = residencyName}}
+        </div>
+      </div>
+
+      <div class="ui center aligned header">
+        <button class="positive ui button" {{action 'addResidency'}}>
+          Add Residency
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+
+
+{{!--
 <div class="ui center aligned header">
   <h2>Modify Residency</h2>
 </div>
@@ -34,4 +79,4 @@
   <button class="positive ui button" {{action 'addResidency'}}>
     Add Residency
   </button>
-</div>
+</div>--}}

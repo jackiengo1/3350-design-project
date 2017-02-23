@@ -8,6 +8,8 @@ export default Ember.Component.extend({
                 Ember.$('.ui .item').removeClass('active');
                 Ember.$(this).addClass('active');
             });
+
+            Ember.$('.ui.dropdown.item').dropdown({ on: 'hover' });
         });
     },
 

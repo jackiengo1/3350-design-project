@@ -77,6 +77,10 @@ export default Ember.Component.extend({
   advancedstandingTabIsDisabled: false,
 
 
+  //students high school record
+  currentStudentHSGrades: null,
+
+
 
   studentModel: Ember.observer('offset', function () { //observes the offset variable. When it changes run code.
     var self = this;
@@ -129,6 +133,8 @@ export default Ember.Component.extend({
     this.get('store').findAll('gender').then(function(records){
       self.set('genderModel', records);
 
+
+
     });
 
     // load first page of the students records
@@ -158,6 +164,8 @@ export default Ember.Component.extend({
     this.set('selectedDate', datestring);
     var gender = this.get('currentStudent').get('genderInfo');
 
+    this.set('currentStudentHSGrades', this.get('currentStudent').get('hsCourseGrade'));
+
     this.set('selectedGender',gender);
     var res = this.get('currentStudent').get('resInfo');
     this.set('selectedResidency',res);
@@ -167,6 +175,8 @@ export default Ember.Component.extend({
 
     this.get('store').query('scholarship-award',{filter:{studentInfo:this.get('currentStudent').get('id')}});
     this.set('scholarShipAndAwardList', this.get('currentStudent').get('scholInfo'));
+
+
 
 
     console.log(this.get('scholarShipAndAwardList'));
