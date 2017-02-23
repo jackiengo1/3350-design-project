@@ -1,5 +1,131 @@
-<div class="ui center aligned header">
-  <h2>Program Records</h2>
+<div class="ui grid">
+
+  <div class="eight wide column" style="padding-right: 20px;">
+    <div class="ui center aligned header" style="margin-bottom: 30px;">
+      <h2>Program Records</h2>
+    </div>
+
+    {{#ui-accordion class="styled fluid"}}
+      {{#each programRecordModel as |oneprogramRecord|}}
+      <div class="title" style="border-color: #6435c9">
+        {{oneprogramRecord.name}}
+      </div>
+      <div class="content">
+        <div class="ui vertically divided grid">
+          <div class="one column row" style="padding-bottom: 0;">
+            <div class="column">
+              <p></p>
+            </div>
+          </div>
+          <div class="two column row" style="padding: 0;">
+            <div class="column">
+              <p></p>
+            </div>
+            <div class="column">
+              <p></p>
+            </div>
+          </div>
+          <div class="one column row" style="padding: 0;">
+            <div class="column">
+              <p></p>
+            </div>
+          </div>
+          <div class="one column row" style="padding: 0;">
+            <div class="column">
+              <p style="text-align: center;"><button class="negative ui button" onclick={{action 'deleteProgramRecord' oneprogramRecord}}>Delete</button></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    {{/ui-accordion}}
+  </div>
+
+  <div class="eight wide column" style="padding-right: 20px;">
+    <div class="ui center aligned header" style="margin-bottom: 30px;">
+      <h2>Add Program Record</h2>
+    </div>
+
+    <div class="ui sixteen wide column">
+      <form class="ui form">
+        <div class="field">
+          <label>Program Record Name</label>
+          {{input type="text"  value = programRecordName}}
+        </div>
+        <div class="three fields">
+          <div class="field">
+            <label>Level</label>
+            {{input type="text"  value = programRecrdLevel}}
+          </div>
+          <div class="field">
+            <label>Load</label>
+            {{input type="text"  value = programRecordLoad}}
+          </div>
+          <div class="field">
+            <label>Status</label>
+            {{input type="text"  value = programRecordStatus}}
+          </div>
+        </div>
+        <div class="two fields">
+          <div class="field">
+            <label>Grade Info</label>
+            {{input type="text"  value = programRecordGradeInfo}}
+          </div>
+          <div class="field">
+            <label>Course Code Info</label>
+            {{input type="text"  value = courseCodeInfo}}
+          </div>
+        </div>
+        <div class="two fields">
+          <div class="field">
+            <label>Term Code Info</label>
+            {{input type="text"  value = termCodeInfo}}
+          </div>
+          <div class="field">
+            <label>Plan Code Info</label>
+            {{input type="text"  value = planCodeInfo}}
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="ui center aligned header">
+      <button class="positive ui button" {{action 'addProgramRecord'}}>
+        Add Program Record
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<div class="ui grid">
+  <div class="eight wide column" style="padding-right: 20px;">
+
+  <div class="ui center aligned header" style="margin-bottom: 30px;">
+    <h2>Add Plan Code</h2>
+  </div>
+    <form class="ui form">
+    <div class="field">
+      <label>Name: </label>
+      {{input type="text"  value = planCodeInfo}}
+    </div>
+  </form>
+
+  <div class="ui center aligned header">
+    <button class="positive ui button" {{action 'addPlanCode'}}>
+      Add plan code
+    </button>
+  </div>
+  </div>
+
+</div>
+
+
+
+
+
+{{!--<div class="ui center aligned header">
+  <h2>Add Program Record</h2>
 </div>
 
 <div class="ui middle aligned divided list">
@@ -55,4 +181,4 @@
     Add Program Record
   </button>
 </div>
-<!---->
+<!---->--}}
