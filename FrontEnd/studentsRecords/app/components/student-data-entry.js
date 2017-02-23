@@ -107,7 +107,7 @@ export default Ember.Component.extend({
   fetchStudent: Ember.observer('currentIndex', function () {  //observes changes to the index
     this.showStudentData(this.get('currentIndex'));           //calls function showStudentData with current index
   }),
-  
+
   init() {
     this._super(...arguments);
     // load Residency data model
@@ -596,8 +596,8 @@ export default Ember.Component.extend({
         this.set('currentStudent', newStudent);
         var gender = this.get('currentStudent').get('genderInfo');
         this.set('selectedGender',gender);
-        var res = this.get('currentStudent').get('resInfo');
-        this.set('selectedResidency',res);
+        var res1 = this.get('currentStudent').get('resInfo');
+        this.set('selectedResidency',res1);
 
         this.set('addingStudent', false);
         this.set('scholarshipTabIsDisabled', false);

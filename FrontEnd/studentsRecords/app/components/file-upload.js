@@ -1,18 +1,59 @@
 import Ember from 'ember';
-import EmberUploader from 'ember-uploader';
-import XLSX from 'npm:xlsx';
-export default EmberUploader.FileField.extend({
 
-  filesDidChange: function(files) {
-    console.log(files);
-    var workbook = XLSX.readFile('test.xlsx');
-    const uploader = EmberUploader.Uploader.create({
-      url: this.get('url')
-    });
+export default Ember.Component.extend({
+  store: Ember.inject.service(),
+  /* golbal XLSX */
+  actions:{
+    fileLoaded: function(file) {
+      var self = this;
+      var workbook = XLSX.read(file.data, {type: 'binary'});
+      var sheet_name_list = workbook.SheetNames;
+      if(file.name === "genders.xlsx")
+      {
+        sheet_name_list.forEach(function (sheetName) {
+          var worksheet = workbook.Sheets[sheetName];
 
-    if (!Ember.isEmpty(files)) {
-      // this second argument is optional and can to be sent as extra data with the upload
-      uploader.upload(files[0] /*,{ whateverObject }*/);
-    }
+          for (var cellName in worksheet) {
+            //all keys that do not begin with "!" correspond to cell addresses
+
+            if (cellName[0] === '!') {
+              continue;
+            }
+            if(worksheet[cellName].v !== "name")
+            {
+              var newgender = self.get('store').createRecord('gender',{
+                name: worksheet[cellName].v,
+              });
+              newgender.save();
+            }
+          }
+
+        });
+      }
+      else if (file.name ==="residencies.xlsx")
+      {
+        sheet_name_list.forEach(function (sheetName) {
+          var worksheet = workbook.Sheets[sheetName];
+
+          for (var cellName in worksheet) {
+            //all keys that do not begin with "!" correspond to cell addresses
+
+            if (cellName[0] === '!') {
+              continue;
+            }
+            if(worksheet[cellName].v !== "name")
+            {
+              var newgender = self.get('store').createRecord('residency',{
+                name: worksheet[cellName].v,
+              });
+              newgender.save();
+            }
+          }
+
+        });
+      }
+
+    },
   }
+
 });
