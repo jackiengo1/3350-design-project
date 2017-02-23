@@ -4,27 +4,31 @@ export default Ember.Component.extend({
 
   store: Ember.inject.service(),
 
+//these are for adding plan codes
   planCode: null,
   planCodeModel: null,
 
+//these are for adding term codes
   termCode: null,
   termCodeModel: null,
 
+//these are for adding course info
   courseLetter: null,
   courseNum: null,
   courseName: null,
   courseUnit: null,
   courseCodeModel: null,
 
+//these are for adding program records
   programRecordName: null,
   programRecordLevel: null,
   programRecordLoad: null,
   programRecordStatus: null,
   programRecordModel: null,
-  programRecordPlanCode: Ember.A(),
-  planCodeTemp: null,
-  programRecordTermCode: Ember.A(),
-  termCodeTemp: null,
+  programRecordPlanCode: Ember.A(), //holds a list of plan codes
+  planCodeTemp: null,               //holds a plan code that will be added to the array
+  programRecordTermCode: Ember.A(), //holds a list of term codes
+  termCodeTemp: null,               //holds a term code that will be added to the array
   programRecordCourseCode: null,
 
 
@@ -36,35 +40,26 @@ export default Ember.Component.extend({
 
     var self = this;
 
-    this.get('store').findAll('plan-code').then(function (records) {
+    this.get('store').findAll('plan-code').then(function (records) { //gets all the plan codes
       self.set('planCodeModel', records);
     });
 
-    this.get('store').findAll('term-code').then(function (records) {
+    this.get('store').findAll('term-code').then(function (records) { //gets all the term codes
       self.set('termCodeModel', records);
     });
 
-    this.get('store').findAll('course-code').then(function (records) {
+    this.get('store').findAll('course-code').then(function (records) { //gets all the course codes
       self.set('courseCodeModel', records);
     });
 
-    this.get('store').findAll('program-record').then(function (records) {
+    this.get('store').findAll('program-record').then(function (records) { //gets all the program records
       self.set('programRecordModel', records);
     });
 
   },
 
   actions: {
-    //Add a grade
-    addGrade(){
-      var newGrade = this.get('store').createRecord('hscourse-grade', {
-        mark: this.get('gradeMark'),
-        note: this.get('gradeNote'),
-        studentInfo: this.get('studentInfo'),
-        programRecordInfo: this.get('programRecordInfo'),
-      });
-      newGrade.save();
-    },
+
     //Add a plan code
     addPlanCode(){
       console.log(this.get('planCode'));
@@ -110,19 +105,6 @@ export default Ember.Component.extend({
       }
       else{
         alert("Not are all fields are filled in");
-      }
-    },
-    //Delete a grade
-    deleteGrade(grade){
-      var choice = confirm('Are you sure you want to delete this?');
-      if (choice) {
-        var index = this.get('gradeModel').indexOf(grade);
-        this.set('gradeIndex', index);
-        var indextemp = this.get('gradeIndex');
-        var restemp = this.get('gradeModel').objectAt(indextemp);
-        console.log(restemp);
-        restemp.deleteRecord();
-        restemp.save();
       }
     },
 
@@ -200,8 +182,7 @@ export default Ember.Component.extend({
 
     deleteFromTermCodeArray(termCode){
       this.get('programRecordTermCode').removeObject(termCode);
-
     }
 
-  }
+  }//end actions
 });
