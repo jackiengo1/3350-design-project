@@ -8,6 +8,7 @@ var parseJSON = bodyParser.json();
 router.route('/')
     .post(parseUrlencoded, parseJSON, function (request, response) {
         var highSchoolSubject = new models.HighSchoolSubjects(request.body.highSchoolSubject);
+        console.log(request.body.highSchoolSubject);
         highSchoolSubject.save(function (error) {
             if (error) response.send(error);
             response.json({highSchoolSubject: highSchoolSubject});

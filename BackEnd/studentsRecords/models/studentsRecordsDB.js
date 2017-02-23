@@ -17,7 +17,7 @@ var studentsSchema = mongoose.Schema(
         genderInfo: {type: mongoose.Schema.ObjectId, ref: 'Genders'},
         scholInfo: [{type: mongoose.Schema.ObjectId, ref: 'ScholarshipAwards'}],
         highSchoolCourse: [{type: mongoose.Schema.ObjectId, ref: 'HsCourseGrades'}],
-        semester: [{type: mongoose.Schema.ObjectId, ref: 'TermCodes'}]
+        grade: [{type: mongoose.Schema.ObjectId, ref: 'TermCodes'}]
     }
 );
 studentsSchema.plugin(mongoosePaginate);
@@ -68,6 +68,7 @@ var highSchoolCourseSchema = mongoose.Schema(
     unit: String,
     school: {type: mongoose.Schema.ObjectId, ref: 'SecondarySchools'},
     course: {type: mongoose.Schema.ObjectId, ref: 'HighSchoolSubjects'},
+    courseGrade:[{type: mongoose.Schema.ObjectId, ref: 'HsCourseGrades'}]
   }
 );
 
