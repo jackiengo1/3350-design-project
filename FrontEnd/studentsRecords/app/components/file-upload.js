@@ -768,11 +768,11 @@ export default Ember.Component.extend({
            name: plan,
          });
          var plancodearray = self.get('store').peekRecord('plan-code',newplancode);
-        //  if(plancodearray == null)
-        //  {
-        //    //if none same plan code is found, save it
-        //    newplancode.save();
-        //  }
+         if(plancodearray == null)
+         {
+           //if none same plan code is found, save it
+           newplancode.save();
+         }
 
          //create a new program record
          var newprogramRecord = self.get('store').createRecord('program-record', {
@@ -791,66 +791,66 @@ export default Ember.Component.extend({
         //    //if the record exist, need to add it to the program record array in the plan code
         //    plancodearray.get('program').pushObject(newplancode);
         //  }
-
-        if(plancodearray == null)
-        {
-           if(programrecordarray == null)
-           {
-             //when the value is null, set it to the array of program record
-             if(newplancode.get('program') == null){
-               newplancode.set('program',[newprogramRecord]);
-             }
-             else{
-               //if the value is not null append the record at the back of the array
-              newplancode.get('program').pushObject(newprogramRecord);
-             }
-           }
-           else{
-             if(newplancode.get('program') == null){
-                newplancode.set('program',[programrecordarray]);
-             }
-             else{
-               newplancode.get('program').pushObject(programrecordarray);
-             }
-
-           }
-          //if none same plan code is found, save it
-          newplancode.save();
-        }
-
-        if(plancodearray == null)
-        {
-          if(programrecordarray == null)
-          {
-            if(newprogramRecord.get('plan')==null)
-            {
-              newprogramRecord.set('program',[programrecordarray]);
-            }
-            newprogramRecord.get('plan').pushObject(newplancode);
-            newprogramRecord.save();
-          }
-          else{
-            programrecordarray.get('plan').pushObject(newplancode);
-            programrecordarray.save();
-          }
-        }
-        else{
-          if(programrecordarray == null)
-          {
-            newprogramRecord.get('plan').pushObject(plancodearray);
-            newprogramRecord.save();
-          }
-          else{
-            programrecordarray.get('plan').pushObject(plancodearray);
-            programrecordarray.save();
-          }
-        }
-
-         //set the term code with student info
-         termobj.set('studentInfo',tempstudent);
-         termobj.set('program',newprogramRecord);
-         termobj.save().then(() => {
-         });
+//trying to do many to many not working properly, instead messing up my data for other part
+        // if(plancodearray == null)
+        // {
+        //    if(programrecordarray == null)
+        //    {
+        //      //when the value is null, set it to the array of program record
+        //      if(newplancode.get('program') == null){
+        //        newplancode.set('program',[newprogramRecord]);
+        //      }
+        //      else{
+        //        //if the value is not null append the record at the back of the array
+        //       newplancode.get('program').pushObject(newprogramRecord);
+        //      }
+        //    }
+        //    else{
+        //      if(newplancode.get('program') == null){
+        //         newplancode.set('program',[programrecordarray]);
+        //      }
+        //      else{
+        //        newplancode.get('program').pushObject(programrecordarray);
+        //      }
+        //
+        //    }
+        //   //if none same plan code is found, save it
+        //   newplancode.save();
+        // }
+        //
+        // if(plancodearray == null)
+        // {
+        //   if(programrecordarray == null)
+        //   {
+        //     if(newprogramRecord.get('plan')==null)
+        //     {
+        //       newprogramRecord.set('program',[programrecordarray]);
+        //     }
+        //     newprogramRecord.get('plan').pushObject(newplancode);
+        //     newprogramRecord.save();
+        //   }
+        //   else{
+        //     programrecordarray.get('plan').pushObject(newplancode);
+        //     programrecordarray.save();
+        //   }
+        // }
+        // else{
+        //   if(programrecordarray == null)
+        //   {
+        //     newprogramRecord.get('plan').pushObject(plancodearray);
+        //     newprogramRecord.save();
+        //   }
+        //   else{
+        //     programrecordarray.get('plan').pushObject(plancodearray);
+        //     programrecordarray.save();
+        //   }
+        // }
+        //
+        //  //set the term code with student info
+        //  termobj.set('studentInfo',tempstudent);
+        //  termobj.set('program',newprogramRecord);
+        //  termobj.save().then(() => {
+        //  });
 
        }
      });
@@ -933,10 +933,8 @@ export default Ember.Component.extend({
        }
      });
   }
-
-
-
 },
+//end of the read file function
 
 findStudent:function(studentnum){
   var self = this;
@@ -997,7 +995,6 @@ findterm:function(term){
     }
   }
 },
-
-
 }
+//end of actions
 });
