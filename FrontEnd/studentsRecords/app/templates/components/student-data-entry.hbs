@@ -38,16 +38,7 @@
     </div>
   </div>
   {{/each}}
-
-  {{!--<div class="ui center aligned header">
-    <button class="ui primary button" {{action 'allStudentsPrev'}} >
-      Previous Page
-    </button>
-    <button class="ui primary button" {{action 'allStudentsNext'}} >
-      Next Page
-    </button>
-  </div>--}}
-
+  
 </div>
 
 
@@ -90,12 +81,6 @@
   </div>
 </div>
 
-{{!--<div class="ui center aligned header">
-  <button onclick={{action 'findRecord'}} class="ui button">
-    Find
-  </button>
-</div>--}}
-
 <div class="ui center aligned header">
   <h1>{{searchResultTitle}}</h1>
 </div>
@@ -135,10 +120,6 @@
 {{else}}
 <!-- Show the menu bar-->
 <div class="fluid ui buttons">
-  {{!--<a class="item" {{action 'saveStudent'}}>
-    <i class="save icon"></i>
-    Save
-  </a>--}}
 
   <div class="ui icon button" data-tooltip="Undo" {{action 'undoSave'}}>
     <i class="undo large icon"></i>
@@ -180,45 +161,6 @@
     <i class="help large icon"></i>
   </div>
 
-
-  {{!--<a class="ui icon button" data-tooltip="Undo" {{action 'undoSave'}}>
-    <i class="undo icon"></i>
-  </a>
-  <a class="item" {{action 'goToAddStudent'}}>
-    <i class="add user icon"></i>
-    Add Student
-  </a>
-  <a class="item" {{action 'deleteStudent'}}>
-    <i class="remove user icon"></i>
-    Delete
-  </a>
-  <a class="item" {{action 'firstStudent'}}>
-    <i class="step backward icon"></i>
-    First
-  </a>
-  <a class="item" {{action 'previousStudent'}}>
-    <i class="arrow left icon"></i>
-    Previous
-  </a>
-  <a class="item" {{action 'nextStudent'}}>
-    <i class="arrow right icon"></i>
-    Next
-  </a>
-  <a class="item" {{action 'lastStudent'}}>
-    <i class="step forward icon"></i>
-    Last
-  </a>
-  <a class="item" {{action 'allStudents'}}>
-    <i class="content icon"></i>
-    All Records
-  </a>
-  <a class="item" {{action 'findStudent'}}>
-    <i class="search icon"></i>
-    Find Record
-  </a>
-  <a class="item">
-    Help
-  </a>--}}
 </div>
 
 {{/if}}
@@ -475,27 +417,6 @@
     </div>
 
   </div>
-
-
-    {{!--<div class="ui middle aligned divided list">
-      {{#each scholarShipAndAwardList as |userScholarShipAndAwardList|}}
-      {{#unless userScholarShipAndAwardList.isDeleted}}
-      <div class="item">
-        <div class="content">
-          <div class="header">
-            <h3>
-              <button class="negative ui button" onclick={{action 'deleteScholarshipAward' userScholarShipAndAwardList}} style = "float: right;">Delete</button>
-              Note: {{userScholarShipAndAwardList.note}}
-            </h3>
-          </div>
-
-        </div>
-      </div>
-      {{/unless}}
-      {{/each}}
-
-    </div>--}}
-
 
 
   </div>
