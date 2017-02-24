@@ -762,34 +762,24 @@ export default Ember.Component.extend({
          var tempstudent = self.get('currentStudent');
          self.send('findterm',term);
          var termobj = self.get('currentTerm');
-         //set the term code with student info
-         termobj.set('studentInfo',tempstudent);
-         termobj.save().then(() => {
-         });
 
          //create new plan code
          var newplancode = self.get('store').createRecord('plan-code',{
            name: plan,
-           program:[newprogramRecord],
          });
          var plancodearray = self.get('store').peekRecord('plan-code',newplancode);
-         if(plancodearray == null)
-         {
-           //if none same plan code is found, save it
-           newplancode.save();
-         }
-         else{
-           //if the record exist, need to add it to program record plan code array
-           newprogramRecord.get('')
-         }
+        //  if(plancodearray == null)
+        //  {
+        //    //if none same plan code is found, save it
+        //    newplancode.save();
+        //  }
 
          //create a new program record
          var newprogramRecord = self.get('store').createRecord('program-record', {
            name: program,
            level: level,
            load: load,
-           semester: termobj,
-           plan: newplancode,
+           semester: [termobj],
          });
          var programrecordarray = self.get('store').peekRecord('program-record',newprogramRecord);
          if(programrecordarray == null)
@@ -797,6 +787,70 @@ export default Ember.Component.extend({
            //if none same program record is found, save it
            newprogramRecord.save();
          }
+        //  else{
+        //    //if the record exist, need to add it to the program record array in the plan code
+        //    plancodearray.get('program').pushObject(newplancode);
+        //  }
+
+        if(plancodearray == null)
+        {
+           if(programrecordarray == null)
+           {
+             //when the value is null, set it to the array of program record
+             if(newplancode.get('program') == null){
+               newplancode.set('program',[newprogramRecord]);
+             }
+             else{
+               //if the value is not null append the record at the back of the array
+              newplancode.get('program').pushObject(newprogramRecord);
+             }
+           }
+           else{
+             if(newplancode.get('program') == null){
+                newplancode.set('program',[programrecordarray]);
+             }
+             else{
+               newplancode.get('program').pushObject(programrecordarray);
+             }
+
+           }
+          //if none same plan code is found, save it
+          newplancode.save();
+        }
+
+        if(plancodearray == null)
+        {
+          if(programrecordarray == null)
+          {
+            if(newprogramRecord.get('plan')==null)
+            {
+              newprogramRecord.set('program',[programrecordarray]);
+            }
+            newprogramRecord.get('plan').pushObject(newplancode);
+            newprogramRecord.save();
+          }
+          else{
+            programrecordarray.get('plan').pushObject(newplancode);
+            programrecordarray.save();
+          }
+        }
+        else{
+          if(programrecordarray == null)
+          {
+            newprogramRecord.get('plan').pushObject(plancodearray);
+            newprogramRecord.save();
+          }
+          else{
+            programrecordarray.get('plan').pushObject(plancodearray);
+            programrecordarray.save();
+          }
+        }
+
+         //set the term code with student info
+         termobj.set('studentInfo',tempstudent);
+         termobj.set('program',newprogramRecord);
+         termobj.save().then(() => {
+         });
 
        }
      });
