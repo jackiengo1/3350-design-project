@@ -652,8 +652,8 @@ export default Ember.Component.extend({
          //create hs course grade record
          var newhsCourseGrade = self.get('store').createRecord('hscourse-grade', {
            mark:grade,
-           studentInfo:  studenttemp,
-           HighSchoolCoursesInfo: newhscoures,
+           studentInfo: studenttemp,
+           source: newhscoures,
          });
          newhsCourseGrade.save();
 
@@ -711,20 +711,36 @@ export default Ember.Component.extend({
       // //get the range of the worksheet
       var range = XLSX.utils.decode_range(worksheet["!ref"]);
       // //loop from start of the range to the end of the range
-      var lastterm,lastprogram,lastlevel,lastload;
-       for(var R = (range.s.r+1); R <= range.e.r; R++)
+      var lastterm,lastprogram,lastlevel,lastload,lastStudentNum;
+       for(var R = (range.s.r+1); R < range.e.r; R++)
        {
          //student number not useful in this case
          var term =  worksheet[XLSX.utils.encode_cell({c: 1, r:R})];
          var program = worksheet[XLSX.utils.encode_cell({c: 2, r:R})];
          var level = worksheet[XLSX.utils.encode_cell({c: 3, r:R})];
          var load = worksheet[XLSX.utils.encode_cell({c: 4, r:R})];
-
+         var studentnum =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})];
+         var plan = worksheet[XLSX.utils.encode_cell({c: 5, r:R})];
+         //if term is null, that means there is a same plan for program record
+         //use all previous record for it.
+         if(plan == null)
+         {
+           //when plan is null, that means this roll is entirely empty, skip current row
+           continue;
+         }
+         if(studentnum == null)
+         {
+           studentnum = lastStudentNum;
+         }
+         else{
+           lastStudentNum = studentnum;
+         }
          if(term == null)
          {
            term = lastterm;
            program = lastprogram;
-           
+           level = lastlevel;
+           load = lastload;
          }
          else{
            lastterm = term;
@@ -733,43 +749,108 @@ export default Ember.Component.extend({
            lastload = load;
          }
 
+         //set all varible to their corresponding values
          term = term.v;
+         program = program.v;
+         level = level.v;
+         load = load.v;
+         studentnum = studentnum.v;
+         plan = plan.v;
 
-         var studentnum =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})].v;
-         var plan = worksheet[XLSX.utils.encode_cell({c: 5, r:R})].v;
 
-         self.send('findterm',term);
-         self.send('findstudent',studentnum);
-         var termobj = self.get('currentTerm');
+         self.send('findStudent',studentnum);
          var tempstudent = self.get('currentStudent');
-
-         //set the term code with student info
-         termobj.get('studentInfo',tempstudent);
-         termobj.save();
+         self.send('findterm',term);
+         var termobj = self.get('currentTerm');
 
          //create new plan code
          var newplancode = self.get('store').createRecord('plan-code',{
            name: plan,
          });
          var plancodearray = self.get('store').peekRecord('plan-code',newplancode);
-         if(plancodearray == null)
-         {
-           //if none same plan code is found, save it
-           newplancode.save();
-         }
+        //  if(plancodearray == null)
+        //  {
+        //    //if none same plan code is found, save it
+        //    newplancode.save();
+        //  }
 
          //create a new program record
-         var newprogramRecord = self.get('store').createRecord('program-recorde', {
+         var newprogramRecord = self.get('store').createRecord('program-record', {
            name: program,
            level: level,
            load: load,
+           semester: [termobj],
          });
-         var programrecordarray = self.get('store').peekRecord('program-recorde',newprogramRecord);
+         var programrecordarray = self.get('store').peekRecord('program-record',newprogramRecord);
          if(programrecordarray == null)
          {
            //if none same program record is found, save it
            newprogramRecord.save();
          }
+        //  else{
+        //    //if the record exist, need to add it to the program record array in the plan code
+        //    plancodearray.get('program').pushObject(newplancode);
+        //  }
+
+        if(plancodearray == null)
+        {
+           if(programrecordarray == null)
+           {
+             //when the value is null, set it to the array of program record
+             if(newplancode.get('program') == null){
+               newplancode.set('program',[newprogramRecord]);
+             }
+             else{
+               //if the value is not null append the record at the back of the array
+              newplancode.get('program').pushObject(newprogramRecord);
+             }
+           }
+           else{
+             if(newplancode.get('program') == null){
+                newplancode.set('program',[programrecordarray]);
+             }
+             else{
+               newplancode.get('program').pushObject(programrecordarray);
+             }
+
+           }
+          //if none same plan code is found, save it
+          newplancode.save();
+        }
+
+        if(plancodearray == null)
+        {
+          if(programrecordarray == null)
+          {
+            if(newprogramRecord.get('plan')==null)
+            {
+              newprogramRecord.set('program',[programrecordarray]);
+            }
+            newprogramRecord.get('plan').pushObject(newplancode);
+            newprogramRecord.save();
+          }
+          else{
+            programrecordarray.get('plan').pushObject(newplancode);
+            programrecordarray.save();
+          }
+        }
+        else{
+          if(programrecordarray == null)
+          {
+            newprogramRecord.get('plan').pushObject(plancodearray);
+            newprogramRecord.save();
+          }
+          else{
+            programrecordarray.get('plan').pushObject(plancodearray);
+            programrecordarray.save();
+          }
+        }
+
+         //set the term code with student info
+         termobj.set('studentInfo',tempstudent);
+         termobj.set('program',newprogramRecord);
+         termobj.save().then(() => {
+         });
 
        }
      });

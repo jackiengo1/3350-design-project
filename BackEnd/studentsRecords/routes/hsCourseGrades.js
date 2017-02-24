@@ -7,10 +7,10 @@ var parseJSON = bodyParser.json();
 
 router.route('/')
     .post(parseUrlencoded, parseJSON, function (request, response) {
-        var hsCourseGrade = new models.HsCourseGrades(request.body.hsCourseGrade);
+        var hsCourseGrade = new models.HsCourseGrades(request.body.hscourseGrade);
         hsCourseGrade.save(function (error) {
             if (error) response.send(error);
-            response.json({hsCourseGrade: hsCourseGrade});
+            response.json({hscourseGrade: hsCourseGrade});
         });
     })
     .get(parseUrlencoded, parseJSON, function (request, response) {
