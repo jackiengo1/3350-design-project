@@ -652,8 +652,8 @@ export default Ember.Component.extend({
          //create hs course grade record
          var newhsCourseGrade = self.get('store').createRecord('hscourse-grade', {
            mark:grade,
-           studentInfo:  studenttemp,
-           HighSchoolCoursesInfo: newhscoures,
+           studentInfo: studenttemp,
+           source: newhscoures,
          });
          newhsCourseGrade.save();
 
@@ -712,7 +712,7 @@ export default Ember.Component.extend({
       var range = XLSX.utils.decode_range(worksheet["!ref"]);
       // //loop from start of the range to the end of the range
       var lastterm,lastprogram,lastlevel,lastload,lastStudentNum;
-       for(var R = (range.s.r+1); R <= range.e.r; R++)
+       for(var R = (range.s.r+1); R < range.e.r; R++)
        {
          //student number not useful in this case
          var term =  worksheet[XLSX.utils.encode_cell({c: 1, r:R})];
@@ -720,8 +720,14 @@ export default Ember.Component.extend({
          var level = worksheet[XLSX.utils.encode_cell({c: 3, r:R})];
          var load = worksheet[XLSX.utils.encode_cell({c: 4, r:R})];
          var studentnum =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})];
+         var plan = worksheet[XLSX.utils.encode_cell({c: 5, r:R})];
          //if term is null, that means there is a same plan for program record
          //use all previous record for it.
+         if(plan == null)
+         {
+           //when plan is null, that means this roll is entirely empty, skip current row
+           continue;
+         }
          if(studentnum == null)
          {
            studentnum = lastStudentNum;
@@ -749,28 +755,32 @@ export default Ember.Component.extend({
          level = level.v;
          load = load.v;
          studentnum = studentnum.v;
+         plan = plan.v;
 
-         var plan = worksheet[XLSX.utils.encode_cell({c: 5, r:R})].v;
 
          self.send('findStudent',studentnum);
          var tempstudent = self.get('currentStudent');
          self.send('findterm',term);
          var termobj = self.get('currentTerm');
-
          //set the term code with student info
-         termobj.get('studentInfo',tempstudent);
-         termobj.save();
+         termobj.set('studentInfo',tempstudent);
+         termobj.save().then(() => {
+         });
 
          //create new plan code
          var newplancode = self.get('store').createRecord('plan-code',{
            name: plan,
+           program:[newprogramRecord],
          });
          var plancodearray = self.get('store').peekRecord('plan-code',newplancode);
-         console.log(newprogramRecord);
          if(plancodearray == null)
          {
            //if none same plan code is found, save it
            newplancode.save();
+         }
+         else{
+           //if the record exist, need to add it to program record plan code array
+           newprogramRecord.get('')
          }
 
          //create a new program record
@@ -778,8 +788,10 @@ export default Ember.Component.extend({
            name: program,
            level: level,
            load: load,
+           semester: termobj,
+           plan: newplancode,
          });
-         var programrecordarray = self.get('store').peekRecord('program-recorde',newprogramRecord);
+         var programrecordarray = self.get('store').peekRecord('program-record',newprogramRecord);
          if(programrecordarray == null)
          {
            //if none same program record is found, save it
