@@ -55,8 +55,8 @@ export default Ember.Component.extend({
           level: this.get('level'),
           source:this.get('source'),
           unit: this.get('unit'),
-          SecondSchoolInfo: this.get('schoolTemp'),
-          HighSchoolSubjectInfo: this.get('subjectTemp')
+          school: this.get('schoolTemp'),
+          course: this.get('subjectTemp')
         });
         newhsCourse.save();
       }
@@ -68,6 +68,7 @@ export default Ember.Component.extend({
         name: this.get('ssName'),
       });
       newSecondarySchool.save();
+
     },
 
     //Add a high-school subject

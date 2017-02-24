@@ -25,6 +25,7 @@ export default Ember.Component.extend({
   movingBackword: false,
   advancedStandingModel: null,
   hsCourseGradeModel: null,
+  hsCourseModel: null,
   currentASIndex:null,
   scholarshipAwardModel:null,
   currentScholIndex:null,
@@ -142,6 +143,10 @@ export default Ember.Component.extend({
 
     this.get('store').findAll('term-code').then(function(records){
       self.set('termCodeModel', records);
+    });
+
+    this.get('store').findAll('high-school-course').then(function(records){
+      self.set('hsCourseModel', records);
     });
 
     // load first page of the students records
@@ -700,9 +705,16 @@ export default Ember.Component.extend({
       var newhsMark = this.get('store').createRecord('hscourse-grade', {
         mark: this.get('hsGrade'),
         studentInfo: this.get('currentStudent'),
-        source: this.get('source'),
+        source: this.get('courseChoice'),
       });
       newhsMark.save();
+    },
+
+    addTermCode(){
+      var newTermCode = this.get('store').createRecord('term-code', {
+        name: this.get('termCode'),
+        studentInfo: this.get('currentStudent')
+      });
     },
 
     deleteAS(currentAS){
