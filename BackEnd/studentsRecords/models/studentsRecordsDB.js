@@ -16,11 +16,8 @@ var studentsSchema = mongoose.Schema(
         advInfo: [{type: mongoose.Schema.ObjectId, ref: 'AdvancedStandings'}],
         genderInfo: {type: mongoose.Schema.ObjectId, ref: 'Genders'},
         scholInfo: [{type: mongoose.Schema.ObjectId, ref: 'ScholarshipAwards'}],
-        //
-        hsCourseGradesInfo: [{type: mongoose.Schema.ObjectId, ref: 'HsCourseGrades'}],
-        // ^ used to be this: highSchoolCourse: [{type: mongoose.Schema.ObjectId, ref: 'HsCourseGrades'}],
-        // change back if it causes issues
-        semester: [{type: mongoose.Schema.ObjectId, ref: 'TermCodes'}]
+        highSchoolCourse: [{type: mongoose.Schema.ObjectId, ref: 'HsCourseGrades'}],
+        grade: [{type: mongoose.Schema.ObjectId, ref: 'TermCodes'}],
     }
 );
 studentsSchema.plugin(mongoosePaginate);
@@ -72,7 +69,7 @@ var highSchoolCourseSchema = mongoose.Schema(
     unit: String,
     school: {type: mongoose.Schema.ObjectId, ref: 'SecondarySchools'},
     course: {type: mongoose.Schema.ObjectId, ref: 'HighSchoolSubjects'},
-    hsCourseGradesInfo: [{type: mongoose.Schema.ObjectId, ref: 'HsCourseGrades'}]
+    courseGrade:[{type: mongoose.Schema.ObjectId, ref: 'HsCourseGrades'}]
   }
 );
 
