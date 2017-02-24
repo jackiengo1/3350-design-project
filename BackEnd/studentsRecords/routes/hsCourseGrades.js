@@ -50,6 +50,7 @@ router.route('/:hsCourseGrade_id')
             else {
                 hsCourseGrade.mark = request.hsCourseGrade.mark;
                 hsCourseGrade.source = request.hsCourseGrade.source;
+                hsCourseGrade.studentInfo = request.hsCourseGrade.studentInfo;
 
                 hsCourseGrade.save(function (error) {
                     if (error) {

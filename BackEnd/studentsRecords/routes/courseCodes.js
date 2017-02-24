@@ -53,6 +53,7 @@ router.route('/:courseCode_id')
                 courseCode.name = request.courseCode.name;
                 courseCode.unit = request.courseCode.unit;
                 courseCode.mark = request.courseCode.mark;
+                courseCode.semester = request.courseCode.semester;
 
                 courseCode.save(function (error) {
                     if (error) {

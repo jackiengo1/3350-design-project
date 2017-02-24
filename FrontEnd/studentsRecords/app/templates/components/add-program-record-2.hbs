@@ -1,0 +1,370 @@
+<div class="ui grid">
+
+  <div class="eight wide column" style="padding-right: 20px;">
+    <div class="ui center aligned header" style="margin-bottom: 30px;">
+      <h2>Program Records</h2>
+    </div>
+
+    {{#ui-accordion class="styled fluid"}}
+    {{#each programRecordModel as |oneprogramRecord|}}
+    <div class="title" style="border-color: #6435c9">
+      {{oneprogramRecord.name}}
+    </div>
+    <div class="content">
+      <div class="ui vertically divided grid">
+        <div class="one column row" style="padding-bottom: 0;">
+          <div class="column">
+            Level: {{oneprogramRecord.level}}
+          </div>
+        </div>
+        <div class="one column row" style="padding: 0;">
+          <div class="column">
+            Load: {{oneprogramRecord.load}}
+          </div>
+        </div>
+        <div class="one column row" style="padding: 0;">
+          <div class="column">
+            Status: {{oneprogramRecord.status}}
+          </div>
+        </div>
+        <div class="one column row" style="padding: 0;">
+          <div class="column">
+            <p style="text-align: center;"><button class="negative ui button" onclick={{action 'deleteProgramRecord' oneprogramRecord}}>Delete</button></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+    {{/ui-accordion}}
+  </div>
+
+  <div class="eight wide column" style="padding-right: 20px;">
+    <div class="ui center aligned header" style="margin-bottom: 30px;">
+      <h2>Add Program Record</h2>
+    </div>
+
+    <div class="ui sixteen wide column">
+      <form class="ui form">
+        <div class="field">
+          <label>Program Record Name</label>
+          {{input type="text"  value = programRecordName}}
+        </div>
+        <div class="three fields">
+          <div class="field">
+            <label>Level</label>
+            {{input type="text"  value = programRecordLevel}}
+          </div>
+          <div class="field">
+            <label>Load</label>
+            {{input type="text"  value = programRecordLoad}}
+          </div>
+          <div class="field">
+            <label>Status</label>
+            {{input type="text"  value = programRecordStatus}}
+          </div>
+        </div>
+
+
+
+        <div class="ui grid">
+          <div class="ui eight wide column">
+
+            <div class="ui middle aligned divided list" style="margin-top: 22px; margin-bottom: 22px;">
+              {{#each programRecordPlanCode as |onePlanCode|}}
+              <div class="item">
+                <div class="content" style="padding-top: 10px; font-size: 16px;">
+                  {{onePlanCode.name}}
+                </div>
+                <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
+                  <div class="negative ui button" onclick={{action 'deleteFromPlanCodeArray' onePlanCode}}>Delete</div>
+                </div>
+
+              </div>
+              {{else}}
+              You have not added any plan codes
+              {{/each}}
+
+
+            </div>
+
+            <div class="field">
+              <label>Plan Code</label>
+              <select onchange={{action 'selectPlanCode' value="target.value"}}>
+                <option selected = "selected" value = null> Select a plan code </option>
+                {{#each planCodeModel as |onePlanCode|}}
+
+                <option value={{onePlanCode.id}} >{{onePlanCode.name}}</option>
+
+                {{/each}}
+              </select>
+            </div>
+
+            <button class="positive ui button" {{action 'addToPlanCodeArray'}}>
+              Add Plan Code
+            </button>
+
+          </div>
+
+          <div class="ui eight wide column">
+            <div class="ui middle aligned divided list" style="margin-top: 22px; margin-bottom: 22px;">
+              {{#each programRecordTermCode as |oneTermCode|}}
+              <div class="item">
+                <div class="content" style="padding-top: 10px; font-size: 16px;">
+                  {{oneTermCode.name}}
+                </div>
+                <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
+                  <div class="negative ui button" onclick={{action 'deleteFromTermCodeArray' oneTermCode}}>Delete</div>
+                </div>
+
+              </div>
+              {{else}}
+              You have not added any term codes
+              {{/each}}
+
+
+            </div>
+            <div class="field">
+              <label>Term Code</label>
+              <select onchange={{action 'selectTermCode' value="target.value"}}>
+                <option selected = "selected" value = null> Select a term code </option>
+                {{#each termCodeModel as |oneTermCode|}}
+
+                <option value={{oneTermCode.id}} >{{oneTermCode.name}}</option>
+
+                {{/each}}
+              </select>
+            </div>
+
+            <button class="positive ui button" {{action 'addToTermCodeArray'}}>
+              Add Term Code
+            </button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Course Code</label>
+          <select onchange={{action 'selectCourseCode' value="target.value"}}>
+            <option selected = "selected" value = null> Select a course code </option>
+            {{#each courseCodeModel as |oneCourseCode|}}
+
+            <option value={{oneTermCode.id}} >{{oneCourseCode.name}}</option>
+
+            {{/each}}
+          </select>
+        </div>
+
+
+      </form>
+    </div>
+
+    <div class="ui center aligned header">
+      <button class="positive ui button" {{action 'addProgramRecord'}}>
+        Add Program Record
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<div class="ui grid">
+  <div class="eight wide column" style="padding-right: 20px;">
+
+    <div class="ui center aligned header" style="margin-bottom: 30px;">
+      <h2>Add Plan Code</h2>
+    </div>
+    <div class="ui middle aligned divided list" style="margin-top: 22px; margin-bottom: 22px;">
+      {{#each planCodeModel as |onePlanCode|}}
+      <div class="item">
+        <div class="content" style="padding-top: 10px; font-size: 16px;">
+          {{onePlanCode.name}}
+        </div>
+        <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
+          <div class="negative ui button" onclick={{action 'deletePlanCode' onePlanCode}}>Delete</div>
+        </div>
+
+      </div>
+      {{/each}}
+    </div>
+
+
+    <form class="ui form">
+      <div class="field">
+        <label>Name: </label>
+        {{input type="text"  value = planCode}}
+      </div>
+    </form>
+
+    <div class="ui center aligned header">
+      <button class="positive ui button" {{action 'addPlanCode'}}>
+        Add plan code
+      </button>
+    </div>
+  </div>
+
+
+  <!--add term code section-->
+
+  <div class="eight wide column" style="padding-right: 20px;">
+
+    <div class="ui center aligned header" style="margin-bottom: 30px;">
+      <h2>Add Term Code</h2>
+    </div>
+    <div class="ui middle aligned divided list" style="margin-top: 22px; margin-bottom: 22px;">
+      {{#each termCodeModel as |oneTermCode|}}
+      <div class="item">
+        <div class="content" style="padding-top: 10px; font-size: 16px;">
+          {{oneTermCode.name}}
+        </div>
+        <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
+          <div class="negative ui button" onclick={{action 'deleteTermCode' oneTermCode}}>Delete</div>
+        </div>
+
+      </div>
+      {{/each}}
+    </div>
+
+
+
+    <form class="ui form">
+      <div class="field">
+        <label>Name: </label>
+        {{input type="text"  value = termCode}}
+      </div>
+    </form>
+
+    <div class="ui center aligned header">
+      <button class="positive ui button" {{action 'addTermCode'}}>
+        Add plan code
+      </button>
+    </div>
+  </div>
+
+</div>
+
+
+<div class="ui grid">
+  <div class="sixteen wide column" style="padding-right: 20px;">
+    <div class="ui center aligned header" style="margin-bottom: 30px;">
+      <h2>Add Course Code</h2>
+    </div>
+
+
+    <div class="ui middle aligned divided list" style="margin-top: 22px; margin-bottom: 22px;">
+      {{#each courseCodeModel as |oneCourseCode|}}
+      <div class="item">
+        <div class="content" style="padding-top: 10px; font-size: 16px;">
+          Course letter: {{oneCourseCode.courseLetter}}
+        </div>
+        <div class="content" style="padding-top: 10px; font-size: 16px;">
+          Course number: {{oneCourseCode.courseNumber}}
+        </div>
+        <div class="content" style="padding-top: 10px; font-size: 16px;">
+          Course name: {{oneCourseCode.name}}
+        </div>
+        <div class="content" style="padding-top: 10px; font-size: 16px;">
+          Course unit: {{oneCourseCode.unit}}
+        </div>
+        <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
+          <div class="negative ui button" onclick={{action 'deleteCourseCode' oneCourseCode}}>Delete</div>
+        </div>
+
+      </div>
+      {{/each}}
+    </div>
+
+
+    <form class="ui form">
+      <div class="two fields">
+        <div class="field">
+          <label>Course Letter: </label>
+          {{input type="text"  value = courseLetter}}
+        </div>
+        <div class="field">
+          <label>Course Number: </label>
+          {{input type="text"  value = courseNum}}
+        </div>
+      </div>
+      <div class="two fields">
+
+        <div class="field">
+          <label>Name: </label>
+          {{input type="text"  value = courseName}}
+        </div>
+        <div class="field">
+          <label>Unit: </label>
+          {{input type="text"  value = courseUnit}}
+        </div>
+      </div>
+    </form>
+
+    <div class="ui center aligned header">
+      <button class="positive ui button" {{action 'addCourseCode'}}>
+        Add course code
+      </button>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+{{!--<div class="ui center aligned header">
+<h2>Add Program Record</h2>
+</div>
+
+<div class="ui middle aligned divided list">
+{{#each programRecordModel as |oneprogramRecord|}}
+<div class="item">
+<div class="content">
+<div class="header">
+<h3>
+{{oneprogramRecord.name}} <button class="negative ui button" onclick={{action 'deleteProgramRecord' oneprogramRecord}} style = "float: right;">Delete</button>
+</h3>
+</div>
+
+</div>
+</div>
+{{/each}}
+</div>
+
+<div class="ui grid">
+<div class="ui middle aligned sixteen wide column">
+<div class="ui form">
+<div class="inline field">
+<label style= "font-size: 20px;">Program Record Name</label>
+{{input type="text"  value = programRecordName}}
+<br>
+<label style= "font-size: 20px;">Level</label>
+{{input type="text"  value = programRecrdLevel}}
+<br>
+<label style= "font-size: 20px;">Load</label>
+{{input type="text"  value = programRecordLoad}}
+<br>
+<label style= "font-size: 20px;">Status</label>
+{{input type="text"  value = programRecordStatus}}
+<br>
+<label style= "font-size: 20px;">Grade Info</label>
+{{input type="text"  value = programRecordGradeInfo}}
+<br>
+<label style= "font-size: 20px;">Course Code Info</label>
+{{input type="text"  value = courseCodeInfo}}
+<br>
+<label style= "font-size: 20px;">Term Code Info</label>
+{{input type="text"  value = termCodeInfo}}
+<br>
+<label style= "font-size: 20px;">Plan Code Info</label>
+{{input type="text"  value = planCodeInfo}}
+<br>
+</div>
+</div>
+</div>
+</div>
+<!---->
+<div class="ui center aligned header">
+<button class="positive ui button" {{action 'addProgramRecord'}}>
+Add Program Record
+</button>
+</div>
+<!---->--}}

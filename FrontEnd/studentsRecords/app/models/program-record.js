@@ -5,6 +5,6 @@ name: DS.attr(),
 level: DS.attr(),
 load: DS.attr(),
 status: DS.attr(),
-termCodeInfo: DS.belongsTo('term-code'),
-planCodeInfo: DS.hasMany('plan-code'),
+semester: DS.hasMany('term-code'),
+plan: DS.hasMany('plan-code'),
 });

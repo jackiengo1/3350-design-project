@@ -10,6 +10,7 @@ router.route('/')
         var planCode = new models.PlanCodes(request.body.planCode);
         planCode.save(function (error) {
             if (error) response.send(error);
+            console.log(planCode);
             response.json({planCode: planCode});
         });
     })
@@ -49,6 +50,7 @@ router.route('/:planCode_id')
             }
             else {
                 planCode.name = request.planCode.name;
+                planCode.program = request.planCode.program;
 
                 planCode.save(function (error) {
                     if (error) {
