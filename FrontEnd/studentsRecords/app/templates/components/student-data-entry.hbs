@@ -6,11 +6,16 @@
 
 {{#if showAllStudents}}
 
-<div class="ui inverted menu" style="background-color: #4e2683;">
-  <a class="item" {{action 'backToEntryForm'}}>
-    <i class="back icon"></i>
-    Back
-  </a>
+<div class="fluid ui buttons">
+  <div class="ui icon button" data-tooltip="Back" {{action 'backToEntryForm'}}>
+    <i class="reply large icon"></i>
+  </div>
+  <div class="ui icon button" data-tooltip="Previous Page" {{action 'allStudentsPrev'}}>
+    <i class="arrow left large icon"></i>
+  </div>
+  <div class="ui icon button" data-tooltip="Next Page" {{action 'allStudentsNext'}}>
+    <i class="arrow right large icon"></i>
+  </div>
 </div>
 
 <div class="ui center aligned header">
@@ -34,25 +39,18 @@
   </div>
   {{/each}}
 
-  <div class="ui center aligned header">
-    <button class="ui primary button" {{action 'allStudentsPrev'}} >
-      Previous Page
-    </button>
-    <button class="ui primary button" {{action 'allStudentsNext'}} >
-      Next Page
-    </button>
-  </div>
-
 </div>
 
 
 {{else if showFindRecord}}
 <!-- Show the menu bar-->
-<div class="ui inverted menu" style="background-color: #4e2683;">
-  <a class="item" {{action 'backToEntryForm'}}>
-    <i class="back icon"></i>
-    Back
-  </a>
+<div class="fluid ui buttons">
+  <div class="ui icon button" data-tooltip="Back" {{action 'backToEntryForm'}}>
+    <i class="reply large icon"></i>
+  </div>
+  <div class="ui icon button" data-tooltip="Find Record" {{action 'findRecord'}}>
+    <i class="search large icon"></i>
+  </div>
 </div>
 
 <div class="ui center aligned header">
@@ -84,12 +82,6 @@
 </div>
 
 <div class="ui center aligned header">
-  <button onclick={{action 'findRecord'}} class="ui button">
-    Find
-  </button>
-</div>
-
-<div class="ui center aligned header">
   <h1>{{searchResultTitle}}</h1>
 </div>
 
@@ -114,24 +106,20 @@
 {{else}}
 
 {{#if addingStudent}}
-<div class="ui inverted menu" style="background-color: #4e2683;">
-  <a class="item" {{action 'backToEntryForm'}}>
-    <i class="back icon"></i>
-    Back
-  </a>
-  <a class="item" {{action 'addStudent'}}>
-    <i class="add user icon"></i>
-    Add Student
-  </a>
+
+<div class="fluid ui buttons">
+  <div class="ui icon button" data-tooltip="Back" {{action 'backToEntryForm'}}>
+    <i class="reply large icon"></i>
+  </div>
+
+  <div class="ui icon button" data-tooltip="Add Student" {{action 'addStudent'}}>
+    <i class="add user large icon"></i>
+  </div>
 </div>
 
 {{else}}
 <!-- Show the menu bar-->
 <div class="fluid ui buttons">
-  {{!--<a class="item" {{action 'saveStudent'}}>
-    <i class="save icon"></i>
-    Save
-  </a>--}}
 
   <div class="ui icon button" data-tooltip="Undo" {{action 'undoSave'}}>
     <i class="undo large icon"></i>
@@ -173,45 +161,6 @@
     <i class="help large icon"></i>
   </div>
 
-
-  {{!--<a class="ui icon button" data-tooltip="Undo" {{action 'undoSave'}}>
-    <i class="undo icon"></i>
-  </a>
-  <a class="item" {{action 'goToAddStudent'}}>
-    <i class="add user icon"></i>
-    Add Student
-  </a>
-  <a class="item" {{action 'deleteStudent'}}>
-    <i class="remove user icon"></i>
-    Delete
-  </a>
-  <a class="item" {{action 'firstStudent'}}>
-    <i class="step backward icon"></i>
-    First
-  </a>
-  <a class="item" {{action 'previousStudent'}}>
-    <i class="arrow left icon"></i>
-    Previous
-  </a>
-  <a class="item" {{action 'nextStudent'}}>
-    <i class="arrow right icon"></i>
-    Next
-  </a>
-  <a class="item" {{action 'lastStudent'}}>
-    <i class="step forward icon"></i>
-    Last
-  </a>
-  <a class="item" {{action 'allStudents'}}>
-    <i class="content icon"></i>
-    All Records
-  </a>
-  <a class="item" {{action 'findStudent'}}>
-    <i class="search icon"></i>
-    Find Record
-  </a>
-  <a class="item">
-    Help
-  </a>--}}
 </div>
 
 {{/if}}
@@ -254,8 +203,8 @@
           </div>
 
 
-          <div class="two fields">
-            <div class="field">
+            <div class="two fields">
+              <div class="field">
               <label>Gender</label>
               <select onchange={{action 'selectGender' value="target.value" }} >
                 {{#each genderModel as |genderChoice|}}
@@ -263,7 +212,7 @@
                   genderChoice.id}}>{{genderChoice.name}} </option>
 
                   {{/each}}
-                </select>
+              </select>
               </div>
               <div class="field">
                 <label>Date of Birth</label>
@@ -470,28 +419,6 @@
 
   </div>
 
-
-    {{!--<div class="ui middle aligned divided list">
-      {{#each scholarShipAndAwardList as |userScholarShipAndAwardList|}}
-      {{#unless userScholarShipAndAwardList.isDeleted}}
-      <div class="item">
-        <div class="content">
-          <div class="header">
-            <h3>
-              <button class="negative ui button" onclick={{action 'deleteScholarshipAward' userScholarShipAndAwardList}} style = "float: right;">Delete</button>
-              Note: {{userScholarShipAndAwardList.note}}
-            </h3>
-          </div>
-
-        </div>
-      </div>
-      {{/unless}}
-      {{/each}}
-
-    </div>--}}
-
-
-
   </div>
 
 
@@ -505,15 +432,56 @@
         <h3>High School:{{oneHSGrade.HighSchoolCoursesInfo.SecondSchoolInfo}}</h3>
         <h3>Subject:{{oneHSGrade.HighSchoolCoursesInfo.HighSchoolSubjectInfo}}</h3>
         <h3>Course: {{oneHSGrade.HighSchoolCoursesInfo}}</h3>
-        <h3>Mark: {{oneHSGrade}}</h3>
+        <h3>Mark: {{oneHSGrade.mark}}</h3>
       {{/each}}
-
+      <h2>Add a Term Code</h2>
+      <div class="field">
+        <label>Grade</label>
+        {{input type="text"  value= hsGrade}}
+      </div>
+      <div class="field">
+        <label>Source</label>
+        {{input type="text"  value= source}}
+      </div>
+      <button class="ui primary button" {{action 'addhsMark'}} >
+        Add Grade
+      </button>
 
     </div>
 
     <!-- program record tab-->
         <div class = "ui tab" data-tab="programRecord" style="background-color: #eee3fd; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">
           <h2>Student's Program Record</h2>
+          {{#each currentStudentTermCode as |oneTerm|}}
+            <h3>Program:{{oneTerm.program.name}}</h3>
+            <h3>Course:{{oneTerm.courseInfo.name}}</h3>
+            <h3>Unit: {{oneTerm.courseInfo.unit}}</h3>
+            <h3>Mark: {{oneTerm.courseInfo.mark.mark}}</h3>
+          {{/each}}
+          <h2>Add Grade</h2>
+          <div class="field">
+            <select onchange={{action 'selectTermCode' value="target.value"}}>
+              <option selected = "selected" value = null> Select a term code </option>
+              {{#each termCodeModel as |oneTermCode|}}
+              <option value={{oneTermCode.id}} >{{oneTermCode.name}}</option>
+              {{/each}}
+            </select>
+          </div>
+
+          <div class="field">
+            <select onchange={{action 'selectCourseCode' value="target.value"}}>
+              <option selected = "selected" value = null> Select a course code </option>
+              {{#each courseCodeModel as |oneCourseCode|}}
+              <option value={{oneCourseCode.id}} >{{oneCourseCode.name}}</option>
+              {{/each}}
+            </select>
+          </div>
+
+
+
+          <button class="ui primary button" {{action 'addGrade'}} >
+            Add grade
+          </button>
         </div>
 
   {{/if}}

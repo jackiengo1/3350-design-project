@@ -264,6 +264,9 @@
         <div class="content" style="padding-top: 10px; font-size: 16px;">
           Course unit: {{oneCourseCode.unit}}
         </div>
+        <div class="content" style="padding-top: 10px; font-size: 16px;">
+          Term code: {{oneCourseCode.semester.name}}
+        </div>
         <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
           <div class="negative ui button" onclick={{action 'deleteCourseCode' oneCourseCode}}>Delete</div>
         </div>
@@ -295,6 +298,18 @@
           {{input type="text"  value = courseUnit}}
         </div>
       </div>
+      <div class="field">
+        <label>Term Code</label>
+        <select onchange={{action 'selectTermCodeForAddCourse' value="target.value"}}>
+          <option selected = "selected" value = null> Select a term code </option>
+          {{#each termCodeModel as |oneTermCode|}}
+
+          <option value={{oneTermCode.id}} >{{oneTermCode.name}}</option>
+
+          {{/each}}
+        </select>
+      </div>
+
     </form>
 
     <div class="ui center aligned header">

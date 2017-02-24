@@ -4,7 +4,15 @@ export default Ember.Component.extend({
 
   store: Ember.inject.service(),
   secondarySchoolModel: null,
+  subjectModel: null,
+  courseModel: null,
 
+  subjectTemp: null,
+  schoolTemp: null,
+
+  secondarySchoolTab: true,
+  subjectTab: false,
+  courseTab: false,
 
   init() {
     this._super(...arguments);
@@ -13,39 +21,51 @@ export default Ember.Component.extend({
     this.get('store').findAll('secondarySchool').then(function(records){
       self.set('secondarySchoolModel', records);
     });
-    console.log(this.get('secondarySchoolModel'));
 
+    this.get('store').findAll('highSchoolSubject').then(function(records){
+      self.set('subjectModel', records);
+    });
 
+    this.get('store').findAll('highSchoolCourse').then(function(records){
+      self.set('courseModel', records);
+    });
+  },
+
+  didRender() {
+    Ember.$('.menu .item').tab();
   },
 
 
   actions: {
-    //Add a high-school mark
-    addhsMark(){
-      var newhsMark = this.get('store').createRecord('hscourse-grade', {
-        mark: this.get('mark'),
-        studentInfo: this.get('studentInfo'),
-        HighSchoolCourseInfo: this.get('hsCourseInfo'),
-      });
-      newhsMark.save();
-    },
+
     //Add a high-school course
-    addhsCourse(){
-      var newhsCourse = this.get('store').createRecord('high-school-courses', {
-        level: this.get('level'),
-        source:this.get('source'),
-        unit: this.get('unit'),
-        HSCourseGradeInfo: this.get('gradeInfo'),
-        SecondSchoolInfo: this.get('ssInfo'),
-        HighSchoolSubjectInfo: this.get('hsSubjectInfo')
-      });
-      newhsCourse.save();
+    addhsCourse() {
+
+      if (this.get('subjectTemp') == null)
+      {
+        alert("Please select a subject.");
+      }
+      else if (this.get('schoolTemp') == null)
+      {
+        alert("Please select a school");
+      }
+      else
+      {
+        var newhsCourse = this.get('store').createRecord('high-school-course', {
+          level: this.get('level'),
+          source:this.get('source'),
+          unit: this.get('unit'),
+          SecondSchoolInfo: this.get('schoolTemp'),
+          HighSchoolSubjectInfo: this.get('subjectTemp')
+        });
+        newhsCourse.save();
+      }
     },
 
     //Add a secondary school
     addSecondarySchool(){
       var newSecondarySchool = this.get('store').createRecord('secondary-school', {
-        name: this.get('ssName')
+        name: this.get('ssName'),
       });
       newSecondarySchool.save();
     },
@@ -54,8 +74,7 @@ export default Ember.Component.extend({
     addhsSubject(){
       var newhsSubject = this.get('store').createRecord('high-school-subject', {
         name: this.get('subjectName'),
-        description: this.get('description'),
-        highSchoolCourses: this.get('courses'),
+        description: this.get('description')
       });
       newhsSubject.save();
     },
@@ -76,10 +95,8 @@ export default Ember.Component.extend({
     deletehsCourse(hscourse){
       var choice = confirm('Are you sure you want to delete this?');
       if (choice) {
-        var index = this.get('hsCourseModel').indexOf(hscourse);
-        this.set('hsCourseIndex', index);
-        var indextemp = this.get('hsCourseIndex');
-        var restemp = this.get('hsCourseModel').objectAt(indextemp);
+        var index = this.get('courseModel').indexOf(hscourse);
+        var restemp = this.get('courseModel').objectAt(index);
         console.log(restemp);
         restemp.deleteRecord();
         restemp.save();
@@ -87,11 +104,15 @@ export default Ember.Component.extend({
     },
 
     //Add a secondary school
-    deleteSecondarySchool( secondarySchool){
+
+    deleteSecondarySchool(secondaryschool){
       var choice = confirm('Are you sure you want to delete this?');
       if (choice) {
-        var index = this.get('secondarySchoolModel').indexOf(secondarySchool);
-        var restemp = this.get('secondarySchoolModel').objectAt(index);
+        var index = this.get('secondarySchoolModel').indexOf(secondaryschool);
+        this.set('ssIndex', index);
+        var indextemp = this.get('ssIndex');
+        var restemp = this.get('secondarySchoolModel').objectAt(indextemp);
+
         console.log(restemp);
         restemp.deleteRecord();
         restemp.save();
@@ -102,14 +123,22 @@ export default Ember.Component.extend({
     deletehsSubject(hssubject){
       var choice = confirm('Are you sure you want to delete this?');
       if (choice) {
-        var index = this.get('hsSubjectModel').indexOf(hssubject);
-        this.set('hsSubjectIndex', index);
-        var indextemp = this.get('hsSubjectIndex');
-        var restemp = this.get('hsSubjectModel').objectAt(indextemp);
+        var index = this.get('subjectModel').indexOf(hssubject);
+        var restemp = this.get('subjectModel').objectAt(index);
         console.log(restemp);
         restemp.deleteRecord();
         restemp.save();
       }
+    },
+
+    selectSubject(subject){
+      var subjectObj = this.get('store').peekRecord('high-school-subject', subject);
+      this.set('subjectTemp', subjectObj);
+    },
+
+    selectSchool(school){
+      var schoolObj = this.get('store').peekRecord('secondary-school', school);
+      this.set('schoolTemp', schoolObj);
     }
 
   }

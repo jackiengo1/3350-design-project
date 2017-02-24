@@ -24,6 +24,7 @@ export default Ember.Component.extend({
   pageSize: null,
   movingBackword: false,
   advancedStandingModel: null,
+  hsCourseGradeModel: null,
   currentASIndex:null,
   scholarshipAwardModel:null,
   currentScholIndex:null,
@@ -79,6 +80,11 @@ export default Ember.Component.extend({
 
   //students high school record
   currentStudentHSGrades: null,
+  currentStudentTermCode: null,
+
+  termCodeModel: null,
+  termCode: null,
+  courseCodeModel: null,
 
 
 
@@ -132,9 +138,10 @@ export default Ember.Component.extend({
 
     this.get('store').findAll('gender').then(function(records){
       self.set('genderModel', records);
+    });
 
-
-
+    this.get('store').findAll('term-code').then(function(records){
+      self.set('termCodeModel', records);
     });
 
     // load first page of the students records
@@ -165,7 +172,7 @@ export default Ember.Component.extend({
     var gender = this.get('currentStudent').get('genderInfo');
 
     this.set('currentStudentHSGrades', this.get('currentStudent').get('hsCourseGrade'));
-
+    this.set('currentStudentTermCode', this.get('currentStudent').get('termCode'));
     this.set('selectedGender',gender);
     var res = this.get('currentStudent').get('resInfo');
     this.set('selectedResidency',res);
@@ -689,6 +696,15 @@ export default Ember.Component.extend({
 
     },
 
+    addhsMark(){
+      var newhsMark = this.get('store').createRecord('hscourse-grade', {
+        mark: this.get('hsGrade'),
+        studentInfo: this.get('currentStudent'),
+        source: this.get('source'),
+      });
+      newhsMark.save();
+    },
+
     deleteAS(currentAS){
       var index = this.get('advancedStandingModel').indexOf(currentAS);
       this.set('currentASIndex', index);
@@ -800,6 +816,15 @@ export default Ember.Component.extend({
       this.set('showAllStudents', false);
 
     },
+    selectTermCode(termCode){
+      var termCodeObj = this.get('store').peekRecord('term-code', termCode);
+      this.set('termCode', termCodeObj);
+      this.set('courseCodeModel', termCodeObj.get('courseInfo'));
+      console.log(this.get('courseCodeModel').get('firstObject'));
+    },
+    selectCourseCode(courseCode){
+
+    },
   }
 
 });
@@ -857,7 +882,7 @@ Ember.$(document).ready(function () {
       return false;
     }
 
-    if (Ember.$("#dateInput").val().length === 4 && asciiCode !== 8) { //adds dashes to date field to force correct format
+     if (Ember.$("#dateInput").val().length === 4 && asciiCode !== 8) { //adds dashes to date field to force correct format
       Ember.$("#dateInput").val(Ember.$("#dateInput").val() + "-");
     }
     if (Ember.$("#dateInput").val().length === 7 && asciiCode !== 8) {

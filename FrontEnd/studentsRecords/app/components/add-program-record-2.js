@@ -29,6 +29,7 @@ export default Ember.Component.extend({
   planCodeTemp: null,               //holds a plan code that will be added to the array
   programRecordTermCode: Ember.A(), //holds a list of term codes
   termCodeTemp: null,               //holds a term code that will be added to the array
+  termCodeCourseTemp: null,
   programRecordCourseCode: null,
 
 
@@ -75,6 +76,7 @@ export default Ember.Component.extend({
         courseNumber: this.get('courseNum'),
         name: this.get('courseName'),
         unit: this.get('courseUnit'),
+        semester: this.get('termCodeCourseTemp'),
       });
       newCourseCode.save();
     },
@@ -163,6 +165,11 @@ export default Ember.Component.extend({
     selectTermCode(termCode){
       var termCodeObj = this.get('store').peekRecord('term-code', termCode);
       this.set('termCodeTemp', termCodeObj);
+    },
+
+    selectTermCodeForAddCourse(termCode){
+      var termCodeCourseObj = this.get('store').peekRecord('term-code', termCode);
+      this.set('termCodeCourseTemp', termCodeCourseObj);
     },
     selectCourseCode(courseCode){
       this.set('programRecordCourseCode', courseCode);
