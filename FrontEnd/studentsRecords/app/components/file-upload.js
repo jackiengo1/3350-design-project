@@ -22,6 +22,8 @@ export default Ember.Component.extend({
   currentHighSchool:null,
   currentHighSchoolSubject:null,
   currentTerm:null,
+  currentGender:null,
+  currentResidency:null,
 
   init() {
     this._super(...arguments);
@@ -102,7 +104,7 @@ export default Ember.Component.extend({
       {
         sheet_name_list.forEach(function (sheetName) {
           var worksheet = workbook.Sheets[sheetName];
-
+          let firsttime = true;
           for (var cellName in worksheet) {
             //all keys that do not begin with "!" correspond to cell addresses
 
@@ -115,6 +117,16 @@ export default Ember.Component.extend({
                 name: worksheet[cellName].v,
               });
               newgender.save();
+              if(firsttime)
+              {
+                self.set('genderModel',[newgender]);
+                firsttime = false;
+              }
+              else {
+                {
+                  self.get('genderModel').pushObject(newgender);
+                }
+              }
             }
           }
 
@@ -125,7 +137,7 @@ export default Ember.Component.extend({
       {
         sheet_name_list.forEach(function (sheetName) {
           var worksheet = workbook.Sheets[sheetName];
-
+          var firsttime = true;
           for (var cellName in worksheet) {
             //all keys that do not begin with "!" correspond to cell addresses
 
@@ -138,6 +150,15 @@ export default Ember.Component.extend({
                 name: worksheet[cellName].v,
               });
               newresidency.save();
+              if(firsttime)
+              {
+                self.set('residencyModel',[newresidency]);
+                firsttime = false;
+              }
+              else{
+                self.get('residencyModel').pushObject(newresidency);
+              }
+
             }
           }
 
@@ -148,6 +169,7 @@ export default Ember.Component.extend({
       {
         sheet_name_list.forEach(function (sheetName) {
           var worksheet = workbook.Sheets[sheetName];
+          let firsttime = false;
           for (var cellName in worksheet) {
             //all keys that do not begin with "!" correspond to cell addresses
 
@@ -160,6 +182,14 @@ export default Ember.Component.extend({
                 name: worksheet[cellName].v,
               });
               newtermcode.save();
+              if(firsttime)
+              {
+                self.set('termCodeModel',[newtermcode]);
+                firsttime = false;
+              }
+              else{
+                self.get('termCodeModel').pushObject(newtermcode);
+              }
             }
           }
 
@@ -225,6 +255,7 @@ export default Ember.Component.extend({
             console.log(Barray[i]);
             self.send('findStudent',Aarray[i]);
             var studenttemp = self.get('currentStudent');
+            console.log(studenttemp.get('number'));
             studenttemp.set('admissionComments',Barray[i]);
             //how to walk around here except ajax
             studenttemp.save().then(() => {
@@ -238,6 +269,7 @@ export default Ember.Component.extend({
     {
       sheet_name_list.forEach(function (sheetName) {
         var worksheet = workbook.Sheets[sheetName];
+        let firsttime = true;
         for (var cellName in worksheet) {
           //all keys that do not begin with "!" correspond to cell addresses
 
@@ -250,6 +282,14 @@ export default Ember.Component.extend({
               name: worksheet[cellName].v,
             });
             newschool.save();
+            if(firsttime)
+            {
+              self.set('secondarySchoolModel',[newschool]);
+              firsttime=false;
+            }
+            else{
+              self.get('secondarySchoolModel').pushObject(newschool);
+            }
           }
         }
 
@@ -259,6 +299,7 @@ export default Ember.Component.extend({
   else if(file.name ==="students.xlsx")
   {
     sheet_name_list.forEach(function (sheetName) {
+      let firsttime = true;
       var indexA=0; var indexB=0; var indexC=0; var indexD=0; var indexE=0; var indexF=0;
       var Aarray = []; var Barray = []; var Carray = []; var Darray = []; var Earray = []; var Farray = [];
       var worksheet = workbook.Sheets[sheetName];
@@ -343,9 +384,10 @@ export default Ember.Component.extend({
 
       for(var i=1;i<indexA;i++)
       {
-        var res = self.get('store').peekRecord('residency', Farray[i]); //get the students residency object
-        var gen = self.get('store').peekRecord('gender', Darray[i]); //get the students gender object
-
+        self.send('findresidency',Farray[i]);
+        self.send('findgender',Darray[i]);
+        var res = self.get('currentResidency');
+        var gen = self.get('currentGender');
         var newStudent = self.get('store').createRecord('student', { //create a new student record
           number: Aarray[i],
           firstName: Barray[i],
@@ -356,6 +398,16 @@ export default Ember.Component.extend({
           genderInfo: gen,
         });
         newStudent.save(); //commit the student record to db
+        //push the newstudent into student model
+        if(firsttime)
+        {
+          self.set('studentModel',[newStudent]);
+          firsttime = false;
+        }
+        else{
+          self.get('studentModel').pushObject(newStudent);
+        }
+
       }
      });
   }
@@ -637,7 +689,6 @@ export default Ember.Component.extend({
 
          //create high school course
          self.send('findhighschool',schoolname);
-         //self.send('findsubject',subject,description);
          var temphighschool = self.get('currentHighSchool');
          //var tempsubject = this.get('currentHighSchoolSubject');
          var newhscoures = self.get('store').createRecord('high-school-course',{
@@ -951,21 +1002,6 @@ findStudent:function(studentnum){
   }
 },
 
-findsubject:function(subject,description){
-  var self = this;
-  var length = self.get('highSchoolSubjectModel').get('length');
-  for (var i=0;i<length;i++)
-  {
-    let tempsubject = self.get('highSchoolSubjectModel').objectAt(i);
-    let tempname = tempsubject.get('name');
-    let tempdescription = tempsubject.get('description');
-    if((tempname == subject) && (tempdescription == description))
-    {
-      self.set('currentHighSchoolSubject',tempsubject);
-    }
-  }
-},
-
 findhighschool:function(highschool){
   var self = this;
   var length = self.get('secondarySchoolModel').get('length');
@@ -995,6 +1031,39 @@ findterm:function(term){
     }
   }
 },
+
+findgender:function(gen)
+{
+  var self = this;
+  var length = self.get('genderModel').get('length');
+  for (var i=0;i<length;i++)
+  {
+    let tempgender = self.get('genderModel').objectAt(i);
+    let gendername = tempgender.get('name');
+    //console.log(tempnum)
+    if(gendername == gen)
+    {
+      self.set('currentGender',tempgender);
+    }
+  }
+},
+
+findresidency:function(res)
+{
+  var self = this;
+  var length = self.get('residencyModel').get('length');
+  for (var i=0;i<length;i++)
+  {
+    let tempresidency = self.get('residencyModel').objectAt(i);
+    let residencyname = tempresidency.get('name');
+    //console.log(tempnum)
+    if(residencyname == res)
+    {
+      self.set('currentResidency',tempresidency);
+    }
+  }
+},
+
 }
 //end of actions
 });
