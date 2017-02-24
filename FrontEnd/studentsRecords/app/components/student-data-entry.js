@@ -700,6 +700,13 @@ export default Ember.Component.extend({
       newhsMark.save();
     },
 
+    addTermCode(){
+      var newTermCode = this.get('store').createRecord('term-code', {
+        name: this.get('termCode'),
+        studentInfo: this.get('currentStudent')
+      });
+    },
+
     deleteAS(currentAS){
       var index = this.get('advancedStandingModel').indexOf(currentAS);
       this.set('currentASIndex', index);

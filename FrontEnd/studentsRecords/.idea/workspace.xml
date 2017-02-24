@@ -108,10 +108,20 @@
       <file leaf-file-name="student-data-entry.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/components/student-data-entry.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="728">
-              <caret line="697" column="35" lean-forward="false" selection-start-line="697" selection-start-column="35" selection-end-line="697" selection-end-column="35" />
+            <state relative-caret-position="404">
+              <caret line="707" column="6" lean-forward="false" selection-start-line="707" selection-start-column="6" selection-end-line="707" selection-end-column="6" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="file-upload.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/components/file-upload.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="13266">
+              <caret line="687" column="0" lean-forward="false" selection-start-line="687" selection-start-column="0" selection-end-line="687" selection-end-column="0" />
               <folding>
-                <marker date="1487902352662" expanded="true" signature="26082:26202" ph="{...}" />
+                <marker date="1487902645006" expanded="true" signature="31067:31071" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -212,16 +222,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="welcome-page.hbs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/templates/components/welcome-page.hbs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="297">
-              <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="add-residency.hbs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/components/add-residency.hbs">
           <provider selected="true" editor-type-id="text-editor">
@@ -258,8 +258,8 @@
       <find>advanced</find>
       <find>data-tab</find>
       <find>addTermCode</find>
-      <find>currentStudentHS</find>
       <find>button</find>
+      <find>currentStudentHS</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -585,7 +585,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="211552000" />
+    <option name="totallyTimeSpent" value="212498000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -821,17 +821,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/components/file-upload.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="862">
-          <caret line="687" column="0" lean-forward="false" selection-start-line="687" selection-start-column="0" selection-end-line="687" selection-end-column="0" />
-          <folding>
-            <marker date="1487899849138" expanded="true" signature="66:29311" ph="{...}" />
-            <marker date="1487899849138" expanded="true" signature="29305:29309" ph="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -911,14 +901,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="513">
           <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/term-code.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="2" lean-forward="false" selection-start-line="0" selection-start-column="2" selection-end-line="0" selection-end-column="2" />
           <folding />
         </state>
       </provider>
@@ -1014,13 +996,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/components/file-upload.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="13266">
+          <caret line="687" column="0" lean-forward="false" selection-start-line="687" selection-start-column="0" selection-end-line="687" selection-end-column="0" />
+          <folding>
+            <marker date="1487902645006" expanded="true" signature="31067:31071" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/term-code.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="2" lean-forward="false" selection-start-line="0" selection-start-column="2" selection-end-line="0" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/components/student-data-entry.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="728">
-          <caret line="697" column="35" lean-forward="false" selection-start-line="697" selection-start-column="35" selection-end-line="697" selection-end-column="35" />
-          <folding>
-            <marker date="1487902352662" expanded="true" signature="26082:26202" ph="{...}" />
-          </folding>
+        <state relative-caret-position="404">
+          <caret line="707" column="6" lean-forward="false" selection-start-line="707" selection-start-column="6" selection-end-line="707" selection-end-column="6" />
+          <folding />
         </state>
       </provider>
     </entry>
