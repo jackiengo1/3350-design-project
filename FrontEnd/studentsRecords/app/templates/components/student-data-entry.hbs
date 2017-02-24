@@ -6,11 +6,16 @@
 
 {{#if showAllStudents}}
 
-<div class="ui inverted menu" style="background-color: #4e2683;">
-  <a class="item" {{action 'backToEntryForm'}}>
-    <i class="back icon"></i>
-    Back
-  </a>
+<div class="fluid ui buttons">
+  <div class="ui icon button" data-tooltip="Back" {{action 'backToEntryForm'}}>
+    <i class="reply large icon"></i>
+  </div>
+  <div class="ui icon button" data-tooltip="Previous Page" {{action 'allStudentsPrev'}}>
+    <i class="arrow left large icon"></i>
+  </div>
+  <div class="ui icon button" data-tooltip="Next Page" {{action 'allStudentsNext'}}>
+    <i class="arrow right large icon"></i>
+  </div>  
 </div>
 
 <div class="ui center aligned header">
@@ -34,25 +39,27 @@
   </div>
   {{/each}}
 
-  <div class="ui center aligned header">
+  {{!--<div class="ui center aligned header">
     <button class="ui primary button" {{action 'allStudentsPrev'}} >
       Previous Page
     </button>
     <button class="ui primary button" {{action 'allStudentsNext'}} >
       Next Page
     </button>
-  </div>
+  </div>--}}
 
 </div>
 
 
 {{else if showFindRecord}}
 <!-- Show the menu bar-->
-<div class="ui inverted menu" style="background-color: #4e2683;">
-  <a class="item" {{action 'backToEntryForm'}}>
-    <i class="back icon"></i>
-    Back
-  </a>
+<div class="fluid ui buttons">
+  <div class="ui icon button" data-tooltip="Back" {{action 'backToEntryForm'}}>
+    <i class="reply large icon"></i>
+  </div>
+  <div class="ui icon button" data-tooltip="Find Record" {{action 'findRecord'}}>
+    <i class="search large icon"></i>
+  </div>
 </div>
 
 <div class="ui center aligned header">
@@ -83,11 +90,11 @@
   </div>
 </div>
 
-<div class="ui center aligned header">
+{{!--<div class="ui center aligned header">
   <button onclick={{action 'findRecord'}} class="ui button">
     Find
   </button>
-</div>
+</div>--}}
 
 <div class="ui center aligned header">
   <h1>{{searchResultTitle}}</h1>
@@ -114,15 +121,15 @@
 {{else}}
 
 {{#if addingStudent}}
-<div class="ui inverted menu" style="background-color: #4e2683;">
-  <a class="item" {{action 'backToEntryForm'}}>
-    <i class="back icon"></i>
-    Back
-  </a>
-  <a class="item" {{action 'addStudent'}}>
-    <i class="add user icon"></i>
-    Add Student
-  </a>
+
+<div class="fluid ui buttons">
+  <div class="ui icon button" data-tooltip="Back" {{action 'backToEntryForm'}}>
+    <i class="reply large icon"></i>
+  </div>
+
+  <div class="ui icon button" data-tooltip="Add Student" {{action 'addStudent'}}>
+    <i class="add user large icon"></i>
+  </div>
 </div>
 
 {{else}}
@@ -254,8 +261,8 @@
           </div>
 
 
-          <div class="two fields">
-            <div class="field">
+            <div class="two fields">
+              <div class="field">
               <label>Gender</label>
               <select onchange={{action 'selectGender' value="target.value" }} >
                 {{#each genderModel as |genderChoice|}}
@@ -263,7 +270,7 @@
                   genderChoice.id}}>{{genderChoice.name}} </option>
 
                   {{/each}}
-                </select>
+              </select>
               </div>
               <div class="field">
                 <label>Date of Birth</label>

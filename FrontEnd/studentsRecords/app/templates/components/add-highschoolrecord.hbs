@@ -1,26 +1,179 @@
-  <div class="ui grid">
+<div class="ui pointing secondary three item menu" style="font-size: 16px;">
 
-    <div class="six wide column" style="padding-right: 20px;">
+  <a class="active item {{if secondarySchoolTab 'active'}}" data-tab="addSecondarySchool" >Modify Secondary School</a>
+  <a class="item {{if courseTab 'disabled'}}" data-tab="addCourse">Modify High School Course</a>
+  <a class="item {{if subjectTab 'disabled'}}" data-tab="addSubject">Modify Subject</a>
+
+</div>  
+  
+
+<!-- School tab -->
+<div class="ui bottom attached active tab segment" data-tab="addSecondarySchool" style="background-color: #eee3fd; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">
+
+  <div class="ui grid" style="background-color: #eee3fd;">
+
+    <div class="eight wide column" style="padding-right: 20px;">
       <div class="ui center aligned header" style="margin-bottom: 30px;">
         <h2>Delete Secondary School</h2>
       </div>
 
-      <div class="ui middle aligned divided list" style="margin-top: 22px; margin-bottom: 22px;">
-        {{#each secondarySchoolModel as |oneSecondarySchool|}}
-        <div class="item">
-          <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
-            <div class="negative ui button" onclick={{action 'deleteSecondarySchool' oneSecondarySchool}}>Delete</div>
+        {{#ui-accordion class="styled fluid"}}
+          {{#each secondarySchoolModel as |oneSecondarySchool|}}
+          <div class="title" style="border-color: #6435c9">
+            School Name: {{oneSecondarySchool.name}}
           </div>
-          <div class="content" style="padding-top: 10px; font-size: 16px;">
-            {{oneSecondarySchool.name}}
+          <div class="content">
+            <div class="ui vertically divided grid">
+              <div class="one column row" style="padding-bottom: 0;">
+                <div class="column">
+                  <p>School ID: {{oneSecondarySchool.ID}}</p>
+                </div>
+              </div>
+              <div class="one column row" style="padding: 0;">
+                <div class="column">
+                  <p style="text-align: center;"><button class="negative ui button" onclick={{action 'deleteSecondarySchool' oneSecondarySchool}}>Delete</button></p>
+                </div>
+              </div>
+            </div>
           </div>
+          {{/each}}
+        {{/ui-accordion}}
+    </div>
+
+    <div class="eight wide column" style="padding-left: 20px;">
+      <div class="ui center aligned header" style="margin-bottom: 30px;">
+        <h2>Add Secondary School</h2>
+      </div>
+
+      <div class="ui form">
+        <div class="field">
+          <label>School ID</label>
+          {{input type="text"  value = ssId}}
         </div>
-        {{/each}}
+        <div class="field">
+          <label>School Name</label>
+          {{input type="text"  value = ssName}}
+        </div>
+      </div>
+
+      <div class="ui center aligned header">
+        <button class="positive ui button" {{action 'addSecondarySchool'}}>
+          Add Secondary School
+        </button>
       </div>
     </div>
 
+  </div>
 
-    <div class="six wide column" style="padding-right: 20px;">
+</div>
+
+
+<!-- Course tab -->
+<div class = "ui tab" data-tab="addCourse" style="background-color: #eee3fd; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">
+
+  <div class="ui grid" style="background-color: #eee3fd;">
+
+    <div class="eight wide column" style="padding-right: 20px;">
+      <div class="ui center aligned header" style="margin-bottom: 30px;">
+        <h2>Delete Course</h2>
+      </div>
+
+
+        {{#ui-accordion class="styled fluid"}}
+          {{#each courseModel as |oneCourse|}}
+          <div class="title" style="border-color: #6435c9">
+            <div class="ui vertically divided grid">
+              <div class="two column row" style="padding-bottom: 0;">
+                <div class="column">
+                  <p>Subject Name: {{oneCourse.HighSchoolSubjectInfo.name}}</p>
+                </div>
+                <div class="column">
+                  <p>Level: {{oneCourse.level}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="content">
+            <div class="ui vertically divided grid">
+              <div class="one column row" style="padding-bottom: 0;">
+                <div class="column">
+                  <p>School Name: {{oneCourse.SecondSchoolInfo.name}}</p>
+                </div>
+              </div>
+              <div class="two column row" style="padding-bottom: 0;">
+                <div class="column">
+                  <p>Source: {{oneCourse.source}}</p>
+                </div>
+                <div class="column">
+                  <p>Unit: {{oneCourse.unit}}</p>
+                </div>
+              </div>
+              <div class="one column row" style="padding: 0;">
+                <div class="column">
+                  <p style="text-align: center;"><button class="negative ui button" onclick={{action 'deletehsCourse' oneCourse}}>Delete</button></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          {{/each}}
+        {{/ui-accordion}}
+    </div>
+
+    <div class="eight wide column" style="padding-left: 20px;">
+      <div class="ui center aligned header" style="margin-bottom: 30px;">
+        <h2>Add Course</h2>
+      </div>
+
+        <div class="ui sixteen wide column">
+          <form class="ui form">
+            <div class="two fields">
+              <div class="field">
+                <label>Subject</label>
+                <select>
+                  {{#each subjectModel as |subjectChoice|}}
+                    <option value={{subjectChoice.ID}} onchange={{eq selectedSubject subjectChoice}}> {{subjectChoice.name}} </option>
+                  {{/each}}
+                </select>
+              </div>
+              <div class="field">
+                <label>Secondary School</label>
+                <select>
+                  {{#each secondarySchoolModel as |schoolChoice|}}
+                    <option value={{schoolChoice.ID}} onchange={{eq selectedSchool schoolChoice}}> {{schoolChoice.name}} </option>
+                  {{/each}}
+                </select>
+              </div>
+            </div>
+
+            <div class="three fields">
+              <div class="field">
+                <label>Source</label>
+                {{input type="text"  value = source}}
+              </div>
+              <div class="field">
+                <label>Level</label>
+                {{input type="text"  value = level}}
+              </div>
+              <div class="field">
+                <label>Unit</label>
+                {{input type="number" min=0 value = unit}}
+              </div>
+            </div>
+          </form>
+        </div>
+
+      <div class="ui center aligned header">
+        <button class="positive ui button" {{action 'addhsCourse'}}>
+          Add Course
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+
+      {{!--<div class="six wide column" style="padding-right: 20px;">
       <div class="ui center aligned header" style="margin-bottom: 30px;">
         <h2>Delete Course Info</h2>
       </div>
@@ -37,32 +190,81 @@
         </div>
         {{/each}}
       </div>
+    </div>--}}
+</div>
+
+
+
+<!-- Subject tab -->
+<div class="ui tab" data-tab="addSubject" style="background-color: #eee3fd; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">
+
+  <div class="ui grid" style="background-color: #EEE3FD;">
+    <div class="eight wide column" style="padding-right: 20px;">
+
+      <div class="ui center aligned header" style="margin-bottom: 30px;">
+        <h2>Delete Subject</h2>
+      </div>
+
+
+        {{#ui-accordion class="styled fluid"}}
+          {{#each subjectModel as |onehsSubject|}}
+          <div class="title" style="border-color: #6435c9">
+            Subject Name: {{onehsSubject.name}}
+          </div>
+          <div class="content">
+            <div class="ui vertically divided grid">
+              <div class="one column row" style="padding-bottom: 0;">
+                <div class="column">
+                  <p>Subject ID: {{onehsSubject.ID}}</p>
+                </div>
+              </div>
+              <div class="one column row" style="padding: 0;">
+                <div class="column">
+                  <p>Description: {{onehsSubject.description}}</p>
+                </div>
+              </div>
+              <div class="one column row" style="padding: 0;">
+                <div class="column">
+                  <p style="text-align: center;"><button class="negative ui button" onclick={{action 'deletehsSubject' onehsSubject}}>Delete</button></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          {{/each}}
+        {{/ui-accordion}}
     </div>
 
-    <div class="four wide column" style="padding-left: 20px;">
+    <div class="eight wide column" style="padding-left: 20px;">
       <div class="ui center aligned header" style="margin-bottom: 30px;">
-        <h2>Add High School Info</h2>
+        <h2>Add Subject</h2>
       </div>
 
       <div class="ui form">
         <div class="field">
-          <label>Secondary School</label>
-          {{input type="text"  value = ssName}}
+          <label>Subject ID</label>
+          {{input type="text"  value = subjectId}}
         </div>
         <div class="field">
-          <label>Course Info</label>
-          {{input type="text"  value = highSchoolCoursesInfo}}
+          <label>Subject Name</label>
+          {{input type="text"  value = subjectName}}
+        </div>
+        <div class="field">
+          <label>Description</label>
+          {{input type="text"  value = description}}
         </div>
       </div>
 
       <div class="ui center aligned header">
-        <button class="positive ui button" {{action 'addSecondarySchool'}}>
-          Add Secondary School
+        <button class="positive ui button" {{action 'addhsSubject'}}>
+          Add Subject
         </button>
       </div>
     </div>
-
   </div>
+
+</div>
+
+
 
 
 

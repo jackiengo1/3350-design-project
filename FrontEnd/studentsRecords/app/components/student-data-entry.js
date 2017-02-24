@@ -857,7 +857,7 @@ Ember.$(document).ready(function () {
       return false;
     }
 
-    if (Ember.$("#dateInput").val().length === 4 && asciiCode !== 8) { //adds dashes to date field to force correct format
+     if (Ember.$("#dateInput").val().length === 4 && asciiCode !== 8) { //adds dashes to date field to force correct format
       Ember.$("#dateInput").val(Ember.$("#dateInput").val() + "-");
     }
     if (Ember.$("#dateInput").val().length === 7 && asciiCode !== 8) {
