@@ -856,6 +856,84 @@ export default Ember.Component.extend({
      });
   }
 
+  else if(file.name === "UndergraduateRecordCourses.xlsx")
+  {
+    sheet_name_list.forEach(function (sheetName) {
+      var worksheet = workbook.Sheets[sheetName];
+
+      // //get the range of the worksheet
+      var range = XLSX.utils.decode_range(worksheet["!ref"]);
+      // //loop from start of the range to the end of the range
+      var lastStudentNum,lastterm;
+       for(var R = (range.s.r+1); R < range.e.r; R++)
+       {
+         //student number not useful in this case
+         var studentnum =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})];
+         var term =  worksheet[XLSX.utils.encode_cell({c: 1, r:R})];
+         var courseLetter = worksheet[XLSX.utils.encode_cell({c: 2, r:R})];
+         var courseNumber = worksheet[XLSX.utils.encode_cell({c: 3, r:R})];
+         var section = worksheet[XLSX.utils.encode_cell({c: 4, r:R})];
+         var grade = worksheet[XLSX.utils.encode_cell({c: 5, r:R})];
+         var note = worksheet[XLSX.utils.encode_cell({c: 6, r:R})];
+
+         //if note is null keep it like that else assignment the acutal value to note
+         if(note != null)
+         {
+           note = note.v;
+         }
+         if(grade != null)
+         {
+           grade = grade.v;
+         }
+         if(studentnum == null)
+         {
+           studentnum = lastStudentNum;
+         }
+         else{
+           lastStudentNum = studentnum;
+         }
+         if(term == null)
+         {
+           term = lastterm;
+         }
+         else{
+           lastterm = term;
+         }
+
+         //set all varible to their corresponding values
+         term = term.v;
+         studentnum = studentnum.v;
+         courseLetter = courseLetter.v;
+         courseNumber = courseNumber.v;
+         section = section.v;
+
+
+        //  self.send('findStudent',studentnum);
+        //  var tempstudent = self.get('currentStudent');
+
+         self.send('findterm',term);
+         var termobj = self.get('currentTerm');
+         //create new grade
+         var newgrade = self.get('store').createRecord('grade',{
+           mark: grade,
+           note: note,
+         });
+         newgrade.save();
+
+         //create new Course code
+         var newcoursecode = self.get('store').createRecord('course-code',{
+           courseLetter: courseLetter,
+           courseNumber: courseNumber,
+           unit: section,
+           semester: termobj,
+           mark: newgrade,
+         });
+         newcoursecode.save();
+
+       }
+     });
+  }
+
 
 
 },
