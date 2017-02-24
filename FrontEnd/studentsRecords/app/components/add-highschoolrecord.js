@@ -37,18 +37,10 @@ export default Ember.Component.extend({
 
 
   actions: {
-    //Add a high-school mark
-    addhsMark(){
-      var newhsMark = this.get('store').createRecord('hscourse-grade', {
-        mark: this.get('mark'),
-        studentInfo: this.get('studentInfo'),
-        HighSchoolCourseInfo: this.get('hsCourseInfo'),
-      });
-      newhsMark.save();
-    },
+
     //Add a high-school course
     addhsCourse() {
-      
+
       if (this.get('subjectTemp') == null)
       {
         alert("Please select a subject.");
@@ -73,8 +65,7 @@ export default Ember.Component.extend({
     //Add a secondary school
     addSecondarySchool(){
       var newSecondarySchool = this.get('store').createRecord('secondary-school', {
-        name: this.get('ssName'),
-        ID: this.get('ssId')
+        name: this.get('ssName')
       });
       newSecondarySchool.save();
     },
@@ -82,7 +73,6 @@ export default Ember.Component.extend({
     //Add a high-school subject
     addhsSubject(){
       var newhsSubject = this.get('store').createRecord('high-school-subject', {
-        ID: this.get('subjectId'),
         name: this.get('subjectName'),
         description: this.get('description')
       });
