@@ -517,19 +517,38 @@
         <h3>Course: {{oneHSGrade.HighSchoolCoursesInfo}}</h3>
         <h3>Mark: {{oneHSGrade.mark}}</h3>
       {{/each}}
-
+      <h2>Add a Term Code</h2>
+      <div class="field">
+        <label>Grade</label>
+        {{input type="text"  value= hsGrade}}
+      </div>
+      <div class="field">
+        <label>Source</label>
+        {{input type="text"  value= source}}
+      </div>
+      <button class="ui primary button" {{action 'addHsGrade'}} >
+        Add Grade
+      </button>
 
     </div>
 
     <!-- program record tab-->
         <div class = "ui tab" data-tab="programRecord" style="background-color: #eee3fd; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">
           <h2>Student's Program Record</h2>
-          {{#each currentStudentGrades as |oneGrade|}}
-            <h3>Program:{{oneGrade.programRecordInfo.name}}</h3>
-            <h3>Course:{{oneGrade.programRecordInfo.courseCodeInfo.name}}</h3>
-            <h3>Unit: {{oneGrade.programRecordInfo.courseCodeInfo.unit}}</h3>
-            <h3>Mark: {{oneGrade.mark}}</h3>
+          {{#each currentStudentTermCode as |oneTerm|}}
+            <h3>Program:{{oneTerm.program.name}}</h3>
+            <h3>Course:{{oneTerm.courseInfo.name}}</h3>
+            <h3>Unit: {{oneTerm.courseInfo.unit}}</h3>
+            <h3>Mark: {{oneTerm.courseInfo.mark.mark}}</h3>
           {{/each}}
+          <h2>Add a Term Code</h2>
+          <div class="field">
+            <label>Term Name</label>
+            {{input type="text"  value= termCode}}
+          </div>
+          <button class="ui primary button" {{action 'addTermCode'}} >
+            Add Term Code
+          </button>
         </div>
 
   {{/if}}

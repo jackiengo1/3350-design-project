@@ -42,7 +42,7 @@
                 </provider>
               </entry>
             </file>
-            <file leaf-file-name="grade.js" pinned="false" current-in-tab="true">
+            <file leaf-file-name="grade.js" pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/app/models/grade.js">
                 <provider selected="true" editor-type-id="text-editor">
                   <state relative-caret-position="189">
@@ -67,18 +67,18 @@
             <file leaf-file-name="course-code.js" pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/app/models/course-code.js">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="243">
+                  <state relative-caret-position="270">
                     <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
                     <folding />
                   </state>
                 </provider>
               </entry>
             </file>
-            <file leaf-file-name="term-code.js" pinned="false" current-in-tab="false">
+            <file leaf-file-name="term-code.js" pinned="false" current-in-tab="true">
               <entry file="file://$PROJECT_DIR$/app/models/term-code.js">
                 <provider selected="true" editor-type-id="text-editor">
                   <state relative-caret-position="0">
-                    <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                    <caret line="0" column="2" lean-forward="false" selection-start-line="0" selection-start-column="2" selection-end-line="0" selection-end-column="2" />
                     <folding />
                   </state>
                 </provider>
@@ -95,73 +95,43 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="home-page.hbs" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/templates/components/home-page.hbs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="file-upload.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/components/file-upload.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="862">
-              <caret line="687" column="0" lean-forward="false" selection-start-line="687" selection-start-column="0" selection-end-line="687" selection-end-column="0" />
-              <folding>
-                <marker date="1487899849138" expanded="true" signature="66:29311" ph="{...}" />
-                <marker date="1487899849138" expanded="true" signature="29305:29309" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="add-highschoolrecord.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/components/add-highschoolrecord.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-724">
-              <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-              <folding>
-                <marker date="1487899849168" expanded="true" signature="66:3929" ph="{...}" />
-                <marker date="1487899849168" expanded="true" signature="842:3927" ph="{...}" />
-                <marker date="1487899849168" expanded="true" signature="888:1136" ph="{...}" />
-                <marker date="1487899849168" expanded="true" signature="961:1104" ph="{...}" />
-                <marker date="1487899849168" expanded="true" signature="1186:1520" ph="{...}" />
-                <marker date="1487899849168" expanded="true" signature="1265:1486" ph="{...}" />
-                <marker date="1487899849168" expanded="true" signature="1576:1839" ph="{...}" />
-                <marker date="1487899849168" expanded="true" signature="1660:1798" ph="{...}" />
-                <marker date="1487899849168" expanded="true" signature="1892:2136" ph="{...}" />
-                <marker date="1487899849168" expanded="true" signature="1973:2101" ph="{...}" />
-                <marker date="1487899849168" expanded="true" signature="2170:2584" ph="{...}" />
-                <marker date="1487899849168" expanded="true" signature="2259:2578" ph="{...}" />
-                <marker date="1487899849168" expanded="true" signature="2645:3062" ph="{...}" />
-                <marker date="1487899849168" expanded="true" signature="2734:3056" ph="{...}" />
-                <marker date="1487899849168" expanded="true" signature="3137:3538" ph="{...}" />
-                <marker date="1487899849168" expanded="true" signature="3226:3532" ph="{...}" />
-                <marker date="1487899849168" expanded="true" signature="3603:3922" ph="{...}" />
-                <marker date="1487899849168" expanded="true" signature="3692:3916" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="student-data-entry.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/components/student-data-entry.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="296">
-              <caret line="168" column="30" lean-forward="false" selection-start-line="168" selection-start-column="14" selection-end-line="168" selection-end-column="30" />
+            <state relative-caret-position="243">
+              <caret line="38" column="2" lean-forward="false" selection-start-line="38" selection-start-column="2" selection-end-line="45" selection-end-column="5" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="all-students.hbs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/templates/components/all-students.hbs">
+      <file leaf-file-name="student-data-entry.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/components/student-data-entry.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="241">
-              <caret line="11" column="39" lean-forward="false" selection-start-line="11" selection-start-column="39" selection-end-line="11" selection-end-column="39" />
+            <state relative-caret-position="728">
+              <caret line="697" column="35" lean-forward="false" selection-start-line="697" selection-start-column="35" selection-end-line="697" selection-end-column="35" />
+              <folding>
+                <marker date="1487902352662" expanded="true" signature="26082:26202" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="hscourse-grade.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/hscourse-grade.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="5" column="2" lean-forward="false" selection-start-line="5" selection-start-column="2" selection-end-line="5" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="add-highschoolrecord.hbs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/templates/components/add-highschoolrecord.hbs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="535">
+              <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -170,8 +140,8 @@
       <file leaf-file-name="student-data-entry.hbs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/components/student-data-entry.hbs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="655">
-              <caret line="534" column="9" lean-forward="false" selection-start-line="534" selection-start-column="9" selection-end-line="534" selection-end-column="9" />
+            <state relative-caret-position="272">
+              <caret line="526" column="42" lean-forward="false" selection-start-line="526" selection-start-column="42" selection-end-line="526" selection-end-column="42" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#6;n#!!top" expanded="true" />
@@ -212,21 +182,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="high-school-course.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models/high-school-course.js">
+      <file leaf-file-name="add-program-record-2.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/components/add-program-record-2.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="16" />
+            <state relative-caret-position="296">
+              <caret line="82" column="15" lean-forward="false" selection-start-line="82" selection-start-column="4" selection-end-line="82" selection-end-column="15" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="hscourse-grade.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models/hscourse-grade.js">
+      <file leaf-file-name="add-program-record-2.hbs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/templates/components/add-program-record-2.hbs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="5" column="2" lean-forward="false" selection-start-line="5" selection-start-column="2" selection-end-line="5" selection-end-column="8" />
+            <state relative-caret-position="799">
+              <caret line="236" column="16" lean-forward="false" selection-start-line="236" selection-start-column="16" selection-end-line="236" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -235,18 +205,28 @@
       <file leaf-file-name="student.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/student.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="486">
-              <caret line="18" column="3" lean-forward="false" selection-start-line="18" selection-start-column="3" selection-end-line="18" selection-end-column="3" />
+            <state relative-caret-position="513">
+              <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="high-school-subject.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models/high-school-subject.js">
+      <file leaf-file-name="welcome-page.hbs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/templates/components/welcome-page.hbs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="54">
-              <caret line="2" column="32" lean-forward="false" selection-start-line="2" selection-start-column="32" selection-end-line="2" selection-end-column="32" />
+            <state relative-caret-position="297">
+              <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="add-residency.hbs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/templates/components/add-residency.hbs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="855">
+              <caret line="82" column="0" lean-forward="false" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -276,8 +256,10 @@
       <find>advancedS</find>
       <find>listAS</find>
       <find>advanced</find>
-      <find>currentStudentHS</find>
       <find>data-tab</find>
+      <find>addTermCode</find>
+      <find>currentStudentHS</find>
+      <find>button</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -324,19 +306,19 @@
         <option value="$PROJECT_DIR$/app/templates/components/welcome-page.hbs" />
         <option value="$PROJECT_DIR$/app/templates/application.hbs" />
         <option value="$PROJECT_DIR$/app/templates/components/add-highschoolrecord.hbs" />
-        <option value="$PROJECT_DIR$/app/models/term-code.js" />
         <option value="$PROJECT_DIR$/app/components/home-page.js" />
         <option value="$PROJECT_DIR$/app/models/program-record.js" />
         <option value="$PROJECT_DIR$/app/components/add-program-record.js" />
         <option value="$PROJECT_DIR$/app/templates/components/add-program-record.hbs" />
-        <option value="$PROJECT_DIR$/app/templates/components/add-program-record-2.hbs" />
         <option value="$PROJECT_DIR$/app/components/add-program-record-2.js" />
         <option value="$PROJECT_DIR$/app/components/file-upload.js" />
         <option value="$PROJECT_DIR$/app/models/high-school-subject.js" />
         <option value="$PROJECT_DIR$/app/components/add-highschoolrecord.js" />
-        <option value="$PROJECT_DIR$/app/components/student-data-entry.js" />
-        <option value="$PROJECT_DIR$/app/templates/components/student-data-entry.hbs" />
         <option value="$PROJECT_DIR$/app/templates/components/home-page.hbs" />
+        <option value="$PROJECT_DIR$/app/models/term-code.js" />
+        <option value="$PROJECT_DIR$/app/templates/components/add-program-record-2.hbs" />
+        <option value="$PROJECT_DIR$/app/templates/components/student-data-entry.hbs" />
+        <option value="$PROJECT_DIR$/app/components/student-data-entry.js" />
       </list>
     </option>
   </component>
@@ -352,9 +334,10 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="667" />
-    <option name="width" value="1260" />
-    <option name="height" value="1047" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -602,13 +585,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="209124000" />
+    <option name="totallyTimeSpent" value="211552000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="667" y="0" width="1260" height="1047" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1511254" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.0" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -733,13 +716,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/components/add-student.js" />
-    <entry file="file://$PROJECT_DIR$/app/templates/components/welcome-page.hbs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="90" lean-forward="false" selection-start-line="0" selection-start-column="90" selection-end-line="0" selection-end-column="90" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/components/show-logo.hbs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -769,19 +745,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/secondary-school.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/high-school-courses.js" />
     <entry file="file://$PROJECT_DIR$/app/models/advanced-standing.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -810,14 +779,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/term-code.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/components/welcome-page.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -834,24 +795,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/components/add-residency.hbs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="999">
-          <caret line="82" column="0" lean-forward="false" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/components/add-highschoolrecord.hbs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="535">
-          <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding>
-            <marker date="1487895418631" expanded="true" signature="9481:11000" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/components/add-program-record.hbs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -859,27 +802,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/components/add-program-record-2.hbs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="828">
-          <caret line="57" column="7" lean-forward="false" selection-start-line="57" selection-start-column="7" selection-end-line="57" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/components/add-program-record.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="128" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/components/add-program-record-2.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="864">
-          <caret line="128" column="3" lean-forward="false" selection-start-line="128" selection-start-column="3" selection-end-line="128" selection-end-column="3" />
-          <folding>
-            <marker date="1487899848811" expanded="true" signature="66:5755" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -925,61 +851,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/student.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="18" column="3" lean-forward="false" selection-start-line="18" selection-start-column="3" selection-end-line="18" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/components/add-highschoolrecord.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-724">
-          <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-          <folding>
-            <marker date="1487899849168" expanded="true" signature="66:3929" ph="{...}" />
-            <marker date="1487899849168" expanded="true" signature="842:3927" ph="{...}" />
-            <marker date="1487899849168" expanded="true" signature="888:1136" ph="{...}" />
-            <marker date="1487899849168" expanded="true" signature="961:1104" ph="{...}" />
-            <marker date="1487899849168" expanded="true" signature="1186:1520" ph="{...}" />
-            <marker date="1487899849168" expanded="true" signature="1265:1486" ph="{...}" />
-            <marker date="1487899849168" expanded="true" signature="1576:1839" ph="{...}" />
-            <marker date="1487899849168" expanded="true" signature="1660:1798" ph="{...}" />
-            <marker date="1487899849168" expanded="true" signature="1892:2136" ph="{...}" />
-            <marker date="1487899849168" expanded="true" signature="1973:2101" ph="{...}" />
-            <marker date="1487899849168" expanded="true" signature="2170:2584" ph="{...}" />
-            <marker date="1487899849168" expanded="true" signature="2259:2578" ph="{...}" />
-            <marker date="1487899849168" expanded="true" signature="2645:3062" ph="{...}" />
-            <marker date="1487899849168" expanded="true" signature="2734:3056" ph="{...}" />
-            <marker date="1487899849168" expanded="true" signature="3137:3538" ph="{...}" />
-            <marker date="1487899849168" expanded="true" signature="3226:3532" ph="{...}" />
-            <marker date="1487899849168" expanded="true" signature="3603:3922" ph="{...}" />
-            <marker date="1487899849168" expanded="true" signature="3692:3916" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/high-school-course.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="189">
           <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/components/student-data-entry.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="168" column="30" lean-forward="false" selection-start-line="168" selection-start-column="14" selection-end-line="168" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/course-code.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -992,10 +867,98 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/components/home-page.hbs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/secondary-school.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/components/welcome-page.hbs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/course-code.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/grade.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="189">
           <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/student.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="513">
+          <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/term-code.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="2" lean-forward="false" selection-start-line="0" selection-start-column="2" selection-end-line="0" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/components/add-program-record-2.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="296">
+          <caret line="82" column="15" lean-forward="false" selection-start-line="82" selection-start-column="4" selection-end-line="82" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/components/add-program-record-2.hbs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="799">
+          <caret line="236" column="16" lean-forward="false" selection-start-line="236" selection-start-column="16" selection-end-line="236" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/components/add-residency.hbs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="855">
+          <caret line="82" column="0" lean-forward="false" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/components/add-highschoolrecord.hbs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="535">
+          <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/components/add-highschoolrecord.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="243">
+          <caret line="38" column="2" lean-forward="false" selection-start-line="38" selection-start-column="2" selection-end-line="45" selection-end-column="5" />
           <folding />
         </state>
       </provider>
@@ -1010,8 +973,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/components/student-data-entry.hbs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="655">
-          <caret line="534" column="9" lean-forward="false" selection-start-line="534" selection-start-column="9" selection-end-line="534" selection-end-column="9" />
+        <state relative-caret-position="272">
+          <caret line="526" column="42" lean-forward="false" selection-start-line="526" selection-start-column="42" selection-end-line="526" selection-end-column="42" />
           <folding>
             <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#6;n#!!top" expanded="true" />
@@ -1051,11 +1014,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/components/home-page.hbs">
+    <entry file="file://$PROJECT_DIR$/app/components/student-data-entry.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="728">
+          <caret line="697" column="35" lean-forward="false" selection-start-line="697" selection-start-column="35" selection-end-line="697" selection-end-column="35" />
+          <folding>
+            <marker date="1487902352662" expanded="true" signature="26082:26202" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>

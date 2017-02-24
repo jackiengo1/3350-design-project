@@ -80,7 +80,7 @@ export default Ember.Component.extend({
 
   //students high school record
   currentStudentHSGrades: null,
-  currentStudentGrades: null,
+  currentStudentTermCode: null,
 
 
 
@@ -167,7 +167,7 @@ export default Ember.Component.extend({
     var gender = this.get('currentStudent').get('genderInfo');
 
     this.set('currentStudentHSGrades', this.get('currentStudent').get('hsCourseGrade'));
-    this.set('currentStudentGrades', this.get('currentStudent').get('grade'));
+    this.set('currentStudentTermCode', this.get('currentStudent').get('termCode'));
     this.set('selectedGender',gender);
     var res = this.get('currentStudent').get('resInfo');
     this.set('selectedResidency',res);
@@ -689,6 +689,15 @@ export default Ember.Component.extend({
       });
       newASRecord.save();
 
+    },
+
+    addhsMark(){
+      var newhsMark = this.get('store').createRecord('hscourse-grade', {
+        mark: this.get('hsGrade'),
+        studentInfo: this.get('currentStudent'),
+        source: this.get('source'),
+      });
+      newhsMark.save();
     },
 
     deleteAS(currentAS){
