@@ -25,6 +25,7 @@ export default Ember.Component.extend({
   movingBackword: false,
   advancedStandingModel: null,
   hsCourseGradeModel: null,
+  hsCourseModel: null,
   currentASIndex:null,
   scholarshipAwardModel:null,
   currentScholIndex:null,
@@ -131,6 +132,13 @@ export default Ember.Component.extend({
       self.set('scholarshipAwardModel', records);
       console.log(Ember.inspect(records));
     });
+    this.get('store').findAll('high-school-course').then(function (records) {
+      self.set('hsCourseModel', records);
+      console.log(Ember.inspect(records));
+    });
+
+
+
 
     this.get('store').findAll('gender').then(function(records){
       self.set('genderModel', records);
@@ -695,7 +703,7 @@ export default Ember.Component.extend({
       var newhsMark = this.get('store').createRecord('hscourse-grade', {
         mark: this.get('hsGrade'),
         studentInfo: this.get('currentStudent'),
-        source: this.get('source'),
+        source: this.get('courseChoice'),
       });
       newhsMark.save();
     },

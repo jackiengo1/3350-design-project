@@ -524,7 +524,11 @@
       </div>
       <div class="field">
         <label>Source</label>
-        {{input type="text"  value= source}}
+        <select>
+          {{#each hsCourseModel as |courseChoice|}}
+            <option value={{courseChoice.ID}} onchange={{eq selectedCourse courseChoice}}> {{courseChoice.name}} </option>
+          {{/each}}
+        </select>
       </div>
       <button class="ui primary button" {{action 'addHsGrade'}} >
         Add Grade
