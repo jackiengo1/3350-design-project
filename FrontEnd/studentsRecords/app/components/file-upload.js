@@ -22,6 +22,8 @@ export default Ember.Component.extend({
   currentHighSchool:null,
   currentHighSchoolSubject:null,
   currentTerm:null,
+  currentGender:null,
+  currentResidency:null,
 
   init() {
     this._super(...arguments);
@@ -102,7 +104,7 @@ export default Ember.Component.extend({
       {
         sheet_name_list.forEach(function (sheetName) {
           var worksheet = workbook.Sheets[sheetName];
-
+          let firsttime = true;
           for (var cellName in worksheet) {
             //all keys that do not begin with "!" correspond to cell addresses
 
@@ -115,6 +117,16 @@ export default Ember.Component.extend({
                 name: worksheet[cellName].v,
               });
               newgender.save();
+              if(firsttime)
+              {
+                self.set('genderModel',[newgender]);
+                firsttime = false;
+              }
+              else {
+                {
+                  self.get('genderModel').pushObject(newgender);
+                }
+              }
             }
           }
 
@@ -125,7 +137,7 @@ export default Ember.Component.extend({
       {
         sheet_name_list.forEach(function (sheetName) {
           var worksheet = workbook.Sheets[sheetName];
-
+          var firsttime = true;
           for (var cellName in worksheet) {
             //all keys that do not begin with "!" correspond to cell addresses
 
@@ -138,6 +150,15 @@ export default Ember.Component.extend({
                 name: worksheet[cellName].v,
               });
               newresidency.save();
+              if(firsttime)
+              {
+                self.set('residencyModel',[newresidency]);
+                firsttime = false;
+              }
+              else{
+                self.get('residencyModel').pushObject(newresidency);
+              }
+
             }
           }
 
@@ -148,6 +169,7 @@ export default Ember.Component.extend({
       {
         sheet_name_list.forEach(function (sheetName) {
           var worksheet = workbook.Sheets[sheetName];
+          let firsttime = false;
           for (var cellName in worksheet) {
             //all keys that do not begin with "!" correspond to cell addresses
 
@@ -160,6 +182,14 @@ export default Ember.Component.extend({
                 name: worksheet[cellName].v,
               });
               newtermcode.save();
+              if(firsttime)
+              {
+                self.set('termCodeModel',[newtermcode]);
+                firsttime = false;
+              }
+              else{
+                self.get('termCodeModel').pushObject(newtermcode);
+              }
             }
           }
 
@@ -225,6 +255,7 @@ export default Ember.Component.extend({
             console.log(Barray[i]);
             self.send('findStudent',Aarray[i]);
             var studenttemp = self.get('currentStudent');
+            console.log(studenttemp.get('number'));
             studenttemp.set('admissionComments',Barray[i]);
             //how to walk around here except ajax
             studenttemp.save().then(() => {
@@ -238,6 +269,7 @@ export default Ember.Component.extend({
     {
       sheet_name_list.forEach(function (sheetName) {
         var worksheet = workbook.Sheets[sheetName];
+        let firsttime = true;
         for (var cellName in worksheet) {
           //all keys that do not begin with "!" correspond to cell addresses
 
@@ -250,6 +282,14 @@ export default Ember.Component.extend({
               name: worksheet[cellName].v,
             });
             newschool.save();
+            if(firsttime)
+            {
+              self.set('secondarySchoolModel',[newschool]);
+              firsttime=false;
+            }
+            else{
+              self.get('secondarySchoolModel').pushObject(newschool);
+            }
           }
         }
 
@@ -259,6 +299,7 @@ export default Ember.Component.extend({
   else if(file.name ==="students.xlsx")
   {
     sheet_name_list.forEach(function (sheetName) {
+      let firsttime = true;
       var indexA=0; var indexB=0; var indexC=0; var indexD=0; var indexE=0; var indexF=0;
       var Aarray = []; var Barray = []; var Carray = []; var Darray = []; var Earray = []; var Farray = [];
       var worksheet = workbook.Sheets[sheetName];
@@ -343,9 +384,10 @@ export default Ember.Component.extend({
 
       for(var i=1;i<indexA;i++)
       {
-        var res = self.get('store').peekRecord('residency', Farray[i]); //get the students residency object
-        var gen = self.get('store').peekRecord('gender', Darray[i]); //get the students gender object
-
+        self.send('findresidency',Farray[i]);
+        self.send('findgender',Darray[i]);
+        var res = self.get('currentResidency');
+        var gen = self.get('currentGender');
         var newStudent = self.get('store').createRecord('student', { //create a new student record
           number: Aarray[i],
           firstName: Barray[i],
@@ -356,6 +398,16 @@ export default Ember.Component.extend({
           genderInfo: gen,
         });
         newStudent.save(); //commit the student record to db
+        //push the newstudent into student model
+        if(firsttime)
+        {
+          self.set('studentModel',[newStudent]);
+          firsttime = false;
+        }
+        else{
+          self.get('studentModel').pushObject(newStudent);
+        }
+
       }
      });
   }
@@ -666,7 +718,6 @@ export default Ember.Component.extend({
 
          //create high school course
          self.send('findhighschool',schoolname);
-         //self.send('findsubject',subject,description);
          var temphighschool = self.get('currentHighSchool');
          //var tempsubject = this.get('currentHighSchoolSubject');
          var newhscoures = self.get('store').createRecord('high-school-course',{
@@ -797,11 +848,11 @@ export default Ember.Component.extend({
            name: plan,
          });
          var plancodearray = self.get('store').peekRecord('plan-code',newplancode);
-        //  if(plancodearray == null)
-        //  {
-        //    //if none same plan code is found, save it
-        //    newplancode.save();
-        //  }
+         if(plancodearray == null)
+         {
+           //if none same plan code is found, save it
+           newplancode.save();
+         }
 
          //create a new program record
          var newprogramRecord = self.get('store').createRecord('program-record', {
@@ -820,74 +871,150 @@ export default Ember.Component.extend({
         //    //if the record exist, need to add it to the program record array in the plan code
         //    plancodearray.get('program').pushObject(newplancode);
         //  }
-
-        if(plancodearray == null)
-        {
-           if(programrecordarray == null)
-           {
-             //when the value is null, set it to the array of program record
-             if(newplancode.get('program') == null){
-               newplancode.set('program',[newprogramRecord]);
-             }
-             else{
-               //if the value is not null append the record at the back of the array
-              newplancode.get('program').pushObject(newprogramRecord);
-             }
-           }
-           else{
-             if(newplancode.get('program') == null){
-                newplancode.set('program',[programrecordarray]);
-             }
-             else{
-               newplancode.get('program').pushObject(programrecordarray);
-             }
-
-           }
-          //if none same plan code is found, save it
-          newplancode.save();
-        }
-
-        if(plancodearray == null)
-        {
-          if(programrecordarray == null)
-          {
-            if(newprogramRecord.get('plan')==null)
-            {
-              newprogramRecord.set('program',[programrecordarray]);
-            }
-            newprogramRecord.get('plan').pushObject(newplancode);
-            newprogramRecord.save();
-          }
-          else{
-            programrecordarray.get('plan').pushObject(newplancode);
-            programrecordarray.save();
-          }
-        }
-        else{
-          if(programrecordarray == null)
-          {
-            newprogramRecord.get('plan').pushObject(plancodearray);
-            newprogramRecord.save();
-          }
-          else{
-            programrecordarray.get('plan').pushObject(plancodearray);
-            programrecordarray.save();
-          }
-        }
-
-         //set the term code with student info
-         termobj.set('studentInfo',tempstudent);
-         termobj.set('program',newprogramRecord);
-         termobj.save().then(() => {
-         });
+//trying to do many to many not working properly, instead messing up my data for other part
+        // if(plancodearray == null)
+        // {
+        //    if(programrecordarray == null)
+        //    {
+        //      //when the value is null, set it to the array of program record
+        //      if(newplancode.get('program') == null){
+        //        newplancode.set('program',[newprogramRecord]);
+        //      }
+        //      else{
+        //        //if the value is not null append the record at the back of the array
+        //       newplancode.get('program').pushObject(newprogramRecord);
+        //      }
+        //    }
+        //    else{
+        //      if(newplancode.get('program') == null){
+        //         newplancode.set('program',[programrecordarray]);
+        //      }
+        //      else{
+        //        newplancode.get('program').pushObject(programrecordarray);
+        //      }
+        //
+        //    }
+        //   //if none same plan code is found, save it
+        //   newplancode.save();
+        // }
+        //
+        // if(plancodearray == null)
+        // {
+        //   if(programrecordarray == null)
+        //   {
+        //     if(newprogramRecord.get('plan')==null)
+        //     {
+        //       newprogramRecord.set('program',[programrecordarray]);
+        //     }
+        //     newprogramRecord.get('plan').pushObject(newplancode);
+        //     newprogramRecord.save();
+        //   }
+        //   else{
+        //     programrecordarray.get('plan').pushObject(newplancode);
+        //     programrecordarray.save();
+        //   }
+        // }
+        // else{
+        //   if(programrecordarray == null)
+        //   {
+        //     newprogramRecord.get('plan').pushObject(plancodearray);
+        //     newprogramRecord.save();
+        //   }
+        //   else{
+        //     programrecordarray.get('plan').pushObject(plancodearray);
+        //     programrecordarray.save();
+        //   }
+        // }
+        //
+        //  //set the term code with student info
+        //  termobj.set('studentInfo',tempstudent);
+        //  termobj.set('program',newprogramRecord);
+        //  termobj.save().then(() => {
+        //  });
 
        }
      });
   }
 
+  else if(file.name === "UndergraduateRecordCourses.xlsx")
+  {
+    sheet_name_list.forEach(function (sheetName) {
+      var worksheet = workbook.Sheets[sheetName];
+
+      // //get the range of the worksheet
+      var range = XLSX.utils.decode_range(worksheet["!ref"]);
+      // //loop from start of the range to the end of the range
+      var lastStudentNum,lastterm;
+       for(var R = (range.s.r+1); R < range.e.r; R++)
+       {
+         //student number not useful in this case
+         var studentnum =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})];
+         var term =  worksheet[XLSX.utils.encode_cell({c: 1, r:R})];
+         var courseLetter = worksheet[XLSX.utils.encode_cell({c: 2, r:R})];
+         var courseNumber = worksheet[XLSX.utils.encode_cell({c: 3, r:R})];
+         var section = worksheet[XLSX.utils.encode_cell({c: 4, r:R})];
+         var grade = worksheet[XLSX.utils.encode_cell({c: 5, r:R})];
+         var note = worksheet[XLSX.utils.encode_cell({c: 6, r:R})];
+
+         //if note is null keep it like that else assignment the acutal value to note
+         if(note != null)
+         {
+           note = note.v;
+         }
+         if(grade != null)
+         {
+           grade = grade.v;
+         }
+         if(studentnum == null)
+         {
+           studentnum = lastStudentNum;
+         }
+         else{
+           lastStudentNum = studentnum;
+         }
+         if(term == null)
+         {
+           term = lastterm;
+         }
+         else{
+           lastterm = term;
+         }
+
+         //set all varible to their corresponding values
+         term = term.v;
+         studentnum = studentnum.v;
+         courseLetter = courseLetter.v;
+         courseNumber = courseNumber.v;
+         section = section.v;
 
 
+        //  self.send('findStudent',studentnum);
+        //  var tempstudent = self.get('currentStudent');
+
+         self.send('findterm',term);
+         var termobj = self.get('currentTerm');
+         //create new grade
+         var newgrade = self.get('store').createRecord('grade',{
+           mark: grade,
+           note: note,
+         });
+         newgrade.save();
+
+         //create new Course code
+         var newcoursecode = self.get('store').createRecord('course-code',{
+           courseLetter: courseLetter,
+           courseNumber: courseNumber,
+           unit: section,
+           semester: termobj,
+           mark: newgrade,
+         });
+         newcoursecode.save();
+
+       }
+     });
+  }
 },
+//end of the read file function
 
 findStudent:function(studentnum){
   var self = this;
@@ -900,21 +1027,6 @@ findStudent:function(studentnum){
     if(tempnum == studentnum)
     {
       self.set('currentStudent',tempstudent);
-    }
-  }
-},
-
-findsubject:function(subject,description){
-  var self = this;
-  var length = self.get('highSchoolSubjectModel').get('length');
-  for (var i=0;i<length;i++)
-  {
-    let tempsubject = self.get('highSchoolSubjectModel').objectAt(i);
-    let tempname = tempsubject.get('name');
-    let tempdescription = tempsubject.get('description');
-    if((tempname == subject) && (tempdescription == description))
-    {
-      self.set('currentHighSchoolSubject',tempsubject);
     }
   }
 },
@@ -949,6 +1061,38 @@ findterm:function(term){
   }
 },
 
+findgender:function(gen)
+{
+  var self = this;
+  var length = self.get('genderModel').get('length');
+  for (var i=0;i<length;i++)
+  {
+    let tempgender = self.get('genderModel').objectAt(i);
+    let gendername = tempgender.get('name');
+    //console.log(tempnum)
+    if(gendername == gen)
+    {
+      self.set('currentGender',tempgender);
+    }
+  }
+},
+
+findresidency:function(res)
+{
+  var self = this;
+  var length = self.get('residencyModel').get('length');
+  for (var i=0;i<length;i++)
+  {
+    let tempresidency = self.get('residencyModel').objectAt(i);
+    let residencyname = tempresidency.get('name');
+    //console.log(tempnum)
+    if(residencyname == res)
+    {
+      self.set('currentResidency',tempresidency);
+    }
+  }
+},
 
 }
+//end of actions
 });
