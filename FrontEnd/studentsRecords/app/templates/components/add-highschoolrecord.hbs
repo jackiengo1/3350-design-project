@@ -4,8 +4,8 @@
   <a class="item {{if courseTab 'disabled'}}" data-tab="addCourse">Modify High School Course</a>
   <a class="item {{if subjectTab 'disabled'}}" data-tab="addSubject">Modify Subject</a>
 
-</div>  
-  
+</div>
+
 
 <!-- School tab -->
 <div class="ui bottom attached active tab segment" data-tab="addSecondarySchool" style="background-color: #eee3fd; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">
@@ -24,11 +24,6 @@
           </div>
           <div class="content">
             <div class="ui vertically divided grid">
-              <div class="one column row" style="padding-bottom: 0;">
-                <div class="column">
-                  <p>School ID: {{oneSecondarySchool.ID}}</p>
-                </div>
-              </div>
               <div class="one column row" style="padding: 0;">
                 <div class="column">
                   <p style="text-align: center;"><button class="negative ui button" onclick={{action 'deleteSecondarySchool' oneSecondarySchool}}>Delete</button></p>
@@ -46,10 +41,6 @@
       </div>
 
       <div class="ui form">
-        <div class="field">
-          <label>School ID</label>
-          {{input type="text"  value = ssId}}
-        </div>
         <div class="field">
           <label>School Name</label>
           {{input type="text"  value = ssName}}
@@ -126,21 +117,24 @@
       </div>
 
         <div class="ui sixteen wide column">
-          <form class="ui form">
+          <form class="ui form" id="courseForm">
+
             <div class="two fields">
               <div class="field">
                 <label>Subject</label>
-                <select>
-                  {{#each subjectModel as |subjectChoice|}}
-                    <option value={{subjectChoice.ID}} onchange={{eq selectedSubject subjectChoice}}> {{subjectChoice.name}} </option>
+                <select onchange={{action 'selectSubject' value="target.value"}}>
+                  <option value = null> Select A Subject </option>
+                  {{#each subjectModel as |oneSubject|}}
+                    <option value={{oneSubject.id}}>{{oneSubject.name}}</option>
                   {{/each}}
                 </select>
               </div>
               <div class="field">
                 <label>Secondary School</label>
-                <select>
-                  {{#each secondarySchoolModel as |schoolChoice|}}
-                    <option value={{schoolChoice.ID}} onchange={{eq selectedSchool schoolChoice}}> {{schoolChoice.name}} </option>
+                <select onchange={{action 'selectSchool' value="target.value"}}>
+                  <option value = null> Select A School </option>
+                  {{#each secondarySchoolModel as |oneSchool|}}
+                    <option value={{oneSchool.id}}>{{oneSchool.name}}</option>
                   {{/each}}
                 </select>
               </div>
@@ -172,25 +166,6 @@
 
   </div>
 
-
-      {{!--<div class="six wide column" style="padding-right: 20px;">
-      <div class="ui center aligned header" style="margin-bottom: 30px;">
-        <h2>Delete Course Info</h2>
-      </div>
-
-      <div class="ui middle aligned divided list" style="margin-top: 22px; margin-bottom: 22px;">
-        {{#each hsSubjectModel as |onehsSubject|}}
-        <div class="item">
-          <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
-            <div class="negative ui button" onclick={{action 'deletehsSubject' onehsSubject}}>Delete</div>
-          </div>
-          <div class="content" style="padding-top: 10px; font-size: 16px;">
-            {{onehsSubject.name}}
-          </div>
-        </div>
-        {{/each}}
-      </div>
-    </div>--}}
 </div>
 
 
@@ -213,11 +188,6 @@
           </div>
           <div class="content">
             <div class="ui vertically divided grid">
-              <div class="one column row" style="padding-bottom: 0;">
-                <div class="column">
-                  <p>Subject ID: {{onehsSubject.ID}}</p>
-                </div>
-              </div>
               <div class="one column row" style="padding: 0;">
                 <div class="column">
                   <p>Description: {{onehsSubject.description}}</p>
@@ -241,10 +211,6 @@
 
       <div class="ui form">
         <div class="field">
-          <label>Subject ID</label>
-          {{input type="text"  value = subjectId}}
-        </div>
-        <div class="field">
           <label>Subject Name</label>
           {{input type="text"  value = subjectName}}
         </div>
@@ -263,63 +229,3 @@
   </div>
 
 </div>
-
-
-
-
-
-{{!--<div class="ui center aligned header">
-  <h2>High School Subjects</h2>
-</div>
-
-<div class="ui middle aligned divided list">
-  {{#each hsSubjectModel as |onehsSubject|}}
-    <div class="item">
-      <div class="content">
-        <div class="header">
-          <h3>
-            {{onehsSubject.name}} <button class="negative ui button" onclick={{action 'deletehsSubject' onehsSubject}} style = "float: right;">Delete</button>
-          </h3>
-        </div>
-
-      </div>
-    </div>
-  {{/each}}
-
-</div>
-
-
-<div class="ui middle aligned divided list">
-  {{#each secondarySchoolModel as |oneSecondarySchool|}}
-    <div class="item">
-      <div class="content">
-        <div class="header">
-          <h3>
-            {{oneSecondarySchool.name}} <button class="negative ui button" onclick={{action 'deleteSecondarySchool' oneSecondarySchool}} style = "float: right;">Delete</button>
-          </h3>
-        </div>
-
-      </div>
-    </div>
-  {{/each}}
-
-</div>
-
-<div class="ui grid">
-  <div class="ui middle aligned sixteen wide column">
-    <div class="ui form">
-      <div class="inline field">
-        <label style= "font-size: 20px;">Secondary School</label>
-        {{input type="text"  value = ssName}}
-        <label style= "font-size: 20px;">Courses Info</label>
-        {{input type="text"  value = highSchoolCoursesInfo}}
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="ui center aligned header">
-  <button class="positive ui button" {{action 'addSecondarySchool'}}>
-    Add Secondary School
-  </button>
-</div>--}}

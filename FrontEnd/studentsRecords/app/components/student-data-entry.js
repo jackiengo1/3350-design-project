@@ -132,18 +132,13 @@ export default Ember.Component.extend({
       self.set('scholarshipAwardModel', records);
       console.log(Ember.inspect(records));
     });
-    this.get('store').findAll('high-school-course').then(function (records) {
-      self.set('hsCourseModel', records);
-      console.log(Ember.inspect(records));
-    });
-
-
-
+   // this.get('store').findAll('high-school-courses').then(function (records) {
+   //    self.set('hsCourseModel', records);
+   //    console.log(Ember.inspect(records));
+   //  });
 
     this.get('store').findAll('gender').then(function(records){
       self.set('genderModel', records);
-
-
 
     });
 
