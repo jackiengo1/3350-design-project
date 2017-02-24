@@ -53,6 +53,7 @@ router.route('/:programRecord_id')
                 programRecord.load = request.programRecord.load;
                 programRecord.status = request.programRecord.status;
                 programRecord.plan = request.programRecord.plan;
+                programRecord.semester = request.programRecord.semester;
 
                 programRecord.save(function (error) {
                     if (error) {

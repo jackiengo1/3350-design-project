@@ -5,5 +5,6 @@ courseLetter: DS.attr(),
 courseNumber: DS.attr(),
 name: DS.attr(),
 unit: DS.attr(),
-programRecordInfo: DS.hasMany('program-record'),
+semester: DS.belongsTo('term-code'),
+mark: DS.belongsTo('grade'),
 });

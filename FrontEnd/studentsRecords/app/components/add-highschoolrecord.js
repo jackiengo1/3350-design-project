@@ -40,7 +40,7 @@ export default Ember.Component.extend({
       var newhsMark = this.get('store').createRecord('hscourse-grade', {
         mark: this.get('mark'),
         studentInfo: this.get('studentInfo'),
-        HighSchoolCourseInfo: this.get('hsCourseInfo')
+        HighSchoolCourseInfo: this.get('hsCourseInfo'),
       });
       newhsMark.save();
     },

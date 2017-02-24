@@ -8,7 +8,6 @@ var parseJSON = bodyParser.json();
 router.route('/')
     .post(parseUrlencoded, parseJSON, function (request, response) {
         var highSchoolSubject = new models.HighSchoolSubjects(request.body.highSchoolSubject);
-        console.log(request.body.highSchoolSubject);
         highSchoolSubject.save(function (error) {
             if (error) response.send(error);
             response.json({highSchoolSubject: highSchoolSubject});
@@ -51,6 +50,7 @@ router.route('/:highSchoolSubject_id')
             else {
                 highSchoolSubject.name = request.highSchoolSubject.name;
                 highSchoolSubject.description = request.highSchoolSubject.description;
+                highSchoolSubject.highSchoolCoursesInfo = request.highSchoolSubject.highSchoolCoursesInfo;
 
                 highSchoolSubject.save(function (error) {
                     if (error) {

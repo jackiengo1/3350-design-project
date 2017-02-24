@@ -48,9 +48,10 @@ router.route('/:termCode_id')
                 response.send({error: error});
             }
             else {
-                termCode.name = request.termCode.name;
-                termCode.courseInfo = request.termCode.courseInfo;
-                termCode.program = request.termCode.program;
+                termCode.name = request.body.termCode.name;
+                termCode.courseInfo = request.body.termCode.courseInfo;
+                termCode.program = request.body.termCode.program;
+                termCode.studentInfo = request.body.termCode.studentInfo;
 
                 termCode.save(function (error) {
                     if (error) {

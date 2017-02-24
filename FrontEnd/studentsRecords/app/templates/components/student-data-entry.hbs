@@ -281,6 +281,7 @@
             <div class="field">
               <label>Residency</label>
               <select onchange={{action 'selectResidency' value="target.value"}}>
+
                 {{#each residencyModel as |residencyChoice|}}
 
                 <option value={{residencyChoice.id}} selected={{eq selectedResidency.id residencyChoice.id}}>{{residencyChoice.name}}</option>
@@ -306,7 +307,7 @@
               </div>
               <div class="field">
                 <label>Admission Average</label>
-                {{input type="number" max=100 min=0 value=tempAdmissionAverage focus-out='studentAAStack'}}
+                {{input type="text" max=100 min=0 value=tempAdmissionAverage focus-out='studentAAStack'}}
               </div>
             </div>
 
