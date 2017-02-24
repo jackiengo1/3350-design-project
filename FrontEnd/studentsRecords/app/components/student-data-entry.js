@@ -24,6 +24,7 @@ export default Ember.Component.extend({
   pageSize: null,
   movingBackword: false,
   advancedStandingModel: null,
+  hsCourseGradeModel: null,
   currentASIndex:null,
   scholarshipAwardModel:null,
   currentScholIndex:null,
@@ -79,6 +80,7 @@ export default Ember.Component.extend({
 
   //students high school record
   currentStudentHSGrades: null,
+  currentStudentGrades: null,
 
 
 
@@ -165,7 +167,7 @@ export default Ember.Component.extend({
     var gender = this.get('currentStudent').get('genderInfo');
 
     this.set('currentStudentHSGrades', this.get('currentStudent').get('hsCourseGrade'));
-
+    this.set('currentStudentGrades', this.get('currentStudent').get('grade'));
     this.set('selectedGender',gender);
     var res = this.get('currentStudent').get('resInfo');
     this.set('selectedResidency',res);

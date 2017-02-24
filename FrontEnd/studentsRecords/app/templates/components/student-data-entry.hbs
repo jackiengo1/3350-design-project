@@ -15,7 +15,7 @@
   </div>
   <div class="ui icon button" data-tooltip="Next Page" {{action 'allStudentsNext'}}>
     <i class="arrow right large icon"></i>
-  </div>  
+  </div>
 </div>
 
 <div class="ui center aligned header">
@@ -155,7 +155,7 @@
   <div class="ui icon button" data-tooltip="Previous Student" {{action 'previousStudent'}}>
     <i class="arrow left large icon"></i>
   </div>
-  
+
   <div class="ui icon button" data-tooltip="Next Student" {{action 'nextStudent'}}>
     <i class="arrow right large icon"></i>
   </div>
@@ -336,7 +336,7 @@
 
     <div class="ui grid">
       <div class="eight wide column" style="padding-right: 20px;">
-        
+
         <div class="ui center aligned header" style="margin-bottom: 30px;">
           <h2>Student's Advanced Standings</h2>
         </div>
@@ -379,9 +379,9 @@
         {{/ui-accordion}}
 
       </div>
-      
+
       <div class="eight wide column" style="padding-left: 20px;">
-        
+
         <div class="ui center aligned header" style="margin-bottom: 30px;">
           <h2>Add Advanced Standing</h2>
         </div>
@@ -477,6 +477,9 @@
   </div>
 
 
+  <!--</div>-->
+<!--</div>-->
+
     {{!--<div class="ui middle aligned divided list">
       {{#each scholarShipAndAwardList as |userScholarShipAndAwardList|}}
       {{#unless userScholarShipAndAwardList.isDeleted}}
@@ -511,7 +514,7 @@
         <h3>High School:{{oneHSGrade.HighSchoolCoursesInfo.SecondSchoolInfo}}</h3>
         <h3>Subject:{{oneHSGrade.HighSchoolCoursesInfo.HighSchoolSubjectInfo}}</h3>
         <h3>Course: {{oneHSGrade.HighSchoolCoursesInfo}}</h3>
-        <h3>Mark: {{oneHSGrade}}</h3>
+        <h3>Mark: {{oneHSGrade.mark}}</h3>
       {{/each}}
 
 
@@ -520,6 +523,12 @@
     <!-- program record tab-->
         <div class = "ui tab" data-tab="programRecord" style="background-color: #eee3fd; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">
           <h2>Student's Program Record</h2>
+          {{#each currentStudentGrades as |oneGrade|}}
+            <h3>Program:{{oneGrade.programRecordInfo.name}}</h3>
+            <h3>Course:{{oneGrade.programRecordInfo.courseCodeInfo.name}}</h3>
+            <h3>Unit: {{oneGrade.programRecordInfo.courseCodeInfo.unit}}</h3>
+            <h3>Mark: {{oneGrade.mark}}</h3>
+          {{/each}}
         </div>
 
   {{/if}}
