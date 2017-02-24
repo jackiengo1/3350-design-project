@@ -126,21 +126,24 @@
       </div>
 
         <div class="ui sixteen wide column">
-          <form class="ui form">
+          <form class="ui form" id="courseForm">
+
             <div class="two fields">
               <div class="field">
                 <label>Subject</label>
-                <select>
-                  {{#each subjectModel as |subjectChoice|}}
-                    <option value={{subjectChoice.ID}} onchange={{eq selectedSubject subjectChoice}}> {{subjectChoice.name}} </option>
+                <select onchange={{action 'selectSubject' value="target.value"}}>
+                  <option value = null> Select A Subject </option>
+                  {{#each subjectModel as |oneSubject|}}
+                    <option value={{oneSubject.id}}>{{oneSubject.name}}</option>
                   {{/each}}
                 </select>
               </div>
               <div class="field">
                 <label>Secondary School</label>
-                <select>
-                  {{#each secondarySchoolModel as |schoolChoice|}}
-                    <option value={{schoolChoice.ID}} onchange={{eq selectedSchool schoolChoice}}> {{schoolChoice.name}} </option>
+                <select onchange={{action 'selectSchool' value="target.value"}}>
+                  <option value = null> Select A School </option>
+                  {{#each secondarySchoolModel as |oneSchool|}}
+                    <option value={{oneSchool.id}}>{{oneSchool.name}}</option>
                   {{/each}}
                 </select>
               </div>
