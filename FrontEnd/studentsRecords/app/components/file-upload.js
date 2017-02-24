@@ -576,7 +576,36 @@ export default Ember.Component.extend({
        }
      });
   }
+  else if(file.name === "UndergraduateRecordCourses.xlsx")
+  {
+    sheet_name_list.forEach(function (sheetName) {
+      var worksheet = workbook.Sheets[sheetName];
 
+      // //get the range of the worksheet
+      var range = XLSX.utils.decode_range(worksheet["!ref"]);
+      // //loop from start of the range to the end of the range
+      var studentNumber;
+      var term;
+      var courseLetter;
+      var courseNumber;
+      var section;
+      var grade;
+      for(var R = (range.s.r+1); R <= range.e.r; R++)
+      {
+        studentNumber =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})].v;
+        courseNumber =  worksheet[XLSX.utils.encode_cell({c: 1, r:R})].v;
+        name = worksheet[XLSX.utils.encode_cell({c: 2, r:R})].v;
+        unit = worksheet[XLSX.utils.encode_cell({c: 3 , r:R})].v;
+        newCourseCodeRecord = self.get('store').createRecord('course-code', {
+          courseLetter: courseLetter,
+          courseNumber: courseNumber,
+          name: name,
+          unit: unit,
+        });
+        newCourseCodeRecord.save();
+      }
+    })
+  }
   else if(file.name ==="HighSchoolCourseInformation.xlsx")
   {
     sheet_name_list.forEach(function (sheetName) {

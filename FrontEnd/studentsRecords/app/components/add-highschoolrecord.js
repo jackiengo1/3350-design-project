@@ -65,7 +65,7 @@ export default Ember.Component.extend({
     //Add a secondary school
     addSecondarySchool(){
       var newSecondarySchool = this.get('store').createRecord('secondary-school', {
-        name: this.get('ssName')
+        name: this.get('ssName'),
       });
       newSecondarySchool.save();
     },
@@ -104,11 +104,15 @@ export default Ember.Component.extend({
     },
 
     //Add a secondary school
-    deleteSecondarySchool( secondarySchool){
+
+    deleteSecondarySchool(secondaryschool){
       var choice = confirm('Are you sure you want to delete this?');
       if (choice) {
-        var index = this.get('secondarySchoolModel').indexOf(secondarySchool);
-        var restemp = this.get('secondarySchoolModel').objectAt(index);
+        var index = this.get('secondarySchoolModel').indexOf(secondaryschool);
+        this.set('ssIndex', index);
+        var indextemp = this.get('ssIndex');
+        var restemp = this.get('secondarySchoolModel').objectAt(indextemp);
+
         console.log(restemp);
         restemp.deleteRecord();
         restemp.save();
