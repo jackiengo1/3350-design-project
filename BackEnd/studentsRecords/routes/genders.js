@@ -7,14 +7,19 @@ var models = require('../models/studentsRecordsDB');
 var bodyParser = require('body-parser');
 var parseUrlencoded = bodyParser.urlencoded({extended: false});
 var parseJSON = bodyParser.json();
+var XLSX = require('xlsx');
 
 router.route('/')
     .post(parseUrlencoded, parseJSON, function (request, response) {
+        console.log("test start");
+        console.log(request.body);
         var gender = new models.Genders(request.body.gender);
+        console.log(request.body);
         gender.save(function (error) {
             if (error) response.send(error);
             response.json({gender: gender});
         });
+
     })
     .get(parseUrlencoded, parseJSON, function (request, response) {
         var Student = request.query.filter;

@@ -1,12 +1,74 @@
+  <div class="ui grid">
+
+    <div class="eight wide column" style="padding-right: 20px;">
+      <div class="ui center aligned header" style="margin-bottom: 30px;">
+        <h2>Delete Residency</h2>
+      </div>
+
+      <div class="ui middle aligned divided list" style="margin-top: 22px; margin-bottom: 22px;">
+        {{#each residencyModel as |oneResidency|}}
+        <div class="item">
+          <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
+            <div class="negative ui button" onclick={{action 'deleteResidency' oneResidency}}>Delete</div>
+          </div>
+          <div class="content" style="padding-top: 10px; font-size: 16px;">
+            {{oneResidency.name}}
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+
+    <div class="eight wide column" style="padding-left: 20px;">
+      <div class="ui center aligned header" style="margin-bottom: 30px;">
+        <h2>Add Residency</h2>
+      </div>
+
+      <div class="ui form">
+        <div class="field">
+          <label>Residency</label>
+          {{input type="text"  value = residencyName}}
+        </div>
+      </div>
+
+      <div class="ui center aligned header">
+        <button class="positive ui button" {{action 'addResidency'}}>
+          Add Residency
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+
+
+{{!--
 <div class="ui center aligned header">
-  <h2>Add Residency</h2>
+  <h2>Modify Residency</h2>
 </div>
 
+<div class="ui middle aligned divided list">
+  {{#each residencyModel as |oneResidency|}}
+    <div class="item">
+      <div class="content">
+        <div class="header">
+          <h3>
+            {{oneResidency.name}} <button class="negative ui button" onclick={{action 'deleteResidency' oneResidency}} style = "float: right;">Delete</button>
+          </h3>
+        </div>
+
+      </div>
+    </div>
+  {{/each}}
+
+</div>
+
+
 <div class="ui grid">
-  <div class="ui left aligned  seven wide column">
+  <div class="ui middle aligned sixteen wide column">
     <div class="ui form">
       <div class="inline field">
-        <label>Residency</label>
+        <label style= "font-size: 20px;">Residency</label>
         {{input type="text"  value = residencyName}}
       </div>
     </div>
@@ -14,7 +76,7 @@
 </div>
 
 <div class="ui center aligned header">
-  <button class="ui primary button" {{action 'addResidency'}}>
+  <button class="positive ui button" {{action 'addResidency'}}>
     Add Residency
   </button>
-</div>
+</div>--}}

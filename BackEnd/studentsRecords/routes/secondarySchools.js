@@ -17,14 +17,14 @@ router.route('/')
 
         var secondarySchoolFilter = request.query.filter;
         if (!secondarySchoolFilter) {
-            models.SecondarySchool.find(function (error, secondarySchools) {
+            models.SecondarySchools.find(function (error, secondarySchools) {
                 if (error) response.send(error);
                 response.json({secondarySchool: secondarySchools});
             });
             console.log("no filter");
         } else {
           console.log("filter");
-            models.SecondarySchools.find({"highSchoolCourse": request.query.highSchoolCourse}, function (error, secondarySchools) {
+            models.SecondarySchools.find({"secondarySchool": request.query.secondarySchool}, function (error, secondarySchools) {
                 if (error) response.send(error);
                 response.json({secondarySchool: secondarySchools});
             });
@@ -43,20 +43,20 @@ router.route('/:secondarySchool_id')
         });
     })
     .put(parseUrlencoded, parseJSON, function (request, response) {
-        models.SecondarySchools.findById(request.params.highSchoolSubject_id, function (error, secondarySchool) {
+        models.SecondarySchools.findById(request.params.secondarySchool_id, function (error, secondarySchool) {
             if (error) {
                 response.send({error: error});
             }
             else {
-                hsCourseGrade.mark = request.hsCourseGrade.mark;
-                hsCourseGrade.source = request.hsCourseGrade.source;
+                secondarySchool.name = request.secondarySchool.name;
+                secondarySchool.highSchoolCoursesInfo = request.secondarySchool.highSchoolCoursesInfo;
 
-                highSchoolSubject.save(function (error) {
+                secondarySchool.save(function (error) {
                     if (error) {
                         response.send({error: error});
                     }
                     else {
-                        response.json({highSchoolSubject: highSchoolSubject});
+                        response.json({secondarySchool: secondarySchool});
                     }
                 });
             }

@@ -4,7 +4,6 @@ export default DS.Model.extend({
   number: DS.attr(),
   firstName: DS.attr(),
   lastName: DS.attr(),
-  gender: DS.attr('number'),
   DOB: DS.attr('date'),
   photo: DS.attr(),
   resInfo: DS.belongsTo('residency'),
@@ -14,5 +13,7 @@ export default DS.Model.extend({
   admissionComments: DS.attr(),
   advInfo: DS.hasMany('advancedStanding'),
   genderInfo: DS.belongsTo('gender'),
-  scholInfo: DS.hasMany('scholarshipAward')
+  scholInfo: DS.hasMany('scholarshipAward'),
+  hsCourseGrade: DS.hasMany('hscourse-grade'),
+  gradeInfo:DS.hasMany('grade'),
 });

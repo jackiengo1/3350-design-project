@@ -3,7 +3,7 @@ var mongoosePaginate = require('mongoose-paginate');
 
 var studentsSchema = mongoose.Schema(
     {
-        number: String,
+        number: String,           //student number
         firstName: String,
         lastName: String,
         DOB: Date,
@@ -16,7 +16,8 @@ var studentsSchema = mongoose.Schema(
         advInfo: [{type: mongoose.Schema.ObjectId, ref: 'AdvancedStandings'}],
         genderInfo: {type: mongoose.Schema.ObjectId, ref: 'Genders'},
         scholInfo: [{type: mongoose.Schema.ObjectId, ref: 'ScholarshipAwards'}],
-        highSchoolCourse: [{type: mongoose.Schema.ObjectId, ref: 'HsCourseGrades'}]
+        highSchoolCourse: [{type: mongoose.Schema.ObjectId, ref: 'HsCourseGrades'}],
+        grade: [{type: mongoose.Schema.ObjectId, ref: 'TermCodes'}],
     }
 );
 studentsSchema.plugin(mongoosePaginate);
@@ -56,7 +57,8 @@ var scholarshipAwardSchema = mongoose.Schema(
 var hsCourseGradeSchema = mongoose.Schema(
   {
     mark: String,
-    source: {type: mongoose.Schema.ObjectId, ref: 'HighSchoolCourses'}
+    source: {type: mongoose.Schema.ObjectId, ref: 'HighSchoolCourses'},
+    studentInfo: {type: mongoose.Schema.ObjectId, ref: 'Students'}
   }
 );
 
@@ -67,19 +69,69 @@ var highSchoolCourseSchema = mongoose.Schema(
     unit: String,
     school: {type: mongoose.Schema.ObjectId, ref: 'SecondarySchools'},
     course: {type: mongoose.Schema.ObjectId, ref: 'HighSchoolSubjects'},
+    courseGrade:[{type: mongoose.Schema.ObjectId, ref: 'HsCourseGrades'}]
   }
 );
 
 var secondarySchoolSchema = mongoose.Schema(
   {
     name: String,
+    highSchoolCoursesInfo: [{type: mongoose.Schema.ObjectId, ref: ('HighSchoolCourses')}]
   }
 );
 
 var highSchoolSubjectSchema = mongoose.Schema(
   {
     name: String,
-    description: String
+    description: String,
+    highSchoolCoursesInfo: [{type: mongoose.Schema.ObjectId, ref: ('HighSchoolCourses')}]
+
+  }
+);
+
+var programRecordSchema = mongoose.Schema(
+  {
+    name: String,
+    level: String,
+    load: String,
+    status: String,
+    plan : [{type: mongoose.Schema.ObjectId, ref: 'PlanCodes'}],
+    semester: [{type: mongoose.Schema.ObjectId, ref: 'TermCodes'}]
+  }
+);
+
+var termCodeSchema = mongoose.Schema(
+  {
+    name: String,
+    courseInfo: [{type: mongoose.Schema.ObjectId, ref: 'CourseCodes'}],
+    program: [{type: mongoose.Schema.ObjectId, ref: 'ProgramRecords'}],
+    studentInfo: {type: mongoose.Schema.ObjectId, ref: 'Students'}
+  }
+);
+
+var planCodeSchema = mongoose.Schema(
+  {
+    name: String,
+    program: [{type: mongoose.Schema.ObjectId, ref: 'ProgramRecords'}]
+  }
+);
+
+var courseCodeSchema = mongoose.Schema(
+  {
+    courseLetter: String,
+    courseNumber: String,
+    name: String,
+    unit: String,
+    mark: [{type: mongoose.Schema.ObjectId, ref: 'Grades'}],
+    semester: {type: mongoose.Schema.ObjectId, ref: 'TermCodes'}
+  }
+);
+
+var gradeSchema = mongoose.Schema(
+  {
+    mark: String,
+    note: String,
+    courseInfo: [{type: mongoose.Schema.ObjectId, ref: 'CourseCodes'}]
   }
 );
 
@@ -93,6 +145,12 @@ var HsCourseGrades = mongoose.model('hsCourseGrade', hsCourseGradeSchema);
 var HighSchoolCourses = mongoose.model('highSchoolCourse', highSchoolCourseSchema);
 var HighSchoolSubjects = mongoose.model('highSchoolSubject', highSchoolSubjectSchema);
 var SecondarySchools = mongoose.model('secondarySchool', secondarySchoolSchema);
+//
+var ProgramRecords = mongoose.model('programRecord', programRecordSchema);
+var TermCodes = mongoose.model('termCode', termCodeSchema);
+var PlanCodes = mongoose.model('planCode', planCodeSchema);
+var CourseCodes = mongoose.model('courseCode', courseCodeSchema);
+var Grades = mongoose.model('grade', gradeSchema);
 
 mongoose.connect('mongodb://localhost/studentsRecords');
 var db = mongoose.connection;
@@ -109,5 +167,11 @@ db.once('open', function() {
     exports.HighSchoolCourses = HighSchoolCourses;
     exports.HighSchoolSubjects = HighSchoolSubjects;
     exports.SecondarySchools = SecondarySchools;
+    //
+    exports.ProgramRecords = ProgramRecords;
+    exports.TermCodes = TermCodes;
+    exports.PlanCodes = PlanCodes;
+    exports.CourseCodes = CourseCodes;
+    exports.Grades = Grades;
 
 });

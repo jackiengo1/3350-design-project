@@ -1,9 +1,3 @@
-/**
- * Created by aayush on 2/3/2017.
- */
-/**
- * Created by aayush on 2/2/2017.
- */
 var express = require('express');
 var router = express.Router();
 var models = require('../models/studentsRecordsDB');

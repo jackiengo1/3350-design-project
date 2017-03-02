@@ -53,6 +53,7 @@ router.route('/:highSchoolCourse_id')
                 highSchoolCourse.unit = request.highSchoolCourse.unit;
                 highSchoolCourse.school = request.highSchoolCourse.school;
                 highSchoolCourse.course = request.highSchoolCourse.course;
+                highSchoolCourse.hsCourseGradesInfo = request.highSchoolCourse.hsCourseGradesInfo;
 
                 highSchoolCourse.save(function (error) {
                     if (error) {
