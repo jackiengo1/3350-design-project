@@ -86,6 +86,9 @@ export default Ember.Component.extend({
   termCodeModel: null,
   termCode: null,
   courseCodeModel: null,
+  programGrade: null,
+  programCourseCode: null,
+  programNote: null,
 
 
 
@@ -147,6 +150,10 @@ export default Ember.Component.extend({
 
     this.get('store').findAll('high-school-course').then(function(records){
       self.set('hsCourseModel', records);
+    });
+
+    this.get('store').findAll('course-code').then(function(records){
+      self.set('courseCodeModel', records);
     });
 
     // load first page of the students records
@@ -710,13 +717,6 @@ export default Ember.Component.extend({
       newhsMark.save();
     },
 
-    addTermCode(){
-      var newTermCode = this.get('store').createRecord('term-code', {
-        name: this.get('termCode'),
-        studentInfo: this.get('currentStudent')
-      });
-    },
-
     deleteAS(currentAS){
       var index = this.get('advancedStandingModel').indexOf(currentAS);
       this.set('currentASIndex', index);
@@ -835,6 +835,20 @@ export default Ember.Component.extend({
       console.log(this.get('courseCodeModel').get('firstObject'));
     },
     selectCourseCode(courseCode){
+      var courseCodeObj = this.get('store').peekRecord('course-code', courseCode);
+      this.set('programCourseCode', courseCodeObj);
+    },
+    addGrade(){
+      var newGrade = this.get('store').createRecord('grade', { //create a new student record
+        mark: this.get('programGrade'),
+        note: this.get('programNote'),
+      });
+      newGrade.save(); //commit the student record to db
+
+      var courseCode = this.get('programCourseCode');
+      console.log(newGrade);
+      courseCode.set('mark', newGrade);
+      courseCode.save();
 
     },
   }

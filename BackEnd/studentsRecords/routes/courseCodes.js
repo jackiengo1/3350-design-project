@@ -48,12 +48,12 @@ router.route('/:courseCode_id')
                 response.send({error: error});
             }
             else {
-                courseCode.courseLetter = request.courseCode.courseLetter;
-                courseCode.courseNumber = request.courseCode.courseNumber;
-                courseCode.name = request.courseCode.name;
-                courseCode.unit = request.courseCode.unit;
-                courseCode.mark = request.courseCode.mark;
-                courseCode.semester = request.courseCode.semester;
+                courseCode.courseLetter = request.body.courseCode.courseLetter;
+                courseCode.courseNumber = request.body.courseCode.courseNumber;
+                courseCode.name = request.body.courseCode.name;
+                courseCode.unit = request.body.courseCode.unit;
+                courseCode.mark = request.body.courseCode.mark;
+                courseCode.semester = request.body.courseCode.semester;
 
                 courseCode.save(function (error) {
                     if (error) {

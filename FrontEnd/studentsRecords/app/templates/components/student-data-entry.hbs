@@ -481,7 +481,11 @@
             </select>
           </div>
 
+          <label>Grade</label>
+          {{input disabled = addingStudent type="number" max=100 min=0 value = programGrade}}
 
+          <label>Note</label>
+          {{input disabled = addingStudent type="text" value = programNote}}
 
           <button class="ui primary button" {{action 'addGrade'}} >
             Add grade
