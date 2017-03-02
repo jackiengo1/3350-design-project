@@ -81,7 +81,7 @@ export default Ember.Component.extend({
 
   //students high school record
   currentStudentHSGrades: null,
-  currentStudentTermCode: null,
+  currentStudentTermCodes: null,
 
   termCodeModel: null,
   termCode: null,
@@ -89,6 +89,7 @@ export default Ember.Component.extend({
   programGrade: null,
   programCourseCode: null,
   programNote: null,
+  termCodeName: null,
 
 
 
@@ -184,7 +185,6 @@ export default Ember.Component.extend({
     var gender = this.get('currentStudent').get('genderInfo');
 
     this.set('currentStudentHSGrades', this.get('currentStudent').get('hsCourseGrade'));
-    this.set('currentStudentTermCode', this.get('currentStudent').get('termCode'));
     this.set('selectedGender',gender);
     var res = this.get('currentStudent').get('resInfo');
     this.set('selectedResidency',res);
@@ -194,6 +194,9 @@ export default Ember.Component.extend({
 
     this.get('store').query('scholarship-award',{filter:{studentInfo:this.get('currentStudent').get('id')}});
     this.set('scholarShipAndAwardList', this.get('currentStudent').get('scholInfo'));
+
+    this.get('store').query('term-code',{filter:{studentInfo:this.get('currentStudent').get('id')}});
+    this.set('currentStudentTermCodes', this.get('currentStudent').get('termCodes'));
 
 
 
@@ -832,23 +835,43 @@ export default Ember.Component.extend({
       var termCodeObj = this.get('store').peekRecord('term-code', termCode);
       this.set('termCode', termCodeObj);
       this.set('courseCodeModel', termCodeObj.get('courseInfo'));
-      console.log(this.get('courseCodeModel').get('firstObject'));
+      console.log(this.get('courseCodeModel'));
     },
     selectCourseCode(courseCode){
       var courseCodeObj = this.get('store').peekRecord('course-code', courseCode);
       this.set('programCourseCode', courseCodeObj);
+      console.log("course code: " + this.get('programCourseCode'));
     },
     addGrade(){
+      var self = this;
       var newGrade = this.get('store').createRecord('grade', { //create a new student record
         mark: this.get('programGrade'),
         note: this.get('programNote'),
       });
-      newGrade.save(); //commit the student record to db
 
-      var courseCode = this.get('programCourseCode');
-      console.log(newGrade);
-      courseCode.set('mark', newGrade);
-      courseCode.save();
+      newGrade.save().then(function(savedNewGrade){ //commit the student record to db
+        console.log("saved grade: " + savedNewGrade);
+        var courseCode = self.get('programCourseCode');
+        courseCode.set('mark', savedNewGrade);
+        courseCode.save();
+
+      });
+
+    },
+    openTermCodeForm(){
+      Ember.$('.ui.modal').modal('show');
+    },
+
+    closeTermCodeForm(){
+      Ember.$('.ui.modal').modal('hide');
+    },
+
+    addTermCode(){
+      var newTermCode = this.get('store').createRecord('term-code', {
+        name: this.get('termCodeName'),
+        studentInfo: this.get('currentStudent')
+      });
+      newTermCode.save();
 
     },
   }
