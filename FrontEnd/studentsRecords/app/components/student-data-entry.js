@@ -228,6 +228,8 @@ export default Ember.Component.extend({
     this.get('store').query('term',{filter:{studentInfo:this.get('currentStudent').get('id')}});
     this.set('currentStudentTerms', this.get('currentStudent').get('semester'));
 
+    this.set('studentCourseCodeForGrade', null);
+    this.set('currentStudentCourseCodes', null);
 
 
   },
@@ -888,7 +890,9 @@ export default Ember.Component.extend({
 
 
 
-    deleteGrade(grade){
+    deleteGrade(gradeID){
+      console.log(gradeID);
+      var grade = this.get('store').peekRecord('grade', gradeID);
       console.log(grade);
       var ans = confirm("are you sure you want to delete this?");
       if(ans){

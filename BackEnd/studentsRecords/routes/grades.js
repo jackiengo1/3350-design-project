@@ -64,7 +64,7 @@ router.route('/:grade_id')
         });
     })
     .delete(parseUrlencoded, parseJSON, function (request, response) {
-        models.grade.findByIdAndRemove(request.params.grade_id,
+        models.Grades.findByIdAndRemove(request.params.grade_id,
             function (error, deleted) {
                 if (!error) {
                     response.json({grade: deleted});
