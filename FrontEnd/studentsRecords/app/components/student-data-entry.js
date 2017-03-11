@@ -88,14 +88,24 @@ export default Ember.Component.extend({
 
 
   currentSelectedTerm: null,
-  currentSelectedTermCode: null,
+  currentSelectedTermCode: null, //this is used to store term code selected for adding courses
+  selectedTermCodeForGrade: null, //used to store term code selected for displaying student grades
+  studentCourseCodeForGrade: null,
+  studentCourseCodeForAddGrade: null,
+
+  selectedTermToEdit: null,
+  selectedCourseToEdit: null,
+  selectedGradeToEdit: null,
+
+  gradeEdit: null,
+  noteEdit: null,
 
   termCodeModel: null,
   termCode: null,
   courseCodeModel: null,
-  programGrade: null,
+  courseGrade: null,
   programCourseCode: null,
-  programNote: null,
+  courseNote: null,
   termCodeName: null,
   selectedTermTemp: null,
 
@@ -104,6 +114,12 @@ export default Ember.Component.extend({
   courseNum: null,
   courseName: null,
   courseUnit: null,
+
+  //these are for editing course info
+  courseLetterEdit: null,
+  courseNumEdit: null,
+  courseNameEdit: null,
+  courseUnitEdit: null,
 
 
 
@@ -210,13 +226,9 @@ export default Ember.Component.extend({
     this.set('scholarShipAndAwardList', this.get('currentStudent').get('scholInfo'));
 
     this.get('store').query('term',{filter:{studentInfo:this.get('currentStudent').get('id')}});
-    this.set('currentStudentTerms', this.get('currentStudent').get('term'));
+    this.set('currentStudentTerms', this.get('currentStudent').get('semester'));
 
 
-
-
-
-    console.log(this.get('scholarShipAndAwardList'));
 
   },
 
@@ -859,12 +871,12 @@ export default Ember.Component.extend({
     },
     addGrade(){
       var self = this;
-      var newGrade = this.get('store').createRecord('grade', { //create a new student record
-        mark: this.get('programGrade'),
-        note: this.get('programNote'),
+      var newGrade = this.get('store').createRecord('grade', { //create a new grade record
+        mark: this.get('courseGrade'),
+        note: this.get('courseNote'),
       });
 
-      newGrade.save().then(function(savedNewGrade){ //commit the student record to db
+      newGrade.save().then(function(savedNewGrade){ //commit the grade record to db
         console.log("saved grade: " + savedNewGrade);
         var courseCode = self.get('programCourseCode');
         courseCode.set('mark', savedNewGrade);
@@ -873,12 +885,43 @@ export default Ember.Component.extend({
       });
 
     },
+
+
+
+    deleteGrade(grade){
+      console.log(grade);
+      var ans = confirm("are you sure you want to delete this?");
+      if(ans){
+        grade.deleteRecord();
+        grade.save();
+      }
+    },
+
+    editGrade(){
+      var grade = this.get('selectedGradeToEdit');
+      console.log(grade);
+      grade.set('mark', this.get('gradeEdit'));
+      grade.set('note', this.get('noteEdit'));
+      grade.save();
+    },
+
+
     openTermForm(){
       Ember.$('.ui.modal.term').modal('show');
     },
 
     closeTermForm(){
       Ember.$('.ui.modal.term').modal('hide');
+    },
+
+    openEditTermForm(term){
+      this.set('selectedTermToEdit', term);
+      this.set('currentSelectedTermCode', term.get('term'));
+      Ember.$('.ui.modal.termEdit').modal('show');
+    },
+
+    closeEditTermForm(){
+      Ember.$('.ui.modal.termEdit').modal('hide');
     },
 
     openCourseCodeForm(){
@@ -889,30 +932,117 @@ export default Ember.Component.extend({
       Ember.$('.ui.modal.courseCode').modal('hide');
     },
 
-    addTerm(){
-      var newTerm = this.get('store').createRecord('term', {
-        studentInfo: this.get('currentStudent'),
-        termCode: this.get('currentSelectedTermCode')
-      });
-      newTerm.save();
+    openEditCourseForm(courseCode){
+      this.set('selectedCourseToEdit', courseCode);
+      this.set('courseNameEdit', courseCode.get('name'));
+      this.set('courseLetterEdit', courseCode.get('courseLetter'));
+      this.set('courseNumEdit', courseCode.get('courseNumber'));
+      this.set('courseUnitEdit', courseCode.get('unit'));
+      Ember.$('.ui.modal.courseCodeEdit').modal('show');
+    },
 
+    closeEditCourseForm(){
+      Ember.$('.ui.modal.courseCodeEdit').modal('hide');
+    },
+
+    openGradeForm(){
+      Ember.$('.ui.modal.grade').modal('show');
+    },
+
+    closeGradeForm(){
+      Ember.$('.ui.modal.grade').modal('hide');
+    },
+
+    openEditGradeForm(gradeID){
+      var grade = this.get('store').peekRecord('grade', gradeID);
+      this.set('selectedGradeToEdit', grade);
+      this.set('gradeEdit', grade.get('mark'));
+      this.set('noteEdit', grade.get('note'));
+
+      Ember.$('.ui.modal.gradeEdit').modal('show');
+
+    },
+
+    closeEditGradeForm(){
+      Ember.$('.ui.modal.gradeEdit').modal('hide');
+    },
+
+
+    addTerm(){
+      if(this.get('currentSelectedTermCode') !== null){
+        var newTerm = this.get('store').createRecord('term', {
+          studentInfo: this.get('currentStudent'),
+          term: this.get('currentSelectedTermCode')
+        });
+        newTerm.save();
+      }
+      else{
+        alert("You must select a term code");
+      }
+
+    },
+
+    editTerm(){
+      if(this.get('currentSelectedTermCode') !== null){
+        var term = this.get('selectedTermToEdit');
+        term.set('term', this.get('currentSelectedTermCode'));
+        term.save();
+        alert("Term successfully updated!");
+      }
+      else{
+        alert('You must select a term code');
+      }
+    },
+
+    deleteTerm(term){
+      console.log(term);
+      var ans = confirm("are you sure you want to delete this?");
+      if(ans){
+        term.deleteRecord();
+        term.save();
+      }
     },
 
     addCourseCode(){
-      var newCourseCode = this.get('store').createRecord('course-code', {
-        courseLetter: this.get('courseLetter'),
-        courseNumber: this.get('courseNum'),
-        name: this.get('courseName'),
-        unit: this.get('courseUnit'),
-        semester: this.get('selectedTermTemp'),
-      });
-      newCourseCode.save();
+      if(this.get('selectedTermTemp') !== null){
+        var newCourseCode = this.get('store').createRecord('course-code', {
+          courseLetter: this.get('courseLetter'),
+          courseNumber: this.get('courseNum'),
+          name: this.get('courseName'),
+          unit: this.get('courseUnit'),
+          semester: this.get('selectedTermTemp'),
+        });
+        newCourseCode.save();
+      }
+      else{
+        alert("must select a term");
+      }
+    },
+
+    editCourseCode(){
+      var course = this.get('selectedCourseToEdit');
+      course.set('courseLetter', this.get('courseLetterEdit'));
+      course.set('name', this.get('courseNameEdit'));
+      course.set('courseNumber', this.get('courseNumEdit'));
+      course.set('unit', this.get('courseUnitEdit'));
+      course.set('semester', this.get('selectedTermTemp'));
+
+      course.save();
+    },
+
+    deleteCourseCode(courseCode){
+      var ans = confirm("Are you sure you want to delete this?");
+
+      if(ans){
+        courseCode.deleteRecord();
+        courseCode.save();
+      }
     },
 
 
-    selectTermForAddCourse(termCode){
-      var termCodeCourseObj = this.get('store').peekRecord('term-code', termCode);
-      this.set('selectedTermTemp', termCodeCourseObj);
+    selectTermForAddCourse(term){
+      var termCourseObj = this.get('store').peekRecord('term', term);
+      this.set('selectedTermTemp', termCourseObj);
     },
 
     selectedTermCode(termCode){
@@ -927,13 +1057,25 @@ export default Ember.Component.extend({
       console.log("selected" + this.get('currentStudentCourseCodes'));*/
     },
 
+    selectTermForGrade(term){
+      var selectedTerm = this.get('store').peekRecord('term', term);
+      this.get('store').query('course-code',{filter:{semester:selectedTerm.get('id')}});
+      this.set('studentCourseCodeForGrade', selectedTerm.get('courseInfo'));
+    },
+
     selectedTerm(term){
       var selectedStudentTerm = this.get('store').peekRecord('term', term);
       this.get('store').query('course-code',{filter:{semester:selectedStudentTerm.get('id')}});
       //this.set('currentSelectedTerm', selectedStudentTerm);
       //this.get('store').query('course-code',{filter:{semester:this.get('currentSelectedTerm').get('id')}});
       this.set('currentStudentCourseCodes', selectedStudentTerm.get('courseInfo'));
+      console.log("term selected" + selectedStudentTerm);
 
+    },
+    selectTermForAddGrade(term){
+      var selectedStudentTerm = this.get('store').peekRecord('term', term);
+      this.get('store').query('course-code', {filter:{semester: selectedStudentTerm.get('id')}});
+      this.set('studentCourseCodeForAddGrade', selectedStudentTerm.get('courseInfo'));
     },
   }
 
