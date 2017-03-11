@@ -143,24 +143,55 @@ var termSchema = mongoose.Schema(
   }
 );
 
+var adjudicationSchema = mongoose.Schema(
+  {
+    date: String,
+    termAVG: String,
+    termUnitPassed: String,
+    termUnitsTotal: String,
+    note: String
+  }
+);
+
+var adjudicationSchema = mongoose.Schema(
+  {
+    date: String,
+    termAVG: String,
+    termUnitPassed: String,
+    termUnitsTotal: String,
+    note: String
+  }
+);
+
+var assessmentCodeSchema = mongoose.Schema(
+  {
+    code: String,
+    name: String
+  }
+);
+
 var ScholarshipAwards = mongoose.model('scholarshopAward', scholarshipAwardSchema);
 var AdvancedStandings = mongoose.model('advancedStanding', advancedStandingSchema);
 var Genders = mongoose.model('gender', genderSchema);
 var Students = mongoose.model('student', studentsSchema);
 var Residencies = mongoose.model('residency', residencySchema);
-//New
 var HsCourseGrades = mongoose.model('hsCourseGrade', hsCourseGradeSchema);
 var HighSchoolCourses = mongoose.model('highSchoolCourse', highSchoolCourseSchema);
 var HighSchoolSubjects = mongoose.model('highSchoolSubject', highSchoolSubjectSchema);
 var SecondarySchools = mongoose.model('secondarySchool', secondarySchoolSchema);
-//
 var ProgramRecords = mongoose.model('programRecord', programRecordSchema);
 var TermCodes = mongoose.model('termCode', termCodeSchema);
 var PlanCodes = mongoose.model('planCode', planCodeSchema);
 var CourseCodes = mongoose.model('courseCode', courseCodeSchema);
 var Grades = mongoose.model('grade', gradeSchema);
-
 var Terms = mongoose.model('term', termSchema);
+////
+var Adjudications = mongoose.model('adjudication', adjudicationSchema);
+var AssessmentCodes = mongoose.model('assessmentcode', assessmentCodeSchema);
+var LogicalExpressions = mongoose.model('logicalexpression', logicalExpressionSchema);
+var Faculties = mongoose.model('faculty', facultyExpressionSchema);
+var Departments = mongoose.model('department', departmentSchema);
+var ProgramAdministrations = mongoose.model('programadministration', programAdministrationSchema);
 
 mongoose.connect('mongodb://localhost/studentsRecords');
 var db = mongoose.connection;
@@ -172,18 +203,21 @@ db.once('open', function() {
     exports.Genders = Genders;
     exports.AdvancedStandings = AdvancedStandings;
     exports.ScholarshipAwards = ScholarshipAwards;
-    //New
     exports.HsCourseGrades = HsCourseGrades;
     exports.HighSchoolCourses = HighSchoolCourses;
     exports.HighSchoolSubjects = HighSchoolSubjects;
     exports.SecondarySchools = SecondarySchools;
-    //
     exports.ProgramRecords = ProgramRecords;
     exports.TermCodes = TermCodes;
     exports.PlanCodes = PlanCodes;
     exports.CourseCodes = CourseCodes;
     exports.Grades = Grades;
-
     exports.Terms = Terms;
-
+    ////
+    exports.Adjudications = Adjudications;
+    exports.AssessmentCodes = AssessmentCodes;
+    exports.LogicalExpressions = LogicalExpressions;
+    exports.Faculties = Faculties;
+    exports.Departments = Departments;
+    exports.ProgramAdministrations = ProgramAdministrations;
 });
