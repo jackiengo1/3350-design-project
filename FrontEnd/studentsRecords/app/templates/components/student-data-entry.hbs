@@ -834,8 +834,10 @@
             <select onchange={{action 'selectCourseCode' value="target.value"}}>
               <option selected = "selected" value = null> Select a course code </option>
               {{#each studentCourseCodeForAddGrade as |oneCourse|}}
-
+              {{#if oneCourse.mark}}
+              {{else}}
               <option value={{oneCourse.id}} >{{oneCourse.name}}</option>
+              {{/if}}
 
               {{/each}}
             </select>
