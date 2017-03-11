@@ -19,6 +19,8 @@ var secondarySchools = require('./routes/secondarySchools');
 var programRecords = require('./routes/programRecords');
 var grades = require('./routes/grades');
 
+var terms = require('./routes/terms');
+
 
 app.use(function (request, response, next) {
     response.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
@@ -35,6 +37,7 @@ app.use('/genders', genders);
 app.use('/advancedStandings', advancedStandings);
 app.use('/scholarshipAwards', scholarshipAwards);
 //
+
 app.use('/grades', grades);
 app.use('/courseCodes', courseCodes);
 app.use('/termCodes', termCodes);
@@ -44,7 +47,7 @@ app.use('/highSchoolSubjects', highSchoolSubjects);
 app.use('/hsCourseGrades', hsCourseGrades);
 app.use('/secondarySchools', secondarySchools);
 app.use('/programRecords', programRecords);
-
+app.use('/terms', terms);
 
 app.listen(3700, function () {
     console.log('Listening on port 3700');
