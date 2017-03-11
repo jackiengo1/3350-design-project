@@ -476,9 +476,8 @@
             <h2>Student's Grades</h2>
           </div>
 
-          <div class="field">
-            <label>Select a term:</label>
-            <select onchange={{action 'selectTermForGrade' value="target.value"}}>
+          <div class="ui center aligned header" style="margin-bottom: 30px;">
+            <select class="ui fluid dropdown"onchange={{action 'selectTermForGrade' value="target.value"}}>
               <option selected = "selected" value = null> Select a term </option>
               {{#each currentStudentTerms as |oneTerm|}}
               <option value={{oneTerm.id}}> {{oneTerm.term.name}} </option>
@@ -486,13 +485,16 @@
             </select>
           </div>
 
+
+
           <div class="ui middle aligned divided list" style="margin-top: 22px; margin-bottom: 22px;">
             {{#each studentCourseCodeForGrade as |oneCourseCode|}}
             {{#unless oneCourseCode.isDeleted}}
+            {{#if oneCourseCode.mark}}
             <div class="item">
               <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
                 <div class="teal ui button" style = "width: 55px;"  onclick={{action 'openEditGradeForm' oneCourseCode.mark.id}}><i class="large edit icon"></i></div>
-                <div class="negative ui button" style = "width: 55px;"  onclick={{action 'deleteGrade' oneCourseCode.mark.id}}><i class="large remove icon"></i></div>
+                <div class="negative ui button" style = "width: 55px;"  onclick={{action 'deleteGrade' oneCourseCode.mark.id oneCourseCode}}><i class="large remove icon"></i></div>
 
               </div>
               <div class="content" style="padding-top: 10px; font-size: 16px;">
@@ -501,6 +503,7 @@
                 Note: {{#if oneCourseCode.mark.note}}{{oneCourseCode.mark.note}} {{else}} null {{/if}}
               </div>
             </div>
+            {{/if}}
             {{/unless}}
             {{/each}}
           </div>
@@ -536,15 +539,17 @@
             <h2>Student's Course Codes</h2>
           </div>
 
-          <div class="field">
-            <label>Select a term:</label>
-            <select onchange={{action 'selectedTerm' value="target.value"}}>
+
+          <div class="ui center aligned header" style="margin-bottom: 30px;">
+            <select class="ui fluid dropdown"onchange={{action 'selectedTerm' value="target.value"}}>
               <option selected = "selected" value = null> Select a term </option>
               {{#each currentStudentTerms as |oneTerm|}}
               <option value={{oneTerm.id}}> {{oneTerm.term.name}} </option>
               {{/each}}
             </select>
           </div>
+
+
 
           <div class="ui middle aligned divided list" style="margin-top: 22px; margin-bottom: 22px;">
             {{#each currentStudentCourseCodes as |oneCourseCode|}}

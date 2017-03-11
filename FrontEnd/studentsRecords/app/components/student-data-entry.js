@@ -890,7 +890,7 @@ export default Ember.Component.extend({
 
 
 
-    deleteGrade(gradeID){
+    deleteGrade(gradeID, courseCode){
       console.log(gradeID);
       var grade = this.get('store').peekRecord('grade', gradeID);
       console.log(grade);
@@ -898,6 +898,9 @@ export default Ember.Component.extend({
       if(ans){
         grade.deleteRecord();
         grade.save();
+
+        courseCode.set('mark', null);
+        courseCode.save();
       }
     },
 
