@@ -17,7 +17,7 @@ var studentsSchema = mongoose.Schema(
         genderInfo: {type: mongoose.Schema.ObjectId, ref: 'Genders'},
         scholInfo: [{type: mongoose.Schema.ObjectId, ref: 'ScholarshipAwards'}],
         highSchoolCourse: [{type: mongoose.Schema.ObjectId, ref: 'HsCourseGrades'}],
-        termCodes: [{type: mongoose.Schema.ObjectId, ref: 'TermCodes'}],
+        semester: [{type: mongoose.Schema.ObjectId, ref: 'Terms'}],
     }
 );
 studentsSchema.plugin(mongoosePaginate);
@@ -96,16 +96,15 @@ var programRecordSchema = mongoose.Schema(
     load: String,
     status: String,
     plan : [{type: mongoose.Schema.ObjectId, ref: 'PlanCodes'}],
-    semester: [{type: mongoose.Schema.ObjectId, ref: 'TermCodes'}]
+    semester: [{type: mongoose.Schema.ObjectId, ref: 'Terms'}]
   }
 );
 
 var termCodeSchema = mongoose.Schema(
   {
     name: String,
-    courseInfo: [{type: mongoose.Schema.ObjectId, ref: 'CourseCodes'}],
-    program: [{type: mongoose.Schema.ObjectId, ref: 'ProgramRecords'}],
-    studentInfo: {type: mongoose.Schema.ObjectId, ref: 'Students'}
+    semester: [{type: mongoose.Schema.ObjectId, ref: 'Terms'}],
+
   }
 );
 
@@ -123,7 +122,7 @@ var courseCodeSchema = mongoose.Schema(
     name: String,
     unit: String,
     mark: {type: mongoose.Schema.ObjectId, ref: 'Grades'},
-    semester: {type: mongoose.Schema.ObjectId, ref: 'TermCodes'}
+    semester: {type: mongoose.Schema.ObjectId, ref: 'Terms'}
   }
 );
 
@@ -132,6 +131,15 @@ var gradeSchema = mongoose.Schema(
     mark: String,
     note: String,
     courseInfo: [{type: mongoose.Schema.ObjectId, ref: 'CourseCodes'}]
+  }
+);
+
+var termSchema = mongoose.Schema(
+  {
+    term: {type: mongoose.Schema.ObjectId, ref: 'TermCodes'},
+    program: [{type: mongoose.Schema.ObjectId, ref: 'ProgramRecords'}],
+    courseInfo: [{type: mongoose.Schema.ObjectId, ref: 'CourseCodes'}],
+    studentInfo: {type: mongoose.Schema.ObjectId, ref: 'Students'}
   }
 );
 
@@ -151,6 +159,8 @@ var TermCodes = mongoose.model('termCode', termCodeSchema);
 var PlanCodes = mongoose.model('planCode', planCodeSchema);
 var CourseCodes = mongoose.model('courseCode', courseCodeSchema);
 var Grades = mongoose.model('grade', gradeSchema);
+
+var Terms = mongoose.model('term', termSchema);
 
 mongoose.connect('mongodb://localhost/studentsRecords');
 var db = mongoose.connection;
@@ -173,5 +183,7 @@ db.once('open', function() {
     exports.PlanCodes = PlanCodes;
     exports.CourseCodes = CourseCodes;
     exports.Grades = Grades;
+
+    exports.Terms = Terms;
 
 });

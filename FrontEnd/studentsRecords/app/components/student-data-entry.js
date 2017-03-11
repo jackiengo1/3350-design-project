@@ -79,9 +79,16 @@ export default Ember.Component.extend({
   advancedstandingTabIsDisabled: false,
 
 
-  //students high school record
+
   currentStudentHSGrades: null,
   currentStudentTermCodes: null,
+  currentStudentCourseCodes: null,
+  currentStudentTerms: null,
+  currentStudentGrades: null,
+
+
+  currentSelectedTerm: null,
+  currentSelectedTermCode: null,
 
   termCodeModel: null,
   termCode: null,
@@ -90,6 +97,13 @@ export default Ember.Component.extend({
   programCourseCode: null,
   programNote: null,
   termCodeName: null,
+  selectedTermTemp: null,
+
+  //these are for adding course info
+  courseLetter: null,
+  courseNum: null,
+  courseName: null,
+  courseUnit: null,
 
 
 
@@ -195,8 +209,9 @@ export default Ember.Component.extend({
     this.get('store').query('scholarship-award',{filter:{studentInfo:this.get('currentStudent').get('id')}});
     this.set('scholarShipAndAwardList', this.get('currentStudent').get('scholInfo'));
 
-    this.get('store').query('term-code',{filter:{studentInfo:this.get('currentStudent').get('id')}});
-    this.set('currentStudentTermCodes', this.get('currentStudent').get('termCodes'));
+    this.get('store').query('term',{filter:{studentInfo:this.get('currentStudent').get('id')}});
+    this.set('currentStudentTerms', this.get('currentStudent').get('term'));
+
 
 
 
@@ -858,20 +873,66 @@ export default Ember.Component.extend({
       });
 
     },
-    openTermCodeForm(){
-      Ember.$('.ui.modal').modal('show');
+    openTermForm(){
+      Ember.$('.ui.modal.term').modal('show');
     },
 
-    closeTermCodeForm(){
-      Ember.$('.ui.modal').modal('hide');
+    closeTermForm(){
+      Ember.$('.ui.modal.term').modal('hide');
     },
 
-    addTermCode(){
-      var newTermCode = this.get('store').createRecord('term-code', {
-        name: this.get('termCodeName'),
-        studentInfo: this.get('currentStudent')
+    openCourseCodeForm(){
+      Ember.$('.ui.modal.courseCode').modal('show');
+    },
+
+    closeCourseCodeForm(){
+      Ember.$('.ui.modal.courseCode').modal('hide');
+    },
+
+    addTerm(){
+      var newTerm = this.get('store').createRecord('term', {
+        studentInfo: this.get('currentStudent'),
+        termCode: this.get('currentSelectedTermCode')
       });
-      newTermCode.save();
+      newTerm.save();
+
+    },
+
+    addCourseCode(){
+      var newCourseCode = this.get('store').createRecord('course-code', {
+        courseLetter: this.get('courseLetter'),
+        courseNumber: this.get('courseNum'),
+        name: this.get('courseName'),
+        unit: this.get('courseUnit'),
+        semester: this.get('selectedTermTemp'),
+      });
+      newCourseCode.save();
+    },
+
+
+    selectTermForAddCourse(termCode){
+      var termCodeCourseObj = this.get('store').peekRecord('term-code', termCode);
+      this.set('selectedTermTemp', termCodeCourseObj);
+    },
+
+    selectedTermCode(termCode){
+      var selectedStudentTermCode = this.get('store').peekRecord('term-code', termCode);
+      this.set('currentSelectedTermCode', selectedStudentTermCode);
+
+      console.log("term code selected" + this.get('currentSelectedTermCode'));
+
+      /*  this.get('store').query('course-code',{filter:{semester:this.get('currentSelectedTermCode').get('id')}});
+      this.set('currentStudentCourseCodes', selectedTermCode.get('courseInfo'));
+
+      console.log("selected" + this.get('currentStudentCourseCodes'));*/
+    },
+
+    selectedTerm(term){
+      var selectedStudentTerm = this.get('store').peekRecord('term', term);
+      this.get('store').query('course-code',{filter:{semester:selectedStudentTerm.get('id')}});
+      //this.set('currentSelectedTerm', selectedStudentTerm);
+      //this.get('store').query('course-code',{filter:{semester:this.get('currentSelectedTerm').get('id')}});
+      this.set('currentStudentCourseCodes', selectedStudentTerm.get('courseInfo'));
 
     },
   }
@@ -931,7 +992,7 @@ Ember.$(document).ready(function () {
       return false;
     }
 
-     if (Ember.$("#dateInput").val().length === 4 && asciiCode !== 8) { //adds dashes to date field to force correct format
+    if (Ember.$("#dateInput").val().length === 4 && asciiCode !== 8) { //adds dashes to date field to force correct format
       Ember.$("#dateInput").val(Ember.$("#dateInput").val() + "-");
     }
     if (Ember.$("#dateInput").val().length === 7 && asciiCode !== 8) {

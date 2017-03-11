@@ -455,74 +455,157 @@
 
   <!-- program record tab-->
   <div class = "ui tab" data-tab="programRecord" style="background-color: #eee3fd; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">
-    <h2>Student's Program Record</h2>
-    {{#each currentStudentTermCode as |oneTerm|}}
-    <h3>Program:{{oneTerm.program.name}}</h3>
-    <h3>Course:{{oneTerm.courseInfo.name}}</h3>
-    <h3>Unit: {{oneTerm.courseInfo.unit}}</h3>
-    <h3>Mark: {{oneTerm.courseInfo.mark.mark}}</h3>
-    {{/each}}
-    <h2>Add Grade</h2>
-    <div class="field">
-      <select onchange={{action 'selectTermCode' value="target.value"}}>
-        <option selected = "selected" value = null> Select a term code </option>
-        {{#each termCodeModel as |oneTermCode|}}
-        <option value={{oneTermCode.id}} >{{oneTermCode.name}}</option>
-        {{/each}}
-      </select>
+    <div class="ui top attached tabular menu" style="font-size: 16px;">
+
+      <a class="active item" data-tab="grades" >Grades</a>
+      <a class="item" data-tab="courseCodes">Course Codes</a>
+      <a class="item " data-tab="termCodes">Terms</a>
+
     </div>
 
-    <div class="field">
-      <select onchange={{action 'selectCourseCode' value="target.value"}}>
-        <option selected = "selected" value = null> Select a course code </option>
-        {{#each courseCodeModel as |oneCourseCode|}}
-        <option value={{oneCourseCode.id}} >{{oneCourseCode.name}}</option>
-        {{/each}}
-      </select>
+    <div class = "ui bottom attached active tab segment" data-tab="grades" style="background-color: #eee3fd; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">
+
+      <h2>Student's Grades</h2>
+
+      <div class="field">
+        <label>Select a term:</label>
+        <select onchange={{action 'selectedTermCode' value="target.value"}}>
+          <option selected = "selected" value = null> Select a term </option>
+          {{#each currentStudentTerms as |oneTerm|}}
+            <option value={{oneTerm.id}}> {{oneTerm.name}} </option>
+          {{/each}}
+        </select>
+      </div>
+
+      {{#each currentStudentCourseCodes as |oneCourseCode|}}
+        <h3>Course code: {{oneCourseCode.name}} Grade: {{oneCourseCode.mark.mark}}</h3>
+      {{/each}}
+
     </div>
 
-    <label>Grade</label>
-    {{input disabled = addingStudent type="number" max=100 min=0 value = programGrade}}
 
-    <label>Note</label>
-    {{input disabled = addingStudent type="text" value = programNote}}
+    <div class = "ui bottom attached tab segment" data-tab="courseCodes" style="background-color: #eee3fd; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">
+      <h2>Student's Course Codes</h2>
 
-    <button class="ui primary button" {{action 'addGrade'}} >
-      Add grade
-    </button>
+      <div class="field">
+        <label>Select a term:</label>
+        <select onchange={{action 'selectedTermCode' value="target.value"}}>
+          <option selected = "selected" value = null> Select a term </option>
+          {{#each currentStudentTerms as |oneTerm|}}
+            <option value={{oneTerm.id}}> {{oneTerm.name}} </option>
+          {{/each}}
+        </select>
+      </div>
 
-    <h2>Student's Term Codes</h2>
-    {{#each currentStudentTermCodes as |oneTermCode|}}
-    <h3>Term code:{{oneTermCode.name}}</h3>
-    {{/each}}
+      {{#each currentStudentCourseCodes as |oneCourseCode|}}
+        <h3>Course code: {{oneCourseCode.name}}</h3>
+      {{/each}}
 
-    <button class="ui primary button" {{action 'openTermCodeForm'}} >
-      Add Term Code
-    </button>
+      <button class="ui primary button" {{action 'openCourseCodeForm'}} >
+        Add course code
+      </button>
+
+    </div>
+
+
+
+
+    <div class = "ui bottom attached tab segment" data-tab="termCodes" style="background-color: #eee3fd; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">
+
+      <h2>Student's Terms</h2>
+      {{#each currentStudentTerms as |oneTerm|}}
+      <h3>Term:{{oneTerm.termCode}}</h3>
+      {{/each}}
+
+      <button class="ui primary button" {{action 'openTermForm'}} >
+        Add Term
+      </button>
+
+    </div>
+
+
+
 
   </div>
 
-<!-- modal to add student's term code-->
-  <div class="ui modal">
+<!-- modal to add student's terms-->
+  <div class="ui modal term">
     <div class="header">
-      Add Term Code
+      Add Terms
     </div>
     <div class="content">
       <form class="ui form">
-        <div class="field">
-          <label>Term code: </label>
-          {{input type="text"  value = termCodeName}}
-        </div>
+        <select onchange={{action 'selectedTermCode' value="target.value"}}>
+          <option selected = "selected" value = null> Select a term code </option>
+          {{#each termCodeModel as |oneTermCode|}}
+            <option value={{oneTermCode.id}}> {{oneTermCode.name}} </option>
+          {{/each}}
+        </select>
       </form>
     </div>
     <div class="actions">
-      <button class="ui primary button" {{action 'closeTermCodeForm'}} >
+      <button class="ui primary button" {{action 'closeTermForm'}} >
         Exit
       </button>
-      <button class="ui primary button" {{action 'addTermCode'}} >
-        Add Term Code
+      <button class="ui primary button" {{action 'addTerm'}} >
+        Add term
       </button>
     </div>
   </div>
+
+
+  <!-- modal to add student's course code-->
+    <div class="ui modal courseCode">
+      <div class="header">
+        Add Course Code
+      </div>
+      <div class="content">
+        <form class="ui form">
+          <div class="two fields">
+            <div class="field">
+              <label>Course Letter: </label>
+              {{input type="text"  value = courseLetter}}
+            </div>
+            <div class="field">
+              <label>Course Number: </label>
+              {{input type="text"  value = courseNum}}
+            </div>
+          </div>
+          <div class="two fields">
+
+            <div class="field">
+              <label>Name: </label>
+              {{input type="text"  value = courseName}}
+            </div>
+            <div class="field">
+              <label>Unit: </label>
+              {{input type="text"  value = courseUnit}}
+            </div>
+          </div>
+          <div class="field">
+            <label>Term</label>
+            <select onchange={{action 'selectTermForAddCourse' value="target.value"}}>
+              <option selected = "selected" value = null> Select a term </option>
+              {{#each currentStudentTerms as |oneTerm|}}
+
+              <option value={{oneTerm.id}} >{{oneTerm.termCode}}</option>
+
+              {{/each}}
+            </select>
+          </div>
+
+        </form>
+
+      </div>
+      <div class="actions">
+        <button class="ui primary button" {{action 'closeCourseCodeForm'}} >
+          Exit
+        </button>
+        <button class="ui primary button" {{action 'addCourseCode'}} >
+          Add Course Code
+        </button>
+      </div>
+    </div>
+
 
   {{/if}}
