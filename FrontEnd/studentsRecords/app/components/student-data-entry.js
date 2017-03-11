@@ -1078,6 +1078,7 @@ export default Ember.Component.extend({
       //this.set('currentSelectedTerm', selectedStudentTerm);
       //this.get('store').query('course-code',{filter:{semester:this.get('currentSelectedTerm').get('id')}});
       this.set('currentStudentCourseCodes', selectedStudentTerm.get('courseInfo'));
+      this.set('selectedTermTemp', selectedStudentTerm);
       console.log("term selected" + selectedStudentTerm);
 
     },
