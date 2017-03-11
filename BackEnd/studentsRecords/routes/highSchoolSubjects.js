@@ -48,9 +48,9 @@ router.route('/:highSchoolSubject_id')
                 response.send({error: error});
             }
             else {
-                highSchoolSubject.name = request.highSchoolSubject.name;
-                highSchoolSubject.description = request.highSchoolSubject.description;
-                highSchoolSubject.highSchoolCoursesInfo = request.highSchoolSubject.highSchoolCoursesInfo;
+                highSchoolSubject.name = request.body.highSchoolSubject.name;
+                highSchoolSubject.description = request.body.highSchoolSubject.description;
+                highSchoolSubject.highSchoolCoursesInfo = request.body.highSchoolSubject.highSchoolCoursesInfo;
 
                 highSchoolSubject.save(function (error) {
                     if (error) {

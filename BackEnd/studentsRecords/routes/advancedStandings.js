@@ -53,11 +53,11 @@ router.route('/:advancedStanding_id')
                 response.send({error: error});
             }
             else {
-                advancedStanding.course = request.advancedStanding.course;
-                advancedStanding.description = request.advancedStanding.description;
-                advancedStanding.units = request.advancedStanding.units;
-                advancedStanding.grade = request.advancedStanding.grade;
-                advancedStanding.from = request.advancedStanding.from;
+                advancedStanding.course = request.body.advancedStanding.course;
+                advancedStanding.description = request.body.advancedStanding.description;
+                advancedStanding.units = request.body.advancedStanding.units;
+                advancedStanding.grade = request.body.advancedStanding.grade;
+                advancedStanding.from = request.body.advancedStanding.from;
 
                 advancedStanding.save(function (error) {
                     if (error) {
