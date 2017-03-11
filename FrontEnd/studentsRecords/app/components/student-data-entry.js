@@ -1062,12 +1062,14 @@ export default Ember.Component.extend({
     },
 
     selectTermForGrade(term){
+
       var selectedTerm = this.get('store').peekRecord('term', term);
       this.get('store').query('course-code',{filter:{semester:selectedTerm.get('id')}});
       this.set('studentCourseCodeForGrade', selectedTerm.get('courseInfo'));
     },
 
     selectedTerm(term){
+      console.log(term);
       var selectedStudentTerm = this.get('store').peekRecord('term', term);
       this.get('store').query('course-code',{filter:{semester:selectedStudentTerm.get('id')}});
       //this.set('currentSelectedTerm', selectedStudentTerm);
