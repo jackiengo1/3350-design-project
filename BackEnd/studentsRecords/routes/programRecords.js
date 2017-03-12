@@ -48,12 +48,12 @@ router.route('/:programRecord_id')
                 response.send({error: error});
             }
             else {
-                programRecord.name = request.programRecord.name;
-                programRecord.level = request.programRecord.level;
-                programRecord.load = request.programRecord.load;
-                programRecord.status = request.programRecord.status;
-                programRecord.plan = request.programRecord.plan;
-                programRecord.semester = request.programRecord.semester;
+                programRecord.name = request.body.programRecord.name;
+                programRecord.level = request.body.programRecord.level;
+                programRecord.load = request.body.programRecord.load;
+                programRecord.status = request.body.programRecord.status;
+                programRecord.plan = request.body.programRecord.plan;
+                programRecord.semester = request.body.programRecord.semester;
 
                 programRecord.save(function (error) {
                     if (error) {

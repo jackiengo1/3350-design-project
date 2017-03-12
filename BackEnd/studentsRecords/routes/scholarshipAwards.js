@@ -48,7 +48,7 @@ router.route('/:scholarshipAward_id')
                 response.send({error: error});
             }
             else {
-                scholarshipAward.note = request.scholarshipAward.note;
+                scholarshipAward.note = request.body.scholarshipAward.note;
 
                 scholarshipAward.save(function (error) {
                     if (error) {
