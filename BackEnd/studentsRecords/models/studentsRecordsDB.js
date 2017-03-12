@@ -18,6 +18,7 @@ var studentsSchema = mongoose.Schema(
         scholInfo: [{type: mongoose.Schema.ObjectId, ref: 'ScholarshipAwards'}],
         highSchoolCourse: [{type: mongoose.Schema.ObjectId, ref: 'HsCourseGrades'}],
         semester: [{type: mongoose.Schema.ObjectId, ref: 'Terms'}],
+        adjudicationInfo: [{type: mongoose.Schema.ObjectId, ref: 'Adjudications'}]
     }
 );
 studentsSchema.plugin(mongoosePaginate);
@@ -139,9 +140,12 @@ var termSchema = mongoose.Schema(
     term: {type: mongoose.Schema.ObjectId, ref: 'TermCodes'},
     program: [{type: mongoose.Schema.ObjectId, ref: 'ProgramRecords'}],
     courseInfo: [{type: mongoose.Schema.ObjectId, ref: 'CourseCodes'}],
-    studentInfo: {type: mongoose.Schema.ObjectId, ref: 'Students'}
+    studentInfo: {type: mongoose.Schema.ObjectId, ref: 'Students'},
+    adjudicationInfo: [{type: mongoose.Schema.ObjectId, ref: 'Adjudications'}]
   }
 );
+
+////////////////////////////////////////////////////////////////////////////////
 
 var adjudicationSchema = mongoose.Schema(
   {
@@ -149,24 +153,53 @@ var adjudicationSchema = mongoose.Schema(
     termAVG: String,
     termUnitPassed: String,
     termUnitsTotal: String,
-    note: String
-  }
-);
-
-var adjudicationSchema = mongoose.Schema(
-  {
-    date: String,
-    termAVG: String,
-    termUnitPassed: String,
-    termUnitsTotal: String,
-    note: String
+    note: String,
+    studentInfo: {type: mongoose.Schema.ObjectId, ref: 'Students'},
+    semester: {type: mongoose.Schema.ObjectId, ref: 'Terms'}
+    comment: [{type: mongoose.Schema.ObjectId, ref: 'AssessmentCodes'}]
   }
 );
 
 var assessmentCodeSchema = mongoose.Schema(
   {
     code: String,
+    name: String,
+    adjudicationInfo: [{type: mongoose.Schema.ObjectId, ref: 'Adjudications'}],
+    testExpression: [{type: mongoose.Schema.ObjectId, ref: 'LogicalExpressions'}],
+    faculty: [{type: mongoose.Schema.ObjectId, ref: 'Faculties'}]
+  }
+);
+
+var logicalExpressionSchema = mongoose.Schema(
+  {
+    booleanExp: String,
+    logicalLink: String,
+    comment: {type: mongoose.Schema.ObjectId, ref: 'AssessmentCodes'},
+    link: [{type: mongoose.Schema.ObjectId, ref: 'LogicalExpressions'}]
+  }
+);
+
+var facultySchema = mongoose.Schema(
+  {
     name: String
+    comment: {type: mongoose.Schema.ObjectId, ref: 'AssessmentCodes'},
+    dept: [{type: mongoose.Schema.ObjectId, ref: 'Departments'}]
+  }
+);
+
+var departmentSchema = mongoose.Schema(
+  {
+    name: String,
+    faculty: {type: mongoose.Schema.ObjectId, ref: 'Faculties'},
+    programAdministrationInfo: [{type: mongoose.Schema.ObjectId, ref: 'ProgramAdministrations'}]
+  }
+);
+
+var programAdministrationSchema = mongoose.Schema(
+  {
+    name: String,
+    position: String,
+    dept: {type: mongoose.Schema.ObjectId, ref: 'Departments'}
   }
 );
 
@@ -189,7 +222,7 @@ var Terms = mongoose.model('term', termSchema);
 var Adjudications = mongoose.model('adjudication', adjudicationSchema);
 var AssessmentCodes = mongoose.model('assessmentcode', assessmentCodeSchema);
 var LogicalExpressions = mongoose.model('logicalexpression', logicalExpressionSchema);
-var Faculties = mongoose.model('faculty', facultyExpressionSchema);
+var Faculties = mongoose.model('faculty', facultySchema);
 var Departments = mongoose.model('department', departmentSchema);
 var ProgramAdministrations = mongoose.model('programadministration', programAdministrationSchema);
 
