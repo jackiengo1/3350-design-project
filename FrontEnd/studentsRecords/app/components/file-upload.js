@@ -136,16 +136,16 @@ export default Ember.Component.extend({
           //double for loop, compare each element in Aarray (student number array) to each object in all student record
           for(let i=1;i<indexA;i++)
           {
-              for(let j=0;j<allStudentRecord.get('length');j++)
+            for(let j=0;j<allStudentRecord.get('length');j++)
+            {
+              //if the stduent number matches
+              if(Aarray[i] == allStudentRecord.objectAt(j).get('number'))
               {
-                //if the stduent number matches
-                if(Aarray[i] == allStudentRecord.objectAt(j).get('number'))
-                {
-                  studentRecord = allStudentRecord.objectAt(j);
-                  studentRecord.set('admissionComments',Barray[i]);
-                  //how to walk around here except ajax
-                  studentRecord.save();
-                }
+                studentRecord = allStudentRecord.objectAt(j);
+                studentRecord.set('admissionComments',Barray[i]);
+                //how to walk around here except ajax
+                studentRecord.save();
+              }
             }
           }
         });
@@ -544,36 +544,6 @@ export default Ember.Component.extend({
           }
         });
       }
-      else if(file.name === "UndergraduateRecordCourses.xlsx")
-      {
-        sheet_name_list.forEach(function (sheetName) {
-          var worksheet = workbook.Sheets[sheetName];
-
-          // //get the range of the worksheet
-          var range = XLSX.utils.decode_range(worksheet["!ref"]);
-          // //loop from start of the range to the end of the range
-          var studentNumber;
-          var term;
-          var courseLetter;
-          var courseNumber;
-          var section;
-          var grade;
-          for(var R = (range.s.r+1); R <= range.e.r; R++)
-          {
-            studentNumber =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})].v;
-            courseNumber =  worksheet[XLSX.utils.encode_cell({c: 1, r:R})].v;
-            name = worksheet[XLSX.utils.encode_cell({c: 2, r:R})].v;
-            unit = worksheet[XLSX.utils.encode_cell({c: 3 , r:R})].v;
-            newCourseCodeRecord = self.get('store').createRecord('course-code', {
-              courseLetter: courseLetter,
-              courseNumber: courseNumber,
-              name: name,
-              unit: unit,
-            });
-            newCourseCodeRecord.save();
-          }
-        });
-      }
       else if(file.name ==="HighSchoolCourseInformation.xlsx")
       {
         sheet_name_list.forEach(function (sheetName) {
@@ -705,46 +675,46 @@ export default Ember.Component.extend({
                       {
                         //this is the last run of the new course, using callback can guarentee the new courses
                         // are posted before the new course grade creation, so that new course pk will not be null
-                          newhscoures.save().then(function(){
-                            //create hs course grade record
-                            for(var k=0;k<unitsArray.length;k++)
+                        newhscoures.save().then(function(){
+                          //create hs course grade record
+                          for(var k=0;k<unitsArray.length;k++)
+                          {
+                            //get all student from the local store cache
+                            var allStudentRecord =self.get('store').peekAll('student');
+                            var studentRecord;
+                            for(let m=0;m<allStudentRecord.get('length');m++)
                             {
-                              //get all student from the local store cache
-                              var allStudentRecord =self.get('store').peekAll('student');
-                              var studentRecord;
-                              for(let m=0;m<allStudentRecord.get('length');m++)
+                              //if the stduent number matches
+                              if(studentnumArray[k] == allStudentRecord.objectAt(m).get('number'))
                               {
-                                //if the stduent number matches
-                                if(studentnumArray[k] == allStudentRecord.objectAt(m).get('number'))
-                                {
-                                  //student record used for the targeted student
-                                  studentRecord = allStudentRecord.objectAt(m);
-                                }
-                              }
-                              //get all high school courses from local cache
-                              var allHighSchoolCourses = self.get('store').peekAll('high-school-course');
-                              for(let l=0;l<allHighSchoolCourses.get('length');l++)
-                              {
-                                //if the high-school-course matches the course name and grade and description
-                                if(levelArray[k]==allHighSchoolCourses.objectAt(l).get('level')
-                                && sourceArray[k]==allHighSchoolCourses.objectAt(l).get('source')
-                                && unitsArray[k]==allHighSchoolCourses.objectAt(l).get('unit')
-                                && schoolnameArray[k]==allHighSchoolCourses.objectAt(l).get('school').get('name')
-                                && subjectArrayTracker[k]==allHighSchoolCourses.objectAt(l).get('course').get('name')
-                                && descriptionArraytracker[k]==allHighSchoolCourses.objectAt(l).get('course').get('description'))
-                                {
-                                  var hscourse = allHighSchoolCourses.objectAt(l);
-                                  //console.log(allHighSchoolCourses.objectAt(l).get('id'));
-                                  var newhsCourseGrade = self.get('store').createRecord('hscourse-grade', {
-                                    mark:grade,
-                                    source: hscourse,
-                                    studentInfo: studentRecord,
-                                  });
-                                  newhsCourseGrade.save();
-                                }
+                                //student record used for the targeted student
+                                studentRecord = allStudentRecord.objectAt(m);
                               }
                             }
-                          });
+                            //get all high school courses from local cache
+                            var allHighSchoolCourses = self.get('store').peekAll('high-school-course');
+                            for(let l=0;l<allHighSchoolCourses.get('length');l++)
+                            {
+                              //if the high-school-course matches the course name and grade and description
+                              if(levelArray[k]==allHighSchoolCourses.objectAt(l).get('level')
+                              && sourceArray[k]==allHighSchoolCourses.objectAt(l).get('source')
+                              && unitsArray[k]==allHighSchoolCourses.objectAt(l).get('unit')
+                              && schoolnameArray[k]==allHighSchoolCourses.objectAt(l).get('school').get('name')
+                              && subjectArrayTracker[k]==allHighSchoolCourses.objectAt(l).get('course').get('name')
+                              && descriptionArraytracker[k]==allHighSchoolCourses.objectAt(l).get('course').get('description'))
+                              {
+                                var hscourse = allHighSchoolCourses.objectAt(l);
+                                //console.log(allHighSchoolCourses.objectAt(l).get('id'));
+                                var newhsCourseGrade = self.get('store').createRecord('hscourse-grade', {
+                                  mark:grade,
+                                  source: hscourse,
+                                  studentInfo: studentRecord,
+                                });
+                                newhsCourseGrade.save();
+                              }
+                            }
+                          }
+                        });
                       }
                       else
                       {
@@ -758,7 +728,7 @@ export default Ember.Component.extend({
               });
             }
             else{
-                //when it's not the last run of the save subject
+              //when it's not the last run of the save subject
               newhssubject.save();
             }
           }
@@ -787,29 +757,32 @@ export default Ember.Component.extend({
             }
             studentnum = studentnum.v;
             //get all local cached student and find the student by student number
-            var studentRecord;
-            self.get('store').peekAll('student').forEach(function(student){
-              if(student.get('number') === studentnum)
-              {
-                //if the stduent number matches
-                studentRecord = student;
-              }
-            });
-            var updatednote;
-            if(studentRecord.get('admissionAverage') == null)
+            //get all student from the local store cache
+            var allStudentRecord =self.get('store').peekAll('student');
+            for(let j=0;j<allStudentRecord.get('length');j++)
             {
-              updatednote = note;
-            }
-            //else append the not into that
-            else{
-              updatednote = studentRecord.get('admissionAverage')+"\n"+note;
-            }
+              //if the stduent number matches
+              if(studentnum == allStudentRecord.objectAt(j).get('number'))
+              {
+                console.log(studentnum);
+                //student record used for the targeted student
+                var studentRecord = allStudentRecord.objectAt(j);
+                var updatednote;
+                //if the basisOfAdmission is null replace it with note
+                if(studentRecord.get('admissionAverage') == null)
+                {
+                  updatednote = note;
+                }
+                //else append the not into that
+                else{
+                  updatednote = studentRecord.get('admissionAverage')+"\n"+note;
+                }
 
-            studentRecord.set('admissionAverage',updatednote);
-            //how to walk around here except ajax
-            studentRecord.save().then(() => {
-              //     this.set('isStudentFormEditing', false);
-            });
+                studentRecord.set('admissionAverage',updatednote);
+                //how to walk around here except ajax
+                studentRecord.save();
+              }
+            }
           }
         });
       }
@@ -991,6 +964,10 @@ export default Ember.Component.extend({
           var range = XLSX.utils.decode_range(worksheet["!ref"]);
           // //loop from start of the range to the end of the range
           var lastStudentNum,lastterm;
+          var studentnumArray = []; var termCodeArray = []; var courseLetterArray =[];
+          var courseNumberArray =[]; var sectionArray =[]; var gradeArray =[];
+          var noteArray =[]; var gradeModelArray=[]; var noteModelArray=[];
+          var index =0;
           for(var R = (range.s.r+1); R < range.e.r; R++)
           {
             //student number not useful in this case
@@ -1026,44 +1003,139 @@ export default Ember.Component.extend({
               lastterm = term;
             }
 
-            //set all varible to their corresponding values
             term = term.v;
             studentnum = studentnum.v;
             courseLetter = courseLetter.v;
             courseNumber = courseNumber.v;
             section = section.v;
-
-
-            //  self.send('findStudent',studentnum);
-            //  var tempstudent = self.get('currentStudent');
-
-            //get all local cached term and find the term by name
-            var termcode;
-            self.get('store').peekAll('term-code').forEach(function(currentterm){
-              if(currentterm.get('name') === term)
+            //assign the value to their corresponding array
+            studentnumArray[index] = studentnum;
+            termCodeArray[index] = term;
+            courseLetterArray[index] = courseLetter;
+            courseNumberArray[index] = courseNumber;
+            sectionArray[index] = section;
+            gradeArray[index] = grade;
+            noteArray[index] = note;
+            index++;
+            //check the grade array to eliminate any duplications it might have, used to create grade model
+            //if the grademodel length is zero addd it anyway
+            //boolean check if the subject found in the array
+            let found = false;
+            for(let i=0;i<gradeModelArray.length;i++)
+            {
+              //if subject name and description exsit in the array, don't add them again
+              if((gradeModelArray[i] == grade) && (noteModelArray[i] == note))
               {
-                //if the stduent number matches
-                termcode = currentterm;
+                found = true;
               }
-            });
-            //create new grade
-            var newgrade = self.get('store').createRecord('grade',{
-              mark: grade,
-              note: note,
-            });
-            newgrade.save();
-
-            //create new Course code
-            var newcoursecode = self.get('store').createRecord('course-code',{
-              courseLetter: courseLetter,
-              courseNumber: courseNumber,
-              unit: section,
-              semester: termcode,
-              mark: newgrade,
-            });
-            newcoursecode.save();
-            //link terrm with studetn !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            }
+            if(!found)
+            {
+              //if it does not exist before add it to the array
+              gradeModelArray[gradeModelArray.length] = grade;
+              noteModelArray[noteModelArray.length] = note;
+            }
           }
+          //end of the for loop all data at this point should be stored in the array
+
+          //create new grade
+          for(let j=0;j<gradeModelArray.length;j++)
+          {
+            var newgrade = self.get('store').createRecord('grade',{
+              mark: gradeModelArray[j],
+              courseInfo: noteModelArray[j],
+            });
+            if(j == gradeModelArray.length-1)
+            {
+              //when it is the last run, save the data and use to call back function to chin the series of saving together
+              newgrade.save().then(function(){
+                //this call back can gurentee when all grade is posted to db before proceed
+                for(let k=0;k<studentnumArray.length;k++)
+                {
+                  //get all student from the local store cache
+                  var allStudentRecord =self.get('store').peekAll('student');
+                  //student record used for the targeted student
+                  var studentRecord;
+                  //double for loop, compare each element in Aarray (student number array) to each object in all student record
+                  for(let l=1;l<studentnumArray.length;l++)
+                  {
+                    for(let m=0;m<allStudentRecord.get('length');m++)
+                    {
+                      //if the stduent number matches
+                      if(studentnumArray[l] == allStudentRecord.objectAt(m).get('number'))
+                      {
+                        //console.log("student found");
+                        studentRecord = allStudentRecord.objectAt(m);
+                      }
+                    }
+                  }
+
+                  //start constructing the term model
+                  var allTermcode = self.get('store').peekAll('term-code');
+                  var currentTermCode;
+                  for (let i=0;i<allTermcode.get('length');i++)
+                  {
+                    if(allTermcode.objectAt(i).get('name') === termCodeArray[k])
+                    {
+                      console.log("term found");
+                      //if term code matches
+                      currentTermCode = allTermcode.objectAt(i);
+                      //after found the term code
+                      var newterm= self.get('store').createRecord('term',{
+                        term:currentTermCode,
+                        studentInfo: studentRecord,
+                      });
+                      newterm.save();
+                    }
+                  }
+
+                  // var allGradeRecord = self.get('store').peekAll('grade');
+                  // var currentgrade=null;
+                  // for(let l=0;l<allGradeRecord.get('length');l++)
+                  // {
+                  //   //if the grade mark and note matches
+                  //   if(allGradeRecord.objectAt(l).get('mark') == gradeArray[k] && allGradeRecord.objectAt(l).get('note') == noteArray[k])
+                  //   {
+                  //     currentgrade = allGradeRecord.objectAt(l);
+                  //   }
+                  // }
+                  // //at this point it should either get the grade object or the student has a null grade
+                  // //start updating the course code grade info
+                  // //get all course code from local cache
+                  // var allCourseCode = self.get('store').peekAll('course-code');
+                  // var currentcourse
+                  // for(let m=0;m<allCourseCode.get('length');m++)
+                  // {
+                  //   //find the coursecode matches the table information
+                  //   if(allCourseCode.objectAt(m).get('courseLetter') == courseLetterArray[k]
+                  //   && allCourseCode.objectAt(m).get('courseNumber') == courseNumberArray[k])
+                  //   {
+                  //     currentcourse = allCourseCode.objectAt(m);
+                  //     currentcourse.set('mark',currentgrade);
+                  //     currentcourse.save();
+                  //   }
+                  // }
+                }
+
+              });
+            }
+            else{
+              //when it isn't the last run, save it normally
+              newgrade.save();
+            }
+
+          }
+
+
+          //create new Course code
+          // var newcoursecode = self.get('store').createRecord('course-code',{
+          //   courseLetter: courseLetter,
+          //   courseNumber: courseNumber,
+          //   unit: section,
+          //   semester: termcode,
+          //   mark: newgrade,
+          // });
+          // newcoursecode.save();
         });
       }
     },
@@ -1084,28 +1156,38 @@ export default Ember.Component.extend({
         }, this);
       });
 
-      //delete all advanced-standing record
-      this.get('store').findAll('advanced-standing').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
-      });
-
-      //delete all course-code record
-      this.get('store').findAll('course-code').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
-      });
-
       //delete all gender record
       this.get('store').findAll('gender').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
+
+      //delete all residency record
+      this.get('store').findAll('residency').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
+
+      //delete all scholarship-award record
+      this.get('store').findAll('scholarship-award').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
+
+      //delete all advanced-standing record
+      this.get('store').findAll('advanced-standing').then(function(record){
         record.content.forEach(function(rec) {
           Ember.run.once(this, function() {
             rec.deleteRecord();
@@ -1144,6 +1226,16 @@ export default Ember.Component.extend({
         }, this);
       });
 
+      //delete all secondary-school record
+      this.get('store').findAll('secondary-school').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
+
       //delete all plan-code record
       this.get('store').findAll('plan-code').then(function(record){
         record.content.forEach(function(rec) {
@@ -1164,35 +1256,6 @@ export default Ember.Component.extend({
         }, this);
       });
 
-      //delete all residency record
-      this.get('store').findAll('residency').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
-      });
-
-      //delete all scholarship-award record
-      this.get('store').findAll('scholarship-award').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
-      });
-
-      //delete all secondary-school record
-      this.get('store').findAll('secondary-school').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
-      });
 
       //delete all term-code record
       this.get('store').findAll('term-code').then(function(record){
@@ -1203,6 +1266,37 @@ export default Ember.Component.extend({
           });
         }, this);
       });
+
+      //delete all course-code record
+      this.get('store').findAll('course-code').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
+
+      //delete all grade record
+      this.get('store').findAll('grade').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
+
+      //delete all term record
+      this.get('store').findAll('term').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
+
     },
 
   }
