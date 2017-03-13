@@ -49,8 +49,8 @@ router.route('/:planCode_id')
                 response.send({error: error});
             }
             else {
-                planCode.name = request.planCode.name;
-                planCode.program = request.planCode.program;
+                planCode.name = request.body.planCode.name;
+                planCode.program = request.body.planCode.program;
 
                 planCode.save(function (error) {
                     if (error) {

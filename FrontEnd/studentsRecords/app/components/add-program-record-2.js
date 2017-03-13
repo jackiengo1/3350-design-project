@@ -32,6 +32,21 @@ export default Ember.Component.extend({
   termCodeCourseTemp: null,
   programRecordCourseCode: null,
 
+  planCodeToEdit: null,
+  planCodeNameEdit:null,
+
+  termCodeToEdit: null,
+  termCodeNameEdit: null,
+
+  programRecordToEdit: null,
+  PRNameEdit:null,
+  PRLevelEdit: null,
+  PRLoadEdit: null,
+  PRStatusEdit: null,
+  PRPlanEdit: null,
+
+  planCodeEditTemp: null,
+
 
 
 
@@ -57,6 +72,10 @@ export default Ember.Component.extend({
       self.set('programRecordModel', records);
     });
 
+  },
+
+  didRender() {
+    Ember.$('.menu .item').tab();
   },
 
   actions: {
@@ -91,15 +110,13 @@ export default Ember.Component.extend({
 
     //Add a program record
     addProgramRecord(){
-      if(this.get('programRecordPlanCode') !== null && this.get('programRecordCourseCode') !== null && this.get('programRecordTermCode') !== null){
+      if(this.get('programRecordPlanCode') !== null){
         var newPgRecord = this.get('store').createRecord('program-record', {
           name: this.get('programRecordName'),
           level: this.get('programRecordLevel'),
           load: this.get('programRecordLoad'),
           status: this.get('programRecordStatus'),
-          courseCodeInfo: this.get('programRecordCourseCode'),
           semester: this.get('programRecordTermCode'),
-          //plan code is a many to many relation, currently not sure if this correct
           plan: this.get('programRecordPlanCode'),
         });
         newPgRecord.save();
@@ -189,7 +206,95 @@ export default Ember.Component.extend({
 
     deleteFromTermCodeArray(termCode){
       this.get('programRecordTermCode').removeObject(termCode);
-    }
+    },
+
+    editPlanCode(){
+      var planCode = this.get('planCodeToEdit');
+      planCode.set('name', this.get('planCodeNameEdit'));
+      planCode.save();
+    },
+    editTermCode(){
+      var termCode = this.get('termCodeToEdit');
+      termCode.set('name', this.get('termCodeNameEdit'));
+      termCode.save();
+    },
+    editProgramRecord(){
+
+      var program = this.get('programRecordToEdit');
+      program.set('name', this.get('PRNameEdit'));
+      program.set('level', this.get('PRLevelEdit'));
+      program.set('load', this.get('PRLoadEdit'));
+      program.set('status', this.get('PRStatusEdit'));
+
+      program.save();
+    },
+
+
+
+
+    openEditTermCodeForm(termCode){
+      this.set('termCodeToEdit', termCode);
+      this.set('termCodeNameEdit', termCode.get('name'));
+      Ember.$('.ui.modal.termCodeEdit').modal('show');
+    },
+    closeEditTermCodeForm(){
+      Ember.$('.ui.modal.termCodeEdit').modal('hide');
+    },
+
+
+
+
+
+    openEditPlanCodeForm(planCode){
+      this.set('planCodeToEdit', planCode);
+      this.set('planCodeNameEdit', planCode.get('name'));
+      console.log(this.get('planCodeToEdit'));
+      Ember.$('.ui.modal.planCodeEdit').modal('show');
+    },
+
+    closeEditPlanCodeForm(){
+      Ember.$('.ui.modal.planCodeEdit').modal('hide');
+    },
+
+    selectPlanCodeEdit(planCode){
+      var planCodeFound = this.get('store').peekRecord('plan-code', planCode);
+      console.log(planCodeFound);
+      this.set('planCodeEditTemp', planCodeFound);
+    },
+
+
+
+
+    openEditProgramRecordForm(programRecord){
+      this.set('PRPlanEdit', null);
+      this.set('programRecordToEdit', programRecord);
+      this.set('PRNameEdit', programRecord.get('name'));
+      this.set('PRLevelEdit', programRecord.get('level'));
+      this.set('PRLoadEdit', programRecord.get('load'));
+      this.set('PRStatusEdit', programRecord.get('status'));
+      this.set('PRPlanEdit', programRecord.get('plan'));
+
+      console.log(this.get('PRPlanEdit').get('length'));
+      Ember.$('.ui.modal.programRecordEdit').modal('show');
+    },
+
+    closeEditProgramRecordForm(){
+      Ember.$('.ui.modal.programRecordEdit').modal('hide');
+    },
+
+    removePlanCodeEdit(planCode){
+      console.log(planCode);
+      this.get('PRPlanEdit').removeObject(planCode);
+      console.log(this.get('PRPlanEdit').get('length'));
+    },
+
+    addPlanCodeEdit(){
+      console.log(this.get('planCodeEditTemp'));
+      this.get('PRPlanEdit').pushObject(this.get('planCodeEditTemp'));
+      console.log(this.get('PRPlanEdit').get('length'));
+    },
+
+
 
   }//end actions
 });

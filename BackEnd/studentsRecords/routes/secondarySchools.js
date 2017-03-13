@@ -48,8 +48,8 @@ router.route('/:secondarySchool_id')
                 response.send({error: error});
             }
             else {
-                secondarySchool.name = request.secondarySchool.name;
-                secondarySchool.highSchoolCoursesInfo = request.secondarySchool.highSchoolCoursesInfo;
+                secondarySchool.name = request.body.secondarySchool.name;
+                secondarySchool.highSchoolCoursesInfo = request.body.secondarySchool.highSchoolCoursesInfo;
 
                 secondarySchool.save(function (error) {
                     if (error) {

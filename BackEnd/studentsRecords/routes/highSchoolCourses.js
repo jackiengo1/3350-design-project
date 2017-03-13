@@ -48,12 +48,12 @@ router.route('/:highSchoolCourse_id')
                 response.send({error: error});
             }
             else {
-                highSchoolCourse.level = request.highSchoolCourse.level;
-                highSchoolCourse.source = request.highSchoolCourse.source;
-                highSchoolCourse.unit = request.highSchoolCourse.unit;
-                highSchoolCourse.school = request.highSchoolCourse.school;
-                highSchoolCourse.course = request.highSchoolCourse.course;
-                highSchoolCourse.hsCourseGradesInfo = request.highSchoolCourse.hsCourseGradesInfo;
+                highSchoolCourse.level = request.body.highSchoolCourse.level;
+                highSchoolCourse.source = request.body.highSchoolCourse.source;
+                highSchoolCourse.unit = request.body.highSchoolCourse.unit;
+                highSchoolCourse.school = request.body.highSchoolCourse.school;
+                highSchoolCourse.course = request.body.highSchoolCourse.course;
+                highSchoolCourse.hsCourseGradesInfo = request.body.highSchoolCourse.hsCourseGradesInfo;
 
                 highSchoolCourse.save(function (error) {
                     if (error) {
