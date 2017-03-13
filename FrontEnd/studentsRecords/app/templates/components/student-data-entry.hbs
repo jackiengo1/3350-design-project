@@ -464,6 +464,7 @@
       <a class="active item" data-tab="grades" >Grades</a>
       <a class="item" data-tab="courseCodes">Course Codes</a>
       <a class="item " data-tab="termCodes">Terms</a>
+      <a class="item " data-tab="studentProgramRecord">Program Record</a>
 
     </div>
 
@@ -625,6 +626,58 @@
           </div>
         </div>
 
+      </div>
+    </div>
+
+
+    <div class = "ui bottom attached tab segment" data-tab="studentProgramRecord" style="background-color: #eee3fd; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">
+      <div class="ui grid">
+          <div class="eight wide column" style="padding-right: 20px;">
+
+            <div class="ui center aligned header" style="margin-bottom: 30px;">
+              <h2>Student's Program Records</h2>
+            </div>
+
+            <div class="ui center aligned header" style="margin-bottom: 30px;">
+              <select class="ui fluid dropdown"onchange={{action 'showProgramRecords' value="target.value"}}>
+                <option selected = "selected" value = null> Select a term </option>
+                {{#each currentStudentTerms as |oneTerm|}}
+                <option value={{oneTerm.id}}> {{oneTerm.term.name}} </option>
+                {{/each}}
+              </select>
+            </div>
+
+
+            <div class="ui middle aligned divided list" style="margin-top: 22px; margin-bottom: 22px;">
+              {{#each currentStudentProgramRecords as |oneProgram|}}
+              {{#unless oneProgram.isDeleted}}
+              <div class="item">
+                <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
+                  <div class="negative ui button" style = "width: 55px;" onclick={{action 'deleteProgramRecord' oneProgram}}><i class=" large remove icon"></i></div>
+
+                </div>
+                <div class="content" style="padding-top: 10px; font-size: 16px;">
+                  Program Record: {{oneProgram.name}}
+                </div>
+              </div>
+              {{/unless}}
+              {{/each}}
+            </div>
+
+          </div>
+
+
+
+
+
+
+            <div class="eight wide column" style="padding-right: 20px;">
+              <div class="ui center aligned header">
+                <button class="ui primary button" {{action 'openProgramRecordForm'}} >
+                  Add Program Record
+                </button>
+              </div>
+            </div>
       </div>
     </div>
 
@@ -893,6 +946,64 @@
       </button>
     </div>
   </div>
+
+
+
+
+
+
+    <!--Modal to add student program record-->
+    <div class="ui modal programRecord">
+      <div class="header">
+        Add Program Record
+      </div>
+      <div class="content">
+        <form class="ui form">
+          <div class="two fields">
+
+            <div class="field">
+              <label>Term</label>
+              <select onchange={{action 'selectTermForProgramRecord' value="target.value"}}>
+                <option selected = "selected" value = null> Select a term </option>
+                {{#each currentStudentTerms as |oneTerm|}}
+                <option value={{oneTerm.id}} >{{oneTerm.term.name}}</option>
+                {{/each}}
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Program record</label>
+              <select onchange={{action 'selectProgramRecord' value="target.value"}}>
+                <option selected = "selected" value = null> Select a program record </option>
+                {{#each programRecordModel as |oneProgram|}}
+                <option value={{oneProgram.id}} >{{oneProgram.name}}</option>
+                {{/each}}
+              </select>
+            </div>
+
+
+          </div>
+
+
+        </form>
+
+      </div>
+      <div class="actions">
+        <button class="ui primary button" {{action 'closeProgramRecordForm'}} >
+          Exit
+        </button>
+        <button class="ui primary button" {{action 'addProgramRecord'}} >
+          Add
+        </button>
+      </div>
+    </div>
+
+
+
+
+
+
+
 
 
   {{/if}}

@@ -121,6 +121,13 @@ export default Ember.Component.extend({
   courseNameEdit: null,
   courseUnitEdit: null,
 
+  programRecordModel: null,
+  currentStudentProgramRecords: null,
+
+  termForAddingProgramRecord: null,
+  programRecordTemp: null,
+  selectedTermInProgramRecord: null,
+
 
 
   studentModel: Ember.observer('offset', function () { //observes the offset variable. When it changes run code.
@@ -187,6 +194,10 @@ export default Ember.Component.extend({
       self.set('courseCodeModel', records);
     });
 
+    this.get('store').findAll('program-record').then(function(records){
+      self.set('programRecordModel', records);
+    });
+
     // load first page of the students records
     this.set('limit', 10);
     this.set('offset', 0);
@@ -228,8 +239,12 @@ export default Ember.Component.extend({
     this.get('store').query('term',{filter:{studentInfo:this.get('currentStudent').get('id')}});
     this.set('currentStudentTerms', this.get('currentStudent').get('semester'));
 
+
+
     this.set('studentCourseCodeForGrade', null);
     this.set('currentStudentCourseCodes', null);
+    this.set('currentStudentProgramRecords', null);
+    this.set('selectedTermTemp', null);
 
 
   },
@@ -975,6 +990,19 @@ export default Ember.Component.extend({
     },
 
 
+
+
+    openProgramRecordForm(){
+      Ember.$('.ui.modal.programRecord').modal('show');
+    },
+    closeProgramRecordForm(){
+      Ember.$('.ui.modal.programRecord').modal('hide');
+    },
+
+
+
+
+
     addTerm(){
       if(this.get('currentSelectedTermCode') !== null){
         var newTerm = this.get('store').createRecord('term', {
@@ -1046,6 +1074,30 @@ export default Ember.Component.extend({
       }
     },
 
+    addProgramRecord(){
+      var currentTerm = this.get('termForAddingProgramRecord');
+      var programRecordList = currentTerm.get('program');
+      console.log(programRecordList.get('length'));
+      programRecordList.pushObject(this.get('programRecordTemp'));
+      currentTerm.save();
+    },
+
+    deleteProgramRecord(program){
+      var ans = confirm('Are you sure you want to delete this?');
+      if(ans){
+        console.log(this.get('currentStudentProgramRecords').get('length'));
+        this.get('currentStudentProgramRecords').removeObject(program);
+        console.log(this.get('currentStudentProgramRecords').get('length'));
+        var currentTerm = this.get('selectedTermInProgramRecord');
+        currentTerm.save();
+      }
+    },
+
+    selectProgramRecord(program){
+      var programRecord = this.get('store').peekRecord('program-record', program);
+      this.set('programRecordTemp', programRecord);
+      console.log(this.get('programRecordTemp'));
+    },
 
     selectTermForAddCourse(term){
       var termCourseObj = this.get('store').peekRecord('term', term);
@@ -1086,6 +1138,19 @@ export default Ember.Component.extend({
       var selectedStudentTerm = this.get('store').peekRecord('term', term);
       this.get('store').query('course-code', {filter:{semester: selectedStudentTerm.get('id')}});
       this.set('studentCourseCodeForAddGrade', selectedStudentTerm.get('courseInfo'));
+    },
+
+    showProgramRecords(term){
+      var selectedStudentTerm = this.get('store').peekRecord('term', term);
+      this.set('selectedTermInProgramRecord', selectedStudentTerm);
+      this.set('currentStudentProgramRecords', selectedStudentTerm.get('program'));
+      console.log(this.get('currentStudentProgramRecords').get('length'));
+    },
+
+    selectTermForProgramRecord(term){
+      var studentTerm = this.get('store').peekRecord('term', term);
+      this.set('termForAddingProgramRecord', studentTerm);
+      console.log(this.get('termForAddingProgramRecord'));
     },
   }
 
