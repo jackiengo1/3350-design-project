@@ -1,28 +1,25 @@
-<div class="ui center aligned header" style="margin-bottom: 20px;">
-  <h2>Students Records Data Entry</h2>
+<div class="ui center aligned header" id="studentRecordsDataEntryHeader">
+  <h2>Student Records Data Entry</h2>
 </div>
-
 
 
 {{#if showAllStudents}}
 
 <div class="fluid ui buttons">
-  <div class="ui icon button" data-tooltip="Back" {{action 'backToEntryForm'}}>
+  <div class="ui icon button" data-tooltip="Back" {{action 'backToEntryForm'}} id="studentRecordsDataEntryNavbarButton">
     <i class="reply large icon"></i>
   </div>
-  <div class="ui icon button" data-tooltip="Previous Page" {{action 'allStudentsPrev'}}>
+  <div class="ui icon button" data-tooltip="Previous Page" {{action 'allStudentsPrev'}} id="studentRecordsDataEntryNavbarButton">
     <i class="arrow left large icon"></i>
   </div>
-  <div class="ui icon button" data-tooltip="Next Page" {{action 'allStudentsNext'}}>
+  <div class="ui icon button" data-tooltip="Next Page" {{action 'allStudentsNext'}} id="studentRecordsDataEntryNavbarButton">
     <i class="arrow right large icon"></i>
   </div>
 </div>
 
 <div class="ui center aligned header">
-  <h2>All Student Records</h2>
+  <h2 id="allStudentRecordsHeader">All Student Records</h2>
 </div>
-
-<br/>
 
 <div class="ui middle aligned divided selection list">
   {{#each studentsRecords as |oneStudent|}}
@@ -45,10 +42,10 @@
 {{else if showFindRecord}}
 <!-- Show the menu bar-->
 <div class="fluid ui buttons">
-  <div class="ui icon button" data-tooltip="Back" {{action 'backToEntryForm'}}>
+  <div class="ui icon button" data-tooltip="Back" {{action 'backToEntryForm'}} id="studentRecordsDataEntryNavbarButton">
     <i class="reply large icon"></i>
   </div>
-  <div class="ui icon button" data-tooltip="Find Record" {{action 'findRecord'}}>
+  <div class="ui icon button" data-tooltip="Find Record" {{action 'findRecord'}} id="studentRecordsDataEntryNavbarButton">
     <i class="search large icon"></i>
   </div>
 </div>
@@ -57,9 +54,9 @@
   <h1>Find Student Record</h1>
 </div>
 
-
-<div class="row" style="padding-bottom: 0;">
+<div class="row" id="findStudentRecordRow">
   <div class="ui sixteen wide column">
+
     <form class="ui form">
       <div class="field">
         <label>Student Number</label>
@@ -76,8 +73,8 @@
           {{input type="text"  value = findStudentLastName}}
         </div>
       </div>
-
     </form>
+
   </div>
 </div>
 
@@ -108,11 +105,11 @@
 {{#if addingStudent}}
 
 <div class="fluid ui buttons">
-  <div class="ui icon button" data-tooltip="Back" {{action 'backToEntryForm'}}>
+  <div class="ui icon button" data-tooltip="Back" {{action 'backToEntryForm'}} id="studentRecordsDataEntryNavbarButton">
     <i class="reply large icon"></i>
   </div>
 
-  <div class="ui icon button" data-tooltip="Add Student" {{action 'addStudent'}}>
+  <div class="ui icon button" data-tooltip="Add Student" {{action 'addStudent'}} id="studentRecordsDataEntryNavbarButton">
     <i class="add user large icon"></i>
   </div>
 </div>
@@ -121,43 +118,43 @@
 <!-- Show the menu bar-->
 <div class="fluid ui buttons">
 
-  <div class="ui icon button" data-tooltip="Undo" {{action 'undoSave'}}>
+  <div class="ui icon button" data-tooltip="Undo" {{action 'undoSave'}} id="studentRecordsDataEntryNavbarButton">
     <i class="undo large icon"></i>
   </div>
 
-  <div class="ui icon button" data-tooltip="Add Student" {{action 'goToAddStudent'}}>
+  <div class="ui icon button" data-tooltip="Add Student" {{action 'goToAddStudent'}} id="studentRecordsDataEntryNavbarButton">
     <i class="add user large icon"></i>
   </div>
 
-  <div class="ui icon button" data-tooltip="First Student" {{action 'firstStudent'}}>
+  <div class="ui icon button" data-tooltip="First Student" {{action 'firstStudent'}} id="studentRecordsDataEntryNavbarButton">
     <i class="step backward large icon"></i>
   </div>
 
-  <div class="ui icon button" data-tooltip="Previous Student" {{action 'previousStudent'}}>
+  <div class="ui icon button" data-tooltip="Previous Student" {{action 'previousStudent'}} id="studentRecordsDataEntryNavbarButton">
     <i class="arrow left large icon"></i>
   </div>
 
-  <div class="ui icon button" data-tooltip="Next Student" {{action 'nextStudent'}}>
+  <div class="ui icon button" data-tooltip="Next Student" {{action 'nextStudent'}} id="studentRecordsDataEntryNavbarButton">
     <i class="arrow right large icon"></i>
   </div>
 
-  <div class="ui icon button" data-tooltip="Last Student" {{action 'lastStudent'}}>
+  <div class="ui icon button" data-tooltip="Last Student" {{action 'lastStudent'}} id="studentRecordsDataEntryNavbarButton">
     <i class="step forward large icon"></i>
   </div>
 
-  <div class="ui icon button" data-tooltip="Delete Student" {{action 'deleteStudent'}}>
+  <div class="ui icon button" data-tooltip="Delete Student" {{action 'deleteStudent'}} id="studentRecordsDataEntryNavbarButton">
     <i class="remove user large icon"></i>
   </div>
 
-  <div class="ui icon button" data-tooltip="All Students" {{action 'allStudents'}}>
+  <div class="ui icon button" data-tooltip="All Students" {{action 'allStudents'}} id="studentRecordsDataEntryNavbarButton">
     <i class="list large icon"></i>
   </div>
 
-  <div class="ui icon button" data-tooltip="Find Student" {{action 'findStudent'}}>
+  <div class="ui icon button" data-tooltip="Find Student" {{action 'findStudent'}} id="studentRecordsDataEntryNavbarButton">
     <i class="search large icon"></i>
   </div>
 
-  <div class="ui icon button" data-tooltip="Help">
+  <div class="ui icon button" data-tooltip="Help" id="studentRecordsDataEntryNavbarButton">
     <i class="help large icon"></i>
   </div>
 
@@ -167,7 +164,7 @@
 
 <!-- Show data entry form -->
 
-<div class="ui pointing secondary five item menu" style="font-size: 16px;">
+<div class="ui pointing secondary five item menu" id="studentRecordsDataEntryTab">
 
   <a class="active item {{if backToBasicInfo 'active'}}" data-tab="basics" >{{tabInfoText}}</a>
   <a class="item {{if scholarshipTabIsDisabled 'disabled'}}" data-tab="scholarshipAndAward" style = "{{addStudentStyles}}">Scholarships and Awards</a>
@@ -177,15 +174,15 @@
 
 </div>
 
+
+<!-- Basic Info Form -->
 <div class="ui bottom attached active tab segment" data-tab="basics">
 
-  <!-- Basic Info Form -->
+  <div class="ui grid" id="studentRecordsDataEntryTabContent">
 
-  <div class="ui grid" style="padding-right: 50px; background-color: #EEE3FD;">
-
-    <div class="row" style="padding-bottom: 0; padding-top: 35px;">
-      <div class="ui eleven wide column" style="padding-left: 50px;">
-        <form class="ui form">
+    <div class="row" id="zeroPadding">
+      <div class="ui eleven wide column" id="zeroPadding">
+        <form class="ui form" id="basicInfoTopRow">
           <div class="field">
             <label>Student Number</label>
             {{input size="10" type="text"  value =tempNumber focus-out='studentNumberStack'}}
@@ -201,7 +198,6 @@
               {{input type="text"  value = tempLN focus-out='studentLNStack'}}
             </div>
           </div>
-
 
             <div class="two fields">
               <div class="field">
@@ -233,14 +229,14 @@
             </div>
           </form>
         </div>
-        <div class="ui center aligned five wide column segment" style="margin-bottom: 14px;">
+        <div class="ui center aligned five wide column segment">
           <img  src={{tempPhoto}}>
         </div>
       </div>
 
 
-      <div class="row" style="padding-top: 0; padding-bottom: 35px;">
-        <div class="ui sixteen wide column" style="padding-right: 0; padding-left: 50px;">
+      <div class="row" id="zeroPadding">
+        <div class="ui sixteen wide column" id="zeroPadding">
           <form class="ui form">
             <div class="two fields">
               <div class="field">
@@ -272,32 +268,31 @@
   </div>
 
 
-
   <!-- Advanced Standing Tab -->
-  <div class = "ui tab" data-tab="advancedStanding" style="background-color: #eee3fd; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">
+  <div class = "ui bottom attached tab segment" data-tab="advancedStanding">
 
 
-    <div class="ui grid">
-      <div class="eight wide column" style="padding-right: 20px;">
+    <div class="ui grid" id="studentRecordsDataEntryTabContent">
+      <div class="eight wide column" id="studentRecordsDataEntryLeftContent">
 
-        <div class="ui center aligned header" style="margin-bottom: 30px;">
+        <div class="ui center aligned header" id="studentRecordsDataEntryTabHeader">
           <h2>Student's Advanced Standings</h2>
         </div>
 
         {{#ui-accordion class="styled fluid"}}
           {{#each listAS as |userListAS|}}
           {{#unless userListAS.isDeleted}}
-          <div class="title" style="border-color: #6435c9">
+          <div class="title">
             Course: {{userListAS.course}}
           </div>
           <div class="content">
             <div class="ui vertically divided grid">
-              <div class="one column row" style="padding-bottom: 0;">
+              <div class="one column row" id="accordionFirstElement">
                 <div class="column">
                   <p>Description: {{userListAS.description}}</p>
                 </div>
               </div>
-              <div class="two column row" style="padding: 0;">
+              <div class="two column row" id="zeroPadding">
                 <div class="column">
                   <p>Units: {{userListAS.units}}</p>
                 </div>
@@ -305,14 +300,16 @@
                   <p>Grade: {{userListAS.grade}}</p>
                 </div>
               </div>
-              <div class="one column row" style="padding: 0;">
+              <div class="one column row" id="zeroPadding">
                 <div class="column">
                   <p>From: {{userListAS.from}}</p>
                 </div>
               </div>
-              <div class="one column row" style="padding: 0;">
+              <div class="one column row" id="zeroPadding">
                 <div class="column">
-                  <p style="text-align: center;"><button class="negative ui button" onclick={{action 'deleteAS' userListAS}}>Delete</button></p>
+                  <div class="ui center aligned header">
+                    <button class="negative ui button" onclick={{action 'deleteAS' userListAS}}>Delete</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -323,9 +320,9 @@
 
       </div>
 
-      <div class="eight wide column" style="padding-left: 20px;">
+      <div class="eight wide column" id="studentRecordsDataEntryRightContent">
 
-        <div class="ui center aligned header" style="margin-bottom: 30px;">
+        <div class="ui center aligned header" id="studentRecordsDataEntryTabHeader">
           <h2>Add Advanced Standing</h2>
         </div>
 
@@ -356,12 +353,11 @@
               <label>From</label>
               {{input  disabled = addingStudent size="20" type="text"  value = fromAS}}
             </div>
-
           </form>
         </div>
 
         <div class="ui center aligned header">
-          <button class="positive ui button" {{action 'addAS'}} disabled = {{addingStudent}}>
+          <button class="ui primary button" {{action 'addAS'}} disabled = {{addingStudent}}>
             Add Advanced Standing
           </button>
         </div>
@@ -373,23 +369,23 @@
 
   <!-- Scholarship and award tab-->
 
-  <div class = "ui tab" data-tab="scholarshipAndAward" style="background-color: #eee3fd; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">
+  <div class = "ui bottom attached tab segment" data-tab="scholarshipAndAward">
 
-  <div class="ui grid">
+  <div class="ui grid" id="studentRecordsDataEntryTabContent">
 
-    <div class="eight wide column" style="padding-right: 20px;">
-      <div class="ui center aligned header" style="margin-bottom: 30px;">
+    <div class="eight wide column" id="studentRecordsDataEntryLeftContent">
+      <div class="ui center aligned header" id="studentRecordsDataEntryTabHeader">
         <h2>Student's Scholarships and Awards</h2>
       </div>
 
-      <div class="ui middle aligned divided list" style="margin-top: 22px; margin-bottom: 22px;">
+      <div class="ui middle aligned divided list">
         {{#each scholarShipAndAwardList as |userScholarShipAndAwardList|}}
         {{#unless userScholarShipAndAwardList.isDeleted}}
         <div class="item">
-          <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
+          <div class="right floated content" id="listDeleteButton">
             <div class="negative ui button" onclick={{action 'deleteScholarshipAward' userScholarShipAndAwardList}}>Delete</div>
           </div>
-          <div class="content" style="padding-top: 10px; font-size: 16px;">
+          <div class="content" id="listText">
             Note: {{userScholarShipAndAwardList.note}}
           </div>
         </div>
@@ -398,8 +394,8 @@
       </div>
     </div>
 
-    <div class="eight wide column" style="padding-left: 20px;">
-      <div class="ui center aligned header" style="margin-bottom: 30px;">
+    <div class="eight wide column" id="studentRecordsDataEntryRightContent">
+      <div class="ui center aligned header" id="studentRecordsDataEntryTabHeader">
         <h2>Add Scholarships and Awards</h2>
       </div>
 
@@ -422,74 +418,124 @@
   </div>
 
 
+
 <!-- HS record tab-->
-    <div class = "ui tab" data-tab="HSCourses" style="background-color: #eee3fd; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">
+    <div class = "ui bottom attached tab segment" data-tab="HSCourses">
 
-      <h2>Student's High School Marks</h2>
+      <div class="ui grid" id="studentRecordsDataEntryTabContent">
 
+        <div class="eight wide column" id="studentRecordsDataEntryLeftContent">
+          <div class="ui center aligned header" id="studentRecordsDataEntryTabHeader">
+            <h2>High School Marks</h2>
+          </div>
 
-      {{#each currentStudentHSGrades as |oneHSGrade|}}
-        <h3>High School:{{oneHSGrade.HighSchoolCoursesInfo.SecondSchoolInfo}}</h3>
-        <h3>Subject:{{oneHSGrade.HighSchoolCoursesInfo.HighSchoolSubjectInfo}}</h3>
-        <h3>Course: {{oneHSGrade.HighSchoolCoursesInfo}}</h3>
-        <h3>Mark: {{oneHSGrade.mark}}</h3>
-      {{/each}}
-      <h2>Add a Term Code</h2>
-      <div class="field">
-        <label>Grade</label>
-        {{input type="text"  value= hsGrade}}
-      </div>
-      <div class="field">
-        <label>Source</label>
-        <select>
-          {{#each hsCourseModel as |courseChoice|}}
-            <option value={{courseChoice.id}} onchange={{eq selectedCourse courseChoice}}> {{courseChoice.name}} </option>
+          {{#each currentStudentHSGrades as |oneHSGrade|}}
+            <h3>High School: {{oneHSGrade.HighSchoolCoursesInfo.SecondSchoolInfo}}</h3>
+            <h3>Subject: {{oneHSGrade.HighSchoolCoursesInfo.HighSchoolSubjectInfo}}</h3>
+            <h3>Course: {{oneHSGrade.HighSchoolCoursesInfo}}</h3>
+            <h3>Mark: {{oneHSGrade.mark}}</h3>
           {{/each}}
-        </select>
+        </div>
+
+        <div class="eight wide column" id="studentRecordsDataEntryRightContent">
+          <div class="ui center aligned header" id="studentRecordsDataEntryTabHeader">
+            <h2>Add Term Code</h2>
+          </div>
+
+          <div class="ui sixteen wide column">
+            <form class="ui form">
+              <div class="field">
+                <label>Grade</label>
+                {{input type="text"  value= hsGrade}}
+              </div>
+              <div class="field">
+                <label>Source</label>
+                <select>
+                  {{#each hsCourseModel as |courseChoice|}}
+                    <option value={{courseChoice.id}} onchange={{eq selectedCourse courseChoice}}> {{courseChoice.name}} </option>
+                  {{/each}}
+                </select>
+              </div>
+            </form>          
+          </div>
+
+          <div class="ui center aligned header">
+            <button class="ui primary button" {{action 'addhsMark'}} >
+              Add Term
+            </button>
+          </div>
+        </div>
+
       </div>
-      <button class="ui primary button" {{action 'addhsMark'}} >
-        Add Grade
-      </button>
 
     </div>
 
+
+
     <!-- program record tab-->
-        <div class = "ui tab" data-tab="programRecord" style="background-color: #eee3fd; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">
-          <h2>Student's Program Record</h2>
-          {{#each currentStudentTermCode as |oneTerm|}}
-            <h3>Program:{{oneTerm.program.name}}</h3>
-            <h3>Course:{{oneTerm.courseInfo.name}}</h3>
-            <h3>Unit: {{oneTerm.courseInfo.unit}}</h3>
-            <h3>Mark: {{oneTerm.courseInfo.mark.mark}}</h3>
-          {{/each}}
-          <h2>Add Grade</h2>
-          <div class="field">
-            <select onchange={{action 'selectTermCode' value="target.value"}}>
-              <option selected = "selected" value = null> Select a term code </option>
-              {{#each termCodeModel as |oneTermCode|}}
-              <option value={{oneTermCode.id}} >{{oneTermCode.name}}</option>
+        <div class = "ui bottom attached tab segment" data-tab="programRecord">
+
+          <div class="ui grid" id="studentRecordsDataEntryTabContent">
+            <div class="eight wide column" id="studentRecordsDataEntryLeftContent">
+              <div class="ui center aligned header" id="studentRecordsDataEntryTabHeader">
+                <h2>Student's Program Record</h2>
+              </div>
+
+              {{#each currentStudentTermCode as |oneTerm|}}
+                <h3>Program:{{oneTerm.program.name}}</h3>
+                <h3>Course:{{oneTerm.courseInfo.name}}</h3>
+                <h3>Unit: {{oneTerm.courseInfo.unit}}</h3>
+                <h3>Mark: {{oneTerm.courseInfo.mark.mark}}</h3>
               {{/each}}
-            </select>
+            </div>
+
+            <div class="eight wide column" id="studentRecordsDataEntryRightContent">
+              <div class="ui center aligned header" id="studentRecordsDataEntryTabHeader">
+                <h2>Add Grade</h2>
+              </div>              
+
+              <div class="ui sixteen wide column">
+                <form class="ui form">
+                  <div class="field">
+                    <label>Term Code</label>
+                    <select onchange={{action 'selectTermCode' value="target.value"}}>
+                      <option selected = "selected" value = null> Select a Term Code </option>
+                      {{#each termCodeModel as |oneTermCode|}}
+                      <option value={{oneTermCode.id}} >{{oneTermCode.name}}</option>
+                      {{/each}}
+                    </select>
+                  </div>
+
+                  <div class="field">
+                    <label>Course Code</label>
+                    <select onchange={{action 'selectCourseCode' value="target.value"}}>
+                      <option selected = "selected" value = null> Select a Course Code </option>
+                      {{#each courseCodeModel as |oneCourseCode|}}
+                      <option value={{oneCourseCode.id}} >{{oneCourseCode.name}}</option>
+                      {{/each}}
+                    </select>
+                  </div>
+
+                  <div class="field">
+                    <label>Grade</label>
+                    {{input disabled = addingStudent type="number" max=100 min=0 value = programGrade}}
+                  </div>
+                  
+                  <div class="field">
+                    <label>Note</label>
+                    {{input disabled = addingStudent type="text" value = programNote}}    
+                  </div>
+                </form>
+              </div>
+
+              <div class="ui center aligned header">
+                <button class="ui primary button" {{action 'addGrade'}} >
+                  Add Grade
+                </button>
+              </div>
+            </div>
           </div>
 
-          <div class="field">
-            <select onchange={{action 'selectCourseCode' value="target.value"}}>
-              <option selected = "selected" value = null> Select a course code </option>
-              {{#each courseCodeModel as |oneCourseCode|}}
-              <option value={{oneCourseCode.id}} >{{oneCourseCode.name}}</option>
-              {{/each}}
-            </select>
-          </div>
-
-          <label>Grade</label>
-          {{input disabled = addingStudent type="number" max=100 min=0 value = programGrade}}
-
-          <label>Note</label>
-          {{input disabled = addingStudent type="text" value = programNote}}
-
-          <button class="ui primary button" {{action 'addGrade'}} >
-            Add grade
-          </button>
         </div>
 
   {{/if}}
