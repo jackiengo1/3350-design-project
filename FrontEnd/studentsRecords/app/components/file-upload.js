@@ -258,25 +258,30 @@ export default Ember.Component.extend({
             }
           }
 
-          for(var i=1;i<indexA;i++)
+          for(let i=1;i<indexA;i++)
           {
             var res;
             var gen;
             //find the residency according to its name in the local cache
-            self.get('store').peekAll('residency').forEach(function(residency){
-              if(residency.get('name') === Farray[i])
+            var allres = self.get('store').peekAll('residency');
+            for(let j=0;j<allres.get('length');j++)
+            {
+              if(Farray[i]==allres.objectAt(j).get('name'))
               {
-                res = residency;
+                res = allres.objectAt(j);
               }
-            });
+            }
 
             //find the gender according to its name in the local cache
-            self.get('store').peekAll('gender').forEach(function(gender){
-              if(gender.get('name') === Darray[i])
+            var allgen = self.get('store').peekAll('gender');
+            for(let j=0;j<allgen.get('length');j++)
+            {
+              if(Darray[i]==allgen.objectAt(j).get('name'))
               {
-                gen = gender;
+                gen = allgen.objectAt(j);
               }
-            });
+            }
+
             var newStudent = self.get('store').createRecord('student', { //create a new student record
               number: Aarray[i],
               firstName: Barray[i],
@@ -796,6 +801,9 @@ export default Ember.Component.extend({
           var range = XLSX.utils.decode_range(worksheet["!ref"]);
           // //loop from start of the range to the end of the range
           var lastterm,lastprogram,lastlevel,lastload,lastStudentNum;
+          var termCodeArray =[]; var programArray =[]; var levelArray = [];
+          var planCountArray=[];
+          var index=0;
           for(var R = (range.s.r+1); R < range.e.r; R++)
           {
             //student number not useful in this case
@@ -811,6 +819,11 @@ export default Ember.Component.extend({
             {
               //when plan is null, that means this roll is entirely empty, skip current row
               continue;
+            }
+            if(load == null)
+            {
+              //if load is null, the student has more than one plan, increament the counter
+              planCountArray[index]++;
             }
             if(studentnum == null)
             {
@@ -853,6 +866,7 @@ export default Ember.Component.extend({
             });
 
             //get all local cached term and find the term by name
+            //!!!!!!!!!!!!!
             var termcode;
             self.get('store').peekAll('term-code').forEach(function(currentterm){
               if(currentterm.get('name') === term)
@@ -1038,104 +1052,115 @@ export default Ember.Component.extend({
           }
           //end of the for loop all data at this point should be stored in the array
 
+
           //create new grade
-          for(let j=0;j<gradeModelArray.length;j++)
+          for(let i=0;i<gradeModelArray.length;i++)
           {
             var newgrade = self.get('store').createRecord('grade',{
-              mark: gradeModelArray[j],
-              courseInfo: noteModelArray[j],
+              mark: gradeModelArray[i],
+              courseInfo: noteModelArray[i],
             });
-            if(j == gradeModelArray.length-1)
+            if(i == gradeModelArray.length-1)
             {
               //when it is the last run, save the data and use to call back function to chin the series of saving together
               newgrade.save().then(function(){
                 //this call back can gurentee when all grade is posted to db before proceed
-                for(let k=0;k<studentnumArray.length;k++)
+                //get all student from the local store cache
+                var allStudentRecord =self.get('store').peekAll('student');
+                //student record used for the targeted student
+                var studentRecord;
+                //double for loop, compare each element in Aarray (student number array) to each object in all student record
+                for(let j=0;j<studentnumArray.length;j++)
                 {
-                  //get all student from the local store cache
-                  var allStudentRecord =self.get('store').peekAll('student');
-                  //student record used for the targeted student
-                  var studentRecord;
-                  //double for loop, compare each element in Aarray (student number array) to each object in all student record
-                  for(let l=1;l<studentnumArray.length;l++)
+                  for(let k=0;k<allStudentRecord.get('length');k++)
                   {
-                    for(let m=0;m<allStudentRecord.get('length');m++)
+                    //if the stduent number matches
+                    if(studentnumArray[j] == allStudentRecord.objectAt(k).get('number'))
                     {
-                      //if the stduent number matches
-                      if(studentnumArray[l] == allStudentRecord.objectAt(m).get('number'))
-                      {
-                        //console.log("student found");
-                        studentRecord = allStudentRecord.objectAt(m);
-                      }
+                      studentRecord = allStudentRecord.objectAt(k);
                     }
                   }
 
                   //start constructing the term model
                   var allTermcode = self.get('store').peekAll('term-code');
                   var currentTermCode;
-                  for (let i=0;i<allTermcode.get('length');i++)
+                  for (let a=0;a<allTermcode.get('length');a++)
                   {
-                    if(allTermcode.objectAt(i).get('name') === termCodeArray[k])
+                    if(allTermcode.objectAt(a).get('name') == termCodeArray[j])
                     {
-                      console.log("term found");
                       //if term code matches
-                      currentTermCode = allTermcode.objectAt(i);
+                      currentTermCode = allTermcode.objectAt(a);
                       //after found the term code
                       var newterm= self.get('store').createRecord('term',{
                         term:currentTermCode,
                         studentInfo: studentRecord,
                       });
-                      newterm.save();
+                      //use the callback on the last term save to chain the function together
+                      if(j==studentnumArray.length-1)
+                      {
+                        newterm.save().then(function(){
+
+                          //start updating course code
+                          var allGradeRecord = self.get('store').peekAll('grade');
+                          var allterm = self.get('store').peekAll('term');
+                          var allCourseCode = self.get('store').peekAll('course-code');
+                          for(let k=0;k<courseLetterArray.length;k++)
+                          {
+                            var currentgrade;
+                            for(let l=0;l<allGradeRecord.get('length');l++)
+                            {
+                              //if the grade mark and note matches
+                              if(allGradeRecord.objectAt(l).get('mark') == gradeArray[k] && allGradeRecord.objectAt(l).get('note') == noteArray[k])
+                              {
+                                currentgrade = allGradeRecord.objectAt(l);
+                                break;
+                              }
+                            }
+                            //at this point it should either get the grade object or the student has a null grade
+
+                            var currenttermobj;
+                            for (let m=0;m<allterm.get('length');m++)
+                            {
+                              if(termCodeArray[k]==allterm.objectAt(m).get('term').get('name')
+                              && studentnumArray[k]==allterm.objectAt(m).get('studentInfo').get('number'))
+                              {
+                                currenttermobj = allterm.objectAt(m);
+                                break;
+                              }
+                            }
+                            //start updating the course code grade info
+                            //get all course code from local cache
+
+                            var currentcourse;
+                            for(let m=0;m<allCourseCode.get('length');m++)
+                            {
+                              //find the coursecode matches the table information
+                              if(allCourseCode.objectAt(m).get('courseLetter') == courseLetterArray[k]
+                              && allCourseCode.objectAt(m).get('courseNumber') == courseNumberArray[k])
+                              {
+                                currentcourse = allCourseCode.objectAt(m);
+                                currentcourse.set('mark',currentgrade);
+                                currentcourse.set('semester',currenttermobj);
+                                currentcourse.save();
+                                break;
+                              }
+                            }
+                          }
+                        });
+                      }
+                      else{
+                        newterm.save();
+                      }
                     }
                   }
-
-                  // var allGradeRecord = self.get('store').peekAll('grade');
-                  // var currentgrade=null;
-                  // for(let l=0;l<allGradeRecord.get('length');l++)
-                  // {
-                  //   //if the grade mark and note matches
-                  //   if(allGradeRecord.objectAt(l).get('mark') == gradeArray[k] && allGradeRecord.objectAt(l).get('note') == noteArray[k])
-                  //   {
-                  //     currentgrade = allGradeRecord.objectAt(l);
-                  //   }
-                  // }
-                  // //at this point it should either get the grade object or the student has a null grade
-                  // //start updating the course code grade info
-                  // //get all course code from local cache
-                  // var allCourseCode = self.get('store').peekAll('course-code');
-                  // var currentcourse
-                  // for(let m=0;m<allCourseCode.get('length');m++)
-                  // {
-                  //   //find the coursecode matches the table information
-                  //   if(allCourseCode.objectAt(m).get('courseLetter') == courseLetterArray[k]
-                  //   && allCourseCode.objectAt(m).get('courseNumber') == courseNumberArray[k])
-                  //   {
-                  //     currentcourse = allCourseCode.objectAt(m);
-                  //     currentcourse.set('mark',currentgrade);
-                  //     currentcourse.save();
-                  //   }
-                  // }
                 }
-
               });
             }
             else{
               //when it isn't the last run, save it normally
               newgrade.save();
             }
-
           }
-
-
-          //create new Course code
-          // var newcoursecode = self.get('store').createRecord('course-code',{
-          //   courseLetter: courseLetter,
-          //   courseNumber: courseNumber,
-          //   unit: section,
-          //   semester: termcode,
-          //   mark: newgrade,
-          // });
-          // newcoursecode.save();
         });
       }
     },
