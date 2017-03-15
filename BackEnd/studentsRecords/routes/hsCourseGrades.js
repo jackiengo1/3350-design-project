@@ -48,9 +48,9 @@ router.route('/:hsCourseGrade_id')
                 response.send({error: error});
             }
             else {
-                hsCourseGrade.mark = request.hsCourseGrade.mark;
-                hsCourseGrade.source = request.hsCourseGrade.source;
-                hsCourseGrade.studentInfo = request.hsCourseGrade.studentInfo;
+                hsCourseGrade.mark = request.body.hsCourseGrade.mark;
+                hsCourseGrade.source = request.body.hsCourseGrade.source;
+                hsCourseGrade.studentInfo = request.body.hsCourseGrade.studentInfo;
 
                 hsCourseGrade.save(function (error) {
                     if (error) {
