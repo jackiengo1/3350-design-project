@@ -2,15 +2,178 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   store: Ember.inject.service(),
-  /* golbal XLSX */
+  filetobeloaded: "Please Click Delete first",
+  count:0,
+  /* globel XLSX */
 
   actions:{
     fileLoaded: function(file) {
+      //each time the fileLoaded function is called, update the counter and lable name
+      //and according to the given sequence determine if the file should be accepted
+      var counter = this.get('count');
+      var label = this.get('filetobeloaded');
+
       var self = this;
       var workbook = XLSX.read(file.data, {type: 'binary'});
       var sheet_name_list = workbook.SheetNames;
+
+      // if(counter === 0)
+      // {
+      //   //counter =0 means the delete is not called, return anyway
+      //   return;
+      // }
+      //
+      // if(counter===1)
+      // {
+      //   if(file.name!== "residencies.xlsx")
+      //   {
+      //     //if file name is not residency don't accept
+      //     return;
+      //   }
+      // }
+      //
+      // if(counter ===2)
+      // {
+      //   if(file.name!== "genders.xlsx")
+      //   {
+      //     //if file name is not residency don't accept
+      //     return;
+      //   }
+      // }
+      //
+      // if(counter ===3)
+      // {
+      //   if(file.name!== "students.xlsx")
+      //   {
+      //     //if file name is not residency don't accept
+      //     return;
+      //   }
+      // }
+      //
+      // if(counter ===4)
+      // {
+      //   if(file.name!== "AdvancedStanding.xlsx")
+      //   {
+      //     //if file name is not residency don't accept
+      //     return;
+      //   }
+      // }
+      //
+      // if(counter ===5)
+      // {
+      //   if(file.name!== "AdmissionAverages.xlsx")
+      //   {
+      //     //if file name is not residency don't accept
+      //     return;
+      //   }
+      // }
+      //
+      // if(counter ===6)
+      // {
+      //   if(file.name!== "AdmissionComments.xlsx")
+      //   {
+      //     //if file name is not residency don't accept
+      //     return;
+      //   }
+      // }
+      //
+      // if(counter ===7)
+      // {
+      //   if(file.name!== "BasisOfAdmission.xlsx")
+      //   {
+      //     //if file name is not residency don't accept
+      //     return;
+      //   }
+      // }
+      //
+      // if(counter ===8)
+      // {
+      //   if(file.name!== "RegistrationComments.xlsx")
+      //   {
+      //     //if file name is not residency don't accept
+      //     return;
+      //   }
+      // }
+      //
+      // if(counter ===9)
+      // {
+      //   if(file.name!== "scholarshipsAndAwards.xlsx")
+      //   {
+      //     //if file name is not residency don't accept
+      //     return;
+      //   }
+      // }
+      //
+      // if(counter ===10)
+      // {
+      //   if(file.name!== "HighSchools.xlsx")
+      //   {
+      //     //if file name is not residency don't accept
+      //     return;
+      //   }
+      // }
+      //
+      // if(counter ===11)
+      // {
+      //   if(file.name!== "HighSchoolCourseInformation.xlsx")
+      //   {
+      //     //if file name is not residency don't accept
+      //     return;
+      //   }
+      // }
+      //
+      // if(counter ===12)
+      // {
+      //   if(file.name!== "termcodes.xlsx")
+      //   {
+      //     //if file name is not residency don't accept
+      //     return;
+      //   }
+      // }
+      //
+      // if(counter ===14)
+      // {
+      //   if(file.name!== "UndergraduateCourses.xlsx")
+      //   {
+      //     //if file name is not residency don't accept
+      //     return;
+      //   }
+      // }
+      //
+      // if(counter ===13)
+      // {
+      //   if(file.name!== "UndergraduateRecordCourses.xlsx")
+      //   {
+      //     //if file name is not residency don't accept
+      //     return;
+      //   }
+      // }
+      //
+      // if(counter ===15)
+      // {
+      //   if(file.name!== "UndergraduateRecordPlans.xlsx")
+      //   {
+      //     //if file name is not residency don't accept
+      //     return;
+      //   }
+      // }
+      //
+      // if(counter>16)
+      // {
+      //   //counter goes beyond 14, it shouldn't upload any files
+      //   return;
+      // }
+
       if(file.name === "genders.xlsx")
       {
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Please upload students.xlsx";
+        self.set('filetobeloaded',label);
+
         sheet_name_list.forEach(function (sheetName) {
           var worksheet = workbook.Sheets[sheetName];
           for (var cellName in worksheet) {
@@ -32,6 +195,14 @@ export default Ember.Component.extend({
 
       else if (file.name ==="residencies.xlsx")
       {
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Please upload genders.xlsx";
+        self.set('filetobeloaded',label);
+
         sheet_name_list.forEach(function (sheetName) {
           var worksheet = workbook.Sheets[sheetName];
           for (var cellName in worksheet) {
@@ -54,9 +225,16 @@ export default Ember.Component.extend({
 
       else if (file.name ==="termcodes.xlsx")
       {
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Please upload UndergraduateRecordCourses.xlsx";
+        self.set('filetobeloaded',label);
+
         sheet_name_list.forEach(function (sheetName) {
           var worksheet = workbook.Sheets[sheetName];
-          let firsttime = false;
           for (var cellName in worksheet) {
             //all keys that do not begin with "!" correspond to cell addresses
 
@@ -77,6 +255,14 @@ export default Ember.Component.extend({
 
       else if(file.name ==="AdmissionComments.xlsx")
       {
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Please upload BasisOfAdmission.xlsx";
+        self.set('filetobeloaded',label);
+
         sheet_name_list.forEach(function (sheetName) {
           var indexA=0; var indexB=0; var Aarray = []; var Barray = []; var lastTimeA = false;
           var worksheet = workbook.Sheets[sheetName];
@@ -153,6 +339,14 @@ export default Ember.Component.extend({
 
       else if(file.name === "HighSchools.xlsx")
       {
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Please upload HighSchoolCourseInformation.xlsx";
+        self.set('filetobeloaded',label);
+
         sheet_name_list.forEach(function (sheetName) {
           var worksheet = workbook.Sheets[sheetName];
           for (var cellName in worksheet) {
@@ -175,6 +369,14 @@ export default Ember.Component.extend({
 
       else if(file.name ==="students.xlsx")
       {
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Please upload AdvancedStanding.xlsx";
+        self.set('filetobeloaded',label);
+
         sheet_name_list.forEach(function (sheetName) {
           var indexA=0; var indexB=0; var indexC=0; var indexD=0; var indexE=0; var indexF=0;
           var Aarray = []; var Barray = []; var Carray = []; var Darray = []; var Earray = []; var Farray = [];
@@ -298,6 +500,14 @@ export default Ember.Component.extend({
 
       else if(file.name === "AdvancedStanding.xlsx")
       {
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Please upload AdmissionAverages.xlsx";
+        self.set('filetobeloaded',label);
+
         sheet_name_list.forEach(function (sheetName) {
           var worksheet = workbook.Sheets[sheetName];
 
@@ -315,12 +525,15 @@ export default Ember.Component.extend({
               continue;
             }
 
-            else if(studentnum == null)
+            if(studentnum == null)
             {
-              studentnum =  lastStudentNum;
+              studentnum = lastStudentNum;
             }
-            else{
-              //when student number is not null, record the student number
+            else if(studentnum.v =="")
+            {
+              studentnum = lastStudentNum;
+            }
+            else {
               lastStudentNum = studentnum;
             }
             //at this point, the student number is properly assigned even for student with multiple record
@@ -337,7 +550,6 @@ export default Ember.Component.extend({
               //if the stduent number matches
               if(studentnum == allStudentRecord.objectAt(j).get('number'))
               {
-                console.log(studentnum);
                 //student record used for the targeted student
                 var studentRecord = allStudentRecord.objectAt(j);
                 //if the student matches, save the advanced standing
@@ -357,6 +569,14 @@ export default Ember.Component.extend({
       }
       else if(file.name ==="scholarshipsAndAwards.xlsx")
       {
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Please upload HighSchools.xlsx";
+        self.set('filetobeloaded',label);
+
         sheet_name_list.forEach(function (sheetName) {
           var worksheet = workbook.Sheets[sheetName];
 
@@ -376,10 +596,13 @@ export default Ember.Component.extend({
 
             if(studentnum == null)
             {
-              studentnum =  lastStudentNum;
+              studentnum = lastStudentNum;
             }
-            else{
-              //when student number is not null, record the student number
+            else if(studentnum.v =="")
+            {
+              studentnum = lastStudentNum;
+            }
+            else {
               lastStudentNum = studentnum;
             }
             //at this point, the student number is properly assigned even for student with multiple record
@@ -392,7 +615,6 @@ export default Ember.Component.extend({
               //if the stduent number matches
               if(studentnum == allStudentRecord.objectAt(j).get('number'))
               {
-                console.log(studentnum);
                 //student record used for the targeted student
                 var studentRecord = allStudentRecord.objectAt(j);
                 var newAwardRecord = self.get('store').createRecord('scholarship-award', {
@@ -408,30 +630,63 @@ export default Ember.Component.extend({
 
       else if(file.name === "UndergraduateCourses.xlsx")
       {
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Please upload UndergraduateRecordPlans.xlsx";
+        self.set('filetobeloaded',label);
+
         sheet_name_list.forEach(function (sheetName) {
           var worksheet = workbook.Sheets[sheetName];
 
           // //get the range of the worksheet
           var range = XLSX.utils.decode_range(worksheet["!ref"]);
           // //loop from start of the range to the end of the range
+          var index =0; var courseLetterArray=[]; var courseNumberArray=[];
+          var nameArray=[]; var unitArray = [];
           for(var R = (range.s.r+1); R <= range.e.r; R++)
           {
             var courseLetter =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})].v;
             var courseNumber =  worksheet[XLSX.utils.encode_cell({c: 1, r:R})].v;
             var name = worksheet[XLSX.utils.encode_cell({c: 2, r:R})].v;
             var unit = worksheet[XLSX.utils.encode_cell({c: 3, r:R})].v;
-            var newCourseCodeRecord = self.get('store').createRecord('course-code', {
-              courseLetter: courseLetter,
-              courseNumber: courseNumber,
-              name: name,
-              unit: unit,
-            });
-            newCourseCodeRecord.save();
+            courseLetterArray[index] = courseLetter;
+            courseNumberArray[index] = courseNumber;
+            nameArray[index] = name;
+            unitArray[index] = unit;
+            index++;
+          }
+          //start updating the courses
+          var allCourseCode = self.get('store').peekAll('course-code');
+
+          for(let i=0;i<courseLetterArray.length;i++)
+          {
+            for(let j=0;j<allCourseCode.get('length');j++)
+            {
+              if(courseLetterArray[i]==allCourseCode.objectAt(j).get('courseLetter') && courseNumberArray[i]==allCourseCode.objectAt(j).get('courseNumber'))
+              {
+                //if same course number and letter, need to update the other info
+                let curretCourseCode = allCourseCode.objectAt(j);
+                curretCourseCode.set('name',nameArray[i]);
+                curretCourseCode.set('unit',unitArray[i]);
+                curretCourseCode.save();
+              }
+            }
           }
         });
       }
       else if(file.name ==="BasisOfAdmission.xlsx")
       {
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Please upload RegistrationComments.xlsx";
+        self.set('filetobeloaded',label);
+
         sheet_name_list.forEach(function (sheetName) {
           var worksheet = workbook.Sheets[sheetName];
 
@@ -451,10 +706,13 @@ export default Ember.Component.extend({
 
             if(studentnum == null)
             {
-              studentnum =  lastStudentNum;
+              studentnum = lastStudentNum;
             }
-            else{
-              //when student number is not null, record the student number
+            else if(studentnum.v =="")
+            {
+              studentnum = lastStudentNum;
+            }
+            else {
               lastStudentNum = studentnum;
             }
             //at this point, the student number is properly assigned even for student with multiple record
@@ -467,7 +725,6 @@ export default Ember.Component.extend({
               //if the stduent number matches
               if(studentnum == allStudentRecord.objectAt(j).get('number'))
               {
-                console.log(studentnum);
                 //student record used for the targeted student
                 var studentRecord = allStudentRecord.objectAt(j);
                 var updatednote;
@@ -492,6 +749,14 @@ export default Ember.Component.extend({
 
       else if(file.name ==="RegistrationComments.xlsx")
       {
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Please upload scholarshipsAndAwards.xlsx";
+        self.set('filetobeloaded',label);
+
         sheet_name_list.forEach(function (sheetName) {
           var worksheet = workbook.Sheets[sheetName];
 
@@ -511,10 +776,13 @@ export default Ember.Component.extend({
 
             if(studentnum == null)
             {
-              studentnum =  lastStudentNum;
+              studentnum = lastStudentNum;
             }
-            else{
-              //when student number is not null, record the student number
+            else if(studentnum.v =="")
+            {
+              studentnum = lastStudentNum;
+            }
+            else {
               lastStudentNum = studentnum;
             }
             //at this point, the student number is properly assigned even for student with multiple record
@@ -527,7 +795,6 @@ export default Ember.Component.extend({
               //if the stduent number matches
               if(studentnum == allStudentRecord.objectAt(j).get('number'))
               {
-                console.log(studentnum);
                 //student record used for the targeted student
                 var studentRecord = allStudentRecord.objectAt(j);
                 var updatednote;
@@ -551,6 +818,14 @@ export default Ember.Component.extend({
       }
       else if(file.name ==="HighSchoolCourseInformation.xlsx")
       {
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Please upload termcodes.xlsx";
+        self.set('filetobeloaded',label);
+
         sheet_name_list.forEach(function (sheetName) {
           var worksheet = workbook.Sheets[sheetName];
           // //get the range of the worksheet
@@ -569,10 +844,13 @@ export default Ember.Component.extend({
 
             if(studentnum == null)
             {
-              studentnum =  lastStudentNum;
+              studentnum = lastStudentNum;
             }
-            else{
-              //when student number is not null, record the student number
+            else if(studentnum.v =="")
+            {
+              studentnum = lastStudentNum;
+            }
+            else {
               lastStudentNum = studentnum;
             }
             if(schoolname == null)
@@ -709,7 +987,6 @@ export default Ember.Component.extend({
                               && descriptionArraytracker[k]==allHighSchoolCourses.objectAt(l).get('course').get('description'))
                               {
                                 var hscourse = allHighSchoolCourses.objectAt(l);
-                                //console.log(allHighSchoolCourses.objectAt(l).get('id'));
                                 var newhsCourseGrade = self.get('store').createRecord('hscourse-grade', {
                                   mark:grade,
                                   source: hscourse,
@@ -739,8 +1016,16 @@ export default Ember.Component.extend({
           }
         });
       }
-      else if(file.name === "AdmissionAverage.xlsx")
+      else if(file.name === "AdmissionAverages.xlsx")
       {
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Please upload AdmissionComments.xlsx";
+        self.set('filetobeloaded',label);
+
         sheet_name_list.forEach(function (sheetName) {
           var worksheet = workbook.Sheets[sheetName];
 
@@ -754,10 +1039,13 @@ export default Ember.Component.extend({
             var note =  worksheet[XLSX.utils.encode_cell({c: 1, r:R})].v;
             if(studentnum == null)
             {
-              studentnum =  lastStudentNum;
+              studentnum = lastStudentNum;
             }
-            else{
-              //when student number is not null, record the student number
+            else if(studentnum.v =="")
+            {
+              studentnum = lastStudentNum;
+            }
+            else {
               lastStudentNum = studentnum;
             }
             studentnum = studentnum.v;
@@ -769,7 +1057,6 @@ export default Ember.Component.extend({
               //if the stduent number matches
               if(studentnum == allStudentRecord.objectAt(j).get('number'))
               {
-                console.log(studentnum);
                 //student record used for the targeted student
                 var studentRecord = allStudentRecord.objectAt(j);
                 var updatednote;
@@ -794,6 +1081,14 @@ export default Ember.Component.extend({
 
       else if(file.name ==="UndergraduateRecordPlans.xlsx")
       {
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Done!";
+        self.set('filetobeloaded',label);
+
         sheet_name_list.forEach(function (sheetName) {
           var worksheet = workbook.Sheets[sheetName];
 
@@ -826,7 +1121,11 @@ export default Ember.Component.extend({
             {
               studentnum = lastStudentNum;
             }
-            else{
+            else if(studentnum.v =="")
+            {
+              studentnum = lastStudentNum;
+            }
+            else {
               lastStudentNum = studentnum;
             }
             if(term == null)
@@ -979,7 +1278,6 @@ export default Ember.Component.extend({
                                 && allterm.objectAt(a).get('studentInfo').get('number') == studentnumArray[x])
                                 {
                                   //if both term name and student number matches
-                                  //console.log("term found");
                                   currentterm = allterm.objectAt(a);
                                   break;
                                 }
@@ -994,7 +1292,6 @@ export default Ember.Component.extend({
                                 && allProgram.objectAt(b).get('load') == loadArray[x])
                                 {
                                   //located the program record
-                                  //console.log("program found");
                                   currentProgramobj = allProgram.objectAt(b);
                                   break;
                                 }
@@ -1039,27 +1336,36 @@ export default Ember.Component.extend({
 
       else if(file.name === "UndergraduateRecordCourses.xlsx")
       {
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Please upload UndergraduateCourses.xlsx";
+        self.set('filetobeloaded',label);
+
         sheet_name_list.forEach(function (sheetName) {
           var worksheet = workbook.Sheets[sheetName];
 
           // //get the range of the worksheet
           var range = XLSX.utils.decode_range(worksheet["!ref"]);
           // //loop from start of the range to the end of the range
-          var lastStudentNum,lastterm;
+          var lastStudentNum; var lastterm;
           var studentnumArray = []; var termCodeArray = []; var courseLetterArray =[];
           var courseNumberArray =[]; var sectionArray =[]; var gradeArray =[];
           var noteArray =[]; var gradeModelArray=[]; var noteModelArray=[];
           var index =0;
-          for(var R = (range.s.r+1); R < range.e.r; R++)
+          var termModelStudentArray = []; var termModelTermArray =[];
+          for(var R = (range.s.r+1); R <= range.e.r; R++)
           {
             //student number not useful in this case
-            var studentnum =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})];
-            var term =  worksheet[XLSX.utils.encode_cell({c: 1, r:R})];
-            var courseLetter = worksheet[XLSX.utils.encode_cell({c: 2, r:R})];
-            var courseNumber = worksheet[XLSX.utils.encode_cell({c: 3, r:R})];
-            var section = worksheet[XLSX.utils.encode_cell({c: 4, r:R})];
-            var grade = worksheet[XLSX.utils.encode_cell({c: 5, r:R})];
-            var note = worksheet[XLSX.utils.encode_cell({c: 6, r:R})];
+            let studentnum =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})];
+            let term =  worksheet[XLSX.utils.encode_cell({c: 1, r:R})];
+            let courseLetter = worksheet[XLSX.utils.encode_cell({c: 2, r:R})];
+            let courseNumber = worksheet[XLSX.utils.encode_cell({c: 3, r:R})];
+            let section = worksheet[XLSX.utils.encode_cell({c: 4, r:R})];
+            let grade = worksheet[XLSX.utils.encode_cell({c: 5, r:R})];
+            let note = worksheet[XLSX.utils.encode_cell({c: 6, r:R})];
 
             //if note is null keep it like that else assignment the acutal value to note
             if(note != null)
@@ -1074,7 +1380,11 @@ export default Ember.Component.extend({
             {
               studentnum = lastStudentNum;
             }
-            else{
+            else if(studentnum.v =="")
+            {
+              studentnum = lastStudentNum;
+            }
+            else {
               lastStudentNum = studentnum;
             }
             if(term == null)
@@ -1083,8 +1393,12 @@ export default Ember.Component.extend({
             }
             else{
               lastterm = term;
+              //if term is not null add the term and student info to term model array, used to construct term model (unique)
+              let tempTerm = term.v;
+              let tempStudent = studentnum.v;
+              termModelTermArray[termModelTermArray.length] = tempTerm;
+              termModelStudentArray[termModelStudentArray.length] = tempStudent;
             }
-
             term = term.v;
             studentnum = studentnum.v;
             courseLetter = courseLetter.v;
@@ -1120,30 +1434,30 @@ export default Ember.Component.extend({
           }
           //end of the for loop all data at this point should be stored in the array
 
-
           //create new grade
           for(let i=0;i<gradeModelArray.length;i++)
           {
             var newgrade = self.get('store').createRecord('grade',{
               mark: gradeModelArray[i],
-              courseInfo: noteModelArray[i],
+              note: noteModelArray[i],
             });
             if(i == gradeModelArray.length-1)
             {
               //when it is the last run, save the data and use to call back function to chin the series of saving together
               newgrade.save().then(function(){
+
                 //this call back can gurentee when all grade is posted to db before proceed
                 //get all student from the local store cache
                 var allStudentRecord =self.get('store').peekAll('student');
                 //student record used for the targeted student
                 var studentRecord;
                 //double for loop, compare each element in Aarray (student number array) to each object in all student record
-                for(let j=0;j<studentnumArray.length;j++)
+                for(let j=0;j<termModelTermArray.length;j++)
                 {
                   for(let k=0;k<allStudentRecord.get('length');k++)
                   {
                     //if the stduent number matches
-                    if(studentnumArray[j] == allStudentRecord.objectAt(k).get('number'))
+                    if(termModelStudentArray[j] == allStudentRecord.objectAt(k).get('number'))
                     {
                       studentRecord = allStudentRecord.objectAt(k);
                     }
@@ -1154,7 +1468,7 @@ export default Ember.Component.extend({
                   var currentTermCode;
                   for (let a=0;a<allTermcode.get('length');a++)
                   {
-                    if(allTermcode.objectAt(a).get('name') == termCodeArray[j])
+                    if(allTermcode.objectAt(a).get('name') == termModelTermArray[j])
                     {
                       //if term code matches
                       currentTermCode = allTermcode.objectAt(a);
@@ -1164,14 +1478,13 @@ export default Ember.Component.extend({
                         studentInfo: studentRecord,
                       });
                       //use the callback on the last term save to chain the function together
-                      if(j==studentnumArray.length-1)
+                      if(j==termModelTermArray.length-1)
                       {
                         newterm.save().then(function(){
 
                           //start updating course code
                           var allGradeRecord = self.get('store').peekAll('grade');
                           var allterm = self.get('store').peekAll('term');
-                          var allCourseCode = self.get('store').peekAll('course-code');
                           for(let k=0;k<courseLetterArray.length;k++)
                           {
                             var currentgrade;
@@ -1199,20 +1512,13 @@ export default Ember.Component.extend({
                             //start updating the course code grade info
                             //get all course code from local cache
 
-                            var currentcourse;
-                            for(let m=0;m<allCourseCode.get('length');m++)
-                            {
-                              //find the coursecode matches the table information
-                              if(allCourseCode.objectAt(m).get('courseLetter') == courseLetterArray[k]
-                              && allCourseCode.objectAt(m).get('courseNumber') == courseNumberArray[k])
-                              {
-                                currentcourse = allCourseCode.objectAt(m);
-                                currentcourse.set('mark',currentgrade);
-                                currentcourse.set('semester',currenttermobj);
-                                currentcourse.save();
-                                break;
-                              }
-                            }
+                            var currentcourse = self.get('store').createRecord('course-code',{
+                              courseLetter: courseLetterArray[k],
+                              courseNumber: courseNumberArray[k],
+                              mark: currentgrade,
+                              semester: currenttermobj
+                            });
+                            currentcourse.save();
                           }
                         });
                       }
@@ -1235,6 +1541,14 @@ export default Ember.Component.extend({
     //end of the read file function
 
     deleteall:function(){
+      //delete has to be called before uploading
+      //when delete is call, increment the counter so the uploading will work
+      var counter = this.get('count');
+      counter=1;
+      this.set('count',counter);
+      var label = this.get('filetobeloaded');
+      label = "Please upload residencies.xlsx";
+      this.set('filetobeloaded',label);
       //when user start uploading the file, delete all original data in the db
       //delete all student record
       this.get('store').query('student', {
@@ -1389,7 +1703,6 @@ export default Ember.Component.extend({
           });
         }, this);
       });
-
     },
 
   }

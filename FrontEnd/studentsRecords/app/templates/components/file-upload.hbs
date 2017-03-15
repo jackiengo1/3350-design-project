@@ -1,7 +1,8 @@
+<label>{{filetobeloaded}}</label>
 <button class="ui button" >
-      {{#file-picker fileLoaded="fileLoaded" accept=".xlsx" readAs="readAsBinaryString"}}
-        Upload Student Data
-    {{/file-picker}}</button>
-    <button class="positive ui button" {{action 'deleteall'}}>
-      Deleteall
-    </button>
+  {{#file-picker fileLoaded="fileLoaded" accept=".xlsx" readAs="readAsBinaryString"}}
+  Upload Student Data
+  {{/file-picker}}</button>
+  <button class="positive ui button" {{action 'deleteall'}}>
+    Deleteall
+  </button>
