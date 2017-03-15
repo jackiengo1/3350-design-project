@@ -414,23 +414,41 @@
 
       <div class="ui sixteen wide column">
         <form class="ui form">
+
           <div class="field">
-            <label>High School Name</label>
-            <select>
-                  
-                </select>
-          </div>
-          <div class="field">
-            <label>Grade</label> {{input type="text" value= hsGrade}}
-          </div>
-          <div class="field">
-            <label>Source</label>
-            <select>
-              {{#each hsCourseModel as |courseChoice|}}
-              <option value={{courseChoice.id}} onchange={{eq selectedCourse courseChoice}}> {{courseChoice.name}} </option>
+            <label>High School</label>
+            <select onchange={{action 'selectHighSchool' value="target.value" }}>
+              {{#each secondarySchoolModel as |schoolChoice|}}
+              <option value={{schoolChoice.id}} onchange={{eq selectedSchool.id schoolChoice.id}}> {{schoolChoice.name}} </option>
               {{/each}}
             </select>
           </div>
+
+          <div class="field">
+            <label>Source</label>
+            <select>
+              {{#each secondarySchoolModel.source as |schoolChoice|}}
+              <option value={{schoolChoice.id}} onchange={{eq selectedSchool.id schoolChoice.id}}> {{schoolChoice}} </option>
+              {{/each}}              
+              {{!--{{#each hsCourseModel as |sourceChoice|}}
+              <option value={{sourceChoice.id}} onchange={{eq selectedSource sourceChoice}}> {{sourceChoice.source}} </option>
+              {{/each}}--}}
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Subject</label>
+            <select>
+              {{#each hsSubjectModel as |subjectChoice|}}
+              <option value={{sourceChoice.id}} onchange={{eq selectedSubject subjectChoice}}> {{sourceChoice.school}} </option>
+              {{/each}}
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Grade</label> {{input type="text" value= hsGrade}}
+          </div>
+
         </form>
       </div>
 

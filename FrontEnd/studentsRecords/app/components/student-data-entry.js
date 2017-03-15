@@ -26,10 +26,15 @@ export default Ember.Component.extend({
   advancedStandingModel: null,
   hsCourseGradeModel: null,
   hsCourseModel: null,
+  secondarySchoolModel: null,
+  hsSubjectModel: null,
   currentASIndex:null,
   scholarshipAwardModel:null,
   currentScholIndex:null,
   endOfRecords: false,
+  selectedSchool: null,
+  selectedSource: null,
+  selectedSubject: null,
 
   //undo
   //the stack store the data
@@ -186,13 +191,25 @@ export default Ember.Component.extend({
       self.set('termCodeModel', records);
     });
 
-    this.get('store').findAll('high-school-course').then(function(records){
-      self.set('hsCourseModel', records);
+    this.get('store').findAll('hscourse-grade').then(function(records){
+      self.set('hsCourseGradeModel', records);
     });
+
+    // this.get('store').findAll('high-school-course').then(function(records){
+    //   self.set('hsCourseModel', records);
+    // });
 
     this.get('store').findAll('course-code').then(function(records){
       self.set('courseCodeModel', records);
     });
+
+    this.get('store').findAll('secondary-school').then(function(records){
+      self.set('secondarySchoolModel', records);
+    });
+
+    this.get('store').findAll('high-school-subject').then(function(records){
+      self.set('hsSubjectModel', records);
+    });    
 
     this.get('store').findAll('program-record').then(function(records){
       self.set('programRecordModel', records);
@@ -708,6 +725,27 @@ export default Ember.Component.extend({
     },
 
 
+    selectHighSchool(highSchool){
+      var self = this;
+      console.log(highSchool);
+      var school1 = this.get('store').peekRecord('secondary-school', highSchool);
+      console.log(school1);
+      school1.get('highSchoolCoursesInfo').then((courses) => {
+        self.set('hsCourseModel', courses);
+        console.log(courses);
+      });
+      // this.set('selectedSchool', highSchool);
+      // console.log(highSchool);
+      // var sourceObj = this.get('store').query('high-school-course', {filter: {school: '58c8a8ce33187e1ca0db79e0'}}).then(function(courses){
+      //   console.log(courses);
+      //   self.set('hsCourseModel', courses);
+      // });
+      //console.log(sourceObj);
+      //console.log(this.get('store').get('hsCourseModel'));
+      //this.set('hsCourseModel', sourceObj);
+    },
+
+
     selectGender (gender){
       this.set('selectedGender', gender);
       console.log(gender);
@@ -826,14 +864,12 @@ export default Ember.Component.extend({
       this.set('listAS', this.get('currentStudent').get('advInfo'));
       this.set('scholarShipAndAwardList', this.get('currentStudent').get('scholInfo'));
 
-
-
     },
+
 
     findRecord(){     //-----------------------------------------------------------------finds the student record-------------------------------------------------
       var self = this;
       //console.log("student number find: " + self.get('findStudentNumber'));
-
 
       this.get('store').query('student', {
         findStudentNum: self.get('findStudentNumber'),
