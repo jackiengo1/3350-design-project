@@ -17,152 +17,152 @@ export default Ember.Component.extend({
       var workbook = XLSX.read(file.data, {type: 'binary'});
       var sheet_name_list = workbook.SheetNames;
 
-      // if(counter === 0)
-      // {
-      //   //counter =0 means the delete is not called, return anyway
-      //   return;
-      // }
-      //
-      // if(counter===1)
-      // {
-      //   if(file.name!== "residencies.xlsx")
-      //   {
-      //     //if file name is not residency don't accept
-      //     return;
-      //   }
-      // }
-      //
-      // if(counter ===2)
-      // {
-      //   if(file.name!== "genders.xlsx")
-      //   {
-      //     //if file name is not residency don't accept
-      //     return;
-      //   }
-      // }
-      //
-      // if(counter ===3)
-      // {
-      //   if(file.name!== "students.xlsx")
-      //   {
-      //     //if file name is not residency don't accept
-      //     return;
-      //   }
-      // }
-      //
-      // if(counter ===4)
-      // {
-      //   if(file.name!== "AdvancedStanding.xlsx")
-      //   {
-      //     //if file name is not residency don't accept
-      //     return;
-      //   }
-      // }
-      //
-      // if(counter ===5)
-      // {
-      //   if(file.name!== "AdmissionAverages.xlsx")
-      //   {
-      //     //if file name is not residency don't accept
-      //     return;
-      //   }
-      // }
-      //
-      // if(counter ===6)
-      // {
-      //   if(file.name!== "AdmissionComments.xlsx")
-      //   {
-      //     //if file name is not residency don't accept
-      //     return;
-      //   }
-      // }
-      //
-      // if(counter ===7)
-      // {
-      //   if(file.name!== "BasisOfAdmission.xlsx")
-      //   {
-      //     //if file name is not residency don't accept
-      //     return;
-      //   }
-      // }
-      //
-      // if(counter ===8)
-      // {
-      //   if(file.name!== "RegistrationComments.xlsx")
-      //   {
-      //     //if file name is not residency don't accept
-      //     return;
-      //   }
-      // }
-      //
-      // if(counter ===9)
-      // {
-      //   if(file.name!== "scholarshipsAndAwards.xlsx")
-      //   {
-      //     //if file name is not residency don't accept
-      //     return;
-      //   }
-      // }
-      //
-      // if(counter ===10)
-      // {
-      //   if(file.name!== "HighSchools.xlsx")
-      //   {
-      //     //if file name is not residency don't accept
-      //     return;
-      //   }
-      // }
-      //
-      // if(counter ===11)
-      // {
-      //   if(file.name!== "HighSchoolCourseInformation.xlsx")
-      //   {
-      //     //if file name is not residency don't accept
-      //     return;
-      //   }
-      // }
-      //
-      // if(counter ===12)
-      // {
-      //   if(file.name!== "termcodes.xlsx")
-      //   {
-      //     //if file name is not residency don't accept
-      //     return;
-      //   }
-      // }
-      //
-      // if(counter ===14)
-      // {
-      //   if(file.name!== "UndergraduateCourses.xlsx")
-      //   {
-      //     //if file name is not residency don't accept
-      //     return;
-      //   }
-      // }
-      //
-      // if(counter ===13)
-      // {
-      //   if(file.name!== "UndergraduateRecordCourses.xlsx")
-      //   {
-      //     //if file name is not residency don't accept
-      //     return;
-      //   }
-      // }
-      //
-      // if(counter ===15)
-      // {
-      //   if(file.name!== "UndergraduateRecordPlans.xlsx")
-      //   {
-      //     //if file name is not residency don't accept
-      //     return;
-      //   }
-      // }
-      //
-      // if(counter>16)
-      // {
-      //   //counter goes beyond 14, it shouldn't upload any files
-      //   return;
-      // }
+      if(counter === 0)
+      {
+        //counter =0 means the delete is not called, return anyway
+        return;
+      }
+
+      if(counter===1)
+      {
+        if(file.name!== "residencies.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===2)
+      {
+        if(file.name!== "genders.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===3)
+      {
+        if(file.name!== "students.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===4)
+      {
+        if(file.name!== "AdvancedStanding.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===5)
+      {
+        if(file.name!== "AdmissionAverages.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===6)
+      {
+        if(file.name!== "AdmissionComments.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===7)
+      {
+        if(file.name!== "BasisOfAdmission.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===8)
+      {
+        if(file.name!== "RegistrationComments.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===9)
+      {
+        if(file.name!== "scholarshipsAndAwards.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===10)
+      {
+        if(file.name!== "HighSchools.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===11)
+      {
+        if(file.name!== "HighSchoolCourseInformation.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===12)
+      {
+        if(file.name!== "termcodes.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===14)
+      {
+        if(file.name!== "UndergraduateCourses.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===13)
+      {
+        if(file.name!== "UndergraduateRecordCourses.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===15)
+      {
+        if(file.name!== "UndergraduateRecordPlans.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter>16)
+      {
+        //counter goes beyond 14, it shouldn't upload any files
+        return;
+      }
 
       if(file.name === "genders.xlsx")
       {
@@ -1502,8 +1502,7 @@ export default Ember.Component.extend({
                             var currenttermobj;
                             for (let m=0;m<allterm.get('length');m++)
                             {
-                              if(termCodeArray[k]==allterm.objectAt(m).get('term').get('name')
-                              && studentnumArray[k]==allterm.objectAt(m).get('studentInfo').get('number'))
+                              if((termCodeArray[k]==allterm.objectAt(m).get('term').get('name')) && (studentnumArray[k]==allterm.objectAt(m).get('studentInfo').get('number')))
                               {
                                 currenttermobj = allterm.objectAt(m);
                                 break;
@@ -1602,7 +1601,7 @@ export default Ember.Component.extend({
           });
         }, this);
       });
-
+      
       //delete all high-school-course record
       this.get('store').findAll('high-school-course').then(function(record){
         record.content.forEach(function(rec) {
