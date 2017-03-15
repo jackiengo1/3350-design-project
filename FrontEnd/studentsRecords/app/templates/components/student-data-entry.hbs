@@ -430,7 +430,8 @@
           </div>
 
           {{#each currentStudentHSGrades as |oneHSGrade|}}
-            <h3>High School: {{oneHSGrade.HighSchoolCoursesInfo.SecondSchoolInfo}}</h3>
+            <h3>School Name: {{oneHSGrade.HighSchoolCoursesInfo.SecondSchoolInfo}}</h3>
+            <h3>Level: {{oneHSGrade.HighSchoolCoursesInfo}}</h3>
             <h3>Subject: {{oneHSGrade.HighSchoolCoursesInfo.HighSchoolSubjectInfo}}</h3>
             <h3>Course: {{oneHSGrade.HighSchoolCoursesInfo}}</h3>
             <h3>Mark: {{oneHSGrade.mark}}</h3>
@@ -439,11 +440,17 @@
 
         <div class="eight wide column" id="studentRecordsDataEntryRightContent">
           <div class="ui center aligned header" id="studentRecordsDataEntryTabHeader">
-            <h2>Add Term Code</h2>
+            <h2>Add High School Course Grade</h2>
           </div>
 
           <div class="ui sixteen wide column">
             <form class="ui form">
+              <div class="field">
+                <label>High School Name</label>
+                <select>
+                  
+                </select>
+              </div>
               <div class="field">
                 <label>Grade</label>
                 {{input type="text"  value= hsGrade}}
