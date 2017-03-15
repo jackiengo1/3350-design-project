@@ -802,8 +802,10 @@ export default Ember.Component.extend({
           // //loop from start of the range to the end of the range
           var lastterm,lastprogram,lastlevel,lastload,lastStudentNum;
           var termCodeArray =[]; var programArray =[]; var levelArray = [];
-          var planCountArray=[];
+          var studentnumArray = []; var loadArray =[]; var planArray =[];
           var index=0;
+          var planModelArray=[]; var programModelArray =[]; var loadModelArray = [];
+          var levelModelArray =[];
           for(var R = (range.s.r+1); R < range.e.r; R++)
           {
             //student number not useful in this case
@@ -819,11 +821,6 @@ export default Ember.Component.extend({
             {
               //when plan is null, that means this roll is entirely empty, skip current row
               continue;
-            }
-            if(load == null)
-            {
-              //if load is null, the student has more than one plan, increament the counter
-              planCountArray[index]++;
             }
             if(studentnum == null)
             {
@@ -853,118 +850,189 @@ export default Ember.Component.extend({
             load = load.v;
             studentnum = studentnum.v;
             plan = plan.v;
+            //assign the value to corresponding array
+            termCodeArray[index] = term;
+            programArray[index] = program;
+            levelArray[index] = level;
+            loadArray[index] = load;
+            studentnumArray[index] = studentnum;
+            planArray[index] = plan;
 
+            index++;
 
-            //get all local cached student and find the student by student number
-            var studentRecord;
-            self.get('store').peekAll('student').forEach(function(student){
-              if(student.get('number') === studentnum)
-              {
-                //if the stduent number matches
-                studentRecord = student;
-              }
-            });
-
-            //get all local cached term and find the term by name
-            //!!!!!!!!!!!!!
-            var termcode;
-            self.get('store').peekAll('term-code').forEach(function(currentterm){
-              if(currentterm.get('name') === term)
-              {
-                //if the stduent number matches
-                termcode = currentterm;
-              }
-            });
-
-            //create new plan code
-            var newplancode = self.get('store').createRecord('plan-code',{
-              name: plan,
-            });
-            var plancodearray = self.get('store').peekRecord('plan-code',newplancode);
-            if(plancodearray == null)
+            //check duplications for plan and add non duplicated to plan model array
+            //boolean check if the plan found in the array
+            let foundplan = false;
+            for(let i=0;i<planModelArray.length;i++)
             {
-              //if none same plan code is found, save it
-              newplancode.save();
+              //if plan is found in the array
+              if(planModelArray[i]==plan)
+              {
+                foundplan = true;
+              }
+            }
+            if(!foundplan)
+            {
+              //if it does not exist before add it to the array
+              planModelArray[planModelArray.length] = plan;
             }
 
-            //create a new program record
-            var newprogramRecord = self.get('store').createRecord('program-record', {
-              name: program,
-              level: level,
-              load: load,
-              semester: [termcode],
-            });
-            var programrecordarray = self.get('store').peekRecord('program-record',newprogramRecord);
-            if(programrecordarray == null)
+            //check duplications for plan and add non duplicated to plan model array
+            //boolean check if the plan found in the array
+            let foundprogram = false;
+            for(let i=0;i<programModelArray.length;i++)
             {
-              //if none same program record is found, save it
-              newprogramRecord.save();
+              //if program is found in the array
+              if(programModelArray[i]==program && levelModelArray[i]==level && loadModelArray == load)
+              {
+                foundprogram = true;
+              }
             }
-            //  else{
-            //    //if the record exist, need to add it to the program record array in the plan code
-            //    plancodearray.get('program').pushObject(newplancode);
-            //  }
-            //trying to do many to many not working properly, instead messing up my data for other part
-            // if(plancodearray == null)
-            // {
-            //    if(programrecordarray == null)
-            //    {
-            //      //when the value is null, set it to the array of program record
-            //      if(newplancode.get('program') == null){
-            //        newplancode.set('program',[newprogramRecord]);
-            //      }
-            //      else{
-            //        //if the value is not null append the record at the back of the array
-            //       newplancode.get('program').pushObject(newprogramRecord);
-            //      }
-            //    }
-            //    else{
-            //      if(newplancode.get('program') == null){
-            //         newplancode.set('program',[programrecordarray]);
-            //      }
-            //      else{
-            //        newplancode.get('program').pushObject(programrecordarray);
-            //      }
-            //
-            //    }
-            //   //if none same plan code is found, save it
-            //   newplancode.save();
-            // }
-            //
-            // if(plancodearray == null)
-            // {
-            //   if(programrecordarray == null)
-            //   {
-            //     if(newprogramRecord.get('plan')==null)
-            //     {
-            //       newprogramRecord.set('program',[programrecordarray]);
-            //     }
-            //     newprogramRecord.get('plan').pushObject(newplancode);
-            //     newprogramRecord.save();
-            //   }
-            //   else{
-            //     programrecordarray.get('plan').pushObject(newplancode);
-            //     programrecordarray.save();
-            //   }
-            // }
-            // else{
-            //   if(programrecordarray == null)
-            //   {
-            //     newprogramRecord.get('plan').pushObject(plancodearray);
-            //     newprogramRecord.save();
-            //   }
-            //   else{
-            //     programrecordarray.get('plan').pushObject(plancodearray);
-            //     programrecordarray.save();
-            //   }
-            // }
-            //
-            //  //set the term code with student info
-            //  termobj.set('studentInfo',tempstudent);
-            //  termobj.set('program',newprogramRecord);
-            //  termobj.save().then(() => {
-            //  });
+            if(!foundprogram)
+            {
+              //if it does not exist before add it to the array
+              programModelArray[programModelArray.length] = program;
+              levelModelArray[levelModelArray.length] = level;
+              loadModelArray[loadModelArray.length] = load;
+            }
+          }
 
+          //create plan model
+          for(let i=0;i<planModelArray.length;i++)
+          {
+            var newplan = self.get('store').createRecord('plan-code',{
+              name: planModelArray[i],
+            });
+            if(i==planModelArray.length-1)
+            {
+              newplan.save().then(function(){
+
+                //start creating the program record
+                for (let j=0;j<programModelArray.length;j++)
+                {
+                  var newProgram = self.get('store').createRecord('program-record',{
+                    name: programModelArray[j],
+                    level: levelModelArray[j],
+                    load: loadModelArray[j],
+                  });
+                  if(j== programModelArray.length-1)
+                  {
+                    newProgram.save().then(function(){
+
+                      //start updateing the program record plan code
+                      //get all program model in local cache
+                      var allProgram = self.get('store').peekAll('program-record');
+                      for(let k=0;k<allProgram.get('length');k++)
+                      {
+                        //first get the plan code
+                        var allPlanCode = self.get('store').peekAll('plan-code');
+                        var currentPlanCode;
+                        for(let l=0;l<allPlanCode.get('length');l++)
+                        {
+                          if(planArray[k] == allPlanCode.objectAt(l).get('name'))
+                          {
+                            currentPlanCode = allPlanCode.objectAt(l);
+                            break;
+                          }
+                        }
+                        //after loate the plan code
+                        var currentProgram;
+                        for(let l=0;l<allProgram.get('length');l++)
+                        {
+                          if(allProgram.objectAt(l).get('name') == programArray[k]
+                          && allProgram.objectAt(l).get('level') == levelArray[k]
+                          && allProgram.objectAt(l).get('load') == loadArray[k])
+                          {
+                            //located the program record
+                            currentProgram = allProgram.objectAt(l);
+                            break;
+                          }
+                        }
+                        //after locate the program record
+                        //if the plan code array is null
+                        if(currentProgram.get('plan') === null)
+                        {
+                          let plancodearray = [currentPlanCode];
+                          currentProgram.set('plan',plancodearray);
+                        }
+                        //if the plan code array is not empty
+                        else
+                        {
+                          let plancodearray = currentProgram.get('plan');
+                          //add the current plan code to the array
+                          plancodearray.pushObject(currentPlanCode);
+                        }
+
+                        if(k==allProgram.get('length')-1)
+                        {
+                          currentProgram.save().then(function(){
+
+                            //the last run of the current program, start adding program record in Terms
+                            for (let x=0;x<termCodeArray.length;x++)
+                            {
+                              //first get all terms
+                              var allterm = self.get('store').peekAll('term');
+                              var currentterm;
+                              for (let a =0;a<allterm.get('length');a++)
+                              {
+                                if(allterm.objectAt(a).get('term').get('name') == termCodeArray[x]
+                                && allterm.objectAt(a).get('studentInfo').get('number') == studentnumArray[x])
+                                {
+                                  //if both term name and student number matches
+                                  //console.log("term found");
+                                  currentterm = allterm.objectAt(a);
+                                  break;
+                                }
+                              }
+                              //after located the term
+                              var allProgram = self.get('store').peekAll('program-record');
+                              var currentProgramobj;
+                              for(let b=0;b<allProgram.get('length');b++)
+                              {
+                                if(allProgram.objectAt(b).get('name') == programArray[x]
+                                && allProgram.objectAt(b).get('level') == levelArray[x]
+                                && allProgram.objectAt(b).get('load') == loadArray[x])
+                                {
+                                  //located the program record
+                                  //console.log("program found");
+                                  currentProgramobj = allProgram.objectAt(b);
+                                  break;
+                                }
+                              }
+                              //after locate the program record
+                              //start updating the term
+                              //if the plan code array is null
+                              if(currentterm.get('program') == null)
+                              {
+                                let programarray = [currentProgramobj];
+                                currentterm.set('program',programarray);
+                              }
+                              //if the plan code array is not empty
+                              else
+                              {
+                                let programarray = currentterm.get('program');
+                                //add the current plan code to the array
+                                programarray.pushObject(currentProgramobj);
+                              }
+                              currentterm.save();
+                            }
+                          });
+                        }
+                        else{
+                          currentProgram.save();
+                        }
+                      }
+                    });
+                  }
+                  else{
+                    newProgram.save();
+                  }
+                }
+              });
+            }
+            else{
+              newplan.save();
+            }
           }
         });
       }
