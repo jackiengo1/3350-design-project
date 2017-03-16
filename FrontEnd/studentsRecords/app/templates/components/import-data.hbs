@@ -1,0 +1,46 @@
+{{#if ID001IsPermitted }}
+  <h2>{{selectedPost.title}}</h2>
+  {{#if isLoading}}
+
+      <table class="ui celled table">
+        <thead>
+        <tr>
+          {{#each tableHeader as |header|}}
+            <th>{{header}}</th>
+          {{/each}}
+        </tr>
+        </thead>
+
+        <tbody>
+        {{#each tableData as |oneRow|}}
+          <tr>
+            {{#each oneRow as |oneCol|}}
+              <td>{{oneCol}}</td>
+            {{/each}}
+          </tr>
+        {{/each}}
+        </tbody>
+      </table>
+      <button class="ui button" {{action 'done'}}> Done</button>
+
+  {{else}}
+    <div>
+      <button class="ui button">{{#file-picker fileLoaded="fileImported" accept=".xlsx" readAs="readAsBinaryString"}}
+        Select Excel File
+      {{/file-picker}}</button>
+    </div>
+  {{/if}}
+
+{{else}}
+  <div class="ui center aligned raised segment">
+    <div class="ui icon header">
+      <i class="protect icon"></i>
+      Permission Denied
+    </div>
+    <div>
+      <p>This feature (ID001) is not allowed for your account.</p>
+      <p>Please contact the system administrator for more information.</p>
+    </div>
+
+  </div>
+{{/if}}

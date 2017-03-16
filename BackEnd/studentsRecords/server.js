@@ -1,5 +1,15 @@
 var express = require('express');
 var logger = require('./logger');
+var posts = require('./routes/posts');
+var comments = require('./routes/comments');
+var residencies = require('./routes/residencies');
+var users = require('./routes/users');
+var passwords = require('./routes/passwords');
+var roleCodes = require('./routes/roleCodes');
+var userRoles = require('./routes/usersRoles');
+var rolePermissions = require('./routes/rolePermissions');
+var logins = require('./routes/logins');
+var roots = require('./routes/roots');
 var app = express();
 
 var students = require('./routes/students');
@@ -56,6 +66,18 @@ app.use('/logicalExpressions', logicalExpressions);
 app.use('/faculties', faculties);
 app.use('/departments', departments);
 app.use('/programAdministrations', programAdministrations);
+
+
+app.use('/posts', posts);
+app.use('/comments', comments);
+app.use('/residencies', residencies);
+app.use('/users', users);
+app.use('/passwords', passwords);
+app.use('/roleCodes', roleCodes);
+app.use('/userRoles', userRoles);
+app.use('/rolePermissions', rolePermissions);
+app.use('/logins', logins);
+app.use('/roots', roots);
 
 
 app.listen(3700, function () {
