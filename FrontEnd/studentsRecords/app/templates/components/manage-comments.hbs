@@ -1,0 +1,23 @@
+{{#if isEditing}}
+  <h2>Add Comment</h2>
+
+  <form class="ui form">
+    <div class="field">
+      <label>Text</label>
+      {{input type="text"  value = statement}}
+    </div>
+    <br>
+    <button class="ui button" {{action 'saveComment'}}> Save </button>
+    <button class="ui button" {{action 'cancel'}}> Cancel </button>
+
+
+  </form>
+{{else}}
+  <br>
+  <h2>Readers' Comments  </h2>
+  {{#each commentsModel as |oneComment|}}
+    <li>  {{oneComment.statement}} </li>
+  {{/each}}
+  <br>
+  <button class="ui button" {{action 'addComment'}}> Add Comment </button>
+{{/if}}

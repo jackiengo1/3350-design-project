@@ -1,0 +1,27 @@
+<h2>{{selectedPost.title}}</h2>
+
+{{#if isEditing}}
+
+  <form class="ui form">
+    <div class="field">
+      <label>Title</label>
+      {{input type="text"  value = selectedPost.title}}
+    </div>
+    <div class="field">
+      <label>Body</label>
+      {{input type="text" value = selectedPost.body }}
+    </div>
+
+    <button class="ui button" {{action 'save' selectedPost.id}}>Save</button>
+  </form>
+
+{{else}}
+  <div class="ui bulleted list">
+    <div class="item">{{selectedPost.body}} </div>
+
+  </div>
+
+  <button class="ui button" {{action 'edit'}}> Edit </button>
+  <button class="ui button" {{action 'cancel'}}> Cancel </button>
+  {{manage-comments ID = selectedPost.id}}
+{{/if}}

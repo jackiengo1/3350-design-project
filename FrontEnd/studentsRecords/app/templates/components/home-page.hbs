@@ -22,14 +22,14 @@
 
 <div class="ui grid secondary menu" style="background-color: #CEB1F4; margin-top: 0;">
 
-  <a class="four wide column item active" {{action "home"}} style="font-size: 16px; font-weight: bold; margin: 0; padding-left: 5%;">
+  <a class="three wide column item active" {{action "home"}} style="font-size: 16px; font-weight: bold; margin: 0; padding-left: 5%;">
     <i class="large home icon"></i> Home
   </a>
-  <a class="four wide column item" {{action "studentsDataEntry"}} style="font-size: 16px; font-weight: bold; margin: 0; padding-left: 5%;">
+  <a class="three wide column item" {{action "studentsDataEntry"}} style="font-size: 16px; font-weight: bold; margin: 0; padding-left: 5%;">
     <i class="large leanpub icon"></i> Students Records
   </a>
 
-  <div class="four wide column ui dropdown item" style="font-size: 16px; font-weight: bold; margin: 0; padding-left: 5%;">
+  <div class="three wide column ui dropdown item" style="font-size: 16px; font-weight: bold; margin: 0; padding-left: 5%;">
     <i class="large setting icon"></i> Configure
     <i class="dropdown icon"></i>
       <div class="menu">
@@ -47,6 +47,10 @@
         </a>
       </div>
   </div>
+
+  <a class="three wide column item" {{action "studentAssessment"}} style="font-size: 16px; font-weight: bold; margin: 0; padding-left: 5%;">
+    <i class="large user icon"></i> Student Assessment
+  </a>
 
   <a class="four wide column item" {{action "about"}} style="font-size: 16px; font-weight: bold; margin: 0; padding-left: 5%;">
     <i class="large user icon"></i> About
@@ -105,6 +109,9 @@
           {{/if}}
           {{#if isAddProgramRecordShowing}}
             {{add-program-record-2}}
+          {{/if}}
+          {{#if isStudentAssessmentShowing}}
+            {{student-assessment}}
           {{/if}}
         </div>
     </div>
