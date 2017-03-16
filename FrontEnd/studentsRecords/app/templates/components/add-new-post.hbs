@@ -1,0 +1,43 @@
+{{#if isAdding}}
+  {{#if ANP01IsPermitted }}
+  <h2>Adding new post</h2>
+  <form class="ui form">
+    <div class="field">
+      <label>Post Title</label>
+      {{input type="text"  value = title placeholder="add title"}}
+    </div>
+    <div class="field">
+      <label>Post Body</label>
+      {{input type="text" value = body placeholder="add body"}}
+    </div>
+
+    <button class="ui button" {{action 'savePost'}}>Save</button>
+    <button class="ui button" {{action 'cancelPost'}}>Cancel</button>
+  </form>
+  {{else}}
+
+    <div class="ui basic modal">
+      <div class="ui icon header">
+        <i class="protect icon"></i>
+        Permission Denied
+      </div>
+      <div class="content">
+        <p>This feature (ANP01) is not allowed for your account.</p>
+        <p>Please contact the system administrator for more information.</p>
+      </div>
+      <div class="actions">
+        <div class="ui red basic cancel inverted button"{{action 'cancelPost'}}>
+          <i class="remove icon"></i>
+          Exit
+        </div>
+      </div>
+    </div>
+
+
+
+  {{/if}}
+{{else}}
+  <button class="ui button" {{action 'addNewPost'}}>
+    Add new post
+  </button>
+{{/if}}

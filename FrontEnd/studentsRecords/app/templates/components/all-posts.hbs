@@ -1,0 +1,37 @@
+{{#if VP001IsPermitted }}
+<div class="ui bulleted list">
+  <br>
+  {{#each model as |onePost|}}
+    <div class="item" >
+      <div class="ui grid">
+        <div class="ten wide column">
+          <li>{{#link-to 'post' onePost.id}}{{onePost.title}}{{onePost.comments.[0]}}
+          {{/link-to}}</li>
+
+        </div>
+        <div class="six wide column">
+          {{delete-post post=onePost}}
+        </div>
+      </div>
+
+    </div>
+  {{/each}}
+</div>
+<br>
+{{add-new-post}}
+<br><br><br>
+
+{{else}}
+  <div class="ui center aligned raised segment">
+    <div class="ui icon header">
+      <i class="protect icon"></i>
+      Permission Denied
+    </div>
+    <div>
+      <p>This feature (VP001) is not allowed for your account.</p>
+      <p>Please contact the system administrator for more information.</p>
+    </div>
+
+  </div>
+
+{{/if}}
