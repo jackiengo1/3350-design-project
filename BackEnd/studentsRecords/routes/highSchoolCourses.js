@@ -23,19 +23,18 @@ router.route('/')
             });
             console.log("no filter");
         } else {
-          console.log("filter");
-          if (request.query.filter.school && request.query.filter.source)
-          {
-            models.HighSchoolCourses.find({"school": request.query.filter.school, "source": request.query.filter.source}, function (error, highSchoolCourses) { //What to replace student with??
-                if (error) response.send(error);
-                console.log(highSchoolCourses);
-                response.json({highSchoolCourse: highSchoolCourses});
-            });
-          }
-          else if(request.query.filter.school)
+          if(request.query.filter.school)
           {
             models.HighSchoolCourses.find({"school": request.query.filter.school}, function (error, highSchoolCourses) { //What to replace student with??
                 if (error) response.send(error);
+                response.json({highSchoolCourse: highSchoolCourses});
+            });
+          }
+          else if (request.query.filter.id)
+          {
+            models.HighSchoolCourses.find({"_id": request.query.filter.id}, function (error, highSchoolCourses) { //What to replace student with??
+                if (error) response.send(error);
+                console.log(highSchoolCourses);
                 response.json({highSchoolCourse: highSchoolCourses});
             });
           }

@@ -26,15 +26,19 @@ export default Ember.Component.extend({
   advancedStandingModel: null,
   hsCourseGradeModel: null,
   hsCourseModel: null,
+  hsCourseModel2: null,
   secondarySchoolModel: null,
   hsSubjectModel: null,
   currentASIndex:null,
   scholarshipAwardModel:null,
   currentScholIndex:null,
   endOfRecords: false,
-  selectedSchool: null,
-  selectedSource: null,
-  selectedSubject: null,
+  isSchoolSelected: false,
+  isCourseSelected: false,
+  isLevelSelected: false,
+  isUnitSelected: false,
+  isGradeValid: false,
+  highSchoolCourseChoice: null,
 
   //undo
   //the stack store the data
@@ -722,9 +726,6 @@ export default Ember.Component.extend({
     },
 
     selectHighSchool(highSchool){
-      
-      this.set('selectedSchool', highSchool);
-
       if (highSchool != "null")
       {
         console.log(highSchool);
@@ -732,43 +733,97 @@ export default Ember.Component.extend({
         this.get('store').query('high-school-course', {filter:{school:highSchool}}).then(function(records){
           self.set('hsCourseModel', records);
         });
-        Ember.$("#sourceSelect").attr('disabled', false);
+
+        Ember.$("#courseSelect").attr('disabled', false);
+        this.set('isSchoolSelected', true);
       }
       else
       {
-        Ember.$("#sourceSelect").attr('disabled', true);
-        Ember.$("#subjectSelect").attr('disabled', true);
-        Ember.$("#addCourseGradeButton").attr('disabled', true);
+        this.set('isSchoolSelected', false);
+        Ember.$("#courseSelect").attr('disabled', true);
       }
+      
+      this.set('isCourseSelected', false);
+      this.set('isLevelSelected', false);
+      this.set('isUnitSelected', false);
+      Ember.$("#gradeField").val(0);
+      Ember.$("#levelSelect").attr('disabled', true);
+      Ember.$("#unitSelect").attr('disabled', true);
+      Ember.$("#gradeField").attr('disabled', true);
+      Ember.$("#addCourseGradeButton").attr('disabled', true);
     },
 
-    selectSource(source){
-
-      this.set('selectedSource', source);
-
-      if (source != "null")
+    selectCourse(courseInfo){
+      if (courseInfo != "null")
       {
-        console.log(source);
         var self = this;
-        
-        this.get('store').query('high-school-course', {filter:{school:this.get('selectedSchool'), source:this.get('selectedSource')}}).then(function(records){
-          self.set('hsCourseModel', records);
+        this.get('store').query('high-school-course', {filter:{id:courseInfo}}).then(function(records){
+          self.set('hsCourseModel2', records);
         });
 
-        this.get('store').query('high-school-subject', {filter:{highSchoolCourses: this.get('hsCourseModel')}}).then(function(subjects){
-          self.set('hsSubjectModel', subjects);
-        });
-        Ember.$("#subjectSelect").attr('disabled', false);
+        Ember.$("#levelSelect").attr('disabled', false);
+        Ember.$("#unitSelect").attr('disabled', false);
+        this.set('isCourseSelected', true);
       }
       else
       {
-        Ember.$("#subjectSelect").attr('disabled', true);
+        this.set('isCourseSelected', false);
+        Ember.$("#levelSelect").attr('disabled', true);
+        Ember.$("#unitSelect").attr('disabled', true);
+      }
+
+      this.set('isLevelSelected', false);
+      this.set('isUnitSelected', false);     
+      Ember.$("#addCourseGradeButton").attr('disabled', true);
+      Ember.$("#gradeField").attr('disabled', true);
+    },
+
+    selectLevel(courseId) {
+      if (courseId != "null")
+      {
+        this.set('isLevelSelected', true);
+        if (this.get('isUnitSelected'))
+        {
+          Ember.$("#gradeField").attr('disabled', false);
+          Ember.$("#addCourseGradeButton").attr('disabled', false);
+          this.set('highSchoolCourseChoice', courseId);
+        }
+        else
+        {
+          Ember.$("#gradeField").attr('disabled', true);
+          Ember.$("#addCourseGradeButton").attr('disabled', true);
+        }
+      }
+      else
+      {
+        this.set('isLevelSelected', false);
         Ember.$("#addCourseGradeButton").attr('disabled', true);
+        Ember.$("#gradeField").attr('disabled', true);
       }
     },
 
-    selectSubject(subject){
-      var self = this;
+    selectUnit(courseId) {
+      if (courseId != "null")
+      {
+        this.set('isUnitSelected', true);
+        if (this.get('isLevelSelected'))
+        {
+          Ember.$("#gradeField").attr('disabled', false);
+          Ember.$("#addCourseGradeButton").attr('disabled', false);
+          this.set('highSchoolCourseChoice', courseId);
+        }
+        else
+        {
+          Ember.$("#gradeField").attr('disabled', true);
+          Ember.$("#addCourseGradeButton").attr('disabled', true);
+        }
+      }
+      else
+      {
+        this.set('isUnitSelected', false);
+        Ember.$("#addCourseGradeButton").attr('disabled', true);
+        Ember.$("#gradeField").attr('disabled', true);
+      }
     },
 
     selectGender (gender){
@@ -819,12 +874,33 @@ export default Ember.Component.extend({
     },
 
     addhsMark(){
-      var newhsMark = this.get('store').createRecord('hscourse-grade', {
-        mark: this.get('hsGrade'),
-        studentInfo: this.get('currentStudent'),
-        source: this.get('courseChoice'),
-      });
-      newhsMark.save();
+      
+      var grade = Ember.$("#gradeField").val();
+
+      if (grade >= 0 && grade <= 100)
+      {
+        this.set('isGradeValid', true);
+      }
+      else
+      {
+        this.set('isGradeValid', false);
+      }
+
+      if (this.get('isCourseSelected') && this.get('isGradeValid') && this.get('isLevelSelected') && this.get('isSchoolSelected') && this.get('isUnitSelected'))
+      {
+        console.log("valid");
+        console.log(this.get('highSchoolCourseChoice'));
+        var newhsMark = this.get('store').createRecord('hscourse-grade', {
+          mark: this.get('hsGrade'),
+          studentInfo: this.get('currentStudent'),
+          source: this.get('highSchoolCourseChoice'),
+        });
+        newhsMark.save();
+      }
+      else
+      {
+        console.log("invalid");
+      }
     },
 
     deleteAS(currentAS){
@@ -1278,7 +1354,9 @@ Ember.$(document).ready(function () {
     }
   });
 
-  Ember.$("#sourceSelect").attr('disabled', true);
-  Ember.$("#subjectSelect").attr('disabled', true);
+  Ember.$("#gradeField").val(0);
+  Ember.$("#levelSelect").attr('disabled', true);
+  Ember.$("#unitSelect").attr('disabled', true);
+  Ember.$("#courseSelect").attr('disabled', true);
   Ember.$("#addCourseGradeButton").attr('disabled', true);
 }); //end ember.$document function

@@ -410,11 +410,11 @@
       </div>
 
       <div class="ui sixteen wide column">
-        <form class="ui form">
+        <form class="ui form" id="highSchoolCourseForm">
 
           <div class="field">
             <label>High School</label>
-            <select onchange={{action 'selectHighSchool' value="target.value" }}>
+            <select id="schoolSelect" onchange={{action 'selectHighSchool' value="target.value" }}>
               <option selected="selected" value="null"> Select a High School </option>
               {{#each secondarySchoolModel as |schoolChoice|}}
               <option value={{schoolChoice.id}}> {{schoolChoice.name}} </option>
@@ -423,26 +423,38 @@
           </div>
 
           <div class="field">
-            <label>Source</label>
-            <select id="sourceSelect" onchange={{action 'selectSource' value="target.value" }}>
-              <option selected="selected" value="null"> Select a Source </option>
-              {{#each hsCourseModel as |sourceChoice|}}
-              <option value={{sourceChoice.source}}> {{sourceChoice.source}} </option>
+            <label>Subject (Description) - Source</label>
+            <select id="courseSelect" onchange={{action 'selectCourse' value="target.value" }}>
+              <option selected="selected" value="null"> Select a Course </option>
+              {{#each hsCourseModel as |courseChoice|}}
+              <option value={{courseChoice.id}}> {{courseChoice.course.name}} ({{courseChoice.course.description}}) - {{courseChoice.source}} </option>
               {{/each}}
             </select>
           </div>
 
-          <div class="field">
-            <label>Subject</label>
-            <select id="subjectSelect" onchange={{action 'selectSubject' value="target.value" }}>
-              {{#each hsSubjectModel as |subjectChoice|}}
-              <option value={{subjectChoice.id}}> {{subjectChoice.course.name}} </option>
-              {{/each}}
-            </select>
+          <div class="two fields">
+            <div class="field">
+              <label>Level</label>
+              <select id="levelSelect" onchange={{action 'selectLevel' value="target.value" }}>
+                <option selected="selected" value="null"> Select a Level </option>
+                {{#each hsCourseModel2 as |levelChoice|}}
+                <option value={{levelChoice.id}}> {{levelChoice.level}} </option>
+                {{/each}}
+              </select>
+            </div>
+            <div class="field">
+              <label>Unit</label>
+              <select id="unitSelect" onchange={{action 'selectUnit' value="target.value" }}>
+                <option selected="selected" value="null"> Select a Unit </option>
+                {{#each hsCourseModel2 as |unitChoice|}}
+                <option value={{unitChoice.id}}> {{unitChoice.unit}} </option>
+                {{/each}}
+              </select>
+            </div>
           </div>
 
           <div class="field">
-            <label>Grade</label> {{input type="text" value= hsGrade}}
+            <label>Grade</label> {{input disabled="true" type="number" value=hsGrade id="gradeField"}}
           </div>
 
         </form>
