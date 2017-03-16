@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   store: Ember.inject.service(),
-  /* golbal XLSX */
+  /* global XLSX */
   residencyModel:null,
   advancedStandingModel:null,
   scholarshipAwardModel:null,
