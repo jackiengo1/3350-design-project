@@ -1,3 +1,5 @@
+{{#if oudaAuth.isAuthenticated }}
+{{log '1'}}
 <div class="ui" style="background-color: #ede7f6;">
 
   {{outlet}}
@@ -11,3 +13,12 @@
   </footer>
 
 </div>
+{{else}}
+{{log '2'}}
+  <div>
+    {{#unless oudaAuth.getName}}
+    {{log '3'}}
+      {{outlet "login"}}
+    {{/unless}}
+  </div>
+{{/if}}
