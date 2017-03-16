@@ -155,7 +155,7 @@ var adjudicationSchema = mongoose.Schema(
     termUnitsTotal: String,
     note: String,
     studentInfo: {type: mongoose.Schema.ObjectId, ref: 'Students'},
-    semester: {type: mongoose.Schema.ObjectId, ref: 'Terms'}
+    semester: {type: mongoose.Schema.ObjectId, ref: 'Terms'},
     comment: [{type: mongoose.Schema.ObjectId, ref: 'AssessmentCodes'}]
   }
 );
@@ -181,7 +181,7 @@ var logicalExpressionSchema = mongoose.Schema(
 
 var facultySchema = mongoose.Schema(
   {
-    name: String
+    name: String,
     comment: {type: mongoose.Schema.ObjectId, ref: 'AssessmentCodes'},
     dept: [{type: mongoose.Schema.ObjectId, ref: 'Departments'}]
   }
