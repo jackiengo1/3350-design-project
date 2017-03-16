@@ -195,10 +195,6 @@ export default Ember.Component.extend({
       self.set('hsCourseGradeModel', records);
     });
 
-    // this.get('store').findAll('high-school-course').then(function(records){
-    //   self.set('hsCourseModel', records);
-    // });
-
     this.get('store').findAll('course-code').then(function(records){
       self.set('courseCodeModel', records);
     });
@@ -214,6 +210,7 @@ export default Ember.Component.extend({
     this.get('store').findAll('program-record').then(function(records){
       self.set('programRecordModel', records);
     });
+
 
     // load first page of the students records
     this.set('limit', 10);
@@ -724,27 +721,55 @@ export default Ember.Component.extend({
 
     },
 
-
     selectHighSchool(highSchool){
-      var self = this;
-      console.log(highSchool);
-      var school1 = this.get('store').peekRecord('secondary-school', highSchool);
-      console.log(school1);
-      school1.get('highSchoolCoursesInfo').then((courses) => {
-        self.set('hsCourseModel', courses);
-        console.log(courses);
-      });
-      // this.set('selectedSchool', highSchool);
-      // console.log(highSchool);
-      // var sourceObj = this.get('store').query('high-school-course', {filter: {school: '58c8a8ce33187e1ca0db79e0'}}).then(function(courses){
-      //   console.log(courses);
-      //   self.set('hsCourseModel', courses);
-      // });
-      //console.log(sourceObj);
-      //console.log(this.get('store').get('hsCourseModel'));
-      //this.set('hsCourseModel', sourceObj);
+      
+      this.set('selectedSchool', highSchool);
+
+      if (highSchool != "null")
+      {
+        console.log(highSchool);
+        var self = this;
+        this.get('store').query('high-school-course', {filter:{school:highSchool}}).then(function(records){
+          self.set('hsCourseModel', records);
+        });
+        Ember.$("#sourceSelect").attr('disabled', false);
+      }
+      else
+      {
+        Ember.$("#sourceSelect").attr('disabled', true);
+        Ember.$("#subjectSelect").attr('disabled', true);
+        Ember.$("#addCourseGradeButton").attr('disabled', true);
+      }
     },
 
+    selectSource(source){
+
+      this.set('selectedSource', source);
+
+      if (source != "null")
+      {
+        console.log(source);
+        var self = this;
+        
+        this.get('store').query('high-school-course', {filter:{school:this.get('selectedSchool'), source:this.get('selectedSource')}}).then(function(records){
+          self.set('hsCourseModel', records);
+        });
+
+        this.get('store').query('high-school-subject', {filter:{highSchoolCourses: this.get('hsCourseModel')}}).then(function(subjects){
+          self.set('hsSubjectModel', subjects);
+        });
+        Ember.$("#subjectSelect").attr('disabled', false);
+      }
+      else
+      {
+        Ember.$("#subjectSelect").attr('disabled', true);
+        Ember.$("#addCourseGradeButton").attr('disabled', true);
+      }
+    },
+
+    selectSubject(subject){
+      var self = this;
+    },
 
     selectGender (gender){
       this.set('selectedGender', gender);
@@ -1251,7 +1276,9 @@ Ember.$(document).ready(function () {
     if (Ember.$("#dateInput").val().length === 7 && asciiCode !== 8) {
       Ember.$("#dateInput").val(Ember.$("#dateInput").val() + "-");
     }
-
   });
 
+  Ember.$("#sourceSelect").attr('disabled', true);
+  Ember.$("#subjectSelect").attr('disabled', true);
+  Ember.$("#addCourseGradeButton").attr('disabled', true);
 }); //end ember.$document function

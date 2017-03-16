@@ -209,11 +209,8 @@
           <div class="field">
             <label>Residency</label>
             <select onchange={{action 'selectResidency' value="target.value" }}>
-
                 {{#each residencyModel as |residencyChoice|}}
-
                 <option value={{residencyChoice.id}} selected={{eq selectedResidency.id residencyChoice.id}}>{{residencyChoice.name}}</option>
-
                 {{/each}}
               </select>
           </div>
@@ -418,29 +415,28 @@
           <div class="field">
             <label>High School</label>
             <select onchange={{action 'selectHighSchool' value="target.value" }}>
+              <option selected="selected" value="null"> Select a High School </option>
               {{#each secondarySchoolModel as |schoolChoice|}}
-              <option value={{schoolChoice.id}} onchange={{eq selectedSchool.id schoolChoice.id}}> {{schoolChoice.name}} </option>
+              <option value={{schoolChoice.id}}> {{schoolChoice.name}} </option>
               {{/each}}
             </select>
           </div>
 
           <div class="field">
             <label>Source</label>
-            <select>
-              {{#each secondarySchoolModel.source as |schoolChoice|}}
-              <option value={{schoolChoice.id}} onchange={{eq selectedSchool.id schoolChoice.id}}> {{schoolChoice}} </option>
-              {{/each}}              
-              {{!--{{#each hsCourseModel as |sourceChoice|}}
-              <option value={{sourceChoice.id}} onchange={{eq selectedSource sourceChoice}}> {{sourceChoice.source}} </option>
-              {{/each}}--}}
+            <select id="sourceSelect" onchange={{action 'selectSource' value="target.value" }}>
+              <option selected="selected" value="null"> Select a Source </option>
+              {{#each hsCourseModel as |sourceChoice|}}
+              <option value={{sourceChoice.source}}> {{sourceChoice.source}} </option>
+              {{/each}}
             </select>
           </div>
 
           <div class="field">
             <label>Subject</label>
-            <select>
+            <select id="subjectSelect" onchange={{action 'selectSubject' value="target.value" }}>
               {{#each hsSubjectModel as |subjectChoice|}}
-              <option value={{sourceChoice.id}} onchange={{eq selectedSubject subjectChoice}}> {{sourceChoice.school}} </option>
+              <option value={{subjectChoice.id}}> {{subjectChoice.course.name}} </option>
               {{/each}}
             </select>
           </div>
@@ -453,9 +449,7 @@
       </div>
 
       <div class="ui center aligned header">
-        <button class="ui primary button" {{action 'addhsMark'}}>
-              Add Term
-            </button>
+        <button id="addCourseGradeButton" class="ui primary button" {{action 'addhsMark'}}>Add Course Grade</button>
       </div>
     </div>
 
