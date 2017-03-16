@@ -3,108 +3,180 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   store: Ember.inject.service(),
   /* global XLSX */
-  residencyModel:null,
-  advancedStandingModel:null,
-  scholarshipAwardModel:null,
-  genderModel:null,
-  studentModel:null,
-  hsCourseGradeModel:null,
-  highSchoolCourseModel:null,
-  secondarySchoolModel:null,
-  highSchoolSubjectModel:null,
-  gradeModel:null,
-  courseCodeModel:null,
-  planCodeModel:null,
-  programRecordModel:null,
-  termCodeModel:null,
 
-  currentStudent:null,
-  currentHighSchool:null,
-  currentHighSchoolSubject:null,
-  currentTerm:null,
-  currentGender:null,
-  currentResidency:null,
-
-  init() {
-    this._super(...arguments);
-    var self = this;
-    // load Residency data model
-    this.get('store').findAll('residency').then(function (records) {
-      self.set('residencyModel', records);
-    });
-
-    // load advanced standing model
-    this.get('store').findAll('advanced-standing').then(function (records) {
-      self.set('advancedStandingModel', records);
-      console.log(Ember.inspect(records));
-    });
-
-    //load scholarship Award model
-    this.get('store').findAll('scholarship-award').then(function (records) {
-      self.set('scholarshipAwardModel', records);
-      console.log(Ember.inspect(records));
-    });
-
-    this.get('store').findAll('gender').then(function(records){
-      self.set('genderModel', records);
-    });
-
-    this.get('store').query('student', {
-      limit: 10000,
-      offset: 0
-    }).then(function(records){
-      self.set('studentModel', records);
-    });
-
-    this.get('store').findAll('hscourse-grade').then(function(records){
-      self.set('hsCourseGradeModel', records);
-    });
-
-    this.get('store').findAll('high-school-course').then(function(records){
-      self.set('highSchoolCourseModel', records);
-    });
-
-    this.get('store').findAll('secondary-school').then(function(records){
-      self.set('secondarySchoolModel', records);
-    });
-
-    this.get('store').findAll('high-school-subject').then(function(records){
-      self.set('highSchoolSubjectModel', records);
-    });
-
-    this.get('store').findAll('grade').then(function(records){
-      self.set('gradeModel', records);
-    });
-
-    this.get('store').findAll('program-record').then(function(records){
-      self.set('programRecordModel', records);
-    });
-
-    this.get('store').findAll('course-code').then(function(records){
-      self.set('courseCodeModel', records);
-    });
-
-    this.get('store').findAll('plan-code').then(function(records){
-      self.set('planCodeModel', records);
-    });
-
-    this.get('store').findAll('term-code').then(function(records){
-      self.set('termCodeModel', records);
-    });
-
-  },
-
+  filetobeloaded: "Please Click Delete first",
+  count:0,
 
   actions:{
     fileLoaded: function(file) {
+      //each time the fileLoaded function is called, update the counter and lable name
+      //and according to the given sequence determine if the file should be accepted
+      var counter = this.get('count');
+      var label = this.get('filetobeloaded');
+
       var self = this;
       var workbook = XLSX.read(file.data, {type: 'binary'});
       var sheet_name_list = workbook.SheetNames;
+
+      if(counter === 0)
+      {
+        //counter =0 means the delete is not called, return anyway
+        return;
+      }
+
+      if(counter===1)
+      {
+        if(file.name!== "residencies.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===2)
+      {
+        if(file.name!== "genders.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===3)
+      {
+        if(file.name!== "students.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===4)
+      {
+        if(file.name!== "AdvancedStanding.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===5)
+      {
+        if(file.name!== "AdmissionAverages.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===6)
+      {
+        if(file.name!== "AdmissionComments.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===7)
+      {
+        if(file.name!== "BasisOfAdmission.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===8)
+      {
+        if(file.name!== "RegistrationComments.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===9)
+      {
+        if(file.name!== "scholarshipsAndAwards.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===10)
+      {
+        if(file.name!== "HighSchools.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===11)
+      {
+        if(file.name!== "HighSchoolCourseInformation.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===12)
+      {
+        if(file.name!== "termcodes.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===14)
+      {
+        if(file.name!== "UndergraduateCourses.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===13)
+      {
+        if(file.name!== "UndergraduateRecordCourses.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===15)
+      {
+        if(file.name!== "UndergraduateRecordPlans.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter>16)
+      {
+        //counter goes beyond 14, it shouldn't upload any files
+        return;
+      }
+
       if(file.name === "genders.xlsx")
       {
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Please upload students.xlsx";
+        self.set('filetobeloaded',label);
+
         sheet_name_list.forEach(function (sheetName) {
           var worksheet = workbook.Sheets[sheetName];
-          let firsttime = true;
           for (var cellName in worksheet) {
             //all keys that do not begin with "!" correspond to cell addresses
 
@@ -117,27 +189,23 @@ export default Ember.Component.extend({
                 name: worksheet[cellName].v,
               });
               newgender.save();
-              if(firsttime)
-              {
-                self.set('genderModel',[newgender]);
-                firsttime = false;
-              }
-              else {
-                {
-                  self.get('genderModel').pushObject(newgender);
-                }
-              }
             }
           }
-
         });
       }
 
       else if (file.name ==="residencies.xlsx")
       {
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Please upload genders.xlsx";
+        self.set('filetobeloaded',label);
+
         sheet_name_list.forEach(function (sheetName) {
           var worksheet = workbook.Sheets[sheetName];
-          var firsttime = true;
           for (var cellName in worksheet) {
             //all keys that do not begin with "!" correspond to cell addresses
 
@@ -150,15 +218,6 @@ export default Ember.Component.extend({
                 name: worksheet[cellName].v,
               });
               newresidency.save();
-              if(firsttime)
-              {
-                self.set('residencyModel',[newresidency]);
-                firsttime = false;
-              }
-              else{
-                self.get('residencyModel').pushObject(newresidency);
-              }
-
             }
           }
 
@@ -167,9 +226,16 @@ export default Ember.Component.extend({
 
       else if (file.name ==="termcodes.xlsx")
       {
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Please upload UndergraduateRecordCourses.xlsx";
+        self.set('filetobeloaded',label);
+
         sheet_name_list.forEach(function (sheetName) {
           var worksheet = workbook.Sheets[sheetName];
-          let firsttime = false;
           for (var cellName in worksheet) {
             //all keys that do not begin with "!" correspond to cell addresses
 
@@ -182,14 +248,6 @@ export default Ember.Component.extend({
                 name: worksheet[cellName].v,
               });
               newtermcode.save();
-              if(firsttime)
-              {
-                self.set('termCodeModel',[newtermcode]);
-                firsttime = false;
-              }
-              else{
-                self.get('termCodeModel').pushObject(newtermcode);
-              }
             }
           }
 
@@ -198,6 +256,14 @@ export default Ember.Component.extend({
 
       else if(file.name ==="AdmissionComments.xlsx")
       {
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Please upload BasisOfAdmission.xlsx";
+        self.set('filetobeloaded',label);
+
         sheet_name_list.forEach(function (sheetName) {
           var indexA=0; var indexB=0; var Aarray = []; var Barray = []; var lastTimeA = false;
           var worksheet = workbook.Sheets[sheetName];
@@ -250,849 +316,1395 @@ export default Ember.Component.extend({
             }
           }
 
-          for(var i=1;i<indexA;i++)
+          //get all student from the local store cache
+          var allStudentRecord =self.get('store').peekAll('student');
+          //student record used for the targeted student
+          var studentRecord;
+          //double for loop, compare each element in Aarray (student number array) to each object in all student record
+          for(let i=1;i<indexA;i++)
           {
-            console.log(Barray[i]);
-            self.send('findStudent',Aarray[i]);
-            var studenttemp = self.get('currentStudent');
-            console.log(studenttemp.get('number'));
-            studenttemp.set('admissionComments',Barray[i]);
-            //how to walk around here except ajax
-            studenttemp.save().then(() => {
-              //     this.set('isStudentFormEditing', false);
-            });
-          }
-         });
-    }
-
-    else if(file.name === "HighSchools.xlsx")
-    {
-      sheet_name_list.forEach(function (sheetName) {
-        var worksheet = workbook.Sheets[sheetName];
-        let firsttime = true;
-        for (var cellName in worksheet) {
-          //all keys that do not begin with "!" correspond to cell addresses
-
-          if (cellName[0] === '!') {
-            continue;
-          }
-          if(worksheet[cellName].v !== "School Name")
-          {
-            var newschool = self.get('store').createRecord('secondarySchool',{
-              name: worksheet[cellName].v,
-            });
-            newschool.save();
-            if(firsttime)
+            for(let j=0;j<allStudentRecord.get('length');j++)
             {
-              self.set('secondarySchoolModel',[newschool]);
-              firsttime=false;
+              //if the stduent number matches
+              if(Aarray[i] == allStudentRecord.objectAt(j).get('number'))
+              {
+                studentRecord = allStudentRecord.objectAt(j);
+                studentRecord.set('admissionComments',Barray[i]);
+                //how to walk around here except ajax
+                studentRecord.save();
+              }
+            }
+          }
+        });
+      }
+
+      else if(file.name === "HighSchools.xlsx")
+      {
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Please upload HighSchoolCourseInformation.xlsx";
+        self.set('filetobeloaded',label);
+
+        sheet_name_list.forEach(function (sheetName) {
+          var worksheet = workbook.Sheets[sheetName];
+          for (var cellName in worksheet) {
+            //all keys that do not begin with "!" correspond to cell addresses
+
+            if (cellName[0] === '!') {
+              continue;
+            }
+            if(worksheet[cellName].v !== "School Name")
+            {
+              var newschool = self.get('store').createRecord('secondarySchool',{
+                name: worksheet[cellName].v,
+              });
+              newschool.save();
+            }
+          }
+
+        });
+      }
+
+      else if(file.name ==="students.xlsx")
+      {
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Please upload AdvancedStanding.xlsx";
+        self.set('filetobeloaded',label);
+
+        sheet_name_list.forEach(function (sheetName) {
+          var indexA=0; var indexB=0; var indexC=0; var indexD=0; var indexE=0; var indexF=0;
+          var Aarray = []; var Barray = []; var Carray = []; var Darray = []; var Earray = []; var Farray = [];
+          var worksheet = workbook.Sheets[sheetName];
+          for (var cellName in worksheet) {
+            //all keys that do not begin with "!" correspond to cell addresses
+            if (cellName[0] === '!') {
+              continue;
+            }
+            //skip all cells in the first row
+            if(indexA <1){
+              indexA++;
+              continue;
+            }
+            if(indexB<1)
+            {
+              indexB++;
+              continue;
+            }
+            if(indexC<1)
+            {
+              indexC++;
+              continue;
+            }
+            if(indexD<1)
+            {
+              indexD++;
+              continue;
+            }
+            if(indexE<1)
+            {
+              indexE++;
+              continue;
+            }
+            if(indexF<1)
+            {
+              indexF++;
+              continue;
+            }
+            //for the first colume where cell name start with A
+            if(cellName[0] === "A")
+            {
+              Aarray[indexA] = worksheet[cellName].v;
+              //increment indexA
+              indexA++;
+            }
+            //for the second colume where cell name start with B
+            if(cellName[0] === "B")
+            {
+              Barray[indexB] = worksheet[cellName].v;
+              //increment indexB
+              indexB++;
+            }
+            //for the 3 colume where cell name start with C
+            if(cellName[0] === "C")
+            {
+              Carray[indexC] = worksheet[cellName].v;
+              //increment indexC
+              indexC++;
+            }
+            //for the 4 colume where cell name start with D
+            if(cellName[0] === "D")
+            {
+              Darray[indexD] = worksheet[cellName].v;
+              //increment indexD
+              indexD++;
+            }
+            //for the first colume where cell name start with A
+            if(cellName[0] === "E")
+            {
+              Earray[indexE] = worksheet[cellName].v;
+              //increment indexE
+              indexE++;
+            }
+            //for the first colume where cell name start with A
+            if(cellName[0] === "F")
+            {
+              Farray[indexF] = worksheet[cellName].v;
+              //increment indexF
+              indexF++;
+            }
+          }
+
+          for(let i=1;i<indexA;i++)
+          {
+            var res;
+            var gen;
+            //find the residency according to its name in the local cache
+            var allres = self.get('store').peekAll('residency');
+            for(let j=0;j<allres.get('length');j++)
+            {
+              if(Farray[i]==allres.objectAt(j).get('name'))
+              {
+                res = allres.objectAt(j);
+              }
+            }
+
+            //find the gender according to its name in the local cache
+            var allgen = self.get('store').peekAll('gender');
+            for(let j=0;j<allgen.get('length');j++)
+            {
+              if(Darray[i]==allgen.objectAt(j).get('name'))
+              {
+                gen = allgen.objectAt(j);
+              }
+            }
+
+            var newStudent = self.get('store').createRecord('student', { //create a new student record
+              number: Aarray[i],
+              firstName: Barray[i],
+              lastName: Carray[i],
+              DOB: new Date(Earray[i]),
+              photo: self.get('photoPath'),
+              resInfo: res,
+              genderInfo: gen,
+            });
+            newStudent.save(); //commit the student record to db
+          }
+        });
+      }
+
+      else if(file.name === "AdvancedStanding.xlsx")
+      {
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Please upload AdmissionAverages.xlsx";
+        self.set('filetobeloaded',label);
+
+        sheet_name_list.forEach(function (sheetName) {
+          var worksheet = workbook.Sheets[sheetName];
+
+          // //get the range of the worksheet
+          var range = XLSX.utils.decode_range(worksheet["!ref"]);
+          // //loop from start of the range to the end of the range
+          var lastStudentNum;
+          for(var R = (range.s.r+1); R <= range.e.r; R++)
+          {
+            var studentnum =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})];
+            var course =  worksheet[XLSX.utils.encode_cell({c: 1, r:R})].v;
+            //do nothing but skip the current row if the course is nothing
+            if(course === "NONE FOUND")
+            {
+              continue;
+            }
+
+            if(studentnum == null)
+            {
+              studentnum = lastStudentNum;
+            }
+            else if(studentnum.v =="")
+            {
+              studentnum = lastStudentNum;
+            }
+            else {
+              lastStudentNum = studentnum;
+            }
+            //at this point, the student number is properly assigned even for student with multiple record
+            //and all students with none record is excluded
+            studentnum = studentnum.v;
+            var description = worksheet[XLSX.utils.encode_cell({c: 2, r:R})].v;
+            var units = worksheet[XLSX.utils.encode_cell({c: 3, r:R})].v;
+            var grade = worksheet[XLSX.utils.encode_cell({c: 4, r:R})].v;
+            var from = worksheet[XLSX.utils.encode_cell({c: 5, r:R})].v;
+            //get all student from the local store cache
+            var allStudentRecord =self.get('store').peekAll('student');
+            for(let j=0;j<allStudentRecord.get('length');j++)
+            {
+              //if the stduent number matches
+              if(studentnum == allStudentRecord.objectAt(j).get('number'))
+              {
+                //student record used for the targeted student
+                var studentRecord = allStudentRecord.objectAt(j);
+                //if the student matches, save the advanced standing
+                var newASRecord = self.get('store').createRecord('advanced-standing', {
+                  course: course,
+                  description: description,
+                  units: units,
+                  grade: grade,
+                  from: from,
+                  studentInfo: studentRecord,
+                });
+                newASRecord.save();
+              }
+            }
+          }
+        });
+      }
+      else if(file.name ==="scholarshipsAndAwards.xlsx")
+      {
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Please upload HighSchools.xlsx";
+        self.set('filetobeloaded',label);
+
+        sheet_name_list.forEach(function (sheetName) {
+          var worksheet = workbook.Sheets[sheetName];
+
+          // //get the range of the worksheet
+          var range = XLSX.utils.decode_range(worksheet["!ref"]);
+          // //loop from start of the range to the end of the range
+          var lastStudentNum;
+          for(var R = (range.s.r+1); R <= range.e.r; R++)
+          {
+            var studentnum =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})];
+            var note =  worksheet[XLSX.utils.encode_cell({c: 1, r:R})].v;
+            //do nothing but skip the current row if the course is nothing
+            if(note === "NONE FOUND")
+            {
+              continue;
+            }
+
+            if(studentnum == null)
+            {
+              studentnum = lastStudentNum;
+            }
+            else if(studentnum.v =="")
+            {
+              studentnum = lastStudentNum;
+            }
+            else {
+              lastStudentNum = studentnum;
+            }
+            //at this point, the student number is properly assigned even for student with multiple record
+            //and all students with none record is excluded
+            studentnum = studentnum.v;
+            //get all student from the local store cache
+            var allStudentRecord =self.get('store').peekAll('student');
+            for(let j=0;j<allStudentRecord.get('length');j++)
+            {
+              //if the stduent number matches
+              if(studentnum == allStudentRecord.objectAt(j).get('number'))
+              {
+                //student record used for the targeted student
+                var studentRecord = allStudentRecord.objectAt(j);
+                var newAwardRecord = self.get('store').createRecord('scholarship-award', {
+                  note: note,
+                  studentInfo: studentRecord,
+                });
+                newAwardRecord.save();
+              }
+            }
+          }
+        });
+      }
+
+      else if(file.name === "UndergraduateCourses.xlsx")
+      {
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Please upload UndergraduateRecordPlans.xlsx";
+        self.set('filetobeloaded',label);
+
+        sheet_name_list.forEach(function (sheetName) {
+          var worksheet = workbook.Sheets[sheetName];
+
+          // //get the range of the worksheet
+          var range = XLSX.utils.decode_range(worksheet["!ref"]);
+          // //loop from start of the range to the end of the range
+          var index =0; var courseLetterArray=[]; var courseNumberArray=[];
+          var nameArray=[]; var unitArray = [];
+          for(var R = (range.s.r+1); R <= range.e.r; R++)
+          {
+            var courseLetter =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})].v;
+            var courseNumber =  worksheet[XLSX.utils.encode_cell({c: 1, r:R})].v;
+            var name = worksheet[XLSX.utils.encode_cell({c: 2, r:R})].v;
+            var unit = worksheet[XLSX.utils.encode_cell({c: 3, r:R})].v;
+            courseLetterArray[index] = courseLetter;
+            courseNumberArray[index] = courseNumber;
+            nameArray[index] = name;
+            unitArray[index] = unit;
+            index++;
+          }
+          //start updating the courses
+          var allCourseCode = self.get('store').peekAll('course-code');
+
+          for(let i=0;i<courseLetterArray.length;i++)
+          {
+            for(let j=0;j<allCourseCode.get('length');j++)
+            {
+              if(courseLetterArray[i]==allCourseCode.objectAt(j).get('courseLetter') && courseNumberArray[i]==allCourseCode.objectAt(j).get('courseNumber'))
+              {
+                //if same course number and letter, need to update the other info
+                let curretCourseCode = allCourseCode.objectAt(j);
+                curretCourseCode.set('name',nameArray[i]);
+                curretCourseCode.set('unit',unitArray[i]);
+                curretCourseCode.save();
+              }
+            }
+          }
+        });
+      }
+      else if(file.name ==="BasisOfAdmission.xlsx")
+      {
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Please upload RegistrationComments.xlsx";
+        self.set('filetobeloaded',label);
+
+        sheet_name_list.forEach(function (sheetName) {
+          var worksheet = workbook.Sheets[sheetName];
+
+          // //get the range of the worksheet
+          var range = XLSX.utils.decode_range(worksheet["!ref"]);
+          // //loop from start of the range to the end of the range
+          var lastStudentNum;
+          for(var R = (range.s.r+1); R <= range.e.r; R++)
+          {
+            var studentnum =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})];
+            var note =  worksheet[XLSX.utils.encode_cell({c: 1, r:R})].v;
+            //do nothing but skip the current row if the course is nothing
+            if(note === "NONE FOUND")
+            {
+              continue;
+            }
+
+            if(studentnum == null)
+            {
+              studentnum = lastStudentNum;
+            }
+            else if(studentnum.v =="")
+            {
+              studentnum = lastStudentNum;
+            }
+            else {
+              lastStudentNum = studentnum;
+            }
+            //at this point, the student number is properly assigned even for student with multiple record
+            //and all students with none record is excluded
+            studentnum = studentnum.v;
+            //get all student from the local store cache
+            var allStudentRecord =self.get('store').peekAll('student');
+            for(let j=0;j<allStudentRecord.get('length');j++)
+            {
+              //if the stduent number matches
+              if(studentnum == allStudentRecord.objectAt(j).get('number'))
+              {
+                //student record used for the targeted student
+                var studentRecord = allStudentRecord.objectAt(j);
+                var updatednote;
+                //if the basisOfAdmission is null replace it with note
+                if(studentRecord.get('basisOfAdmission') == null)
+                {
+                  updatednote = note;
+                }
+                //else append the not into that
+                else{
+                  updatednote = studentRecord.get('basisOfAdmission')+"\n"+note;
+                }
+
+                studentRecord.set('basisOfAdmission',updatednote);
+                //how to walk around here except ajax
+                studentRecord.save();
+              }
+            }
+          }
+        });
+      }
+
+      else if(file.name ==="RegistrationComments.xlsx")
+      {
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Please upload scholarshipsAndAwards.xlsx";
+        self.set('filetobeloaded',label);
+
+        sheet_name_list.forEach(function (sheetName) {
+          var worksheet = workbook.Sheets[sheetName];
+
+          // //get the range of the worksheet
+          var range = XLSX.utils.decode_range(worksheet["!ref"]);
+          // //loop from start of the range to the end of the range
+          var lastStudentNum;
+          for(var R = (range.s.r+1); R <= range.e.r; R++)
+          {
+            var studentnum =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})];
+            var note =  worksheet[XLSX.utils.encode_cell({c: 1, r:R})].v;
+            //do nothing but skip the current row if the course is nothing
+            if(note === "NONE FOUND")
+            {
+              continue;
+            }
+
+            if(studentnum == null)
+            {
+              studentnum = lastStudentNum;
+            }
+            else if(studentnum.v =="")
+            {
+              studentnum = lastStudentNum;
+            }
+            else {
+              lastStudentNum = studentnum;
+            }
+            //at this point, the student number is properly assigned even for student with multiple record
+            //and all students with none record is excluded
+            studentnum = studentnum.v;
+            //get all student from the local store cache
+            var allStudentRecord =self.get('store').peekAll('student');
+            for(let j=0;j<allStudentRecord.get('length');j++)
+            {
+              //if the stduent number matches
+              if(studentnum == allStudentRecord.objectAt(j).get('number'))
+              {
+                //student record used for the targeted student
+                var studentRecord = allStudentRecord.objectAt(j);
+                var updatednote;
+                //if the basisOfAdmission is null replace it with note
+                if(studentRecord.get('registrationComments') == null)
+                {
+                  updatednote = note;
+                }
+                //else append the not into that
+                else{
+                  updatednote = studentRecord.get('registrationComments')+"\n"+note;
+                }
+
+                studentRecord.set('registrationComments',updatednote);
+                //how to walk around here except ajax
+                studentRecord.save();
+              }
+            }
+          }
+        });
+      }
+      else if(file.name ==="HighSchoolCourseInformation.xlsx")
+      {
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Please upload termcodes.xlsx";
+        self.set('filetobeloaded',label);
+
+        sheet_name_list.forEach(function (sheetName) {
+          var worksheet = workbook.Sheets[sheetName];
+          // //get the range of the worksheet
+          var range = XLSX.utils.decode_range(worksheet["!ref"]);
+          // //loop from start of the range to the end of the range
+          var lastStudentNum,lastSchoolName;
+          //a bunch of array to hold the value
+          var studentnumArray = []; var schoolnameArray = []; var levelArray = []; var subjectArray = [];
+          var descriptionArray = []; var sourceArray = []; var unitsArray = []; var gradeArray = [];
+          var subjectArrayTracker = []; var descriptionArraytracker =[];
+          var index =0;
+          for(var R = (range.s.r+1); R <= range.e.r; R++)
+          {
+            var studentnum =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})];
+            var schoolname =  worksheet[XLSX.utils.encode_cell({c: 1, r:R})];
+
+            if(studentnum == null)
+            {
+              studentnum = lastStudentNum;
+            }
+            else if(studentnum.v =="")
+            {
+              studentnum = lastStudentNum;
+            }
+            else {
+              lastStudentNum = studentnum;
+            }
+            if(schoolname == null)
+            {
+              schoolname =  lastSchoolName;
             }
             else{
-              self.get('secondarySchoolModel').pushObject(newschool);
+              //when school name is not null, record the school name
+              lastSchoolName = schoolname;
+            }
+
+            //at this point, the student number is properly assigned even for student with multiple record
+            //and all students with none record is excluded
+            studentnum = studentnum.v;
+            schoolname = schoolname.v;
+            if(schoolname ==="NONE FOUND")
+            {
+              //if the schoolname is not found, skip this row
+              continue;
+            }
+            var level = worksheet[XLSX.utils.encode_cell({c: 2, r:R})].v;
+            var subject = worksheet[XLSX.utils.encode_cell({c: 3, r:R})].v;
+            var description = worksheet[XLSX.utils.encode_cell({c: 4, r:R})].v;
+            var source = worksheet[XLSX.utils.encode_cell({c: 5, r:R})].v;
+            var units = worksheet[XLSX.utils.encode_cell({c: 6, r:R})].v;
+            var grade = worksheet[XLSX.utils.encode_cell({c: 7, r:R})].v;
+            //store all values in the array
+            studentnumArray[index] = studentnum;
+            schoolnameArray[index] = schoolname;
+            levelArray[index] = level;
+            sourceArray[index] = source;
+            unitsArray[index] = units;
+            gradeArray[index] = grade;
+            //two tracker used to know the corresponding subject and description of the student
+            subjectArrayTracker[index] =subject;
+            descriptionArraytracker[index] = description;
+            //if the line is not skiped
+            index++;
+
+            //check the subject array to eliminate any duplications it might have, used to create subject model
+            //if the subjectArray length is zero addd it anyway
+            //boolean check if the subject found in the array
+            let found = false;
+            for(let i=0;i<subjectArray.length;i++)
+            {
+              //if subject name and description exsit in the array, don't add them again
+              if((subjectArray[i]==subject) && (descriptionArray[i] == description))
+              {
+                found = true;
+              }
+            }
+            if(!found)
+            {
+              //if it does not exist before add it to the array
+              subjectArray[subjectArray.length] = subject;
+              descriptionArray[descriptionArray.length] = description;
             }
           }
-        }
+          //after the loop all values should be stored in the array
 
+          //create all high school subjects
+          for(let i=0;i<subjectArray.length;i++)
+          {
+            let newhssubject = self.get('store').createRecord('high-school-subject',{
+              name: subjectArray[i],
+              description: descriptionArray[i],
+            });
+
+            if(i==subjectArray.length-1)
+            {
+              //this is the last run of the sae new subject, using the call back can guarentee that the
+              //post of new subjects is done before starting to add the new courses
+              newhssubject.save().then(function(){
+                //create high school course
+
+                for(let j=0;j<levelArray.length;j++)
+                {
+                  //get all local cached high school subject
+                  var allsubject = self.get('store').peekAll('high-school-subject');
+                  var currentsubject;
+                  for(let i=0;i<allsubject.get('length');i++)
+                  {
+                    //if the subject name and description both matches
+                    if(subjectArrayTracker[j] == allsubject.objectAt(i).get('name') && descriptionArraytracker[j] == allsubject.objectAt(i).get('description'))
+                    {
+                      currentsubject = allsubject.objectAt(i);
+                    }
+                  }
+                  //get all local cached secondary-school and find the highschool by name
+                  var allHighschoolRecord= self.get('store').peekAll('secondary-school');
+                  var highschoolRecord;
+                  for(let i=0;i<allHighschoolRecord.get('length');i++)
+                  {
+                    if(allHighschoolRecord.objectAt(i).get('name') == schoolnameArray[j])
+                    {
+                      highschoolRecord = allHighschoolRecord.objectAt(i);
+                      var newhscoures = self.get('store').createRecord('high-school-course',{
+                        level:levelArray[j],
+                        source:sourceArray[j],
+                        unit:unitsArray[j],
+                        school:highschoolRecord,
+                        course:currentsubject,
+                      });
+                      if(j== levelArray.length-1)
+                      {
+                        //this is the last run of the new course, using callback can guarentee the new courses
+                        // are posted before the new course grade creation, so that new course pk will not be null
+                        newhscoures.save().then(function(){
+                          //create hs course grade record
+                          for(var k=0;k<unitsArray.length;k++)
+                          {
+                            //get all student from the local store cache
+                            var allStudentRecord =self.get('store').peekAll('student');
+                            var studentRecord;
+                            for(let m=0;m<allStudentRecord.get('length');m++)
+                            {
+                              //if the stduent number matches
+                              if(studentnumArray[k] == allStudentRecord.objectAt(m).get('number'))
+                              {
+                                //student record used for the targeted student
+                                studentRecord = allStudentRecord.objectAt(m);
+                              }
+                            }
+                            //get all high school courses from local cache
+                            var allHighSchoolCourses = self.get('store').peekAll('high-school-course');
+                            for(let l=0;l<allHighSchoolCourses.get('length');l++)
+                            {
+                              //if the high-school-course matches the course name and grade and description
+                              if(levelArray[k]==allHighSchoolCourses.objectAt(l).get('level')
+                              && sourceArray[k]==allHighSchoolCourses.objectAt(l).get('source')
+                              && unitsArray[k]==allHighSchoolCourses.objectAt(l).get('unit')
+                              && schoolnameArray[k]==allHighSchoolCourses.objectAt(l).get('school').get('name')
+                              && subjectArrayTracker[k]==allHighSchoolCourses.objectAt(l).get('course').get('name')
+                              && descriptionArraytracker[k]==allHighSchoolCourses.objectAt(l).get('course').get('description'))
+                              {
+                                var hscourse = allHighSchoolCourses.objectAt(l);
+                                var newhsCourseGrade = self.get('store').createRecord('hscourse-grade', {
+                                  mark:grade,
+                                  source: hscourse,
+                                  studentInfo: studentRecord,
+                                });
+                                newhsCourseGrade.save();
+                              }
+                            }
+                          }
+                        });
+                      }
+                      else
+                      {
+                        //when it's not the last run of the save course
+                        newhscoures.save();
+                      }
+
+                    }
+                  }
+                }
+              });
+            }
+            else{
+              //when it's not the last run of the save subject
+              newhssubject.save();
+            }
+          }
+        });
+      }
+      else if(file.name === "AdmissionAverages.xlsx")
+      {
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Please upload AdmissionComments.xlsx";
+        self.set('filetobeloaded',label);
+
+        sheet_name_list.forEach(function (sheetName) {
+          var worksheet = workbook.Sheets[sheetName];
+
+          // //get the range of the worksheet
+          var range = XLSX.utils.decode_range(worksheet["!ref"]);
+          // //loop from start of the range to the end of the range
+          var lastStudentNum;
+          for(var R = (range.s.r+1); R <= range.e.r; R++)
+          {
+            var studentnum =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})];
+            var note =  worksheet[XLSX.utils.encode_cell({c: 1, r:R})].v;
+            if(studentnum == null)
+            {
+              studentnum = lastStudentNum;
+            }
+            else if(studentnum.v =="")
+            {
+              studentnum = lastStudentNum;
+            }
+            else {
+              lastStudentNum = studentnum;
+            }
+            studentnum = studentnum.v;
+            //get all local cached student and find the student by student number
+            //get all student from the local store cache
+            var allStudentRecord =self.get('store').peekAll('student');
+            for(let j=0;j<allStudentRecord.get('length');j++)
+            {
+              //if the stduent number matches
+              if(studentnum == allStudentRecord.objectAt(j).get('number'))
+              {
+                //student record used for the targeted student
+                var studentRecord = allStudentRecord.objectAt(j);
+                var updatednote;
+                //if the basisOfAdmission is null replace it with note
+                if(studentRecord.get('admissionAverage') == null)
+                {
+                  updatednote = note;
+                }
+                //else append the not into that
+                else{
+                  updatednote = studentRecord.get('admissionAverage')+"\n"+note;
+                }
+
+                studentRecord.set('admissionAverage',updatednote);
+                //how to walk around here except ajax
+                studentRecord.save();
+              }
+            }
+          }
+        });
+      }
+
+      else if(file.name ==="UndergraduateRecordPlans.xlsx")
+      {
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Done!";
+        self.set('filetobeloaded',label);
+
+        sheet_name_list.forEach(function (sheetName) {
+          var worksheet = workbook.Sheets[sheetName];
+
+          // //get the range of the worksheet
+          var range = XLSX.utils.decode_range(worksheet["!ref"]);
+          // //loop from start of the range to the end of the range
+          var lastterm,lastprogram,lastlevel,lastload,lastStudentNum;
+          var termCodeArray =[]; var programArray =[]; var levelArray = [];
+          var studentnumArray = []; var loadArray =[]; var planArray =[];
+          var index=0;
+          var planModelArray=[]; var programModelArray =[]; var loadModelArray = [];
+          var levelModelArray =[];
+          for(var R = (range.s.r+1); R < range.e.r; R++)
+          {
+            //student number not useful in this case
+            var term =  worksheet[XLSX.utils.encode_cell({c: 1, r:R})];
+            var program = worksheet[XLSX.utils.encode_cell({c: 2, r:R})];
+            var level = worksheet[XLSX.utils.encode_cell({c: 3, r:R})];
+            var load = worksheet[XLSX.utils.encode_cell({c: 4, r:R})];
+            var studentnum =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})];
+            var plan = worksheet[XLSX.utils.encode_cell({c: 5, r:R})];
+            //if term is null, that means there is a same plan for program record
+            //use all previous record for it.
+            if(plan == null)
+            {
+              //when plan is null, that means this roll is entirely empty, skip current row
+              continue;
+            }
+            if(studentnum == null)
+            {
+              studentnum = lastStudentNum;
+            }
+            else if(studentnum.v =="")
+            {
+              studentnum = lastStudentNum;
+            }
+            else {
+              lastStudentNum = studentnum;
+            }
+            if(term == null)
+            {
+              term = lastterm;
+              program = lastprogram;
+              level = lastlevel;
+              load = lastload;
+            }
+            else{
+              lastterm = term;
+              lastprogram = program;
+              lastlevel = level;
+              lastload = load;
+            }
+
+            //set all varible to their corresponding values
+            term = term.v;
+            program = program.v;
+            level = level.v;
+            load = load.v;
+            studentnum = studentnum.v;
+            plan = plan.v;
+            //assign the value to corresponding array
+            termCodeArray[index] = term;
+            programArray[index] = program;
+            levelArray[index] = level;
+            loadArray[index] = load;
+            studentnumArray[index] = studentnum;
+            planArray[index] = plan;
+
+            index++;
+
+            //check duplications for plan and add non duplicated to plan model array
+            //boolean check if the plan found in the array
+            let foundplan = false;
+            for(let i=0;i<planModelArray.length;i++)
+            {
+              //if plan is found in the array
+              if(planModelArray[i]==plan)
+              {
+                foundplan = true;
+              }
+            }
+            if(!foundplan)
+            {
+              //if it does not exist before add it to the array
+              planModelArray[planModelArray.length] = plan;
+            }
+
+            //check duplications for plan and add non duplicated to plan model array
+            //boolean check if the plan found in the array
+            let foundprogram = false;
+            for(let i=0;i<programModelArray.length;i++)
+            {
+              //if program is found in the array
+              if(programModelArray[i]==program && levelModelArray[i]==level && loadModelArray == load)
+              {
+                foundprogram = true;
+              }
+            }
+            if(!foundprogram)
+            {
+              //if it does not exist before add it to the array
+              programModelArray[programModelArray.length] = program;
+              levelModelArray[levelModelArray.length] = level;
+              loadModelArray[loadModelArray.length] = load;
+            }
+          }
+
+          //create plan model
+          for(let i=0;i<planModelArray.length;i++)
+          {
+            var newplan = self.get('store').createRecord('plan-code',{
+              name: planModelArray[i],
+            });
+            if(i==planModelArray.length-1)
+            {
+              newplan.save().then(function(){
+
+                //start creating the program record
+                for (let j=0;j<programModelArray.length;j++)
+                {
+                  var newProgram = self.get('store').createRecord('program-record',{
+                    name: programModelArray[j],
+                    level: levelModelArray[j],
+                    load: loadModelArray[j],
+                  });
+                  if(j== programModelArray.length-1)
+                  {
+                    newProgram.save().then(function(){
+
+                      //start updateing the program record plan code
+                      //get all program model in local cache
+                      var allProgram = self.get('store').peekAll('program-record');
+                      for(let k=0;k<allProgram.get('length');k++)
+                      {
+                        //first get the plan code
+                        var allPlanCode = self.get('store').peekAll('plan-code');
+                        var currentPlanCode;
+                        for(let l=0;l<allPlanCode.get('length');l++)
+                        {
+                          if(planArray[k] == allPlanCode.objectAt(l).get('name'))
+                          {
+                            currentPlanCode = allPlanCode.objectAt(l);
+                            break;
+                          }
+                        }
+                        //after loate the plan code
+                        var currentProgram;
+                        for(let l=0;l<allProgram.get('length');l++)
+                        {
+                          if(allProgram.objectAt(l).get('name') == programArray[k]
+                          && allProgram.objectAt(l).get('level') == levelArray[k]
+                          && allProgram.objectAt(l).get('load') == loadArray[k])
+                          {
+                            //located the program record
+                            currentProgram = allProgram.objectAt(l);
+                            break;
+                          }
+                        }
+                        //after locate the program record
+                        //if the plan code array is null
+                        if(currentProgram.get('plan') === null)
+                        {
+                          let plancodearray = [currentPlanCode];
+                          currentProgram.set('plan',plancodearray);
+                        }
+                        //if the plan code array is not empty
+                        else
+                        {
+                          let plancodearray = currentProgram.get('plan');
+                          //add the current plan code to the array
+                          plancodearray.pushObject(currentPlanCode);
+                        }
+
+                        if(k==allProgram.get('length')-1)
+                        {
+                          currentProgram.save().then(function(){
+
+                            //the last run of the current program, start adding program record in Terms
+                            for (let x=0;x<termCodeArray.length;x++)
+                            {
+                              //first get all terms
+                              var allterm = self.get('store').peekAll('term');
+                              var currentterm;
+                              for (let a =0;a<allterm.get('length');a++)
+                              {
+                                if(allterm.objectAt(a).get('term').get('name') == termCodeArray[x]
+                                && allterm.objectAt(a).get('studentInfo').get('number') == studentnumArray[x])
+                                {
+                                  //if both term name and student number matches
+                                  currentterm = allterm.objectAt(a);
+                                  break;
+                                }
+                              }
+                              //after located the term
+                              var allProgram = self.get('store').peekAll('program-record');
+                              var currentProgramobj;
+                              for(let b=0;b<allProgram.get('length');b++)
+                              {
+                                if(allProgram.objectAt(b).get('name') == programArray[x]
+                                && allProgram.objectAt(b).get('level') == levelArray[x]
+                                && allProgram.objectAt(b).get('load') == loadArray[x])
+                                {
+                                  //located the program record
+                                  currentProgramobj = allProgram.objectAt(b);
+                                  break;
+                                }
+                              }
+                              //after locate the program record
+                              //start updating the term
+                              //if the plan code array is null
+                              if(currentterm.get('program') == null)
+                              {
+                                let programarray = [currentProgramobj];
+                                currentterm.set('program',programarray);
+                              }
+                              //if the plan code array is not empty
+                              else
+                              {
+                                let programarray = currentterm.get('program');
+                                //add the current plan code to the array
+                                programarray.pushObject(currentProgramobj);
+                              }
+                              currentterm.save();
+                            }
+                          });
+                        }
+                        else{
+                          currentProgram.save();
+                        }
+                      }
+                    });
+                  }
+                  else{
+                    newProgram.save();
+                  }
+                }
+              });
+            }
+            else{
+              newplan.save();
+            }
+          }
+        });
+      }
+
+      else if(file.name === "UndergraduateRecordCourses.xlsx")
+      {
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Please upload UndergraduateCourses.xlsx";
+        self.set('filetobeloaded',label);
+
+        sheet_name_list.forEach(function (sheetName) {
+          var worksheet = workbook.Sheets[sheetName];
+
+          // //get the range of the worksheet
+          var range = XLSX.utils.decode_range(worksheet["!ref"]);
+          // //loop from start of the range to the end of the range
+          var lastStudentNum; var lastterm;
+          var studentnumArray = []; var termCodeArray = []; var courseLetterArray =[];
+          var courseNumberArray =[]; var sectionArray =[]; var gradeArray =[];
+          var noteArray =[]; var gradeModelArray=[]; var noteModelArray=[];
+          var index =0;
+          var termModelStudentArray = []; var termModelTermArray =[];
+          for(var R = (range.s.r+1); R <= range.e.r; R++)
+          {
+            //student number not useful in this case
+            let studentnum =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})];
+            let term =  worksheet[XLSX.utils.encode_cell({c: 1, r:R})];
+            let courseLetter = worksheet[XLSX.utils.encode_cell({c: 2, r:R})];
+            let courseNumber = worksheet[XLSX.utils.encode_cell({c: 3, r:R})];
+            let section = worksheet[XLSX.utils.encode_cell({c: 4, r:R})];
+            let grade = worksheet[XLSX.utils.encode_cell({c: 5, r:R})];
+            let note = worksheet[XLSX.utils.encode_cell({c: 6, r:R})];
+
+            //if note is null keep it like that else assignment the acutal value to note
+            if(note != null)
+            {
+              note = note.v;
+            }
+            if(grade != null)
+            {
+              grade = grade.v;
+            }
+            if(studentnum == null)
+            {
+              studentnum = lastStudentNum;
+            }
+            else if(studentnum.v =="")
+            {
+              studentnum = lastStudentNum;
+            }
+            else {
+              lastStudentNum = studentnum;
+            }
+            if(term == null)
+            {
+              term = lastterm;
+            }
+            else{
+              lastterm = term;
+              //if term is not null add the term and student info to term model array, used to construct term model (unique)
+              let tempTerm = term.v;
+              let tempStudent = studentnum.v;
+              termModelTermArray[termModelTermArray.length] = tempTerm;
+              termModelStudentArray[termModelStudentArray.length] = tempStudent;
+            }
+            term = term.v;
+            studentnum = studentnum.v;
+            courseLetter = courseLetter.v;
+            courseNumber = courseNumber.v;
+            section = section.v;
+            //assign the value to their corresponding array
+            studentnumArray[index] = studentnum;
+            termCodeArray[index] = term;
+            courseLetterArray[index] = courseLetter;
+            courseNumberArray[index] = courseNumber;
+            sectionArray[index] = section;
+            gradeArray[index] = grade;
+            noteArray[index] = note;
+            index++;
+            //check the grade array to eliminate any duplications it might have, used to create grade model
+            //if the grademodel length is zero addd it anyway
+            //boolean check if the subject found in the array
+            let found = false;
+            for(let i=0;i<gradeModelArray.length;i++)
+            {
+              //if subject name and description exsit in the array, don't add them again
+              if((gradeModelArray[i] == grade) && (noteModelArray[i] == note))
+              {
+                found = true;
+              }
+            }
+            if(!found)
+            {
+              //if it does not exist before add it to the array
+              gradeModelArray[gradeModelArray.length] = grade;
+              noteModelArray[noteModelArray.length] = note;
+            }
+          }
+          //end of the for loop all data at this point should be stored in the array
+
+          //create new grade
+          for(let i=0;i<gradeModelArray.length;i++)
+          {
+            var newgrade = self.get('store').createRecord('grade',{
+              mark: gradeModelArray[i],
+              note: noteModelArray[i],
+            });
+            if(i == gradeModelArray.length-1)
+            {
+              //when it is the last run, save the data and use to call back function to chin the series of saving together
+              newgrade.save().then(function(){
+
+                //this call back can gurentee when all grade is posted to db before proceed
+                //get all student from the local store cache
+                var allStudentRecord =self.get('store').peekAll('student');
+                //student record used for the targeted student
+                var studentRecord;
+                //double for loop, compare each element in Aarray (student number array) to each object in all student record
+                for(let j=0;j<termModelTermArray.length;j++)
+                {
+                  for(let k=0;k<allStudentRecord.get('length');k++)
+                  {
+                    //if the stduent number matches
+                    if(termModelStudentArray[j] == allStudentRecord.objectAt(k).get('number'))
+                    {
+                      studentRecord = allStudentRecord.objectAt(k);
+                    }
+                  }
+
+                  //start constructing the term model
+                  var allTermcode = self.get('store').peekAll('term-code');
+                  var currentTermCode;
+                  for (let a=0;a<allTermcode.get('length');a++)
+                  {
+                    if(allTermcode.objectAt(a).get('name') == termModelTermArray[j])
+                    {
+                      //if term code matches
+                      currentTermCode = allTermcode.objectAt(a);
+                      //after found the term code
+                      var newterm= self.get('store').createRecord('term',{
+                        term:currentTermCode,
+                        studentInfo: studentRecord,
+                      });
+                      //use the callback on the last term save to chain the function together
+                      if(j==termModelTermArray.length-1)
+                      {
+                        newterm.save().then(function(){
+
+                          //start updating course code
+                          var allGradeRecord = self.get('store').peekAll('grade');
+                          var allterm = self.get('store').peekAll('term');
+                          for(let k=0;k<courseLetterArray.length;k++)
+                          {
+                            var currentgrade;
+                            for(let l=0;l<allGradeRecord.get('length');l++)
+                            {
+                              //if the grade mark and note matches
+                              if(allGradeRecord.objectAt(l).get('mark') == gradeArray[k] && allGradeRecord.objectAt(l).get('note') == noteArray[k])
+                              {
+                                currentgrade = allGradeRecord.objectAt(l);
+                                break;
+                              }
+                            }
+                            //at this point it should either get the grade object or the student has a null grade
+
+                            var currenttermobj;
+                            for (let m=0;m<allterm.get('length');m++)
+                            {
+                              if((termCodeArray[k]==allterm.objectAt(m).get('term').get('name')) && (studentnumArray[k]==allterm.objectAt(m).get('studentInfo').get('number')))
+                              {
+                                currenttermobj = allterm.objectAt(m);
+                                break;
+                              }
+                            }
+                            //start updating the course code grade info
+                            //get all course code from local cache
+
+                            var currentcourse = self.get('store').createRecord('course-code',{
+                              courseLetter: courseLetterArray[k],
+                              courseNumber: courseNumberArray[k],
+                              mark: currentgrade,
+                              semester: currenttermobj
+                            });
+                            currentcourse.save();
+                          }
+                        });
+                      }
+                      else{
+                        newterm.save();
+                      }
+                    }
+                  }
+                }
+              });
+            }
+            else{
+              //when it isn't the last run, save it normally
+              newgrade.save();
+            }
+          }
+        });
+      }
+    },
+    //end of the read file function
+
+    deleteall:function(){
+      //delete has to be called before uploading
+      //when delete is call, increment the counter so the uploading will work
+      var counter = this.get('count');
+      counter=1;
+      this.set('count',counter);
+      var label = this.get('filetobeloaded');
+      label = "Please upload residencies.xlsx";
+      this.set('filetobeloaded',label);
+      //when user start uploading the file, delete all original data in the db
+      //delete all student record
+      this.get('store').query('student', {
+        limit: 9007199254740992, //this is the max int in javascript
+        offset: 0
+      }).then(function (record) {
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
       });
-    }
 
-  else if(file.name ==="students.xlsx")
-  {
-    sheet_name_list.forEach(function (sheetName) {
-      let firsttime = true;
-      var indexA=0; var indexB=0; var indexC=0; var indexD=0; var indexE=0; var indexF=0;
-      var Aarray = []; var Barray = []; var Carray = []; var Darray = []; var Earray = []; var Farray = [];
-      var worksheet = workbook.Sheets[sheetName];
-      for (var cellName in worksheet) {
-        //all keys that do not begin with "!" correspond to cell addresses
-        if (cellName[0] === '!') {
-          continue;
-        }
-        //skip all cells in the first row
-        if(indexA <1){
-          indexA++;
-          continue;
-        }
-        if(indexB<1)
-        {
-          indexB++;
-          continue;
-        }
-        if(indexC<1)
-        {
-          indexC++;
-          continue;
-        }
-        if(indexD<1)
-        {
-          indexD++;
-          continue;
-        }
-        if(indexE<1)
-        {
-          indexE++;
-          continue;
-        }
-        if(indexF<1)
-        {
-          indexF++;
-          continue;
-        }
-        //for the first colume where cell name start with A
-        if(cellName[0] === "A")
-        {
-          Aarray[indexA] = worksheet[cellName].v;
-          //increment indexA
-          indexA++;
-        }
-        //for the second colume where cell name start with B
-        if(cellName[0] === "B")
-        {
-          Barray[indexB] = worksheet[cellName].v;
-          //increment indexB
-          indexB++;
-        }
-        //for the 3 colume where cell name start with C
-        if(cellName[0] === "C")
-        {
-          Carray[indexC] = worksheet[cellName].v;
-          //increment indexC
-          indexC++;
-        }
-        //for the 4 colume where cell name start with D
-        if(cellName[0] === "D")
-        {
-          Darray[indexD] = worksheet[cellName].v;
-          //increment indexD
-          indexD++;
-        }
-        //for the first colume where cell name start with A
-        if(cellName[0] === "E")
-        {
-          Earray[indexE] = worksheet[cellName].v;
-          //increment indexE
-          indexE++;
-        }
-        //for the first colume where cell name start with A
-        if(cellName[0] === "F")
-        {
-          Farray[indexF] = worksheet[cellName].v;
-          //increment indexF
-          indexF++;
-        }
-      }
+      //delete all gender record
+      this.get('store').findAll('gender').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
 
-      for(var i=1;i<indexA;i++)
-      {
-        self.send('findresidency',Farray[i]);
-        self.send('findgender',Darray[i]);
-        var res = self.get('currentResidency');
-        var gen = self.get('currentGender');
-        var newStudent = self.get('store').createRecord('student', { //create a new student record
-          number: Aarray[i],
-          firstName: Barray[i],
-          lastName: Carray[i],
-          DOB: new Date(Earray[i]),
-          photo: self.get('photoPath'),
-          resInfo: res,
-          genderInfo: gen,
-        });
-        newStudent.save(); //commit the student record to db
-        //push the newstudent into student model
-        if(firsttime)
-        {
-          self.set('studentModel',[newStudent]);
-          firsttime = false;
-        }
-        else{
-          self.get('studentModel').pushObject(newStudent);
-        }
+      //delete all residency record
+      this.get('store').findAll('residency').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
 
-      }
-     });
+      //delete all scholarship-award record
+      this.get('store').findAll('scholarship-award').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
+
+      //delete all advanced-standing record
+      this.get('store').findAll('advanced-standing').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
+
+      //delete all high-school-course record
+      this.get('store').findAll('high-school-course').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
+
+      //delete all high-school-subject record
+      this.get('store').findAll('high-school-subject').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
+
+      //delete all hscourse-grade record
+      this.get('store').findAll('hscourse-grade').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
+
+      //delete all secondary-school record
+      this.get('store').findAll('secondary-school').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
+
+      //delete all plan-code record
+      this.get('store').findAll('plan-code').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
+
+      //delete all program-record record
+      this.get('store').findAll('program-record').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
+
+
+      //delete all term-code record
+      this.get('store').findAll('term-code').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
+
+      //delete all course-code record
+      this.get('store').findAll('course-code').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
+
+      //delete all grade record
+      this.get('store').findAll('grade').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
+
+      //delete all term record
+      this.get('store').findAll('term').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
+    },
+
   }
-
-  else if(file.name === "AdvancedStanding.xlsx")
-  {
-    sheet_name_list.forEach(function (sheetName) {
-      var worksheet = workbook.Sheets[sheetName];
-
-      // //get the range of the worksheet
-        var range = XLSX.utils.decode_range(worksheet["!ref"]);
-      // //loop from start of the range to the end of the range
-      var lastStudentNum;
-       for(var R = (range.s.r+1); R <= range.e.r; R++)
-       {
-         var studentnum =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})];
-         var course =  worksheet[XLSX.utils.encode_cell({c: 1, r:R})].v;
-         //do nothing but skip the current row if the course is nothing
-         if(course === "NONE FOUND")
-         {
-           continue;
-         }
-
-         else if(studentnum == null)
-         {
-           studentnum =  lastStudentNum;
-         }
-         else{
-           //when student number is not null, record the student number
-           lastStudentNum = studentnum;
-         }
-         //at this point, the student number is properly assigned even for student with multiple record
-         //and all students with none record is excluded
-         studentnum = studentnum.v;
-         var description = worksheet[XLSX.utils.encode_cell({c: 2, r:R})].v;
-         var units = worksheet[XLSX.utils.encode_cell({c: 3, r:R})].v;
-         var grade = worksheet[XLSX.utils.encode_cell({c: 4, r:R})].v;
-         var from = worksheet[XLSX.utils.encode_cell({c: 5, r:R})].v;
-         //var studentdata = self.get('studentModel').findBy("number", studentnum);
-         self.send('findStudent',studentnum);
-         //console.log(self.get('currentStudent').get('number'));
-         var newASRecord = self.get('store').createRecord('advanced-standing', {
-           course: course,
-           description: description,
-           units: units,
-           grade: grade,
-           from: from,
-           studentInfo: self.get('currentStudent'),
-         });
-         newASRecord.save();
-       }
-     });
-  }
-  else if(file.name ==="scholarshipsAndAwards.xlsx")
-  {
-    sheet_name_list.forEach(function (sheetName) {
-      var worksheet = workbook.Sheets[sheetName];
-
-      // //get the range of the worksheet
-        var range = XLSX.utils.decode_range(worksheet["!ref"]);
-      // //loop from start of the range to the end of the range
-      var lastStudentNum;
-       for(var R = (range.s.r+1); R <= range.e.r; R++)
-       {
-         var studentnum =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})];
-         var note =  worksheet[XLSX.utils.encode_cell({c: 1, r:R})].v;
-         //do nothing but skip the current row if the course is nothing
-         if(note === "NONE FOUND")
-         {
-           continue;
-         }
-
-         if(studentnum == null)
-         {
-           studentnum =  lastStudentNum;
-         }
-         else{
-           //when student number is not null, record the student number
-           lastStudentNum = studentnum;
-         }
-         //at this point, the student number is properly assigned even for student with multiple record
-         //and all students with none record is excluded
-         studentnum = studentnum.v;
-         self.send('findStudent',studentnum);
-         var newAwardRecord = self.get('store').createRecord('scholarship-award', {
-           note: note,
-           studentInfo: self.get('currentStudent'),
-         });
-         newAwardRecord.save();
-       }
-     });
-  }
-
-  else if(file.name === "UndergraduateCourses.xlsx")
-  {
-    sheet_name_list.forEach(function (sheetName) {
-      var worksheet = workbook.Sheets[sheetName];
-
-      // //get the range of the worksheet
-        var range = XLSX.utils.decode_range(worksheet["!ref"]);
-      // //loop from start of the range to the end of the range
-       for(var R = (range.s.r+1); R <= range.e.r; R++)
-       {
-         var courseLetter =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})].v;
-         var courseNumber =  worksheet[XLSX.utils.encode_cell({c: 1, r:R})].v;
-         var name = worksheet[XLSX.utils.encode_cell({c: 2, r:R})].v;
-         var unit = worksheet[XLSX.utils.encode_cell({c: 3, r:R})].v;
-         var newCourseCodeRecord = self.get('store').createRecord('course-code', {
-           courseLetter: courseLetter,
-           courseNumber: courseNumber,
-           name: name,
-           unit: unit,
-         });
-         newCourseCodeRecord.save();
-       }
-     });
-  }
-  else if(file.name ==="BasisOfAdmission.xlsx")
-  {
-    sheet_name_list.forEach(function (sheetName) {
-      var worksheet = workbook.Sheets[sheetName];
-
-      // //get the range of the worksheet
-        var range = XLSX.utils.decode_range(worksheet["!ref"]);
-      // //loop from start of the range to the end of the range
-      var lastStudentNum;
-       for(var R = (range.s.r+1); R <= range.e.r; R++)
-       {
-         var studentnum =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})];
-         var note =  worksheet[XLSX.utils.encode_cell({c: 1, r:R})].v;
-         //do nothing but skip the current row if the course is nothing
-         if(note === "NONE FOUND")
-         {
-           continue;
-         }
-
-         if(studentnum == null)
-         {
-           studentnum =  lastStudentNum;
-         }
-         else{
-           //when student number is not null, record the student number
-           lastStudentNum = studentnum;
-         }
-         //at this point, the student number is properly assigned even for student with multiple record
-         //and all students with none record is excluded
-         studentnum = studentnum.v;
-         self.send('findStudent',studentnum);
-         var studenttemp = self.get('currentStudent');
-        var updatednote;
-        //if the basisOfAdmission is null replace it with note
-         if(studenttemp.get('basisOfAdmission') == null)
-         {
-            updatednote = note;
-         }
-         //else append the not into that
-         else{
-             updatednote = studenttemp.get('basisOfAdmission')+"/n"+note;
-         }
-
-         studenttemp.set('basisOfAdmission',updatednote);
-         //how to walk around here except ajax
-         studenttemp.save().then(() => {
-           //     this.set('isStudentFormEditing', false);
-         });
-       }
-     });
-  }
-
-  else if(file.name ==="RegistrationComments.xlsx")
-  {
-    sheet_name_list.forEach(function (sheetName) {
-      var worksheet = workbook.Sheets[sheetName];
-
-      // //get the range of the worksheet
-        var range = XLSX.utils.decode_range(worksheet["!ref"]);
-      // //loop from start of the range to the end of the range
-      var lastStudentNum;
-       for(var R = (range.s.r+1); R <= range.e.r; R++)
-       {
-         var studentnum =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})];
-         var note =  worksheet[XLSX.utils.encode_cell({c: 1, r:R})].v;
-         //do nothing but skip the current row if the course is nothing
-         if(note === "NONE FOUND")
-         {
-           continue;
-         }
-
-         if(studentnum == null)
-         {
-           studentnum =  lastStudentNum;
-         }
-         else{
-           //when student number is not null, record the student number
-           lastStudentNum = studentnum;
-         }
-         //at this point, the student number is properly assigned even for student with multiple record
-         //and all students with none record is excluded
-         studentnum = studentnum.v;
-         self.send('findStudent',studentnum);
-         var studenttemp = self.get('currentStudent');
-        var updatednote;
-        //if the basisOfAdmission is null replace it with note
-         if(studenttemp.get('registrationComments') == null)
-         {
-            updatednote = note;
-         }
-         //else append the not into that
-         else{
-             updatednote = studenttemp.get('registrationComments')+"\n"+note;
-         }
-
-         studenttemp.set('registrationComments',updatednote);
-         //how to walk around here except ajax
-         studenttemp.save().then(() => {
-           //     this.set('isStudentFormEditing', false);
-         });
-       }
-     });
-  }
-  else if(file.name === "UndergraduateRecordCourses.xlsx")
-  {
-    sheet_name_list.forEach(function (sheetName) {
-      var worksheet = workbook.Sheets[sheetName];
-
-      // //get the range of the worksheet
-      var range = XLSX.utils.decode_range(worksheet["!ref"]);
-      // //loop from start of the range to the end of the range
-      var studentNumber;
-      var term;
-      var courseLetter;
-      var courseNumber;
-      var section;
-      var grade;
-      for(var R = (range.s.r+1); R <= range.e.r; R++)
-      {
-        studentNumber =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})].v;
-        courseNumber =  worksheet[XLSX.utils.encode_cell({c: 1, r:R})].v;
-        name = worksheet[XLSX.utils.encode_cell({c: 2, r:R})].v;
-        unit = worksheet[XLSX.utils.encode_cell({c: 3 , r:R})].v;
-        newCourseCodeRecord = self.get('store').createRecord('course-code', {
-          courseLetter: courseLetter,
-          courseNumber: courseNumber,
-          name: name,
-          unit: unit,
-        });
-        newCourseCodeRecord.save();
-      }
-    })
-  }
-  else if(file.name ==="HighSchoolCourseInformation.xlsx")
-  {
-    sheet_name_list.forEach(function (sheetName) {
-      var worksheet = workbook.Sheets[sheetName];
-
-      // //get the range of the worksheet
-      var range = XLSX.utils.decode_range(worksheet["!ref"]);
-      // //loop from start of the range to the end of the range
-      var lastStudentNum,lastSchoolName;
-       for(var R = (range.s.r+1); R <= range.e.r; R++)
-       {
-         var studentnum =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})];
-         var schoolname =  worksheet[XLSX.utils.encode_cell({c: 1, r:R})];
-         //do nothing but skip the current row if the course is nothing
-
-         if(studentnum == null)
-         {
-           studentnum =  lastStudentNum;
-         }
-         else{
-           //when student number is not null, record the student number
-           lastStudentNum = studentnum;
-         }
-         if(schoolname == null)
-         {
-           schoolname =  lastSchoolName;
-         }
-         else{
-           //when school name is not null, record the school name
-           lastSchoolName = schoolname;
-         }
-
-         //at this point, the student number is properly assigned even for student with multiple record
-         //and all students with none record is excluded
-         studentnum = studentnum.v;
-         schoolname = schoolname.v;
-         if(schoolname ==="NONE FOUND")
-         {
-           //if the schoolname is not found, skip this row
-           continue;
-         }
-
-         self.send('findStudent',studentnum);
-         var studenttemp = self.get('currentStudent');
-         var level = worksheet[XLSX.utils.encode_cell({c: 2, r:R})].v;
-         var subject = worksheet[XLSX.utils.encode_cell({c: 3, r:R})].v;
-         var description = worksheet[XLSX.utils.encode_cell({c: 4, r:R})].v;
-         var source = worksheet[XLSX.utils.encode_cell({c: 5, r:R})].v;
-         var units = worksheet[XLSX.utils.encode_cell({c: 6, r:R})].v;
-         var grade = worksheet[XLSX.utils.encode_cell({c: 7, r:R})].v;
-
-         //create high school subject
-         var newhssubject = self.get('store').createRecord('high-school-subject',{
-           name: subject,
-           description: description
-         });
-         newhssubject.save();
-
-         //create high school course
-         self.send('findhighschool',schoolname);
-         var temphighschool = self.get('currentHighSchool');
-         //var tempsubject = this.get('currentHighSchoolSubject');
-         var newhscoures = self.get('store').createRecord('high-school-course',{
-           level:level,
-           source:source,
-           unit:units,
-           SecondSchoolInfo:temphighschool,
-           HighSchoolSubjectInfo:newhssubject,
-         });
-         newhscoures.save();
-
-         //create hs course grade record
-         var newhsCourseGrade = self.get('store').createRecord('hscourse-grade', {
-           mark:grade,
-           studentInfo: studenttemp,
-           source: newhscoures,
-         });
-         newhsCourseGrade.save();
-
-       }
-     });
-  }
-  else if(file.name === "AdmissionAverage.xlsx")
-  {
-    sheet_name_list.forEach(function (sheetName) {
-      var worksheet = workbook.Sheets[sheetName];
-
-      // //get the range of the worksheet
-        var range = XLSX.utils.decode_range(worksheet["!ref"]);
-      // //loop from start of the range to the end of the range
-      var lastStudentNum;
-       for(var R = (range.s.r+1); R <= range.e.r; R++)
-       {
-         var studentnum =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})];
-         var note =  worksheet[XLSX.utils.encode_cell({c: 1, r:R})].v;
-         if(studentnum == null)
-         {
-           studentnum =  lastStudentNum;
-         }
-         else{
-           //when student number is not null, record the student number
-           lastStudentNum = studentnum;
-         }
-         studentnum = studentnum.v;
-         self.send('findStudent',studentnum);
-         var studenttemp = self.get('currentStudent');
-         var updatednote;
-         if(studenttemp.get('admissionAverage') == null)
-         {
-            updatednote = note;
-         }
-         //else append the not into that
-         else{
-             updatednote = studenttemp.get('admissionAverage')+"\n"+note;
-         }
-
-         studenttemp.set('admissionAverage',updatednote);
-         //how to walk around here except ajax
-         studenttemp.save().then(() => {
-           //     this.set('isStudentFormEditing', false);
-         });
-       }
-     });
-  }
-
-  else if(file.name ==="UndergraduateRecordPlans.xlsx")
-  {
-    sheet_name_list.forEach(function (sheetName) {
-      var worksheet = workbook.Sheets[sheetName];
-
-      // //get the range of the worksheet
-      var range = XLSX.utils.decode_range(worksheet["!ref"]);
-      // //loop from start of the range to the end of the range
-      var lastterm,lastprogram,lastlevel,lastload,lastStudentNum;
-       for(var R = (range.s.r+1); R < range.e.r; R++)
-       {
-         //student number not useful in this case
-         var term =  worksheet[XLSX.utils.encode_cell({c: 1, r:R})];
-         var program = worksheet[XLSX.utils.encode_cell({c: 2, r:R})];
-         var level = worksheet[XLSX.utils.encode_cell({c: 3, r:R})];
-         var load = worksheet[XLSX.utils.encode_cell({c: 4, r:R})];
-         var studentnum =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})];
-         var plan = worksheet[XLSX.utils.encode_cell({c: 5, r:R})];
-         //if term is null, that means there is a same plan for program record
-         //use all previous record for it.
-         if(plan == null)
-         {
-           //when plan is null, that means this roll is entirely empty, skip current row
-           continue;
-         }
-         if(studentnum == null)
-         {
-           studentnum = lastStudentNum;
-         }
-         else{
-           lastStudentNum = studentnum;
-         }
-         if(term == null)
-         {
-           term = lastterm;
-           program = lastprogram;
-           level = lastlevel;
-           load = lastload;
-         }
-         else{
-           lastterm = term;
-           lastprogram = program;
-           lastlevel = level;
-           lastload = load;
-         }
-
-         //set all varible to their corresponding values
-         term = term.v;
-         program = program.v;
-         level = level.v;
-         load = load.v;
-         studentnum = studentnum.v;
-         plan = plan.v;
-
-
-         self.send('findStudent',studentnum);
-         var tempstudent = self.get('currentStudent');
-         self.send('findterm',term);
-         var termobj = self.get('currentTerm');
-
-         //create new plan code
-         var newplancode = self.get('store').createRecord('plan-code',{
-           name: plan,
-         });
-         var plancodearray = self.get('store').peekRecord('plan-code',newplancode);
-         if(plancodearray == null)
-         {
-           //if none same plan code is found, save it
-           newplancode.save();
-         }
-
-         //create a new program record
-         var newprogramRecord = self.get('store').createRecord('program-record', {
-           name: program,
-           level: level,
-           load: load,
-           semester: [termobj],
-         });
-         var programrecordarray = self.get('store').peekRecord('program-record',newprogramRecord);
-         if(programrecordarray == null)
-         {
-           //if none same program record is found, save it
-           newprogramRecord.save();
-         }
-        //  else{
-        //    //if the record exist, need to add it to the program record array in the plan code
-        //    plancodearray.get('program').pushObject(newplancode);
-        //  }
-//trying to do many to many not working properly, instead messing up my data for other part
-        // if(plancodearray == null)
-        // {
-        //    if(programrecordarray == null)
-        //    {
-        //      //when the value is null, set it to the array of program record
-        //      if(newplancode.get('program') == null){
-        //        newplancode.set('program',[newprogramRecord]);
-        //      }
-        //      else{
-        //        //if the value is not null append the record at the back of the array
-        //       newplancode.get('program').pushObject(newprogramRecord);
-        //      }
-        //    }
-        //    else{
-        //      if(newplancode.get('program') == null){
-        //         newplancode.set('program',[programrecordarray]);
-        //      }
-        //      else{
-        //        newplancode.get('program').pushObject(programrecordarray);
-        //      }
-        //
-        //    }
-        //   //if none same plan code is found, save it
-        //   newplancode.save();
-        // }
-        //
-        // if(plancodearray == null)
-        // {
-        //   if(programrecordarray == null)
-        //   {
-        //     if(newprogramRecord.get('plan')==null)
-        //     {
-        //       newprogramRecord.set('program',[programrecordarray]);
-        //     }
-        //     newprogramRecord.get('plan').pushObject(newplancode);
-        //     newprogramRecord.save();
-        //   }
-        //   else{
-        //     programrecordarray.get('plan').pushObject(newplancode);
-        //     programrecordarray.save();
-        //   }
-        // }
-        // else{
-        //   if(programrecordarray == null)
-        //   {
-        //     newprogramRecord.get('plan').pushObject(plancodearray);
-        //     newprogramRecord.save();
-        //   }
-        //   else{
-        //     programrecordarray.get('plan').pushObject(plancodearray);
-        //     programrecordarray.save();
-        //   }
-        // }
-        //
-        //  //set the term code with student info
-        //  termobj.set('studentInfo',tempstudent);
-        //  termobj.set('program',newprogramRecord);
-        //  termobj.save().then(() => {
-        //  });
-
-       }
-     });
-  }
-
-  else if(file.name === "UndergraduateRecordCourses.xlsx")
-  {
-    sheet_name_list.forEach(function (sheetName) {
-      var worksheet = workbook.Sheets[sheetName];
-
-      // //get the range of the worksheet
-      var range = XLSX.utils.decode_range(worksheet["!ref"]);
-      // //loop from start of the range to the end of the range
-      var lastStudentNum,lastterm;
-       for(var R = (range.s.r+1); R < range.e.r; R++)
-       {
-         //student number not useful in this case
-         var studentnum =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})];
-         var term =  worksheet[XLSX.utils.encode_cell({c: 1, r:R})];
-         var courseLetter = worksheet[XLSX.utils.encode_cell({c: 2, r:R})];
-         var courseNumber = worksheet[XLSX.utils.encode_cell({c: 3, r:R})];
-         var section = worksheet[XLSX.utils.encode_cell({c: 4, r:R})];
-         var grade = worksheet[XLSX.utils.encode_cell({c: 5, r:R})];
-         var note = worksheet[XLSX.utils.encode_cell({c: 6, r:R})];
-
-         //if note is null keep it like that else assignment the acutal value to note
-         if(note != null)
-         {
-           note = note.v;
-         }
-         if(grade != null)
-         {
-           grade = grade.v;
-         }
-         if(studentnum == null)
-         {
-           studentnum = lastStudentNum;
-         }
-         else{
-           lastStudentNum = studentnum;
-         }
-         if(term == null)
-         {
-           term = lastterm;
-         }
-         else{
-           lastterm = term;
-         }
-
-         //set all varible to their corresponding values
-         term = term.v;
-         studentnum = studentnum.v;
-         courseLetter = courseLetter.v;
-         courseNumber = courseNumber.v;
-         section = section.v;
-
-
-        //  self.send('findStudent',studentnum);
-        //  var tempstudent = self.get('currentStudent');
-
-         self.send('findterm',term);
-         var termobj = self.get('currentTerm');
-         //create new grade
-         var newgrade = self.get('store').createRecord('grade',{
-           mark: grade,
-           note: note,
-         });
-         newgrade.save();
-
-         //create new Course code
-         var newcoursecode = self.get('store').createRecord('course-code',{
-           courseLetter: courseLetter,
-           courseNumber: courseNumber,
-           unit: section,
-           semester: termobj,
-           mark: newgrade,
-         });
-         newcoursecode.save();
-
-       }
-     });
-  }
-},
-//end of the read file function
-
-findStudent:function(studentnum){
-  var self = this;
-  var length = self.get('studentModel').get('length');
-  for (var i=0;i<length;i++)
-  {
-    let tempstudent = self.get('studentModel').objectAt(i);
-    let tempnum = tempstudent.get('number');
-    //console.log(tempnum)
-    if(tempnum == studentnum)
-    {
-      self.set('currentStudent',tempstudent);
-    }
-  }
-},
-
-findhighschool:function(highschool){
-  var self = this;
-  var length = self.get('secondarySchoolModel').get('length');
-  for (var i=0;i<length;i++)
-  {
-    let temphighschool = self.get('secondarySchoolModel').objectAt(i);
-    let tempname = temphighschool.get('name');
-    //console.log(tempnum)
-    if(tempname == highschool)
-    {
-      self.set('currentHighSchool',temphighschool);
-    }
-  }
-},
-
-findterm:function(term){
-  var self = this;
-  var length = self.get('termCodeModel').get('length');
-  for (var i=0;i<length;i++)
-  {
-    let temptermobj = self.get('termCodeModel').objectAt(i);
-    let tempterm = temptermobj.get('name');
-    //console.log(tempnum)
-    if(tempterm == term)
-    {
-      self.set('currentTerm',temptermobj);
-    }
-  }
-},
-
-findgender:function(gen)
-{
-  var self = this;
-  var length = self.get('genderModel').get('length');
-  for (var i=0;i<length;i++)
-  {
-    let tempgender = self.get('genderModel').objectAt(i);
-    let gendername = tempgender.get('name');
-    //console.log(tempnum)
-    if(gendername == gen)
-    {
-      self.set('currentGender',tempgender);
-    }
-  }
-},
-
-findresidency:function(res)
-{
-  var self = this;
-  var length = self.get('residencyModel').get('length');
-  for (var i=0;i<length;i++)
-  {
-    let tempresidency = self.get('residencyModel').objectAt(i);
-    let residencyname = tempresidency.get('name');
-    //console.log(tempnum)
-    if(residencyname == res)
-    {
-      self.set('currentResidency',tempresidency);
-    }
-  }
-},
-
-}
-//end of actions
+  //end of actions
 });

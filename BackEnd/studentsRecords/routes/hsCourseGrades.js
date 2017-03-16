@@ -19,14 +19,14 @@ router.route('/')
         if (!hsCourseGradeFilter) {
             models.HsCourseGrades.find(function (error, hsCourseGrades) {
                 if (error) response.send(error);
-                response.json({hsCourseGrade: hsCourseGrades});
+                response.json({hscourseGrade: hsCourseGrades});
             });
             console.log("no filter");
         } else {
           console.log("filter");
             models.HsCourseGrades.find({"student": request.query.student}, function (error, hsCourseGrades) {
                 if (error) response.send(error);
-                response.json({hsCourseGrade: hsCourseGrades});
+                response.json({hscourseGrade: hsCourseGrades});
             });
         }
     });
@@ -38,7 +38,7 @@ router.route('/:hsCourseGrade_id')
                 response.send({error: error});
             }
             else {
-                response.json({hsCourseGrade: hsCourseGrade});
+                response.json({hscourseGrade: hsCourseGrade});
             }
         });
     })
@@ -57,7 +57,7 @@ router.route('/:hsCourseGrade_id')
                         response.send({error: error});
                     }
                     else {
-                        response.json({hsCourseGrade: hsCourseGrade});
+                        response.json({hscourseGrade: hsCourseGrade});
                     }
                 });
             }
@@ -67,7 +67,10 @@ router.route('/:hsCourseGrade_id')
         models.HsCourseGrades.findByIdAndRemove(request.params.hsCourseGrade_id,
             function (error, deleted) {
                 if (!error) {
-                    response.json({hsCourseGrade: deleted});
+                    response.json({hscourseGrade: deleted});
+                }
+                else {
+                  response.send({error: error});
                 }
             }
         );
