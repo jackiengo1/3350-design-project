@@ -1,11 +1,5 @@
 
 
-
-
-<!--  <div class="ui secondary center aligned grid padded segment" style="background-color: #EEE3FD;"> -->
-
-
-
   <div class="ui secondary center aligned grid padded segment" style="background-color: #EEE3FD;">
 
     <div class="two wide column" style="padding: 0;">
@@ -56,36 +50,13 @@
     <i class="large user icon"></i> User Settings
   </a>
 
-  <a class="two wide column item" {{action "about"}} style="font-size: 16px; font-weight: bold; margin: 0; padding-left: 5%;">
-    <i class="large user icon"></i> About
+  <a class="two wide column item" {{action "logout"}} style="font-size: 16px; font-weight: bold; margin: 0; padding-left: 5%;">
+    <i class="large user icon"></i> Logout
   </a>
 </div>
 
 
 
-{{!--<div class="ui seven item menu" style="background-color: #CEB1F4;">
-  <a class="item active" {{action "home"}} style="font-size: 16px; font-weight: bold;">
-    <i class="large home icon"></i> Home
-  </a>
-  <a class="item" {{action "studentsDataEntry"}} style="font-size: 16px; font-weight: bold;">
-    <i class="large leanpub icon"></i> Students Records
-  </a>
-  <a class="item " {{action "addResidency"}} style="font-size: 16px; font-weight: bold;">
-    <i class="large setting icon"></i> Configure Residency
-  </a>
-  <a class="item " {{action "addGender"}} style="font-size: 16px; font-weight: bold;">
-    <i class="large setting icon"></i> Configure Gender
-  </a>
-  <a class="item " {{action "addHighSchoolInfo"}} style="font-size: 16px; font-weight: bold;">
-    <i class="large setting icon"></i> Configure High School Information
-  </a>
-  <a class="item " {{action "addProgramRecord"}} style="font-size: 16px; font-weight: bold;">
-    <i class="large setting icon"></i> Configure Program Record Information
-  </a>
-  <a class="item " {{action "about"}} style="font-size: 16px; font-weight: bold;">
-    <i class="large user icon"></i> About
-  </a>
-</div>--}}
 
 <br/>
 
@@ -98,9 +69,6 @@
             {{/if}}
             {{#if isStudentsRecordsDataEntry}}
                 {{student-data-entry}}
-            {{/if}}
-            {{#if isAboutShowing}}
-                {{about-us}}
             {{/if}}
             {{#if isAddResidencyShowing}}
                 {{add-residency}}
@@ -119,6 +87,9 @@
           {{/if}}
           {{#if isUserSettingsShowing}}
             {{user-settings}}
+          {{/if}}
+          {{#if isLogoutShowing}}
+            {{log-out}}
           {{/if}}
         </div>
     </div>

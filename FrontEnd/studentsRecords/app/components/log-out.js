@@ -5,6 +5,12 @@ export default Ember.Component.extend({
   store: Ember.inject.service(),
   name: null,
 
+  init() {
+    this._super(...arguments);
+    this.get('oudaAuth').close();
+    this.get('routing').transitionTo('login');
+  },
+
   actions: {
     logout(){
       this.get('oudaAuth').close();
