@@ -46,9 +46,18 @@
     <i class="large user icon"></i> Student Assessment
   </a>
 
-  <a class="three wide column item" {{action "userSettings"}} style="font-size: 16px; font-weight: bold; margin: 0; padding-left: 5%;">
-    <i class="large user icon"></i> User Settings
-  </a>
+  <div class="three wide column ui dropdown item" style="font-size: 16px; font-weight: bold; margin: 0; padding-left: 5%;">
+    <i class="large setting icon"></i> User Settings
+    <i class="dropdown icon"></i>
+      <div class="menu">
+        <a class="item configureItem" {{action "userProfile"}} style="font-size: 16px; font-weight: bold;">
+          User Profile
+        </a>
+        <a class="item configureItem" {{action "adminPortal"}} style="font-size: 16px; font-weight: bold;">
+          Admin Portal
+        </a>
+      </div>
+  </div>
 
   <a class="two wide column item" {{action "logout"}} style="font-size: 16px; font-weight: bold; margin: 0; padding-left: 5%;">
     <i class="large user icon"></i> Logout

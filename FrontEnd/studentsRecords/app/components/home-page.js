@@ -2,6 +2,8 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
 
+  routing: Ember.inject.service('-routing'),
+
   didInsertElement() {
     //    Ember.$('.tabular.menu .item').tab();
     Ember.$(document).ready(function () {
@@ -139,6 +141,14 @@ export default Ember.Component.extend({
       this.set('isUserSettingsShowing', true);
       this.set('isLogoutShowing', false);
 
+    },
+
+    userProfile(){
+      this.get('routing').transitionTo('user');
+    },
+
+    adminPortal(){
+      this.get('routing').transitionTo('admin-portal');
     },
   }
 });
