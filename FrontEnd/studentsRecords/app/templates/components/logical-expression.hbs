@@ -7,9 +7,19 @@
 
     <div class="ui center aligned header" style="margin-bottom: 30px;">
       <select class="ui fluid dropdown"onchange={{action 'selectLogicalExpression' value="target.value"}}>
-        <option selected = "selected" value = null> Select a term </option>
-        {{#each currentStudentTerms as |oneTerm|}}
-        <option value={{oneTerm.id}}> {{oneTerm.term.name}} </option>
+        <option selected = "selected" value = null> Select a logic </option>
+        {{#each courseModel as |oneCourse|}}
+        <option value={{oneCourse.id}}> {{oneCourse.name}} </option>
+        {{/each}}
+      </select>
+      <div class="ui vertical divider">
+      </div>
+      <select class="ui fluid dropdown"onchange={{action 'selectBooleanSymbol' value="target.value"}}>
+        <option selected = "selected" value = null>  </option>
+        {{#each boolExpression as |oneBool|}}
+        <option value={{oneBool}}> {{oneBool}} </option>
         {{/each}}
       </select>
     </div>
+  </div>
+</div>
