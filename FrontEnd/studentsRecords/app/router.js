@@ -25,6 +25,7 @@ Router.map(function() {
   this.route('home');
   this.route('login', {path: '/'});
   this.route('user');
+    this.route('no-path', {path: "*path" });
 });
 
 export default Router;

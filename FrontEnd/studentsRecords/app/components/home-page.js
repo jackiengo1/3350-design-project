@@ -14,7 +14,6 @@ export default Ember.Component.extend({
     });
   },
 
-
   isHomeShowing: true,
   isStudentsRecordsDataEntry: false,
   isAddGenderShowing: false,

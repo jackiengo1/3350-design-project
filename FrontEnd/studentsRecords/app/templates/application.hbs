@@ -15,14 +15,9 @@
 </div>
 {{else}}
 {{log '2'}}
-    {{#if oudaAuth.getName}}
-    {{log '4'}}
-
-      {{log-out}}
-
-    {{else}}
-      {{log '3'}}
-        {{outlet "login"}}
-    {{/if}}
+  <div>
+    {{log '3'}}
+      {{outlet "login"}}
+  </div>
 
 {{/if}}
