@@ -27,9 +27,11 @@ export default Ember.Component.extend({
   hsCourseGradeModel: null,
   hsCourseModel: null,
   hsCourseModel2: null,
+  highSchoolCourseModel: null,
   secondarySchoolModel: null,
   hsSubjectModel: null,
   currentASIndex: null,
+  currentHsGradeIndex: null,
   scholarshipAwardModel: null,
   currentScholIndex: null,
   endOfRecords: false,
@@ -215,6 +217,10 @@ export default Ember.Component.extend({
       self.set('programRecordModel', records);
     });
 
+    this.get('store').findAll('high-school-course').then(function (records) {
+      self.set('highSchoolCourseModel', records);
+    });
+
     // load first page of the students records
     this.set('limit', 10);
     this.set('offset', 0);
@@ -260,6 +266,7 @@ export default Ember.Component.extend({
     this.set('currentStudentProgramRecords', null);
     this.set('selectedTermTemp', null);
 
+    this.get('store').query('hscourse-grade', { filter: { studentInfo: this.get('currentStudent').get('id') } });
     this.set('currentStudentHSGrades', this.get('currentStudent').get('hsCourseGrade'));
   },
 
@@ -847,7 +854,6 @@ export default Ember.Component.extend({
     },
 
     addhsMark() {
-
       var grade = Ember.$("#gradeField").val();
 
       if (grade >= 0 && grade <= 100) {
@@ -871,7 +877,12 @@ export default Ember.Component.extend({
     },
 
     deleteHsMark(hsGrade){
-      
+      var index = this.get('hsCourseGradeModel').indexOf(hsGrade);
+      this.set('currentHsGradeIndex', index);
+      var indexTemp = this.get('currentHsGradeIndex');
+      var temp = this.get('hsCourseGradeModel').objectAt(indexTemp);
+      temp.deleteRecord();
+      temp.save();
     },
 
     deleteAS(currentAS) {
@@ -907,6 +918,8 @@ export default Ember.Component.extend({
     },
 
     backToEntryForm() {
+      this.set('currentStudentHSGrades', this.get('currentStudent').get('hsCourseGrade'));
+
       this.set('addingStudent', false);
       this.set('scholarshipTabIsDisabled', false);
       this.set('advancedstandingTabIsDisabled', false);
@@ -935,7 +948,6 @@ export default Ember.Component.extend({
 
       this.set('listAS', this.get('currentStudent').get('advInfo'));
       this.set('scholarShipAndAwardList', this.get('currentStudent').get('scholInfo'));
-      this.set('currentStudentHSGrades', this.get('currentStudent').get('hsCourseGrade'));
     },
 
 
@@ -958,6 +970,8 @@ export default Ember.Component.extend({
 
     goToRecord(studentRecord) { //---------------------------------------------go to the found record ---------------------------------------------------
       console.log("clicked: " + studentRecord.get('firstName'));
+      this.set('currentStudentHSGrades', this.get('currentStudent').get('hsCourseGrade'));
+
       this.set('currentStudent', studentRecord);
       this.set('studentPhoto', this.get('currentStudent').get('photo'));
       var date = this.get('currentStudent').get('DOB');
@@ -973,8 +987,6 @@ export default Ember.Component.extend({
 
       this.get('store').query('scholarship-award', { filter: { studentInfo: this.get('currentStudent').get('id') } });
       this.set('scholarShipAndAwardList', this.get('currentStudent').get('scholInfo'));
-
-      this.set('currentStudentHSGrades', this.get('currentStudent').get('hsCourseGrade'));
 
       var gender = this.get('currentStudent').get('genderInfo');
       this.set('selectedGender', gender);

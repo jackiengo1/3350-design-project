@@ -70,6 +70,9 @@ router.route('/:hsCourseGrade_id')
                 if (!error) {
                     response.json({hscourseGrade: deleted});
                 }
+                else {
+                  response.send({error: error});
+                }
             }
         );
     });
