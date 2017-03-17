@@ -24,10 +24,21 @@ router.route('/')
             console.log("no filter");
         } else {
           console.log("filter");
+
+          if (request.query.filter.highSchoolCourses)
+          {
+            models.HighSchoolSubjects.find({"highSchoolCourses": request.query.filter.highSchoolCourses}, function (error, highSchoolCourses) {
+                if (error) response.send(error);
+                response.json({highSchoolSubject: highSchoolCourses});
+            });
+          }
+          else
+          {
             models.HighSchoolSubjects.find({"highSchoolSubject": request.query.highSchoolSubject}, function (error, highSchoolSubjects) {
                 if (error) response.send(error);
                 response.json({highSchoolSubject: highSchoolSubjects});
             });
+          }
         }
     });
 

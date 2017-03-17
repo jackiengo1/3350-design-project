@@ -1,0 +1,17 @@
+<div class="ui grid">
+
+  <div class="eight wide column" style="padding-right: 20px;">
+    <div class="ui center aligned header" style="margin-bottom: 30px;">
+      <h2>Logical Expression</h2>
+    </div>
+
+    <div class="ui center aligned header" style="margin-bottom: 30px;">
+      <select class="ui fluid dropdown" onchange={{action 'selectLogicalExpression' value="target.value" }}>
+        <option selected = "selected" value = null> Select a term </option>
+        {{#each currentStudentTerms as |oneTerm|}}
+        <option value={{oneTerm.id}}> {{oneTerm.term.name}} </option>
+        {{/each}}
+      </select>
+    </div>
+  </div>
+</div>

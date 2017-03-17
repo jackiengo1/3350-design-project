@@ -8,6 +8,7 @@ var parseJSON = bodyParser.json();
 router.route('/')
     .post(parseUrlencoded, parseJSON, function (request, response) {
         var highSchoolCourse = new models.HighSchoolCourses(request.body.highSchoolCourse);
+        console.log(highSchoolCourse);
         highSchoolCourse.save(function (error) {
             if (error) response.send(error);
             response.json({highSchoolCourse: highSchoolCourse});
@@ -23,11 +24,28 @@ router.route('/')
             });
             console.log("no filter");
         } else {
-          console.log("filter");
+          if(request.query.filter.school)
+          {
+            models.HighSchoolCourses.find({"school": request.query.filter.school}, function (error, highSchoolCourses) { //What to replace student with??
+                if (error) response.send(error);
+                response.json({highSchoolCourse: highSchoolCourses});
+            });
+          }
+          else if (request.query.filter.id)
+          {
+            models.HighSchoolCourses.find({"_id": request.query.filter.id}, function (error, highSchoolCourses) { //What to replace student with??
+                if (error) response.send(error);
+                console.log(highSchoolCourses);
+                response.json({highSchoolCourse: highSchoolCourses});
+            });
+          }
+          else
+          {
             models.HighSchoolCourses.find({"highSchoolCourse": request.query.highSchoolCourse}, function (error, highSchoolCourses) { //What to replace student with??
                 if (error) response.send(error);
                 response.json({highSchoolCourse: highSchoolCourses});
             });
+          }
         }
     });
 
