@@ -23,6 +23,10 @@ export default Ember.Component.extend({
   isAddProgramRecordShowing: false,
   isStudentAssessmentShowing: false,
   isUserSettingsShowing: false,
+  isUserProfileShowing: false,
+  isAdminPortalShowing: false,
+  isImportDataShowing: false,
+  isPostsShowing: false,
 
   actions: {
     home () {
@@ -36,6 +40,10 @@ export default Ember.Component.extend({
       this.set('isAddProgramRecordShowing', false);
       this.set('isStudentAssessmentShowing', false);
       this.set('isUserSettingsShowing', false);
+      this.set('isUserProfileShowing', false);
+      this.set('isAdminPortalShowing', false);
+      this.set('isImportDataShowing', false);
+      this.set('isPostsShowing', false);
     },
 
     studentsDataEntry (){
@@ -49,6 +57,10 @@ export default Ember.Component.extend({
       this.set('isAddProgramRecordShowing', false);
       this.set('isStudentAssessmentShowing', false);
       this.set('isUserSettingsShowing', false);
+      this.set('isUserProfileShowing', false);
+      this.set('isAdminPortalShowing', false);
+      this.set('isImportDataShowing', false);
+      this.set('isPostsShowing', false);
     },
 
     about (){
@@ -62,6 +74,10 @@ export default Ember.Component.extend({
       this.set('isAddProgramRecordShowing', false);
       this.set('isStudentAssessmentShowing', false);
       this.set('isUserSettingsShowing', false);
+      this.set('isUserProfileShowing', false);
+      this.set('isAdminPortalShowing', false);
+      this.set('isImportDataShowing', false);
+      this.set('isPostsShowing', false);
     },
 
     addResidency(){
@@ -75,6 +91,10 @@ export default Ember.Component.extend({
       this.set('isAddProgramRecordShowing', false);
       this.set('isStudentAssessmentShowing', false);
       this.set('isUserSettingsShowing', false);
+      this.set('isUserProfileShowing', false);
+      this.set('isAdminPortalShowing', false);
+      this.set('isImportDataShowing', false);
+      this.set('isPostsShowing', false);
     },
     addGender(){
       this.set('isHomeShowing', false);
@@ -87,6 +107,10 @@ export default Ember.Component.extend({
       this.set('isAddProgramRecordShowing', false);
       this.set('isStudentAssessmentShowing', false);
       this.set('isUserSettingsShowing', false);
+      this.set('isUserProfileShowing', false);
+      this.set('isAdminPortalShowing', false);
+      this.set('isImportDataShowing', false);
+      this.set('isPostsShowing', false);
     },
     addHighSchoolInfo(){
       this.set('isHomeShowing', false);
@@ -99,6 +123,10 @@ export default Ember.Component.extend({
       this.set('isAddProgramRecordShowing', false);
       this.set('isStudentAssessmentShowing', false);
       this.set('isUserSettingsShowing', false);
+      this.set('isUserProfileShowing', false);
+      this.set('isAdminPortalShowing', false);
+      this.set('isImportDataShowing', false);
+      this.set('isPostsShowing', false);
     },
     addProgramRecord(){
       this.set('isHomeShowing', false);
@@ -111,6 +139,10 @@ export default Ember.Component.extend({
       this.set('isAddProgramRecordShowing', true);
       this.set('isStudentAssessmentShowing', false);
       this.set('isUserSettingsShowing', false);
+      this.set('isUserProfileShowing', false);
+      this.set('isAdminPortalShowing', false);
+      this.set('isImportDataShowing', false);
+      this.set('isPostsShowing', false);
     },
 
     studentAssessment(){
@@ -124,6 +156,10 @@ export default Ember.Component.extend({
       this.set('isAddProgramRecordShowing', false);
       this.set('isStudentAssessmentShowing', true);
       this.set('isUserSettingsShowing', false);
+      this.set('isUserProfileShowing', false);
+      this.set('isAdminPortalShowing', false);
+      this.set('isImportDataShowing', false);
+      this.set('isPostsShowing', false);
     },
 
     userSettings(){
@@ -137,6 +173,11 @@ export default Ember.Component.extend({
       this.set('isAddProgramRecordShowing', false);
       this.set('isStudentAssessmentShowing', false);
       this.set('isUserSettingsShowing', true);
-    }
+      this.set('isUserProfileShowing', false);
+      this.set('isAdminPortalShowing', false);
+      this.set('isImportDataShowing', false);
+      this.set('isPostsShowing', false);
+    },
+
   }
 });
