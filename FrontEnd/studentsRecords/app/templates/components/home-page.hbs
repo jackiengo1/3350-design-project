@@ -22,7 +22,7 @@
 
 <div class="ui grid secondary menu" style="background-color: #CEB1F4; margin-top: 0;">
 
-  <a class="three wide column item active" {{action "home"}} style="font-size: 16px; font-weight: bold; margin: 0; padding-left: 5%;">
+  <a class="two wide column item active" {{action "home"}} style="font-size: 16px; font-weight: bold; margin: 0; padding-left: 5%;">
     <i class="large home icon"></i> Home
   </a>
   <a class="three wide column item" {{action "studentsDataEntry"}} style="font-size: 16px; font-weight: bold; margin: 0; padding-left: 5%;">
@@ -52,7 +52,11 @@
     <i class="large user icon"></i> Student Assessment
   </a>
 
-  <a class="four wide column item" {{action "about"}} style="font-size: 16px; font-weight: bold; margin: 0; padding-left: 5%;">
+  <a class="three wide column item" {{action "userSettings"}} style="font-size: 16px; font-weight: bold; margin: 0; padding-left: 5%;">
+    <i class="large user icon"></i> User Settings
+  </a>
+
+  <a class="two wide column item" {{action "about"}} style="font-size: 16px; font-weight: bold; margin: 0; padding-left: 5%;">
     <i class="large user icon"></i> About
   </a>
 </div>
@@ -112,6 +116,9 @@
           {{/if}}
           {{#if isStudentAssessmentShowing}}
             {{student-assessment}}
+          {{/if}}
+          {{#if isUserSettingsShowing}}
+            {{user-settings}}
           {{/if}}
         </div>
     </div>

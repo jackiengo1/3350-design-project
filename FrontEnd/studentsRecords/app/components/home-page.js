@@ -22,6 +22,7 @@ export default Ember.Component.extend({
   isAddHighSchoolInfoShowing: false,
   isAddProgramRecordShowing: false,
   isStudentAssessmentShowing: false,
+  isUserSettingsShowing: false,
 
   actions: {
     home () {
@@ -34,6 +35,7 @@ export default Ember.Component.extend({
       this.set('isAddHighSchoolInfoShowing', false);
       this.set('isAddProgramRecordShowing', false);
       this.set('isStudentAssessmentShowing', false);
+      this.set('isUserSettingsShowing', false);
     },
 
     studentsDataEntry (){
@@ -46,6 +48,7 @@ export default Ember.Component.extend({
       this.set('isAddHighSchoolInfoShowing', false);
       this.set('isAddProgramRecordShowing', false);
       this.set('isStudentAssessmentShowing', false);
+      this.set('isUserSettingsShowing', false);
     },
 
     about (){
@@ -58,6 +61,7 @@ export default Ember.Component.extend({
       this.set('isAddHighSchoolInfoShowing', false);
       this.set('isAddProgramRecordShowing', false);
       this.set('isStudentAssessmentShowing', false);
+      this.set('isUserSettingsShowing', false);
     },
 
     addResidency(){
@@ -70,6 +74,7 @@ export default Ember.Component.extend({
       this.set('isAddHighSchoolInfoShowing', false);
       this.set('isAddProgramRecordShowing', false);
       this.set('isStudentAssessmentShowing', false);
+      this.set('isUserSettingsShowing', false);
     },
     addGender(){
       this.set('isHomeShowing', false);
@@ -81,6 +86,7 @@ export default Ember.Component.extend({
       this.set('isAddHighSchoolInfoShowing', false);
       this.set('isAddProgramRecordShowing', false);
       this.set('isStudentAssessmentShowing', false);
+      this.set('isUserSettingsShowing', false);
     },
     addHighSchoolInfo(){
       this.set('isHomeShowing', false);
@@ -92,6 +98,7 @@ export default Ember.Component.extend({
       this.set('isAddHighSchoolInfoShowing', true);
       this.set('isAddProgramRecordShowing', false);
       this.set('isStudentAssessmentShowing', false);
+      this.set('isUserSettingsShowing', false);
     },
     addProgramRecord(){
       this.set('isHomeShowing', false);
@@ -103,6 +110,7 @@ export default Ember.Component.extend({
       this.set('isAddHighSchoolInfoShowing', false);
       this.set('isAddProgramRecordShowing', true);
       this.set('isStudentAssessmentShowing', false);
+      this.set('isUserSettingsShowing', false);
     },
 
     studentAssessment(){
@@ -115,6 +123,20 @@ export default Ember.Component.extend({
       this.set('isAddHighSchoolInfoShowing', false);
       this.set('isAddProgramRecordShowing', false);
       this.set('isStudentAssessmentShowing', true);
+      this.set('isUserSettingsShowing', false);
+    },
+
+    userSettings(){
+      this.set('isHomeShowing', false);
+      this.set('isStudentsRecordsDataEntry', false);
+      this.set('isAboutShowing', false);
+      this.set('isAddResidencyShowing', false);
+      this.set('isAddGenderShowing', false);
+      this.set('isAddStudentShowing', false);
+      this.set('isAddHighSchoolInfoShowing', false);
+      this.set('isAddProgramRecordShowing', false);
+      this.set('isStudentAssessmentShowing', false);
+      this.set('isUserSettingsShowing', true);
     }
   }
 });
