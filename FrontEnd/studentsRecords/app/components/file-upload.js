@@ -1537,6 +1537,10 @@ export default Ember.Component.extend({
           }
         });
       }
+      else if(file.name === "Departments.xlsx")
+      {
+        
+      }
     },
     //end of the read file function
 

@@ -4,22 +4,25 @@
     <div class="ui center aligned header" style="margin-bottom: 30px;">
       <h2>Logical Expression</h2>
     </div>
-
-    <div class="ui center aligned header" style="margin-bottom: 30px;">
-      <select class="ui fluid dropdown"onchange={{action 'selectLogicalExpression' value="target.value"}}>
-        <option selected = "selected" value = null> Select a logic </option>
-        {{#each courseModel as |oneCourse|}}
-        <option value={{oneCourse.id}}> {{oneCourse.name}} </option>
-        {{/each}}
-      </select>
-      <div class="ui vertical divider">
+    <div class ="ui grid">
+      <div class="six wide column" style="padding-right: 20px;">
+        <div class="ui center aligned header" style="margin-bottom: 30px;">
+          <select class="ui search dropdown" id='search'>
+          </select>
+        </div>
+        <div class="six wide column" style="padding-right: 20px;">
+          <div class="ui center aligned header" style="margin-bottom: 30px;">
+            <select class="ui search dropdown" id='bool'>
+            </select>
+          </div>
+          <div class="six wide column" style="padding-right: 20px;">
+            <div class="ui center aligned header" style="margin-bottom: 30px;">
+              <select class="ui search dropdown" id='value'>
+              </select>
+            </div>
+          </div>
+        </div>
       </div>
-      <select class="ui fluid dropdown"onchange={{action 'selectBooleanSymbol' value="target.value"}}>
-        <option selected = "selected" value = null>  </option>
-        {{#each boolExpression as |oneBool|}}
-        <option value={{oneBool}}> {{oneBool}} </option>
-        {{/each}}
-      </select>
+
+
     </div>
-  </div>
-</div>
