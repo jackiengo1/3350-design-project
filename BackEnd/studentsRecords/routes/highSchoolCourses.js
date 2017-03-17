@@ -8,6 +8,7 @@ var parseJSON = bodyParser.json();
 router.route('/')
     .post(parseUrlencoded, parseJSON, function (request, response) {
         var highSchoolCourse = new models.HighSchoolCourses(request.body.highSchoolCourse);
+        console.log(highSchoolCourse);
         highSchoolCourse.save(function (error) {
             if (error) response.send(error);
             response.json({highSchoolCourse: highSchoolCourse});

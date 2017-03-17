@@ -8,25 +8,26 @@ var parseJSON = bodyParser.json();
 router.route('/')
     .post(parseUrlencoded, parseJSON, function (request, response) {
         var hsCourseGrade = new models.HsCourseGrades(request.body.hscourseGrade);
+        console.log(hsCourseGrade);
         hsCourseGrade.save(function (error) {
             if (error) response.send(error);
             response.json({hscourseGrade: hsCourseGrade});
         });
     })
     .get(parseUrlencoded, parseJSON, function (request, response) {
-
         var hsCourseGradeFilter = request.query.filter;
         if (!hsCourseGradeFilter) {
             models.HsCourseGrades.find(function (error, hsCourseGrades) {
+                console.log(hsCourseGrades);
                 if (error) response.send(error);
-                response.json({hsCourseGrade: hsCourseGrades});
+                response.json({hscourseGrade: hsCourseGrades});
             });
             console.log("no filter");
         } else {
           console.log("filter");
             models.HsCourseGrades.find({"student": request.query.student}, function (error, hsCourseGrades) {
                 if (error) response.send(error);
-                response.json({hsCourseGrade: hsCourseGrades});
+                response.json({hscourseGrade: hsCourseGrades});
             });
         }
     });
@@ -38,7 +39,7 @@ router.route('/:hsCourseGrade_id')
                 response.send({error: error});
             }
             else {
-                response.json({hsCourseGrade: hsCourseGrade});
+                response.json({hscourseGrade: hsCourseGrade});
             }
         });
     })
@@ -57,7 +58,7 @@ router.route('/:hsCourseGrade_id')
                         response.send({error: error});
                     }
                     else {
-                        response.json({hsCourseGrade: hsCourseGrade});
+                        response.json({hscourseGrade: hsCourseGrade});
                     }
                 });
             }
@@ -67,7 +68,7 @@ router.route('/:hsCourseGrade_id')
         models.HsCourseGrades.findByIdAndRemove(request.params.hsCourseGrade_id,
             function (error, deleted) {
                 if (!error) {
-                    response.json({hsCourseGrade: deleted});
+                    response.json({hscourseGrade: deleted});
                 }
             }
         );

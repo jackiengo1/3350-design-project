@@ -395,13 +395,61 @@
         <h2>High School Marks</h2>
       </div>
 
-      {{#each currentStudentHSGrades as |oneHSGrade|}}
-      <h3>School Name: {{oneHSGrade.HighSchoolCoursesInfo.SecondSchoolInfo}}</h3>
-      <h3>Level: {{oneHSGrade.HighSchoolCoursesInfo}}</h3>
-      <h3>Subject: {{oneHSGrade.HighSchoolCoursesInfo.HighSchoolSubjectInfo}}</h3>
-      <h3>Course: {{oneHSGrade.HighSchoolCoursesInfo}}</h3>
-      <h3>Mark: {{oneHSGrade.mark}}</h3>
-      {{/each}}
+      <!-- add #unless hsGrade.isDeleted -->
+      {{#ui-accordion class="styled fluid"}} {{#each currentStudentHSGrades as |oneHSGrade|}} {{#unless oneHSGrade.isDeleted}}
+      <div class="title">
+        School Name: {{oneHSGrade.source.school.name}}
+      </div>
+      <div class="content">
+        <div class="ui vertically divided grid">
+          <div class="one column row" id="accordionFirstElement">
+            <div class="column">
+              <p>Subject: {{oneHSGrade.source.course.name}}</p>
+            </div>
+          </div>
+          <div class="one column row" id="zeroPadding">
+            <div class="column">
+              <p>Source: {{oneHSGrade.source.source}}</p>
+            </div>
+          </div>          
+          <div class="one column row" id="zeroPadding">
+            <div class="column">
+              <p>Description: {{oneHSGrade.source.course.description}}</p>
+            </div>
+          </div>          
+          <div class="two column row" id="zeroPadding">
+            <div class="column">
+              <p>Level: {{oneHSGrade.source.level}}</p>
+            </div>
+            <div class="column">
+              <p>Units: {{oneHSGrade.source.unit}}</p>
+            </div>
+          </div>
+          <div class="one column row" id="zeroPadding">
+            <div class="column">
+              <p>Grade: {{oneHSGrade.mark}}</p>
+            </div>
+          </div>
+          <div class="one column row" id="zeroPadding">
+            <div class="column">
+              <div class="ui center aligned header">
+                <button class="negative ui button" onclick={{action 'deleteHsMark' oneHSGrade}}>Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/unless}} {{/each}} {{/ui-accordion}}
+      
+      {{!--{{#each currentStudentHSGrades as |oneHSGrade|}}
+      <h3>School Name: {{oneHSGrade.source.school.name}}</h3>
+      <h3>Level: {{oneHSGrade.source.level}}</h3>
+      <h3>Subject: {{oneHSGrade.source.course.name}}</h3>
+      <h3>Description: {{oneHSGrade.source.course.description}}</h3>
+      <h3>Source: {{oneHSGrade.source.source}}</h3>
+      <h3>Units: {{oneHSGrade.source.unit}}</h3>
+      <h3>Grade: {{oneHSGrade.mark}}</h3>
+      {{/each}}--}}
     </div>
 
     <div class="eight wide column" id="studentRecordsDataEntryRightContent">
@@ -415,7 +463,7 @@
           <div class="field">
             <label>High School</label>
             <select id="schoolSelect" onchange={{action 'selectHighSchool' value="target.value" }}>
-              <option selected="selected" value="null"> Select a High School </option>
+              <option selected="selected" value="null">Select a High School</option>
               {{#each secondarySchoolModel as |schoolChoice|}}
               <option value={{schoolChoice.id}}> {{schoolChoice.name}} </option>
               {{/each}}
@@ -425,7 +473,7 @@
           <div class="field">
             <label>Subject (Description) - Source</label>
             <select id="courseSelect" onchange={{action 'selectCourse' value="target.value" }}>
-              <option selected="selected" value="null"> Select a Course </option>
+              <option selected="selected" value="null">Select a Course</option>
               {{#each hsCourseModel as |courseChoice|}}
               <option value={{courseChoice.id}}> {{courseChoice.course.name}} ({{courseChoice.course.description}}) - {{courseChoice.source}} </option>
               {{/each}}
@@ -436,7 +484,7 @@
             <div class="field">
               <label>Level</label>
               <select id="levelSelect" onchange={{action 'selectLevel' value="target.value" }}>
-                <option selected="selected" value="null"> Select a Level </option>
+                <option selected="selected" value="null">Select a Level</option>
                 {{#each hsCourseModel2 as |levelChoice|}}
                 <option value={{levelChoice.id}}> {{levelChoice.level}} </option>
                 {{/each}}
@@ -445,7 +493,7 @@
             <div class="field">
               <label>Unit</label>
               <select id="unitSelect" onchange={{action 'selectUnit' value="target.value" }}>
-                <option selected="selected" value="null"> Select a Unit </option>
+                <option selected="selected" value="null">Select a Unit</option>
                 {{#each hsCourseModel2 as |unitChoice|}}
                 <option value={{unitChoice.id}}> {{unitChoice.unit}} </option>
                 {{/each}}
