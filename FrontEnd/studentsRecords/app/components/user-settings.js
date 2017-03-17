@@ -18,13 +18,5 @@ export default Ember.Component.extend({
       this.get('routing').transitionTo('admin-portal');
     },
 
-    importData(){
-      this.get('routing').transitionTo('import');
-    },
-
-    posts(){
-      this.get('routing').transitionTo('posts');
-    },
-
   },
 });
