@@ -2,9 +2,10 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   store: Ember.inject.service(),
+  /* global XLSX */
+
   filetobeloaded: "Please Click Delete first",
   count:0,
-  /* globel XLSX */
 
   actions:{
     fileLoaded: function(file) {
@@ -1601,7 +1602,7 @@ export default Ember.Component.extend({
           });
         }, this);
       });
-      
+
       //delete all high-school-course record
       this.get('store').findAll('high-school-course').then(function(record){
         record.content.forEach(function(rec) {
