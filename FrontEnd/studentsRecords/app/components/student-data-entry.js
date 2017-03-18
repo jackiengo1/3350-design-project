@@ -7,9 +7,9 @@ export default Ember.Component.extend({
   showAllStudents: false,
   showFindRecord: false,
   residencyModel: null,
-  residencyIndex:null,
+  residencyIndex: null,
   genderModel: null,
-  genderIndex:null,
+  genderIndex: null,
   selectedResidency: null,
   selectedGender: null,
   selectedDate: null,
@@ -30,25 +30,41 @@ export default Ember.Component.extend({
   scholarshipAwardModel:null,
   currentScholIndex:null,
   endOfRecords: false,
+  hsCourseModel2: null,
+  highSchoolCourseModel: null,
+  secondarySchoolModel: null,
+  hsSubjectModel: null,
+  currentASIndex: null,
+  currentHsGradeIndex: null,
+  scholarshipAwardModel: null,
+  currentScholIndex: null,
+  endOfRecords: false,
+  isSchoolSelected: false,
+  isCourseSelected: false,
+  isLevelSelected: false,
+  isUnitSelected: false,
+  isGradeValid: false,
+  highSchoolCourseChoice: null,
+>>>>>>> 18396a9912f4f78c33c45f39c463fc053f80c125
 
   //undo
   //the stack store the data
   undoStack: Ember.A(),
   //the stack store the action name, e.g. student,name...
-  undoNameStack:Ember.A(),
+  undoNameStack: Ember.A(),
   //temp data shown on the main page, these should not be bind with the currentStudent, thus currentStudent value will not change unless saved
   tempFN: null,
-  tempLN:null,
-  tempPhoto:null,
-  tempNumber:null,
+  tempLN: null,
+  tempPhoto: null,
+  tempNumber: null,
   //tempRest:null,
-  tempRegistrationComments:null,
-  tempBasisOfAdmission:null,
-  tempAdmissionAverage:null,
-  tempAdmissionComments:null,
-  tempAdvInfo:null,
+  tempRegistrationComments: null,
+  tempBasisOfAdmission: null,
+  tempAdmissionAverage: null,
+  tempAdmissionComments: null,
+  tempAdvInfo: null,
   //tempGenderInfo:null,
-  tempScholInfo:null,
+  tempScholInfo: null,
 
 
   //advanced standing
@@ -137,7 +153,7 @@ export default Ember.Component.extend({
       offset: self.get('offset')
     }).then(function (records) {
 
-      if(records.get('length') > 0){
+      if (records.get('length') > 0) {
 
         self.set('studentsRecords', records);
         //console.log(this.get('studentsRecords').objectAt(2).get('resInfo'));
@@ -149,7 +165,7 @@ export default Ember.Component.extend({
           self.set('currentIndex', records.indexOf(records.get("firstObject")));
         }
       }
-      else{
+      else {
         self.set('endOfRecords', true);
       }
     });
@@ -178,11 +194,11 @@ export default Ember.Component.extend({
       console.log(Ember.inspect(records));
     });
 
-    this.get('store').findAll('gender').then(function(records){
+    this.get('store').findAll('gender').then(function (records) {
       self.set('genderModel', records);
     });
 
-    this.get('store').findAll('term-code').then(function(records){
+    this.get('store').findAll('term-code').then(function (records) {
       self.set('termCodeModel', records);
     });
 
@@ -195,7 +211,29 @@ export default Ember.Component.extend({
     });
 
     this.get('store').findAll('program-record').then(function(records){
+    this.get('store').findAll('hscourse-grade').then(function (records) {
+      self.set('hsCourseGradeModel', records);
+    });
+
+    this.get('store').findAll('course-code').then(function (records) {
+      self.set('courseCodeModel', records);
+    });
+
+    this.get('store').findAll('secondary-school').then(function (records) {
+      self.set('secondarySchoolModel', records);
+    });
+
+    this.get('store').findAll('high-school-subject').then(function (records) {
+      self.set('hsSubjectModel', records);
+    });
+
+    this.get('store').findAll('program-record').then(function (records) {
+>>>>>>> 18396a9912f4f78c33c45f39c463fc053f80c125
       self.set('programRecordModel', records);
+    });
+
+    this.get('store').findAll('high-school-course').then(function (records) {
+      self.set('highSchoolCourseModel', records);
     });
 
     // load first page of the students records
@@ -225,28 +263,26 @@ export default Ember.Component.extend({
     this.set('selectedDate', datestring);
     var gender = this.get('currentStudent').get('genderInfo');
 
-    this.set('currentStudentHSGrades', this.get('currentStudent').get('hsCourseGrade'));
-    this.set('selectedGender',gender);
+    this.set('selectedGender', gender);
     var res = this.get('currentStudent').get('resInfo');
-    this.set('selectedResidency',res);
+    this.set('selectedResidency', res);
 
-    this.get('store').query('advanced-standing',{filter:{studentInfo:this.get('currentStudent').get('id')}});
+    this.get('store').query('advanced-standing', { filter: { studentInfo: this.get('currentStudent').get('id') } });
     this.set('listAS', this.get('currentStudent').get('advInfo'));
 
-    this.get('store').query('scholarship-award',{filter:{studentInfo:this.get('currentStudent').get('id')}});
+    this.get('store').query('scholarship-award', { filter: { studentInfo: this.get('currentStudent').get('id') } });
     this.set('scholarShipAndAwardList', this.get('currentStudent').get('scholInfo'));
 
-    this.get('store').query('term',{filter:{studentInfo:this.get('currentStudent').get('id')}});
+    this.get('store').query('term', { filter: { studentInfo: this.get('currentStudent').get('id') } });
     this.set('currentStudentTerms', this.get('currentStudent').get('semester'));
-
-
 
     this.set('studentCourseCodeForGrade', null);
     this.set('currentStudentCourseCodes', null);
     this.set('currentStudentProgramRecords', null);
     this.set('selectedTermTemp', null);
 
-
+    this.get('store').query('hscourse-grade', { filter: { studentInfo: this.get('currentStudent').get('id') } });
+    this.set('currentStudentHSGrades', this.get('currentStudent').get('hsCourseGrade'));
   },
 
   didRender() {
@@ -254,7 +290,7 @@ export default Ember.Component.extend({
   },
 
   //the observer function for the currentStudent, it will update the tmpValue shown on the page on change
-  currentStudentChanged:function(){
+  currentStudentChanged: function () {
     //a ref to current student
     var studenthold = this.get('currentStudent');
 
@@ -270,22 +306,21 @@ export default Ember.Component.extend({
     var studentAdvInfo = studenthold.get('advInfo');
     //var studentGenderInfo = studenthold.get('genderInfo');
     var studentScholInfo = studenthold.get('scholInfo');
-    this.set('tempFN',studentFN);
-    this.set('tempLN',studentLN);
-    this.set('tempNumber',studentNumber);
-    this.set('tempPhoto',studentPhoto);
+    this.set('tempFN', studentFN);
+    this.set('tempLN', studentLN);
+    this.set('tempNumber', studentNumber);
+    this.set('tempPhoto', studentPhoto);
     //this.set('tempRest',studentRest);
-    this.set('tempRegistrationComments',studentRegistrationComments);
-    this.set('tempBasisOfAdmission',studentBasisOfAdmission);
-    this.set('tempAdmissionAverage',studentAdmissionAverage);
-    this.set('tempAdmissionComments',studentAdmissionComments);
-    this.set('tempAdvInfo',studentAdvInfo);
+    this.set('tempRegistrationComments', studentRegistrationComments);
+    this.set('tempBasisOfAdmission', studentBasisOfAdmission);
+    this.set('tempAdmissionAverage', studentAdmissionAverage);
+    this.set('tempAdmissionComments', studentAdmissionComments);
+    this.set('tempAdvInfo', studentAdvInfo);
     //this.set('tempGenderInfo',studentGenderInfo);
-    this.set('tempScholInfo',studentScholInfo);
+    this.set('tempScholInfo', studentScholInfo);
   }.observes('currentStudent'),
 
-  addCurrentStudentToStack()
-  {
+  addCurrentStudentToStack() {
     var studenthold = this.get('currentStudent');
 
     var studentFN = studenthold.get('firstName');
@@ -322,94 +357,83 @@ export default Ember.Component.extend({
   actions: {
 
     //undo function
-    undoSave(){
+    undoSave() {
 
       var category = this.get('undoNameStack').popObject();
-      if(category === "number")
-      {
+      if (category === "number") {
         var number = this.get('undoStack').popObject();
-        this.set('tempNumber',number);
+        this.set('tempNumber', number);
       }
-      else if (category === "firstName")
-      {
+      else if (category === "firstName") {
         var fn = this.get('undoStack').popObject();
-        this.set('tempFN',fn);
+        this.set('tempFN', fn);
       }
-      else if (category === "lastName")
-      {
+      else if (category === "lastName") {
         var ln = this.get('undoStack').popObject();
-        this.set('tempLN',ln);
+        this.set('tempLN', ln);
       }
-      else if (category === "genderInfo")
-      {
+      else if (category === "genderInfo") {
         var gender = this.get('undoStack').popObject();
         console.log(gender);
-        this.set('selectedGender',gender);
+        this.set('selectedGender', gender);
       }
-      else if (category === "DOB")
-      {
+      else if (category === "DOB") {
         var studentdob = this.get('undoStack').popObject();
         var datestring = studentdob.toISOString().substring(0, 10);
-        this.set('selectedDate',datestring);
+        this.set('selectedDate', datestring);
       }
-      else if (category === "resInfo")
-      {
+      else if (category === "resInfo") {
         var res = this.get('undoStack').popObject();
         this.set('selectedResidency', res);
       }
-      else if (category === "basisOfAdmission")
-      {
+      else if (category === "basisOfAdmission") {
         var boa = this.get('undoStack').popObject();
-        this.set('tempBasisOfAdmission',boa);
+        this.set('tempBasisOfAdmission', boa);
       }
-      else if (category === "admissionAverage")
-      {
+      else if (category === "admissionAverage") {
         var aa = this.get('undoStack').popObject();
         this.set('tempAdmissionAverage', aa);
       }
-      else if (category === "admissionComments")
-      {
+      else if (category === "admissionComments") {
         var ac = this.get('undoStack').popObject();
-        this.set('tempAdmissionComments',ac);
+        this.set('tempAdmissionComments', ac);
       }
-      else if (category === "registrationComments")
-      {
+      else if (category === "registrationComments") {
         var rc = this.get('undoStack').popObject();
-        this.set('tempRegistrationComments',rc);
+        this.set('tempRegistrationComments', rc);
       }
-      else if(category === "save")
-      {
-        var studentScholInfo =this.get('undoStack').popObject();
-        var studentGenderInfo =this.get('undoStack').popObject();
-        var studentAdvInfo =this.get('undoStack').popObject();
-        var studentAdmissionComments =this.get('undoStack').popObject();
-        var studentAdmissionAverage =this.get('undoStack').popObject();
-        var studentBasisOfAdmission =this.get('undoStack').popObject();
-        var studentRegistrationComments =this.get('undoStack').popObject();
-        var studentRest =this.get('undoStack').popObject();
-        var studentPhoto =this.get('undoStack').popObject();
-        var dob =this.get('undoStack').popObject();
-        var studentNumber =this.get('undoStack').popObject();
-        var studentLN =this.get('undoStack').popObject();
-        var studentFN =this.get('undoStack').popObject();
+      else if (category === "save") {
+        var studentScholInfo = this.get('undoStack').popObject();
+        var studentGenderInfo = this.get('undoStack').popObject();
+        var studentAdvInfo = this.get('undoStack').popObject();
+        var studentAdmissionComments = this.get('undoStack').popObject();
+        var studentAdmissionAverage = this.get('undoStack').popObject();
+        var studentBasisOfAdmission = this.get('undoStack').popObject();
+        var studentRegistrationComments = this.get('undoStack').popObject();
+        var studentRest = this.get('undoStack').popObject();
+        var studentPhoto = this.get('undoStack').popObject();
+        var dob = this.get('undoStack').popObject();
+        var studentNumber = this.get('undoStack').popObject();
+        var studentLN = this.get('undoStack').popObject();
+        var studentFN = this.get('undoStack').popObject();
 
 
         //set the currentvalue according to the reference and save it
         var studenthold = this.get('currentStudent');
 
-        studenthold.set('number',studentNumber);
-        studenthold.set('firstName',studentFN);
-        studenthold.set('lastName',studentLN);
-        studenthold.set('DOB',dob);
-        studenthold.set('photo',studentPhoto);
-        studenthold.set('resInfo',studentRest);
-        studenthold.set('registrationComments',studentRegistrationComments);
-        studenthold.set('basisOfAdmission',studentBasisOfAdmission);
-        studenthold.set('admissionAverage',studentAdmissionAverage);
-        studenthold.set('admissionComments',studentAdmissionComments);
-        studenthold.set('advInfo',studentAdvInfo);
-        studenthold.set('genderInfo',studentGenderInfo);
-        studenthold.set('scholInfo',studentScholInfo);
+        studenthold.set('number', studentNumber);
+        studenthold.set('firstName', studentFN);
+        studenthold.set('lastName', studentLN);
+        studenthold.set('DOB', dob);
+        studenthold.set('photo', studentPhoto);
+        studenthold.set('resInfo', studentRest);
+        studenthold.set('registrationComments', studentRegistrationComments);
+        studenthold.set('basisOfAdmission', studentBasisOfAdmission);
+        studenthold.set('admissionAverage', studentAdmissionAverage);
+        studenthold.set('admissionComments', studentAdmissionComments);
+        studenthold.set('advInfo', studentAdvInfo);
+        studenthold.set('genderInfo', studentGenderInfo);
+        studenthold.set('scholInfo', studentScholInfo);
 
         studenthold.save().then(() => {
           //     this.set('isStudentFormEditing', false);
@@ -420,29 +444,29 @@ export default Ember.Component.extend({
 
         //dob string
         var studentDOB = dob.toISOString().substring(0, 10);
-        this.set('selectedDate',studentDOB);
-        this.set('tempFN',studentFN);
-        this.set('tempLN',studentLN);
-        this.set('tempNumber',studentNumber);
-        this.set('tempPhoto',studentPhoto);
-        this.set('tempRegistrationComments',studentRegistrationComments);
-        this.set('tempBasisOfAdmission',studentBasisOfAdmission);
-        this.set('tempAdmissionAverage',studentAdmissionAverage);
-        this.set('tempAdmissionComments',studentAdmissionComments);
-        this.set('tempAdvInfo',studentAdvInfo);
-        this.set('tempScholInfo',studentScholInfo);
+        this.set('selectedDate', studentDOB);
+        this.set('tempFN', studentFN);
+        this.set('tempLN', studentLN);
+        this.set('tempNumber', studentNumber);
+        this.set('tempPhoto', studentPhoto);
+        this.set('tempRegistrationComments', studentRegistrationComments);
+        this.set('tempBasisOfAdmission', studentBasisOfAdmission);
+        this.set('tempAdmissionAverage', studentAdmissionAverage);
+        this.set('tempAdmissionComments', studentAdmissionComments);
+        this.set('tempAdvInfo', studentAdvInfo);
+        this.set('tempScholInfo', studentScholInfo);
       }
     },
     //functions used for undo function
     //function get called when the focus leave the student number save the value into stack
-    studentNumberStack(){
+    studentNumberStack() {
       this.get('undoNameStack').pushObject("number");
       var tempstudentnumber = this.get('currentStudent').get('number');
       this.get('undoStack').pushObject(tempstudentnumber);
     },
 
     //function get called when the focus leave the student first name save the value into stack
-    studentFNStack(){
+    studentFNStack() {
       console.log(1);
       this.get('undoNameStack').pushObject("firstName");
       var tempstudent = this.get('currentStudent').get('firstName');
@@ -450,7 +474,7 @@ export default Ember.Component.extend({
     },
 
     //function get called when the focus leave the student last name save the value into stack
-    studentLNStack(){
+    studentLNStack() {
       console.log(1);
       this.get('undoNameStack').pushObject("lastName");
       var tempstudent = this.get('currentStudent').get('lastName');
@@ -458,7 +482,7 @@ export default Ember.Component.extend({
     },
 
     //function get called when the focus leave the student basis of admission save the value into stack
-    studentBOAStack(){
+    studentBOAStack() {
       console.log(1);
       this.get('undoNameStack').pushObject("basisOfAdmission");
       var tempstudent = this.get('currentStudent').get('basisOfAdmission');
@@ -466,7 +490,7 @@ export default Ember.Component.extend({
     },
 
     //function get called when the focus leave the student admission average save the value into stack
-    studentAAStack(){
+    studentAAStack() {
       console.log(1);
       this.get('undoNameStack').pushObject("admissionAverage");
       var tempstudent = this.get('currentStudent').get('admissionAverage');
@@ -474,7 +498,7 @@ export default Ember.Component.extend({
     },
 
     //function get called when the focus leave the student admission comment save the value into stack
-    studentACStack(){
+    studentACStack() {
       console.log(1);
       this.get('undoNameStack').pushObject("admissionComments");
       var tempstudent = this.get('currentStudent').get('admissionComments');
@@ -482,7 +506,7 @@ export default Ember.Component.extend({
     },
 
     //function get called when the focus leave the student registration comments save the value into stack
-    studentRCStack(){
+    studentRCStack() {
       console.log(1);
       this.get('undoNameStack').pushObject("registrationComments");
       var tempstudent = this.get('currentStudent').get('registrationComments');
@@ -490,7 +514,7 @@ export default Ember.Component.extend({
     },
 
 
-    saveStudent () {
+    saveStudent() {
 
       var studenthold = this.get('currentStudent');
 
@@ -538,16 +562,16 @@ export default Ember.Component.extend({
       var updatestudentScholInfo = this.get('tempScholInfo');
 
       //set the current student value to the front end temp value
-      studenthold.set('firstName',updatestudentFN);
-      studenthold.set('lastName',updatestudentLN);
-      studenthold.set('number',updatestudentnumebr);
-      studenthold.set('photo',updatestudentPhoto);
-      studenthold.set('registrationComments',updatestudentRegistrationComments);
-      studenthold.set('basisOfAdmission',updatestudentBasisOfAdmission);
-      studenthold.set('admissionAverage',updatestudentAdmissionAverage);
-      studenthold.set('admissionComments',updatestudentAdmissionComments);
-      studenthold.set('advInfo',updatestudentAdvInfo);
-      studenthold.set('scholInfo',updatestudentScholInfo);
+      studenthold.set('firstName', updatestudentFN);
+      studenthold.set('lastName', updatestudentLN);
+      studenthold.set('number', updatestudentnumebr);
+      studenthold.set('photo', updatestudentPhoto);
+      studenthold.set('registrationComments', updatestudentRegistrationComments);
+      studenthold.set('basisOfAdmission', updatestudentBasisOfAdmission);
+      studenthold.set('admissionAverage', updatestudentAdmissionAverage);
+      studenthold.set('admissionComments', updatestudentAdmissionComments);
+      studenthold.set('advInfo', updatestudentAdvInfo);
+      studenthold.set('scholInfo', updatestudentScholInfo);
       var res = this.get('store').peekRecord('residency', this.get('selectedResidency'));
       var gen = this.get('store').peekRecord('gender', this.get('selectedGender'));
       if (gen != null) {
@@ -568,7 +592,7 @@ export default Ember.Component.extend({
     },
 
     nextStudent() {
-      this.set('movingBackword' , false);
+      this.set('movingBackword', false);
       if (this.get('currentIndex') < this.get('lastIndex')) {
         this.set('currentIndex', this.get('currentIndex') + 1);
       }
@@ -585,7 +609,7 @@ export default Ember.Component.extend({
       this.set('searchResultTitle', null);
     },
     previousStudent() {
-      this.set('movingBackword' , true);
+      this.set('movingBackword', true);
       if (this.get('currentIndex') > 0) {
         this.set('currentIndex', this.get('currentIndex') - 1);
       }
@@ -604,7 +628,7 @@ export default Ember.Component.extend({
       this.set('endOfRecords', false);
     },
 
-    deleteStudent(){
+    deleteStudent() {
       var choice = confirm('Are you sure you want to delete this?');
       if (choice) {
         this.get('currentStudent').deleteRecord();
@@ -625,22 +649,22 @@ export default Ember.Component.extend({
 
     },
 
-    allStudentsPrev(){
+    allStudentsPrev() {
       if (this.get('offset') >= this.get('pageSize')) {
         this.set('offset', this.get('offset') - this.get('pageSize'));
         this.set('endOfRecords', false);
       }
     },
 
-    allStudentsNext(){
-      if(this.get('endOfRecords') === false){
+    allStudentsNext() {
+      if (this.get('endOfRecords') === false) {
         this.set('offset', this.get('offset') + this.get('pageSize'));
       }
     },
 
-    addStudent(){
+    addStudent() {
       //validates that the fields entered are correct
-      if (validateFields(this.get('tempNumber'), this.get('tempFN'), this.get('tempLN'), this.get('selectedDate'), this.get('selectedResidency'),this.get('selectedGender'))) {
+      if (validateFields(this.get('tempNumber'), this.get('tempFN'), this.get('tempLN'), this.get('selectedDate'), this.get('selectedResidency'), this.get('selectedGender'))) {
 
 
         var res = this.get('store').peekRecord('residency', this.get('selectedResidency')); //get the students residency object
@@ -670,9 +694,9 @@ export default Ember.Component.extend({
 
         this.set('currentStudent', newStudent);
         var gender = this.get('currentStudent').get('genderInfo');
-        this.set('selectedGender',gender);
+        this.set('selectedGender', gender);
         var res1 = this.get('currentStudent').get('resInfo');
-        this.set('selectedResidency',res1);
+        this.set('selectedResidency', res1);
 
         this.set('addingStudent', false);
         this.set('scholarshipTabIsDisabled', false);
@@ -685,7 +709,7 @@ export default Ember.Component.extend({
 
     },
 
-    goToAddStudent(){
+    goToAddStudent() {
       this.set('scholarshipTabIsDisabled', true);
       this.set('advancedstandingTabIsDisabled', true);
       this.set('addStudentStyles', "pointer-events: none;");
@@ -705,10 +729,102 @@ export default Ember.Component.extend({
       this.set('tempAdmissionComments', null);
       this.set('tempRegistrationComments', null);
 
+      this.set('currentStudentHSGrades', null);
     },
 
+    selectHighSchool(highSchool) {
+      if (highSchool != "null") {
+        console.log(highSchool);
+        var self = this;
+        this.get('store').query('high-school-course', { filter: { school: highSchool } }).then(function (records) {
+          self.set('hsCourseModel', records);
+        });
 
     selectGender (gender){
+
+        Ember.$("#courseSelect").attr('disabled', false);
+        this.set('isSchoolSelected', true);
+      }
+      else {
+        this.set('isSchoolSelected', false);
+        Ember.$("#courseSelect").attr('disabled', true);
+      }
+
+      this.set('isCourseSelected', false);
+      this.set('isLevelSelected', false);
+      this.set('isUnitSelected', false);
+      Ember.$("#gradeField").val(0);
+      Ember.$("#levelSelect").attr('disabled', true);
+      Ember.$("#unitSelect").attr('disabled', true);
+      Ember.$("#gradeField").attr('disabled', true);
+      Ember.$("#addCourseGradeButton").attr('disabled', true);
+    },
+
+    selectCourse(courseInfo) {
+      if (courseInfo != "null") {
+        var self = this;
+        this.get('store').query('high-school-course', { filter: { id: courseInfo } }).then(function (records) {
+          self.set('hsCourseModel2', records);
+        });
+
+        Ember.$("#levelSelect").attr('disabled', false);
+        Ember.$("#unitSelect").attr('disabled', false);
+        this.set('isCourseSelected', true);
+      }
+      else {
+        this.set('isCourseSelected', false);
+        Ember.$("#levelSelect").attr('disabled', true);
+        Ember.$("#unitSelect").attr('disabled', true);
+      }
+
+      this.set('isLevelSelected', false);
+      this.set('isUnitSelected', false);
+      Ember.$("#addCourseGradeButton").attr('disabled', true);
+      Ember.$("#gradeField").attr('disabled', true);
+    },
+
+    selectLevel(courseId) {
+      if (courseId != "null") {
+        this.set('isLevelSelected', true);
+        if (this.get('isUnitSelected')) {
+          Ember.$("#gradeField").attr('disabled', false);
+          Ember.$("#addCourseGradeButton").attr('disabled', false);
+          this.set('highSchoolCourseChoice', this.get('store').find('high-school-course', courseId));
+        }
+        else {
+          Ember.$("#gradeField").attr('disabled', true);
+          Ember.$("#addCourseGradeButton").attr('disabled', true);
+        }
+      }
+      else {
+        this.set('isLevelSelected', false);
+        Ember.$("#addCourseGradeButton").attr('disabled', true);
+        Ember.$("#gradeField").attr('disabled', true);
+      }
+    },
+
+    selectUnit(courseId) {
+      if (courseId != "null") {
+        this.set('isUnitSelected', true);
+        if (this.get('isLevelSelected')) {
+          Ember.$("#gradeField").attr('disabled', false);
+          Ember.$("#addCourseGradeButton").attr('disabled', false);
+          this.set('highSchoolCourseChoice', this.get('store').find('high-school-course', courseId));
+        }
+        else {
+          Ember.$("#gradeField").attr('disabled', true);
+          Ember.$("#addCourseGradeButton").attr('disabled', true);
+        }
+      }
+      else {
+        this.set('isUnitSelected', false);
+        Ember.$("#addCourseGradeButton").attr('disabled', true);
+        Ember.$("#gradeField").attr('disabled', true);
+      }
+    },
+
+    selectGender(gender) {
+>>>>>>> 18396a9912f4f78c33c45f39c463fc053f80c125
       this.set('selectedGender', gender);
       console.log(gender);
       console.log(1);
@@ -718,7 +834,7 @@ export default Ember.Component.extend({
       this.get('undoStack').pushObject(tempstudent);
     },
 
-    selectResidency (residency){
+    selectResidency(residency) {
       this.set('selectedResidency', residency);
       console.log(residency);
       //push the orignal one into the stack
@@ -727,7 +843,7 @@ export default Ember.Component.extend({
       this.get('undoStack').pushObject(tempstudent);
     },
 
-    assignDate (date){
+    assignDate(date) {
       this.set('selectedDate', date);
       //push the original dob from the current student to undo stack
       console.log(1);
@@ -736,7 +852,7 @@ export default Ember.Component.extend({
       this.get('undoStack').pushObject(tempstudent);
     },
 
-    addAS(){
+    addAS() {
       console.log(this.get('courseNameAS'));
       console.log(this.get('descriptionAS'));
       console.log(this.get('unitsAS'));
@@ -755,16 +871,39 @@ export default Ember.Component.extend({
 
     },
 
-    addhsMark(){
-      var newhsMark = this.get('store').createRecord('hscourse-grade', {
-        mark: this.get('hsGrade'),
-        studentInfo: this.get('currentStudent'),
-        source: this.get('courseChoice'),
-      });
-      newhsMark.save();
+    addhsMark() {
+      var grade = Ember.$("#gradeField").val();
+
+      if (grade >= 0 && grade <= 100) {
+        this.set('isGradeValid', true);
+      }
+      else {
+        this.set('isGradeValid', false);
+      }
+
+      if (this.get('isCourseSelected') && this.get('isGradeValid') && this.get('isLevelSelected') && this.get('isSchoolSelected') && this.get('isUnitSelected')) {
+        var newhsMark = this.get('store').createRecord('hscourse-grade', {
+          mark: this.get('hsGrade'),
+          studentInfo: this.get('currentStudent'),
+          source: this.get('highSchoolCourseChoice'),
+        });
+        newhsMark.save();
+      }
+      else {
+        console.log("invalid");
+      }
     },
 
-    deleteAS(currentAS){
+    deleteHsMark(hsGrade){
+      var index = this.get('hsCourseGradeModel').indexOf(hsGrade);
+      this.set('currentHsGradeIndex', index);
+      var indexTemp = this.get('currentHsGradeIndex');
+      var temp = this.get('hsCourseGradeModel').objectAt(indexTemp);
+      temp.deleteRecord();
+      temp.save();
+    },
+
+    deleteAS(currentAS) {
       var index = this.get('advancedStandingModel').indexOf(currentAS);
       this.set('currentASIndex', index);
       var indextemp = this.get('currentASIndex');
@@ -790,7 +929,7 @@ export default Ember.Component.extend({
       temp.save();
     },
 
-    deleteScholarshipAward(scholAward){
+    deleteScholarshipAward(scholAward) {
       var index = this.get('scholarshipAwardModel').indexOf(scholAward);
       this.set('currentScholIndex', index);
       var indextemp = this.get('currentScholIndex');
@@ -808,10 +947,11 @@ export default Ember.Component.extend({
       temp.set('note', this.get('scholarshipAndAwardNote'));
       temp.save();
     },
-    addScholarShipAndAward(){
+
+    addScholarShipAndAward() {
       console.log(this.get('scholarshipAndAwardNote'));
 
-      var newScholarShipAndAward = this.get('store').createRecord('scholarship-award',{
+      var newScholarShipAndAward = this.get('store').createRecord('scholarship-award', {
         note: this.get('scholarshipAndAwardNote'),
         studentInfo: this.get('currentStudent'),
       });
@@ -820,7 +960,9 @@ export default Ember.Component.extend({
       this.set('scholarshipAndAwardNote', null);
     },
 
-    backToEntryForm(){
+    backToEntryForm() {
+      this.set('currentStudentHSGrades', this.get('currentStudent').get('hsCourseGrade'));
+
       this.set('addingStudent', false);
       this.set('scholarshipTabIsDisabled', false);
       this.set('advancedstandingTabIsDisabled', false);
@@ -830,31 +972,31 @@ export default Ember.Component.extend({
       this.set('showFindRecord', false);
       this.set('showAllStudents', false);
 
-      this.set('tempFN',this.get('currentStudent').get('firstName'));
-      this.set('tempLN',this.get('currentStudent').get('lastName'));
-      this.set('tempNumber',this.get('currentStudent').get('number'));
-      this.set('tempPhoto',this.get('currentStudent').get('photo'));
-      this.set('tempRegistrationComments',this.get('currentStudent').get('registrationComments'));
-      this.set('tempBasisOfAdmission',this.get('currentStudent').get('basisOfAdmission'));
-      this.set('tempAdmissionAverage',this.get('currentStudent').get('admissionAverage'));
-      this.set('tempAdmissionComments',this.get('currentStudent').get('admissionComments'));
-      this.set('tempAdvInfo',this.get('currentStudent').get('advInfo'));
-      this.set('tempScholInfo',this.get('currentStudent').get('scholInfo'));
+      this.set('tempFN', this.get('currentStudent').get('firstName'));
+      this.set('tempLN', this.get('currentStudent').get('lastName'));
+      this.set('tempNumber', this.get('currentStudent').get('number'));
+      this.set('tempPhoto', this.get('currentStudent').get('photo'));
+      this.set('tempRegistrationComments', this.get('currentStudent').get('registrationComments'));
+      this.set('tempBasisOfAdmission', this.get('currentStudent').get('basisOfAdmission'));
+      this.set('tempAdmissionAverage', this.get('currentStudent').get('admissionAverage'));
+      this.set('tempAdmissionComments', this.get('currentStudent').get('admissionComments'));
+      this.set('tempAdvInfo', this.get('currentStudent').get('advInfo'));
+      this.set('tempScholInfo', this.get('currentStudent').get('scholInfo'));
       this.set('selectedDate', this.get('currentStudent').get('DOB').toISOString().substring(0, 10));
 
       var gender = this.get('currentStudent').get('genderInfo');
-      this.set('selectedGender',gender);
+      this.set('selectedGender', gender);
       var res = this.get('currentStudent').get('resInfo');
-      this.set('selectedResidency',res);
+      this.set('selectedResidency', res);
 
       this.set('listAS', this.get('currentStudent').get('advInfo'));
       this.set('scholarShipAndAwardList', this.get('currentStudent').get('scholInfo'));
 
-
-
     },
 
-    findRecord(){     //-----------------------------------------------------------------finds the student record-------------------------------------------------
+
+
+    findRecord() {     //-----------------------------------------------------------------finds the student record-------------------------------------------------
       var self = this;
       //console.log("student number find: " + self.get('findStudentNumber'));
 
@@ -872,8 +1014,10 @@ export default Ember.Component.extend({
 
     },
 
-    goToRecord(studentRecord){ //---------------------------------------------go to the found record ---------------------------------------------------
+    goToRecord(studentRecord) { //---------------------------------------------go to the found record ---------------------------------------------------
       console.log("clicked: " + studentRecord.get('firstName'));
+      this.set('currentStudentHSGrades', this.get('currentStudent').get('hsCourseGrade'));
+
       this.set('currentStudent', studentRecord);
       this.set('studentPhoto', this.get('currentStudent').get('photo'));
       var date = this.get('currentStudent').get('DOB');
@@ -884,40 +1028,40 @@ export default Ember.Component.extend({
       this.set('tempBasisOfAdmission', this.get('currentStudent').get('basisOfAdmission'));
       this.set('tempAdmissionComments', this.get('currentStudent').get('admissionComments'));
 
-      this.get('store').query('advanced-standing',{filter:{studentInfo:this.get('currentStudent').get('id')}});
+      this.get('store').query('advanced-standing', { filter: { studentInfo: this.get('currentStudent').get('id') } });
       this.set('listAS', this.get('currentStudent').get('advInfo'));
 
-      this.get('store').query('scholarship-award',{filter:{studentInfo:this.get('currentStudent').get('id')}});
+      this.get('store').query('scholarship-award', { filter: { studentInfo: this.get('currentStudent').get('id') } });
       this.set('scholarShipAndAwardList', this.get('currentStudent').get('scholInfo'));
 
       var gender = this.get('currentStudent').get('genderInfo');
-      this.set('selectedGender',gender);
+      this.set('selectedGender', gender);
       var res = this.get('currentStudent').get('resInfo');
-      this.set('selectedResidency',res);
+      this.set('selectedResidency', res);
 
       this.set('showFindRecord', false);
       this.set('showAllStudents', false);
 
     },
-    selectTermCode(termCode){
+    selectTermCode(termCode) {
       var termCodeObj = this.get('store').peekRecord('term-code', termCode);
       this.set('termCode', termCodeObj);
       this.set('courseCodeModel', termCodeObj.get('courseInfo'));
       console.log(this.get('courseCodeModel'));
     },
-    selectCourseCode(courseCode){
+    selectCourseCode(courseCode) {
       var courseCodeObj = this.get('store').peekRecord('course-code', courseCode);
       this.set('programCourseCode', courseCodeObj);
       console.log("course code: " + this.get('programCourseCode'));
     },
-    addGrade(){
+    addGrade() {
       var self = this;
       var newGrade = this.get('store').createRecord('grade', { //create a new grade record
         mark: this.get('courseGrade'),
         note: this.get('courseNote'),
       });
 
-      newGrade.save().then(function(savedNewGrade){ //commit the grade record to db
+      newGrade.save().then(function (savedNewGrade) { //commit the grade record to db
         console.log("saved grade: " + savedNewGrade);
         var courseCode = self.get('programCourseCode');
         courseCode.set('mark', savedNewGrade);
@@ -929,12 +1073,12 @@ export default Ember.Component.extend({
 
 
 
-    deleteGrade(gradeID, courseCode){
+    deleteGrade(gradeID, courseCode) {
       console.log(gradeID);
       var grade = this.get('store').peekRecord('grade', gradeID);
       console.log(grade);
       var ans = confirm("are you sure you want to delete this?");
-      if(ans){
+      if (ans) {
         grade.deleteRecord();
         grade.save();
 
@@ -943,7 +1087,7 @@ export default Ember.Component.extend({
       }
     },
 
-    editGrade(){
+    editGrade() {
       var grade = this.get('selectedGradeToEdit');
       console.log(grade);
       grade.set('mark', this.get('gradeEdit'));
@@ -952,33 +1096,33 @@ export default Ember.Component.extend({
     },
 
 
-    openTermForm(){
+    openTermForm() {
       Ember.$('.ui.modal.term').modal('show');
     },
 
-    closeTermForm(){
+    closeTermForm() {
       Ember.$('.ui.modal.term').modal('hide');
     },
 
-    openEditTermForm(term){
+    openEditTermForm(term) {
       this.set('selectedTermToEdit', term);
       this.set('currentSelectedTermCode', term.get('term'));
       Ember.$('.ui.modal.termEdit').modal('show');
     },
 
-    closeEditTermForm(){
+    closeEditTermForm() {
       Ember.$('.ui.modal.termEdit').modal('hide');
     },
 
-    openCourseCodeForm(){
+    openCourseCodeForm() {
       Ember.$('.ui.modal.courseCode').modal('show');
     },
 
-    closeCourseCodeForm(){
+    closeCourseCodeForm() {
       Ember.$('.ui.modal.courseCode').modal('hide');
     },
 
-    openEditCourseForm(courseCode){
+    openEditCourseForm(courseCode) {
       this.set('selectedCourseToEdit', courseCode);
       this.set('courseNameEdit', courseCode.get('name'));
       this.set('courseLetterEdit', courseCode.get('courseLetter'));
@@ -987,19 +1131,19 @@ export default Ember.Component.extend({
       Ember.$('.ui.modal.courseCodeEdit').modal('show');
     },
 
-    closeEditCourseForm(){
+    closeEditCourseForm() {
       Ember.$('.ui.modal.courseCodeEdit').modal('hide');
     },
 
-    openGradeForm(){
+    openGradeForm() {
       Ember.$('.ui.modal.grade').modal('show');
     },
 
-    closeGradeForm(){
+    closeGradeForm() {
       Ember.$('.ui.modal.grade').modal('hide');
     },
 
-    openEditGradeForm(gradeID){
+    openEditGradeForm(gradeID) {
       var grade = this.get('store').peekRecord('grade', gradeID);
       this.set('selectedGradeToEdit', grade);
       this.set('gradeEdit', grade.get('mark'));
@@ -1009,17 +1153,17 @@ export default Ember.Component.extend({
 
     },
 
-    closeEditGradeForm(){
+    closeEditGradeForm() {
       Ember.$('.ui.modal.gradeEdit').modal('hide');
     },
 
 
 
 
-    openProgramRecordForm(){
+    openProgramRecordForm() {
       Ember.$('.ui.modal.programRecord').modal('show');
     },
-    closeProgramRecordForm(){
+    closeProgramRecordForm() {
       Ember.$('.ui.modal.programRecord').modal('hide');
     },
 
@@ -1027,43 +1171,43 @@ export default Ember.Component.extend({
 
 
 
-    addTerm(){
-      if(this.get('currentSelectedTermCode') !== null){
+    addTerm() {
+      if (this.get('currentSelectedTermCode') !== null) {
         var newTerm = this.get('store').createRecord('term', {
           studentInfo: this.get('currentStudent'),
           term: this.get('currentSelectedTermCode')
         });
         newTerm.save();
       }
-      else{
+      else {
         alert("You must select a term code");
       }
 
     },
 
-    editTerm(){
-      if(this.get('currentSelectedTermCode') !== null){
+    editTerm() {
+      if (this.get('currentSelectedTermCode') !== null) {
         var term = this.get('selectedTermToEdit');
         term.set('term', this.get('currentSelectedTermCode'));
         term.save();
         alert("Term successfully updated!");
       }
-      else{
+      else {
         alert('You must select a term code');
       }
     },
 
-    deleteTerm(term){
+    deleteTerm(term) {
       console.log(term);
       var ans = confirm("are you sure you want to delete this?");
-      if(ans){
+      if (ans) {
         term.deleteRecord();
         term.save();
       }
     },
 
-    addCourseCode(){
-      if(this.get('selectedTermTemp') !== null){
+    addCourseCode() {
+      if (this.get('selectedTermTemp') !== null) {
         var newCourseCode = this.get('store').createRecord('course-code', {
           courseLetter: this.get('courseLetter'),
           courseNumber: this.get('courseNum'),
@@ -1073,12 +1217,12 @@ export default Ember.Component.extend({
         });
         newCourseCode.save();
       }
-      else{
+      else {
         alert("must select a term");
       }
     },
 
-    editCourseCode(){
+    editCourseCode() {
       var course = this.get('selectedCourseToEdit');
       course.set('courseLetter', this.get('courseLetterEdit'));
       course.set('name', this.get('courseNameEdit'));
@@ -1089,16 +1233,16 @@ export default Ember.Component.extend({
       course.save();
     },
 
-    deleteCourseCode(courseCode){
+    deleteCourseCode(courseCode) {
       var ans = confirm("Are you sure you want to delete this?");
 
-      if(ans){
+      if (ans) {
         courseCode.deleteRecord();
         courseCode.save();
       }
     },
 
-    addProgramRecord(){
+    addProgramRecord() {
       var currentTerm = this.get('termForAddingProgramRecord');
       var programRecordList = currentTerm.get('program');
       console.log(programRecordList.get('length'));
@@ -1106,9 +1250,9 @@ export default Ember.Component.extend({
       currentTerm.save();
     },
 
-    deleteProgramRecord(program){
+    deleteProgramRecord(program) {
       var ans = confirm('Are you sure you want to delete this?');
-      if(ans){
+      if (ans) {
         console.log(this.get('currentStudentProgramRecords').get('length'));
         this.get('currentStudentProgramRecords').removeObject(program);
         console.log(this.get('currentStudentProgramRecords').get('length'));
@@ -1117,18 +1261,18 @@ export default Ember.Component.extend({
       }
     },
 
-    selectProgramRecord(program){
+    selectProgramRecord(program) {
       var programRecord = this.get('store').peekRecord('program-record', program);
       this.set('programRecordTemp', programRecord);
       console.log(this.get('programRecordTemp'));
     },
 
-    selectTermForAddCourse(term){
+    selectTermForAddCourse(term) {
       var termCourseObj = this.get('store').peekRecord('term', term);
       this.set('selectedTermTemp', termCourseObj);
     },
 
-    selectedTermCode(termCode){
+    selectedTermCode(termCode) {
       var selectedStudentTermCode = this.get('store').peekRecord('term-code', termCode);
       this.set('currentSelectedTermCode', selectedStudentTermCode);
 
@@ -1139,17 +1283,17 @@ export default Ember.Component.extend({
       console.log("selected" + this.get('currentStudentCourseCodes'));*/
     },
 
-    selectTermForGrade(term){
+    selectTermForGrade(term) {
 
       var selectedTerm = this.get('store').peekRecord('term', term);
-      this.get('store').query('course-code',{filter:{semester:selectedTerm.get('id')}});
+      this.get('store').query('course-code', { filter: { semester: selectedTerm.get('id') } });
       this.set('studentCourseCodeForGrade', selectedTerm.get('courseInfo'));
     },
 
-    selectedTerm(term){
+    selectedTerm(term) {
       console.log(term);
       var selectedStudentTerm = this.get('store').peekRecord('term', term);
-      this.get('store').query('course-code',{filter:{semester:selectedStudentTerm.get('id')}});
+      this.get('store').query('course-code', { filter: { semester: selectedStudentTerm.get('id') } });
       //this.set('currentSelectedTerm', selectedStudentTerm);
       //this.get('store').query('course-code',{filter:{semester:this.get('currentSelectedTerm').get('id')}});
       this.set('currentStudentCourseCodes', selectedStudentTerm.get('courseInfo'));
@@ -1157,20 +1301,20 @@ export default Ember.Component.extend({
       console.log("term selected" + selectedStudentTerm);
 
     },
-    selectTermForAddGrade(term){
+    selectTermForAddGrade(term) {
       var selectedStudentTerm = this.get('store').peekRecord('term', term);
-      this.get('store').query('course-code', {filter:{semester: selectedStudentTerm.get('id')}});
+      this.get('store').query('course-code', { filter: { semester: selectedStudentTerm.get('id') } });
       this.set('studentCourseCodeForAddGrade', selectedStudentTerm.get('courseInfo'));
     },
 
-    showProgramRecords(term){
+    showProgramRecords(term) {
       var selectedStudentTerm = this.get('store').peekRecord('term', term);
       this.set('selectedTermInProgramRecord', selectedStudentTerm);
       this.set('currentStudentProgramRecords', selectedStudentTerm.get('program'));
       console.log(this.get('currentStudentProgramRecords').get('length'));
     },
 
-    selectTermForProgramRecord(term){
+    selectTermForProgramRecord(term) {
       var studentTerm = this.get('store').peekRecord('term', term);
       this.set('termForAddingProgramRecord', studentTerm);
       console.log(this.get('termForAddingProgramRecord'));
@@ -1213,7 +1357,7 @@ function validateFields(_studentNum, _fName, _lName, _dob, _residency, _gender) 
   }
 
   //validates the gender field
-  if (_gender === null || _gender === undefined){
+  if (_gender === null || _gender === undefined) {
     alert('Must select a gender');
     return false;
   }
@@ -1238,7 +1382,11 @@ Ember.$(document).ready(function () {
     if (Ember.$("#dateInput").val().length === 7 && asciiCode !== 8) {
       Ember.$("#dateInput").val(Ember.$("#dateInput").val() + "-");
     }
-
   });
 
+  Ember.$("#gradeField").val(0);
+  Ember.$("#levelSelect").attr('disabled', true);
+  Ember.$("#unitSelect").attr('disabled', true);
+  Ember.$("#courseSelect").attr('disabled', true);
+  Ember.$("#addCourseGradeButton").attr('disabled', true);
 }); //end ember.$document function
