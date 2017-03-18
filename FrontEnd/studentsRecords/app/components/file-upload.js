@@ -1232,7 +1232,6 @@ export default Ember.Component.extend({
                           if(planArray[k] == allPlanCode.objectAt(l).get('name'))
                           {
                             currentPlanCode = allPlanCode.objectAt(l);
-                            break;
                           }
                         }
                         //after loate the plan code
@@ -1245,7 +1244,7 @@ export default Ember.Component.extend({
                           {
                             //located the program record
                             currentProgram = allProgram.objectAt(l);
-                            break;
+
                           }
                         }
                         //after locate the program record
@@ -1280,7 +1279,7 @@ export default Ember.Component.extend({
                                 {
                                   //if both term name and student number matches
                                   currentterm = allterm.objectAt(a);
-                                  break;
+
                                 }
                               }
                               //after located the term
@@ -1294,7 +1293,7 @@ export default Ember.Component.extend({
                                 {
                                   //located the program record
                                   currentProgramobj = allProgram.objectAt(b);
-                                  break;
+
                                 }
                               }
                               //after locate the program record
@@ -1495,7 +1494,7 @@ export default Ember.Component.extend({
                               if(allGradeRecord.objectAt(l).get('mark') == gradeArray[k] && allGradeRecord.objectAt(l).get('note') == noteArray[k])
                               {
                                 currentgrade = allGradeRecord.objectAt(l);
-                                break;
+
                               }
                             }
                             //at this point it should either get the grade object or the student has a null grade
@@ -1506,7 +1505,7 @@ export default Ember.Component.extend({
                               if((termCodeArray[k]==allterm.objectAt(m).get('term').get('name')) && (studentnumArray[k]==allterm.objectAt(m).get('studentInfo').get('number')))
                               {
                                 currenttermobj = allterm.objectAt(m);
-                                break;
+
                               }
                             }
                             //start updating the course code grade info
@@ -1537,178 +1536,477 @@ export default Ember.Component.extend({
           }
         });
       }
+      else if(file.name === "AssessmentCodes.xlsx")
+      {
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Please upload Faculties.xlsx";
+        self.set('filetobeloaded',label);
+
+        sheet_name_list.forEach(function (sheetName) {
+          var worksheet = workbook.Sheets[sheetName];
+
+          // //get the range of the worksheet
+          var range = XLSX.utils.decode_range(worksheet["!ref"]);
+          // //loop from start of the range to the end of the range
+          for(var R = (range.s.r+1); R <= range.e.r; R++)
+          {
+            var code1 =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})].v;
+            var name1 =  worksheet[XLSX.utils.encode_cell({c: 1, r:R})].v;
+
+
+            let newAssessmentCode = self.get('store').createRecord('assessment-code',{
+              code:code1,
+              name:name1,
+            });
+            newAssessmentCode.save();
+          }
+        });
+      }
+
+      else if(file.name === "Faculties.xlsx")
+      {
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Please upload Departments.xlsx";
+        self.set('filetobeloaded',label);
+
+        sheet_name_list.forEach(function (sheetName) {
+          var worksheet = workbook.Sheets[sheetName];
+
+          // //get the range of the worksheet
+          var range = XLSX.utils.decode_range(worksheet["!ref"]);
+          // //loop from start of the range to the end of the range
+          for(var R = (range.s.r+1); R <= range.e.r; R++)
+          {
+            var name1 =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})].v;
+
+            let newFaculty = self.get('store').createRecord('faculty',{
+              name:name1,
+            });
+            newFaculty.save();
+          }
+        });
+      }
+
       else if(file.name === "Departments.xlsx")
       {
-        
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Please upload ProgramAdministrations.xlsx";
+        self.set('filetobeloaded',label);
+
+        sheet_name_list.forEach(function (sheetName) {
+          var worksheet = workbook.Sheets[sheetName];
+          var nameArray =[]; var facultyArray=[];
+          // //get the range of the worksheet
+          var range = XLSX.utils.decode_range(worksheet["!ref"]);
+          // //loop from start of the range to the end of the range
+          for(var R = (range.s.r+1); R <= range.e.r; R++)
+          {
+            var name1 =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})].v;
+            var faculty1 = worksheet[XLSX.utils.encode_cell({c: 1, r:R})].v;
+            nameArray[nameArray.length] = name1;
+            facultyArray[facultyArray.length] = faculty1;
+          }
+
+          //start finding the faculty from cache
+          var allfaculty = self.get('store').peekAll('faculty');
+          for (let i=0;i<facultyArray.length;i++)
+          {
+            for(let j=0;j<allfaculty.get('length');j++)
+            {
+              if(allfaculty.objectAt(j).get('name')== facultyArray[i])
+              {
+                let currentfaculty = allfaculty.objectAt(j);
+                let newDepartment = self.get('store').createRecord('department',{
+                  name:nameArray[i],
+                  faculty:currentfaculty,
+                });
+                newDepartment.save();
+              }
+            }
+          }
+        });
+      }
+
+      else if(file.name === "ProgramAdministrations.xlsx")
+      {
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Please upload UndergraduateRecordAdjudications.xlsx";
+        self.set('filetobeloaded',label);
+
+        sheet_name_list.forEach(function (sheetName) {
+          var worksheet = workbook.Sheets[sheetName];
+          var nameArray =[]; var positionArray=[]; var departmentArray=[];
+          // //get the range of the worksheet
+          var range = XLSX.utils.decode_range(worksheet["!ref"]);
+          // //loop from start of the range to the end of the range
+          for(var R = (range.s.r+1); R <= range.e.r; R++)
+          {
+            var name1 =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})].v;
+            var position1 = worksheet[XLSX.utils.encode_cell({c: 1, r:R})].v;
+            var department1 = worksheet[XLSX.utils.encode_cell({c: 2, r:R})].v;
+            nameArray[nameArray.length] = name1;
+            positionArray[positionArray.length] = position1;
+            departmentArray[departmentArray.length] = department1;
+          }
+
+          //start finding the faculty from cache
+          var alldepartment = self.get('store').peekAll('department');
+          for (let i=0;i<nameArray.length;i++)
+          {
+            for(let j=0;j<alldepartment.get('length');j++)
+            {
+              if(alldepartment.objectAt(j).get('name')== departmentArray[i])
+              {
+                let currentdepartment = alldepartment.objectAt(j);
+                let newProgramAdministration = self.get('store').createRecord('program-administration',{
+                  name:nameArray[i],
+                  position:positionArray[i],
+                  dept: currentdepartment,
+                });
+                newProgramAdministration.save();
+              }
+            }
+          }
+        });
+      }
+
+      else if(file.name === "UndergraduateRecordAdjudications.xlsx")
+      {
+        //by here the file name is residency
+        //increment the counter
+        counter++;
+        self.set('count',counter);
+        //set the label to genders
+        label = "Done !";
+        self.set('filetobeloaded',label);
+
+        sheet_name_list.forEach(function (sheetName) {
+          var worksheet = workbook.Sheets[sheetName];
+          var studentnumArray =[]; var termArray=[]; var termAVGArray=[];
+          var termUnitsPassedArray =[]; var termUnitsTotalArray=[];
+          var termAdjudicationArray = []; var index =0;
+          // //get the range of the worksheet
+          var range = XLSX.utils.decode_range(worksheet["!ref"]);
+          // //loop from start of the range to the end of the range
+          for(var R = (range.s.r+1); R <= range.e.r; R++)
+          {
+            var studentnum =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})].v;
+            var termcode = worksheet[XLSX.utils.encode_cell({c: 1, r:R})].v;
+            var termavg = worksheet[XLSX.utils.encode_cell({c: 2, r:R})].v;
+            var termunitspassed = worksheet[XLSX.utils.encode_cell({c: 3, r:R})].v;
+            var termunitstotoal = worksheet[XLSX.utils.encode_cell({c: 4, r:R})].v;
+            var termadjudication = worksheet[XLSX.utils.encode_cell({c: 5, r:R})];
+            if(termadjudication != null)
+            {
+              termadjudication = termadjudication.v;
+            }
+
+            studentnumArray[index] = studentnum;
+            termArray[index] = termcode;
+            termAVGArray[index] = termavg;
+            termUnitsPassedArray[index] = termunitspassed;
+            termUnitsTotalArray[index] = termunitstotoal;
+            termAdjudicationArray[index] = termadjudication;
+
+            index++;
+          }
+
+          //get all student from chache
+          var allstudent = self.get('store').peekAll('student');
+          var allterm = self.get('store').peekAll('term');
+          var allassessmentcode = self.get('store').peekAll('assessment-code');
+
+          for(let i=0;i<studentnumArray.length;i++)
+          {
+            var currentStudent;
+            for(let j=0;j<allstudent.get('length');j++)
+            {
+              if(allstudent.objectAt(j).get('number') == studentnumArray[i])
+              {
+                currentStudent = allstudent.objectAt(j);
+              }
+            }
+            //after getting the student info
+            var currentTerm;
+            for(let j=0;j<allterm.get('length');j++)
+            {
+              if(allterm.objectAt(j).get('term').get('name') == termArray[i] && allterm.objectAt(j).get('studentInfo').get('number') == studentnumArray[i] )
+              {
+                currentTerm = allterm.objectAt(j);
+              }
+            }
+            //after getting the term start getting the student assessment-code
+            //checking this part
+            // var currentAssessmentCode;
+            // for(let j=0;j<allassessmentcode.get('length');j++)
+            // {
+            //   if(allassessmentcode.objectAt(j).get('term') == termArray[i] && allassessmentcode.objectAt(j).get('studentInfo').get('number') == studentnumArray[i] )
+            //   {
+            //     currentAssessmentCode = allassessmentcode.objectAt(j);
+            //   }
+            // }
+
+
+
+            let newAdjudication = self.get('store').createRecord('adjudication',{
+              //date: new Date(),
+              termAVG: termAVGArray[i],
+              termUnitPassed:termUnitsPassedArray[i],
+              termUnitsTotal: termUnitsTotalArray[i],
+              note: termAdjudicationArray[i],
+              studentInfo: currentStudent,
+              semester: currentTerm,
+              //comment:DS.belongsTo('assessment-code'),
+            });
+            newAdjudication.save();
+          }
+        });
       }
     },
-    //end of the read file function
 
-    deleteall:function(){
-      //delete has to be called before uploading
-      //when delete is call, increment the counter so the uploading will work
-      var counter = this.get('count');
-      counter=1;
-      this.set('count',counter);
-      var label = this.get('filetobeloaded');
-      label = "Please upload residencies.xlsx";
-      this.set('filetobeloaded',label);
-      //when user start uploading the file, delete all original data in the db
-      //delete all student record
-      this.get('store').query('student', {
-        limit: 9007199254740992, //this is the max int in javascript
-        offset: 0
-      }).then(function (record) {
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
+//end of the read file function
+
+deleteall:function(){
+  //delete has to be called before uploading
+  //when delete is call, increment the counter so the uploading will work
+  var counter = this.get('count');
+  counter=1;
+  this.set('count',counter);
+  var label = this.get('filetobeloaded');
+  label = "Please upload residencies.xlsx";
+  this.set('filetobeloaded',label);
+  //when user start uploading the file, delete all original data in the db
+  //delete all student record
+  this.get('store').query('student', {
+    limit: 9007199254740992, //this is the max int in javascript
+    offset: 0
+  }).then(function (record) {
+    record.content.forEach(function(rec) {
+      Ember.run.once(this, function() {
+        rec.deleteRecord();
+        rec.save();
       });
+    }, this);
+  });
 
-      //delete all gender record
-      this.get('store').findAll('gender').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
+  //delete all gender record
+  this.get('store').findAll('gender').then(function(record){
+    record.content.forEach(function(rec) {
+      Ember.run.once(this, function() {
+        rec.deleteRecord();
+        rec.save();
       });
+    }, this);
+  });
 
-      //delete all residency record
-      this.get('store').findAll('residency').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
+  //delete all residency record
+  this.get('store').findAll('residency').then(function(record){
+    record.content.forEach(function(rec) {
+      Ember.run.once(this, function() {
+        rec.deleteRecord();
+        rec.save();
       });
+    }, this);
+  });
 
-      //delete all scholarship-award record
-      this.get('store').findAll('scholarship-award').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
+  //delete all scholarship-award record
+  this.get('store').findAll('scholarship-award').then(function(record){
+    record.content.forEach(function(rec) {
+      Ember.run.once(this, function() {
+        rec.deleteRecord();
+        rec.save();
       });
+    }, this);
+  });
 
-      //delete all advanced-standing record
-      this.get('store').findAll('advanced-standing').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
+  //delete all advanced-standing record
+  this.get('store').findAll('advanced-standing').then(function(record){
+    record.content.forEach(function(rec) {
+      Ember.run.once(this, function() {
+        rec.deleteRecord();
+        rec.save();
       });
+    }, this);
+  });
 
-      //delete all high-school-course record
-      this.get('store').findAll('high-school-course').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
+  //delete all high-school-course record
+  this.get('store').findAll('high-school-course').then(function(record){
+    record.content.forEach(function(rec) {
+      Ember.run.once(this, function() {
+        rec.deleteRecord();
+        rec.save();
       });
+    }, this);
+  });
 
-      //delete all high-school-subject record
-      this.get('store').findAll('high-school-subject').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
+  //delete all high-school-subject record
+  this.get('store').findAll('high-school-subject').then(function(record){
+    record.content.forEach(function(rec) {
+      Ember.run.once(this, function() {
+        rec.deleteRecord();
+        rec.save();
       });
+    }, this);
+  });
 
-      //delete all hscourse-grade record
-      this.get('store').findAll('hscourse-grade').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
+  //delete all hscourse-grade record
+  this.get('store').findAll('hscourse-grade').then(function(record){
+    record.content.forEach(function(rec) {
+      Ember.run.once(this, function() {
+        rec.deleteRecord();
+        rec.save();
       });
+    }, this);
+  });
 
-      //delete all secondary-school record
-      this.get('store').findAll('secondary-school').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
+  //delete all secondary-school record
+  this.get('store').findAll('secondary-school').then(function(record){
+    record.content.forEach(function(rec) {
+      Ember.run.once(this, function() {
+        rec.deleteRecord();
+        rec.save();
       });
+    }, this);
+  });
 
-      //delete all plan-code record
-      this.get('store').findAll('plan-code').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
+  //delete all plan-code record
+  this.get('store').findAll('plan-code').then(function(record){
+    record.content.forEach(function(rec) {
+      Ember.run.once(this, function() {
+        rec.deleteRecord();
+        rec.save();
       });
+    }, this);
+  });
 
-      //delete all program-record record
-      this.get('store').findAll('program-record').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
+  //delete all program-record record
+  this.get('store').findAll('program-record').then(function(record){
+    record.content.forEach(function(rec) {
+      Ember.run.once(this, function() {
+        rec.deleteRecord();
+        rec.save();
       });
+    }, this);
+  });
 
 
-      //delete all term-code record
-      this.get('store').findAll('term-code').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
+  //delete all term-code record
+  this.get('store').findAll('term-code').then(function(record){
+    record.content.forEach(function(rec) {
+      Ember.run.once(this, function() {
+        rec.deleteRecord();
+        rec.save();
       });
+    }, this);
+  });
 
-      //delete all course-code record
-      this.get('store').findAll('course-code').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
+  //delete all course-code record
+  this.get('store').findAll('course-code').then(function(record){
+    record.content.forEach(function(rec) {
+      Ember.run.once(this, function() {
+        rec.deleteRecord();
+        rec.save();
       });
+    }, this);
+  });
 
-      //delete all grade record
-      this.get('store').findAll('grade').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
+  //delete all grade record
+  this.get('store').findAll('grade').then(function(record){
+    record.content.forEach(function(rec) {
+      Ember.run.once(this, function() {
+        rec.deleteRecord();
+        rec.save();
       });
+    }, this);
+  });
 
-      //delete all term record
-      this.get('store').findAll('term').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
+  //delete all term record
+  this.get('store').findAll('term').then(function(record){
+    record.content.forEach(function(rec) {
+      Ember.run.once(this, function() {
+        rec.deleteRecord();
+        rec.save();
       });
-    },
+    }, this);
+  });
 
-  }
-  //end of actions
+  //delete all program administration
+  this.get('store').findAll('program-administration').then(function(record){
+    record.content.forEach(function(rec) {
+      Ember.run.once(this, function() {
+        rec.deleteRecord();
+        rec.save();
+      });
+    }, this);
+  });
+
+  //delete all department
+  this.get('store').findAll('department').then(function(record){
+    record.content.forEach(function(rec) {
+      Ember.run.once(this, function() {
+        rec.deleteRecord();
+        rec.save();
+      });
+    }, this);
+  });
+
+  //delete all faculty
+  this.get('store').findAll('faculty').then(function(record){
+    record.content.forEach(function(rec) {
+      Ember.run.once(this, function() {
+        rec.deleteRecord();
+        rec.save();
+      });
+    }, this);
+  });
+
+  //delete all assessment code
+  this.get('store').findAll('assessment-code').then(function(record){
+    record.content.forEach(function(rec) {
+      Ember.run.once(this, function() {
+        rec.deleteRecord();
+        rec.save();
+      });
+    }, this);
+  });
+
+  //delete all logical expression
+  this.get('store').findAll('logical-expression').then(function(record){
+    record.content.forEach(function(rec) {
+      Ember.run.once(this, function() {
+        rec.deleteRecord();
+        rec.save();
+      });
+    }, this);
+  });
+
+  //delete all adjudication
+  this.get('store').findAll('adjudication').then(function(record){
+    record.content.forEach(function(rec) {
+      Ember.run.once(this, function() {
+        rec.deleteRecord();
+        rec.save();
+      });
+    }, this);
+  });
+},
+
+}
+//end of actions
 });
