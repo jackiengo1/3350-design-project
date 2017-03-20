@@ -156,7 +156,7 @@ var adjudicationSchema = mongoose.Schema(
     note: String,
     studentInfo: {type: mongoose.Schema.ObjectId, ref: 'Students'},
     semester: {type: mongoose.Schema.ObjectId, ref: 'Terms'},
-    comment: [{type: mongoose.Schema.ObjectId, ref: 'AssessmentCodes'}]
+    comment: {type: mongoose.Schema.ObjectId, ref: 'AssessmentCodes'}
   }
 );
 

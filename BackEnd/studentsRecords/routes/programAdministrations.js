@@ -10,7 +10,7 @@ router.route('/')
         var programAdministration = new models.ProgramAdministrations(request.body.programAdministration);
         programAdministration.save(function (error) {
             if (error) response.send(error);
-            response.json({scholarshipAward: programAdministration});
+            response.json({programAdministration: programAdministration});
         });
     })
     .get(parseUrlencoded, parseJSON, function (request, response) {
