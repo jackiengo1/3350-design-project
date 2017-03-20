@@ -44,7 +44,7 @@
     padding-left: 50px;
     padding-top: 35px;
     padding-bottom: 35px;
-    background-color: #d8d8d8;
+    background-color: #e2e0e2;
 }
 
 #basicInfoTopRow {
@@ -117,7 +117,7 @@
 }
 
 #logoTitleSegment {
-    background-color: #EEE3FD;
+    background-color: #EEE;
 }
 
 #titleHeader {
@@ -127,7 +127,7 @@
 }
 
 #mainContent {
-    background-color: #EEE3FD;
+    background-color: #EEE;
     padding-left: 60px;
     padding-right: 60px;
     padding-top: 25px;
@@ -149,3 +149,16 @@
     text-align: center;
 }
 /* END of welcome-page.hbs */
+
+/* authenticate-user.hbs */
+html {
+    background-repeat: no-repeat;
+    background-size: 500px;
+    background-position: center;
+    background-image: URL("/assets/images/UWO Stacked.png");
+}
+
+#loginFormBox {
+    
+}
+/* END of authenticate-user.hbs */
