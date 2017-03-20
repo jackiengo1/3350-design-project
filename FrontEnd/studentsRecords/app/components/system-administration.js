@@ -4,6 +4,8 @@ export default Ember.Component.extend({
   isUsersShowing: true,
   isFeatureEditing: false,
   isRolesEditing: false,
+  routing: Ember.inject.service('-routing'),
+
   ADM01IsPermitted: Ember.computed(function(){ //Manage system roles
     var authentication = this.get('oudaAuth');
     if (authentication.getName === "Root") {
@@ -43,6 +45,10 @@ export default Ember.Component.extend({
       this.set('isRolesEditing', false);
 
 
+    },
+
+    goBack() {
+      this.get('routing').transitionTo('home');      
     }
 
 
