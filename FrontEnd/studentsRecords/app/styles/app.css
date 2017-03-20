@@ -86,7 +86,7 @@
 }
 
 #mainNavbarButton {
-    width: 20%;
+    width: 19%;
     font-size: 16px;
     font-weight: bold;
     margin: 0;
@@ -94,7 +94,20 @@
     color: whitesmoke;
 }
 
+#mainNavbarLogoutButton {
+    width: 5%;
+    font-size: 16px;
+    font-weight: bold;
+    padding-left: 1.5%;
+    margin: 0;
+    color: whitesmoke;
+}
+
 #mainNavbarButton:hover {
+    background-color: #6D499C;
+}
+
+#mainNavbarLogoutButton:hover {
     background-color: #6D499C;
 }
 
