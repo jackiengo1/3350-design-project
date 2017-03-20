@@ -1,39 +1,27 @@
 <!-- Display the login screen with the main application background -->
 {{#if isPasswordChanging}}
-  <section class="hero">
-    <div class="row intro">
-      <div>
-        <div class="row">
-          <div class="large-10  large-centered columns">
-            <div class="panel">
-              <h3>Please change your password and login again</h3>
-              <br>
-              <div class="row">
-                <div class="small-3 columns">
-                  <label class="right">Enter Password</label>
-                </div>
-                <div class="small-7 columns" class="left">
-                  {{input value=firstPassword type="password" }}
-                </div>
-              </div>
-              <div class="row">
-                <div class="small-3 columns">
-                  <label class="right">Reenter Password</label>
-                </div>
-                <div class="small-7 columns" class="left">
-                  {{input value=secondPassword type="password" }}
-                </div>
-              </div>
-              <br> <br>
-              <a href="#" class="button radius" {{action 'save'}}>Save</a>
-            </div>
 
-          </div>
+  <div class="ui modal">
+    <div class="header">Please change your password and login again</div>
+    <div class="content">
+      <div class="ui form">
+        <div class="inline field">
+          <label>Password</label>
+          {{input value=firstPassword type="password" placeholder="enter password"}}
+        </div>
+        <div class="inline field">
+          <label>Reenter Password</label>
+          {{input value=secondPassword type="password" placeholder="re-enter password"}}
         </div>
       </div>
     </div>
-  </section>
 
+    <div class="actions">
+      <div class="ui button" {{action "save"}}>
+        Save
+      </div>
+    </div>
+  </div>
 
 {{else}}
 
