@@ -251,10 +251,10 @@ export default Ember.Component.extend({
     this.set('selectedGender', gender);
     var res = this.get('currentStudent').get('resInfo');
     this.set('selectedResidency', res);
-
+    console.log("here");
     this.get('store').query('advanced-standing', { filter: { studentInfo: this.get('currentStudent').get('id') } });
     this.set('listAS', this.get('currentStudent').get('advInfo'));
-
+    console.log("here1");
     this.get('store').query('scholarship-award', { filter: { studentInfo: this.get('currentStudent').get('id') } });
     this.set('scholarShipAndAwardList', this.get('currentStudent').get('scholInfo'));
 
@@ -918,8 +918,6 @@ export default Ember.Component.extend({
     },
 
     backToEntryForm() {
-      this.set('currentStudentHSGrades', this.get('currentStudent').get('hsCourseGrade'));
-
       this.set('addingStudent', false);
       this.set('scholarshipTabIsDisabled', false);
       this.set('advancedstandingTabIsDisabled', false);
@@ -948,6 +946,8 @@ export default Ember.Component.extend({
 
       this.set('listAS', this.get('currentStudent').get('advInfo'));
       this.set('scholarShipAndAwardList', this.get('currentStudent').get('scholInfo'));
+
+      this.set('currentStudentHSGrades', this.get('currentStudent').get('hsCourseGrade'));
     },
 
 
