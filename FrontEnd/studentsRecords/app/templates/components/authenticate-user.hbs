@@ -1,0 +1,47 @@
+<!-- Display the login screen with the main application background -->
+{{#if isPasswordChanging}}
+
+  <div class="ui modal">
+    <div class="header">Please change your password and login again</div>
+    <div class="content">
+      <div class="ui form">
+        <div class="inline field">
+          <label>Password</label>
+          {{input value=firstPassword type="password" placeholder="enter password"}}
+        </div>
+        <div class="inline field">
+          <label>Reenter Password</label>
+          {{input value=secondPassword type="password" placeholder="re-enter password"}}
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <div class="ui button" {{action "save"}}>
+        Save
+      </div>
+    </div>
+  </div>
+
+{{else}}
+
+<div class="ui one column center aligned grid" id="loginFormGrid">
+  <div class="form-holder" id="loginFormBox">
+    <h2 class="aligned header form-head" id="loginFormHeader">Western Engineering Students Adjudication System</h2>
+    <div class="ui form">
+      <div class="field" id="loginFormField">
+        {{input value=name type="text" placeholder="user name"}}
+      </div>
+      <div class="field" id="loginFormField">
+        {{input value=password type="password" placeholder="password"}}
+      </div>
+      <div class="field">
+        <a class="ui button large fluid" id="loginButton" {{action 'login'}}>
+            LOG IN
+        </a>
+        <p> {{errorMessage}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+{{/if}}

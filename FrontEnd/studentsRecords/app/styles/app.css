@@ -17,6 +17,10 @@
     font-size: 16px;
 }
 
+#programRecordTab.active {
+    background-color: #e2e0e2 !important;
+}
+
 #studentRecordsDataEntryTabHeader {
     margin-bottom: 30px;
 }
@@ -44,7 +48,7 @@
     padding-left: 50px;
     padding-top: 35px;
     padding-bottom: 35px;
-    background-color: #d8d8d8;
+    background-color: #e2e0e2;
 }
 
 #basicInfoTopRow {
@@ -86,14 +90,28 @@
 }
 
 #mainNavbarButton {
+    width: 19%;
     font-size: 16px;
     font-weight: bold;
     margin: 0;
-    padding-left: 5%;
+    padding-left: 2.5%;
+    color: whitesmoke;
+}
+
+#mainNavbarLogoutButton {
+    width: 5%;
+    font-size: 16px;
+    font-weight: bold;
+    padding-left: 1.5%;
+    margin: 0;
     color: whitesmoke;
 }
 
 #mainNavbarButton:hover {
+    background-color: #6D499C;
+}
+
+#mainNavbarLogoutButton:hover {
     background-color: #6D499C;
 }
 
@@ -103,7 +121,7 @@
 }
 
 #logoTitleSegment {
-    background-color: #EEE3FD;
+    background-color: #EEE;
 }
 
 #titleHeader {
@@ -113,7 +131,7 @@
 }
 
 #mainContent {
-    background-color: #EEE3FD;
+    background-color: #EEE;
     padding-left: 60px;
     padding-right: 60px;
     padding-top: 25px;
@@ -135,3 +153,46 @@
     text-align: center;
 }
 /* END of welcome-page.hbs */
+
+/* authenticate-user.hbs */
+#loginFormBox {
+    width: 45%;
+    padding-bottom: 4%;
+    padding-right: 4%;
+    padding-left: 4%;
+    padding-top: 3%;
+    background-color: rgba(136, 136, 136, 0.85)
+}
+
+#loginFormGrid {
+    padding-top: 10%;
+}
+
+#loginButton {
+    font-size: 16px;
+    background-color: #6435c9;
+    color: whitesmoke;
+}
+
+#loginButton:hover {
+    background-color: rgba(100, 53, 201, 0.65);
+}
+
+#loginFormHeader {
+    text-align: center;
+    padding-bottom: 3%;
+    font-size: 26px;
+}
+
+#loginFormField {
+    padding-bottom: 3%;
+    font-size: 16px;
+}
+
+html {
+    background-repeat: no-repeat;
+    background-position-x: 17%;
+    background-position-y: 30%;
+    background-size: 3000px;
+}
+/* END of authenticate-user.hbs */

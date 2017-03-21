@@ -22,7 +22,7 @@ router.route('/')
                 if (error) response.send(error);
                 response.json({highSchoolCourse: highSchoolCourses});
             });
-            console.log("no filter");
+            console.log("no filter 1");
         } else {
           if(request.query.filter.school)
           {

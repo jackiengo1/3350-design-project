@@ -1,5 +1,8 @@
+{{#if oudaAuth.isAuthenticated }} {{log '1'}}
 <div class="ui">
+
   {{outlet}}
+  
   <footer>
     <div class="ui violet inverted grid segment" id="zeroMargin">
       <div class="sixteen wide column" id="footerStyle">
@@ -7,4 +10,12 @@
       </div>
     </div>
   </footer>
+
 </div>
+
+{{else}} {{log '2'}}
+<div>
+  {{log '3'}} {{outlet "login"}}
+</div>
+
+{{/if}}

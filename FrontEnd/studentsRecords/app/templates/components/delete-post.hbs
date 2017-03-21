@@ -1,0 +1,11 @@
+{{#if DP001IsPermitted }}
+  <button class="ui icon button" {{action 'deletePost' post}}>
+    <i class="delete icon"></i>
+  </button>
+
+{{else}}
+  <button class="ui icon button" data-content="This feature (DP001) is disabled">
+    <i class="delete icon"></i>
+  </button>
+
+{{/if}}

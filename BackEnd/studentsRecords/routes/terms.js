@@ -60,6 +60,7 @@ router.route('/')
                     term.program = request.body.term.program;
                     term.courseInfo = request.body.term.courseInfo;
                     term.studentInfo = request.body.term.studentInfo;
+                    term.adjudicationInfo = request.body.term.adjudicationInfo;
 
                     term.save(function (error) {
                         if (error) {
@@ -82,7 +83,4 @@ router.route('/')
                 }
             );
         });
-
-
-
 module.exports = router;
