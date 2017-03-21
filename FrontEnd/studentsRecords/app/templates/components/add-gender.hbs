@@ -10,9 +10,14 @@
         <div class="item">
           <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
             <div class="negative ui button" onclick={{action 'deleteGender' oneGender}}>Delete</div>
+            <div class="negative ui button" onclick={{action 'editGender' oneGender}}>Edit</div>
           </div>
           <div class="content" style="padding-top: 10px; font-size: 16px;">
             {{oneGender.name}}
+          </div>
+          <div class="field">
+            <label>Gender</label>
+            {{input type="text"  value = genderName}}
           </div>
         </div>
         {{/each}}

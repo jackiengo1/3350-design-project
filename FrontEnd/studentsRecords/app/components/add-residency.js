@@ -38,6 +38,13 @@ export default Ember.Component.extend({
         restemp.save();
       }
     },
+    editResidency(residency){
+      var index = this.get('residencyModel').indexOf(residency);
+      this.set('residencyIndex', index);
+      var indextemp = this.get('residencyIndex');
+      var restemp = this.get('residencyModel').objectAt(indextemp);
+      restemp.set('name', this.get('residencyName'));
+    },
 
     //used to show the list of residency for delete function
     getResidence: function (residency) {

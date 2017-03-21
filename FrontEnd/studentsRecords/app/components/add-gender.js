@@ -41,6 +41,15 @@ export default Ember.Component.extend({
       }
     },
 
+    editGender(gender){
+      var index = this.get('genderModel').indexOf(gender);
+      this.set('genderIndex', index);
+      var indextemp = this.get('genderIndex');
+      var restemp = this.get('genderModel').objectAt(indextemp);
+      restemp.set('name', this.get('genderName'));
+      restemp.save();
+    },
+
     //used to show the list of gender for delete function
     getGender: function (gender) {
       var index = this.get('genderModel').indexOf(gender);

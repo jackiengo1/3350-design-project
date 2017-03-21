@@ -853,6 +853,30 @@ export default Ember.Component.extend({
 
     },
 
+  editAS(currentAS){
+  var index = this.get('advancedStandingModel').indexOf(currentAS);
+  this.set('currentASIndex', index);
+  var indextemp = this.get('currentASIndex');
+  var temp = this.get('advancedStandingModel').objectAt(indextemp);
+
+
+
+  temp.set('course', this.get('courseNameAS'));
+  temp.set('description', this.get('descriptionAS'));
+  temp.set('units', this.get('unitsAS'));
+  temp.set('grade', this.get('gradeAS'));
+  temp.set('from', this.get('fromAS'));
+  temp.save();
+},
+editScholarshipAward(scholAward){
+  var index = this.get('scholarshipAwardModel').indexOf(scholAward);
+  this.set('currentScholIndex', index);
+  var indextemp = this.get('currentScholIndex');
+  var temp = this.get('scholarshipAwardModel').objectAt(indextemp);
+  temp.set('note', this.get('scholarshipAndAwardNote'));
+  temp.save();
+},
+
     addhsMark() {
       var grade = Ember.$("#gradeField").val();
 

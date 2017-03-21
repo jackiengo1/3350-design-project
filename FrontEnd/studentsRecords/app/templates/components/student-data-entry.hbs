@@ -259,42 +259,80 @@
       <div class="ui center aligned header" id="studentRecordsDataEntryTabHeader">
         <h2>Student's Advanced Standings</h2>
       </div>
-
-      {{#ui-accordion class="styled fluid"}} {{#each listAS as |userListAS|}} {{#unless userListAS.isDeleted}}
-      <div class="title">
-        Course: {{userListAS.course}}
-      </div>
-      <div class="content">
-        <div class="ui vertically divided grid">
-          <div class="one column row" id="accordionFirstElement">
-            <div class="column">
-              <p>Description: {{userListAS.description}}</p>
-            </div>
+      {{#ui-accordion class="styled fluid"}}
+          {{#each listAS as |userListAS|}}
+          {{#unless userListAS.isDeleted}}
+          <div class="title" style="border-color: #6435c9">
+            Course: {{userListAS.course}}
           </div>
-          <div class="two column row" id="zeroPadding">
-            <div class="column">
-              <p>Units: {{userListAS.units}}</p>
-            </div>
-            <div class="column">
-              <p>Grade: {{userListAS.grade}}</p>
-            </div>
-          </div>
-          <div class="one column row" id="zeroPadding">
-            <div class="column">
-              <p>From: {{userListAS.from}}</p>
-            </div>
-          </div>
-          <div class="one column row" id="zeroPadding">
-            <div class="column">
-              <div class="ui center aligned header">
-                <button class="negative ui button" onclick={{action 'deleteAS' userListAS}}>Delete</button>
+          <div class="content">
+            <div class="ui vertically divided grid">
+              <div class="one column row" style="padding-bottom: 0;">
+                <div class="column">
+                  <p>Description: {{userListAS.description}}</p>
+                </div>
               </div>
+              <div class="two column row" style="padding: 0;">
+                <div class="column">
+                  <p>Units: {{userListAS.units}}</p>
+                </div>
+                <div class="column">
+                  <p>Grade: {{userListAS.grade}}</p>
+                </div>
+              </div>
+              <div class="one column row" style="padding: 0;">
+                <div class="column">
+                  <p>From: {{userListAS.from}}</p>
+                </div>
+              </div>
+              <div class="one column row" style="padding: 0;">
+                <div class="column">
+                  <p style="text-align: center;"><button class="negative ui button" onclick={{action 'deleteAS' userListAS}}>Delete</button></p>
+                </div>
+              </div>
+
+                      <div class="ui sixteen wide column">
+                        <form class="ui form">
+                          <div class="field">
+                            <label>Course Name</label>
+                            {{input disabled = addingStudent size="20" type="text"  value = courseNameAS}}
+                          </div>
+
+                          <div class="field">
+                            <label>Course Description</label>
+                            {{input disabled = addingStudent size="20" type="text"  value = descriptionAS}}
+                          </div>
+
+                          <div class="two fields">
+                            <div class="field">
+                              <label>Units</label>
+                              {{input disabled = addingStudent type="number" value = unitsAS}}
+                            </div>
+                            <div class="field">
+                              <label>Grade</label>
+                              {{input disabled = addingStudent type="number" max=100 min=0 value = gradeAS}}
+                            </div>
+                          </div>
+
+                          <div class="field">
+                            <label>From</label>
+                            {{input  disabled = addingStudent size="20" type="text"  value = fromAS}}
+                          </div>
+
+                        </form>
+                        <div class="column">
+                          <p style="text-align: center;"><button class="positive ui button" onclick={{action 'editAS' userListAS}}>Edit</button></p>
+                        </div>
+                      </div>
             </div>
           </div>
+          {{/unless}}
+
+          {{/each}}
+          //////
+          {{/ui-accordion}}
+
         </div>
-      </div>
-      {{/unless}} {{/each}} {{/ui-accordion}}
-    </div>
 
     <div class="eight wide column" id="studentRecordsDataEntryRightContent">
 
@@ -349,18 +387,25 @@
         <h2>Student's Scholarships and Awards</h2>
       </div>
 
-      <div class="ui middle aligned divided list">
-        {{#each scholarShipAndAwardList as |userScholarShipAndAwardList|}} {{#unless userScholarShipAndAwardList.isDeleted}}
-        <div class="item">
-          <div class="right floated content" id="listDeleteButton">
-            <div class="negative ui button" onclick={{action 'deleteScholarshipAward' userScholarShipAndAwardList}}>Delete</div>
+      <div class="ui middle aligned divided list" style="margin-top: 22px; margin-bottom: 22px;">
+            {{#each scholarShipAndAwardList as |userScholarShipAndAwardList|}}
+            {{#unless userScholarShipAndAwardList.isDeleted}}
+            <div class="item">
+              <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
+                <div class="negative ui button" onclick={{action 'deleteScholarshipAward' userScholarShipAndAwardList}}>Delete</div>
+                <div class="positive ui button" onclick={{action 'editScholarshipAward' userScholarShipAndAwardList}}>Edit</div>
+              </div>
+              <div class="content" style="padding-top: 10px; font-size: 16px;">
+                Note: {{userScholarShipAndAwardList.note}}
+              </div>
+              <div class="field">
+                <label>New note</label>
+                {{input disabled = addingStudent type="text" value = scholarshipAndAwardNote}}
+              </div>
+            </div>
+            {{/unless}}
+            {{/each}}
           </div>
-          <div class="content" id="listText">
-            Note: {{userScholarShipAndAwardList.note}}
-          </div>
-        </div>
-        {{/unless}} {{/each}}
-      </div>
     </div>
 
     <div class="eight wide column" id="studentRecordsDataEntryRightContent">
@@ -1014,7 +1059,3 @@
 
   <div class="ui bottom attached tab segment" data-tab="adjudicationTab" style="background-color: #eee3fd; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">
   </div>
-
-
-
-{{/if}}
