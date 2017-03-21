@@ -927,17 +927,19 @@ export default Ember.Component.extend({
       var currentScholAward = this.get('store').peekRecord('scholarship-award', scholID);
       this.set('selectedScholToEdit', currentScholAward);
       this.set('scholNoteEdit', currentScholAward.get('note'));
-      Ember.$('.ui.modal.scholEdit').modal('show');
+
+      Ember.$('.ui.modal.scholEdit').modal({detachable: false,}).modal('show');
     },
 
     editScholarShipAndAwards() {
       var currentScholAward = this.get('selectedScholToEdit');
-      currentScholAward.set('note', this.get('scholNoteEdit'));      
+      currentScholAward.set('note', this.get('scholNoteEdit'));
       currentScholAward.save();
     },
 
     closeEditScholForm() {
       Ember.$('.ui.modal.scholEdit').modal('hide');
+      Ember.$('.ui.modal.scholEdit').remove();
     },
 
     backToEntryForm() {
