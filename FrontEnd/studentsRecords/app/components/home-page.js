@@ -65,6 +65,7 @@ export default Ember.Component.extend({
       this.set('isStudentAssessmentShowing', false);
       this.set('isUserSettingsShowing', false);
       this.set('isLogoutShowing', true);
+      Ember.$("body").css("background-color", "transparent");
     },
 
     addResidency(){
