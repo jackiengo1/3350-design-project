@@ -33,8 +33,8 @@
 
           <div class="four wide column" >
             {{#if showLogic}}
-            <select class="ui search dropdown">
-              <option selected = "selected" value = null> Select a logic </option>
+            <select class="ui search dropdown"onchange={{action 'selectlogicLink' value="target.value"}}>
+              <option selected = "selected" value = "null"> Select a logic </option>
               {{#each logicalLink as |oneLogicalLink| }}
                 <option value={{oneLogicalLink}}> {{oneLogicalLink}} </option>
               {{/each}}
