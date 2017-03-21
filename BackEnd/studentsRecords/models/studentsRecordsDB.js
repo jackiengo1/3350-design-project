@@ -174,8 +174,8 @@ var assessmentCodeSchema = mongoose.Schema(
 
 var logicalExpressionSchema = mongoose.Schema(
   {
-    booleanExp: String,
-    logicalLink: String,
+    booleanExp: [String],
+    logicalLink: [ String],
     comment: {type: mongoose.Schema.ObjectId, ref: 'AssessmentCodes'},
     link: [{type: mongoose.Schema.ObjectId, ref: 'LogicalExpressions'}]
   }

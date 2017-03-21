@@ -511,35 +511,36 @@
 
 
 <!-- program record tab-->
-<div class="ui tab" data-tab="programRecord" style="background-color: #eee3fd; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">
-  <div class="ui top attached tabular menu" style="font-size: 16px;">
+<div class="ui tab" data-tab="programRecord">
+  
+  <div class="ui top attached tabular menu" id="studentRecordsDataEntryTab">
 
-    <a class="active item" data-tab="grades">Grades</a>
-    <a class="item" data-tab="courseCodes">Course Codes</a>
-    <a class="item " data-tab="termCodes">Terms</a>
-    <a class="item " data-tab="studentProgramRecord">Program Record</a>
+    <a class="active item" data-tab="grades" id="programRecordTab">Grades</a>
+    <a class="item" data-tab="courseCodes" id="programRecordTab">Course Codes</a>
+    <a class="item " data-tab="termCodes" id="programRecordTab">Terms</a>
+    <a class="item " data-tab="studentProgramRecord" id="programRecordTab">Program Record</a>
 
   </div>
 
-  <div class="ui bottom attached active tab segment" data-tab="grades" style="background-color: #eee3fd; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">
+  <div class="ui bottom attached active tab segment" data-tab="grades">
 
-    <div class="ui grid">
+    <div class="ui grid" id="studentRecordsDataEntryTabContent">
 
-      <div class="eight wide column" style="padding-right: 20px;">
-        <div class="ui center aligned header" style="margin-bottom: 30px;">
+    <div class="eight wide column" id="studentRecordsDataEntryLeftContent">
+      <div class="ui center aligned header" id="studentRecordsDataEntryTabHeader">
           <h2>Student's Grades</h2>
         </div>
 
-        <div class="ui center aligned header" style="margin-bottom: 30px;">
-          <select class="ui fluid dropdown" onchange={{action 'selectTermForGrade' value="target.value" }}>
-              <option selected = "selected" value = null> Select a term </option>
-              {{#each currentStudentTerms as |oneTerm|}}
-              <option value={{oneTerm.id}}> {{oneTerm.term.name}} </option>
-              {{/each}}
+        <form class="ui form">
+          <div class="field">
+            <select onchange={{action 'selectTermForGrade' value="target.value" }}>
+                <option selected = "selected" value = null> Select a Term </option>
+                {{#each currentStudentTerms as |oneTerm|}}
+                <option value={{oneTerm.id}}> {{oneTerm.term.name}} </option>
+                {{/each}}
             </select>
-        </div>
-
-
+          </div>
+        </form>
 
         <div class="ui middle aligned divided list" style="margin-top: 22px; margin-bottom: 22px;">
           {{#each studentCourseCodeForGrade as |oneCourseCode|}} {{#unless oneCourseCode.isDeleted}} {{#if oneCourseCode.mark}}
@@ -558,11 +559,11 @@
         </div>
       </div>
 
-      <div class="eight wide column" style="padding-left: 20px;">
+      <div class="eight wide column" id="studentRecordsDataEntryRightContent">
 
         <div class="ui center aligned header">
           <button class="ui primary button" {{action 'openGradeForm'}}>
-              Add grade
+              Add Grade
             </button>
         </div>
       </div>
@@ -570,27 +571,25 @@
   </div>
 
 
-  <div class="ui bottom attached tab segment" data-tab="courseCodes" style="background-color: #eee3fd; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">
+  <div class="ui bottom attached tab segment" data-tab="courseCodes">
 
+    <div class="ui grid" id="studentRecordsDataEntryTabContent">
 
-    <div class="ui grid">
-
-      <div class="eight wide column" style="padding-right: 20px;">
-        <div class="ui center aligned header" style="margin-bottom: 30px;">
+    <div class="eight wide column" id="studentRecordsDataEntryLeftContent">
+      <div class="ui center aligned header" id="studentRecordsDataEntryTabHeader">
           <h2>Student's Course Codes</h2>
         </div>
 
-
-        <div class="ui center aligned header" style="margin-bottom: 30px;">
-          <select class="ui fluid dropdown" onchange={{action 'selectedTerm' value="target.value" }}>
-              <option selected = "selected" value = null> Select a term </option>
-              {{#each currentStudentTerms as |oneTerm|}}
-              <option value={{oneTerm.id}}> {{oneTerm.term.name}} </option>
-              {{/each}}
+        <form class="ui form">
+          <div class="field">
+            <select onchange={{action 'selectedTerm' value="target.value" }}>
+                <option selected = "selected" value = null> Select a Term </option>
+                {{#each currentStudentTerms as |oneTerm|}}
+                <option value={{oneTerm.id}}> {{oneTerm.term.name}} </option>
+                {{/each}}
             </select>
-        </div>
-
-
+          </div>
+        </form>
 
         <div class="ui middle aligned divided list" style="margin-top: 22px; margin-bottom: 22px;">
           {{#each currentStudentCourseCodes as |oneCourseCode|}} {{#unless oneCourseCode.isDeleted}}
@@ -611,11 +610,11 @@
       </div>
 
 
-      <div class="eight wide column" style="padding-left: 20px;">
+      <div class="eight wide column" id="studentRecordsDataEntryRightContent">
 
         <div class="ui center aligned header">
           <button class="ui primary button" {{action 'openCourseCodeForm'}}>
-              Add course code
+              Add Course Code
             </button>
         </div>
       </div>
@@ -626,13 +625,12 @@
 
 
 
-  <div class="ui bottom attached tab segment" data-tab="termCodes" style="background-color: #eee3fd; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">
+  <div class="ui bottom attached tab segment" data-tab="termCodes">
 
+    <div class="ui grid" id="studentRecordsDataEntryTabContent">
 
-    <div class="ui grid">
-
-      <div class="eight wide column" style="padding-right: 20px;">
-        <div class="ui center aligned header" style="margin-bottom: 30px;">
+    <div class="eight wide column" id="studentRecordsDataEntryLeftContent">
+      <div class="ui center aligned header" id="studentRecordsDataEntryTabHeader">
           <h2>Student's Terms</h2>
         </div>
 
@@ -654,7 +652,7 @@
 
       <div class="eight wide column" style="padding-left: 20px;">
 
-        <div class="ui center aligned header">
+        <div class="ui center aligned header" id="studentRecordsDataEntryRightContent">
           <button class="ui primary button" {{action 'openTermForm'}}>
               Add Term
             </button>
@@ -665,23 +663,24 @@
   </div>
 
 
-  <div class="ui bottom attached tab segment" data-tab="studentProgramRecord" style="background-color: #eee3fd; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">
-    <div class="ui grid">
-      <div class="eight wide column" style="padding-right: 20px;">
-
-        <div class="ui center aligned header" style="margin-bottom: 30px;">
+  <div class="ui bottom attached tab segment" data-tab="studentProgramRecord">
+    <div class="ui grid" id="studentRecordsDataEntryTabContent">
+      
+    <div class="eight wide column" id="studentRecordsDataEntryLeftContent">
+      <div class="ui center aligned header" id="studentRecordsDataEntryTabHeader">
           <h2>Student's Program Records</h2>
         </div>
 
-        <div class="ui center aligned header" style="margin-bottom: 30px;">
-          <select class="ui fluid dropdown" onchange={{action 'showProgramRecords' value="target.value" }}>
-                <option selected = "selected" value = null> Select a term </option>
-                {{#each currentStudentTerms as |oneTerm|}}
-                <option value={{oneTerm.id}}> {{oneTerm.term.name}} </option>
-                {{/each}}
-              </select>
-        </div>
-
+        <form class="ui form">
+          <div class="field">
+            <select class="ui fluid dropdown" onchange={{action 'showProgramRecords' value="target.value" }}>
+              <option selected = "selected" value = null> Select a Term </option>
+              {{#each currentStudentTerms as |oneTerm|}}
+              <option value={{oneTerm.id}}> {{oneTerm.term.name}} </option>
+              {{/each}}
+            </select>
+          </div>
+        </form>
 
         <div class="ui middle aligned divided list" style="margin-top: 22px; margin-bottom: 22px;">
           {{#each currentStudentProgramRecords as |oneProgram|}} {{#unless oneProgram.isDeleted}}
@@ -699,8 +698,8 @@
 
       </div>
 
-      <div class="eight wide column" style="padding-right: 20px;">
-        <div class="ui center aligned header">
+      <div class="eight wide column">
+        <div class="ui center aligned header" id="studentRecordsDataEntryRightContent">
           <button class="ui primary button" {{action 'openProgramRecordForm'}}>
                   Add Program Record
                 </button>

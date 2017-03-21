@@ -27,18 +27,18 @@
 
 <div class="ui one column center aligned grid" id="loginFormGrid">
   <div class="form-holder" id="loginFormBox">
-    <h2 class="center aligned header form-head">WE Adjudication</h2>
+    <h2 class="aligned header form-head" id="loginFormHeader">Western Engineering Students Adjudication System</h2>
     <div class="ui form">
-      <div class="field">
+      <div class="field" id="loginFormField">
         {{input value=name type="text" placeholder="user name"}}
       </div>
-      <div class="field">
+      <div class="field" id="loginFormField">
         {{input value=password type="password" placeholder="password"}}
       </div>
       <div class="field">
-        <button class="ui button large fluid green" {{action 'login'}}>
-            Log In
-          </button>
+        <a class="ui button large fluid" id="loginButton" {{action 'login'}}>
+            LOG IN
+        </a>
         <p> {{errorMessage}}</p>
       </div>
     </div>
