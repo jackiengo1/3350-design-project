@@ -37,6 +37,10 @@ export default Ember.Component.extend({
     });
   },
 
+  didRender() {
+    Ember.$('.menu .item').tab();
+  },
+
   actions:{
 
     selectCourse(course){
