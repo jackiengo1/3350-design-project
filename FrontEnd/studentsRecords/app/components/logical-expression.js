@@ -183,6 +183,7 @@ export default Ember.Component.extend({
     },
 
     openLogicalExpModal(){
+      this.set('inputValue', null);
       Ember.$('.ui.modal.logicalExp').modal('show');
     },
 

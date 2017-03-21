@@ -33,21 +33,22 @@
             </div>
           </div>
         </div>
-<div class="ui center aligned header" style="margin-bottom: 30px;">
-  <select class="ui search dropdown"onchange={{action 'selectAssessmentcode' value="target.value"}}>
-    <option selected = "selected" value = null> Select an assessment code </option>
-    {{#each assessmentCodeModel as |oneAssessmentCode| }}
-    <option value={{oneAssessmentCode.id}}> {{oneAssessmentCode.name}} </option>
-    {{/each}}
-  </select>
-</div>
+        <div class="ui center aligned header" style="margin-bottom: 30px;">
+          <select class="ui search dropdown"onchange={{action 'selectAssessmentcode' value="target.value"}}>
+            <option selected = "selected" value = null> Select an assessment code </option>
+            {{#each assessmentCodeModel as |oneAssessmentCode| }}
+            <option value={{oneAssessmentCode.id}}> {{oneAssessmentCode.name}} </option>
+            {{/each}}
+          </select>
+        </div>
 
-
+        {{#if logicalDemoArray}}
         <div class="ui center aligned header" style="margin-bottom: 30px;">
           <h2>Logical Expression List</h2>
         </div>
+        {{/if}}
 
-        <div class="ui middle aligned divided list">
+        <div class="ui middle aligned divided list" style = "width: 50%; margin-left: 25%;">
           {{#each logicalDemoArray as |oneDemo|}}
           <div class="item">
             <div class="right floated content" id="listDeleteButton">
@@ -118,7 +119,7 @@
             <select class="ui search dropdown" onchange={{action 'selectBool' value="target.value"}}>
               <option selected = "selected" value = null> Select a operator </option>
               {{#each boolExpression as |oneOperator|}}
-              <option value={{oneOperator}}> {{oneOperator}} </option>
+              <option value={{oneOperator}} selected={{eq selectedBool oneOperator}}> {{oneOperator}} </option>
               {{/each}}
             </select>
           </div>
