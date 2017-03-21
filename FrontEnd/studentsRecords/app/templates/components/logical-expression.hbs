@@ -27,7 +27,7 @@
         {{#each logicalDemoArray as |oneDemo|}}
         <div class="item">
           <div class="right floated content" id="listDeleteButton">
-            <div class="negative ui button">Delete</div>
+            <div class="negative ui button" onclick={{action 'deleteOneExp' oneDemo}}>Delete</div>
           </div>
           <div class="content" id="listText">
             {{oneDemo}}

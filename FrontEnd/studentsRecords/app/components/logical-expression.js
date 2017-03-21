@@ -19,6 +19,7 @@ export default Ember.Component.extend({
   logicalExpArray:Ember.A(),
   logicalLinkArray:Ember.A(),
   logicalDemoArray:Ember.A(),
+  logicalDBDemoArray:Ember.A(),
 
   init() {
     this._super(...arguments);
@@ -35,6 +36,12 @@ export default Ember.Component.extend({
     //get all existing logical expression to local
     this.get('store').findAll('logical-expression').then(function(records){
       self.set('logicalExpModel',records);
+      //after get the logical expression  from db, reassemble the demo for exp
+      for(let i=0;i<records.get('length');i++)
+      {
+        
+        self.get('logicalDBDemoArray').pushObject()
+      }
     });
   },
 
@@ -119,6 +126,29 @@ export default Ember.Component.extend({
       this.get('logicalLinkArray').clear();
       this.get('logicalDemoArray').clear();
 
+    },
+
+    deleteOneExp(oneDemo){
+      //first search throught the demo array to find the index
+      {
+        var demoTemp = this.get('logicalDemoArray');
+        for(let i=0;i<demoTemp.get('length');i++)
+        {
+          if(oneDemo == demoTemp.objectAt(i))
+          {
+            //if the index is zero, then only pop from demo and logic exp array, do not touch the link array
+            this.get('logicalDemoArray').removeAt(i);
+            this.get('logicalExpArray').removeAt(i);
+            //if the index is not zero remove the link array i-1, since link array always has one element less then the other two (first round doesn't add the link)
+            if(i!==0)
+            {
+              this.get('logicalLinkArray').removeAt(i-1);
+            }
+            //only find the first one if there is a duplication, after that break out the loop
+            break;
+          }
+        }
+      }
     },
 
     saveExpOnDB()
