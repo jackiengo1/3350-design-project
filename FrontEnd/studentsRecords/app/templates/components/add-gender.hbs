@@ -9,6 +9,7 @@
         {{#each genderModel as |oneGender|}}
         <div class="item">
           <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
+            <div class="negative ui button" onclick={{action 'openEditGenderModal' oneGender}}>Edit</div>
             <div class="negative ui button" onclick={{action 'deleteGender' oneGender}}>Delete</div>
           </div>
           <div class="content" style="padding-top: 10px; font-size: 16px;">
@@ -42,42 +43,39 @@
 
 
 
-{{!--
-<div class="ui center aligned header">
-  <h2>Modify Gender</h2>
-</div>
 
 
-<div class="ui middle aligned divided list">
-  {{#each genderModel as |oneGender|}}
-    <div class="item">
-      <div class="content">
-        <div class="header">
-          <h3>
-            {{oneGender.name}} <button class="negative ui button" onclick={{action 'deleteGender' oneGender}} style = "float: right;">Delete</button>
-          </h3>
+<!--Modal to edit gender-->
+  <div class="ui modal genderEdit">
+    <div class="header">
+      Edit Gender
+    </div>
+
+    <div class="content">
+      <div class="ui center aligned header" style="margin-bottom: 30px;">
+        <h2>{{errorMsg}}</h2>
+      </div>
+
+      <div class="ui form">
+        <div class="field">
+          <label>Gender</label>
+          {{input type="text"  value = editGenderName}}
         </div>
-
       </div>
+
     </div>
-  {{/each}}
-
-</div>
 
 
-<div class="ui grid">
-  <div class="ui left aligned  seven wide column">
-    <div class="ui form">
-      <div class="inline field">
-        <label>Gender</label>
-        {{input type="text"  value = genderName}}
-      </div>
+    <div class="actions">
+      <button class="teal ui button" {{action 'closeEditGenderModal'}}>
+        Cancel
+      </button>
+
+      <button class="green ui button" {{action 'editGender'}}>
+        Update
+      </button>
     </div>
+
+
+
   </div>
-</div>
-
-<div class="ui center aligned header">
-  <button class="positive ui button" {{action 'addGender'}}>
-    Add Gender
-  </button>
-</div>--}}

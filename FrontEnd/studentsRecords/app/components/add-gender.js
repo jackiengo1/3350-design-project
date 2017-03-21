@@ -7,6 +7,9 @@ export default Ember.Component.extend({
   genderModel:null,
   genderIndex:null,
 
+  editGenderTemp: null,
+  editGenderName: "",
+
   init() {
     this._super(...arguments);
 
@@ -15,7 +18,7 @@ export default Ember.Component.extend({
       self.set('genderModel', records);
     });
 
-      var self = this;
+    var self = this;
 
   },
 
@@ -41,11 +44,37 @@ export default Ember.Component.extend({
       }
     },
 
+    editGender(){
+      if(this.get('editGenderName').length !== 0){
+        var updatedGender = this.get('editGenderTemp');
+        updatedGender.set('name', this.get('editGenderName'));
+        updatedGender.save();
+        alert('Successfully updated');
+        Ember.$('.ui.modal.genderEdit').modal('hide');
+      }
+      else{
+        alert('Textbox cannot be empty');
+      }
+    },
+
     //used to show the list of gender for delete function
     getGender: function (gender) {
       var index = this.get('genderModel').indexOf(gender);
       this.set('genderIndex', index);
     },
+
+    openEditGenderModal(gender){
+      console.log(gender);
+      this.set('editGenderTemp', gender);
+      console.log(this.get('editGenderTemp').get('name'));
+      this.set('editGenderName', gender.get('name'));
+      Ember.$('.ui.modal.genderEdit').modal('show');
+    },
+
+    closeEditGenderModal(){
+      Ember.$('.ui.modal.genderEdit').modal('hide');
+    },
+
 
   },
 });
