@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   store: Ember.inject.service(),
   adjudicationModel: null,
-  assessment-codeModel: null,
+  assessmentcodeModel: null,
 
   init() {
     this._super(...arguments);
@@ -133,7 +133,7 @@ for(let i=0;i<this.get('adjudicationModel').get('length');i++)
       }
 
       //check if everything is true
-      if(let a = 0; a < results2.get('length'); a++){
+      for(let a = 0; a < results2.get('length'); a++){
         if(results2[a] == 1){
           results3 = true;
         }
@@ -154,3 +154,4 @@ for(let i=0;i<this.get('adjudicationModel').get('length');i++)
 
   }
 }
+});
