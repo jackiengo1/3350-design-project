@@ -6,7 +6,7 @@ export default Ember.Component.extend({
   name: null,
 
   init() {
-    this._super(...arguments);
+    this._super();
     this.get('oudaAuth').close();
     this.get('routing').transitionTo('login');
   },

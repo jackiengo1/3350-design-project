@@ -68,7 +68,7 @@ export default Ember.Component.extend({
       this.set('editGenderTemp', gender);
       console.log(this.get('editGenderTemp').get('name'));
       this.set('editGenderName', gender.get('name'));
-      Ember.$('.ui.modal.genderEdit').modal('show');
+      Ember.$('.ui.modal.genderEdit').modal({detachable: false,}).modal('show');
     },
 
     closeEditGenderModal(){

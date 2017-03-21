@@ -1052,7 +1052,7 @@ export default Ember.Component.extend({
 
 
     openTermForm() {
-      Ember.$('.ui.modal.term').modal('show');
+      Ember.$('.ui.modal.term').modal({detachable: false,}).modal('show');
     },
 
     closeTermForm() {
@@ -1062,7 +1062,7 @@ export default Ember.Component.extend({
     openEditTermForm(term) {
       this.set('selectedTermToEdit', term);
       this.set('currentSelectedTermCode', term.get('term'));
-      Ember.$('.ui.modal.termEdit').modal('show');
+      Ember.$('.ui.modal.termEdit').modal({detachable: false,}).modal('show');
     },
 
     closeEditTermForm() {
@@ -1070,7 +1070,7 @@ export default Ember.Component.extend({
     },
 
     openCourseCodeForm() {
-      Ember.$('.ui.modal.courseCode').modal('show');
+      Ember.$('.ui.modal.courseCode').modal({detachable: false,}).modal('show');
     },
 
     closeCourseCodeForm() {
@@ -1083,7 +1083,7 @@ export default Ember.Component.extend({
       this.set('courseLetterEdit', courseCode.get('courseLetter'));
       this.set('courseNumEdit', courseCode.get('courseNumber'));
       this.set('courseUnitEdit', courseCode.get('unit'));
-      Ember.$('.ui.modal.courseCodeEdit').modal('show');
+      Ember.$('.ui.modal.courseCodeEdit').modal({detachable: false,}).modal('show');
     },
 
     closeEditCourseForm() {
@@ -1091,7 +1091,7 @@ export default Ember.Component.extend({
     },
 
     openGradeForm() {
-      Ember.$('.ui.modal.grade').modal('show');
+      Ember.$('.ui.modal.grade').modal({detachable: false,}).modal('show');
     },
 
     closeGradeForm() {
@@ -1104,7 +1104,7 @@ export default Ember.Component.extend({
       this.set('gradeEdit', grade.get('mark'));
       this.set('noteEdit', grade.get('note'));
 
-      Ember.$('.ui.modal.gradeEdit').modal('show');
+      Ember.$('.ui.modal.gradeEdit').modal({detachable: false,}).modal('show');
 
     },
 
@@ -1116,7 +1116,7 @@ export default Ember.Component.extend({
 
 
     openProgramRecordForm() {
-      Ember.$('.ui.modal.programRecord').modal('show');
+      Ember.$('.ui.modal.programRecord').modal({detachable: false,}).modal('show');
     },
     closeProgramRecordForm() {
       Ember.$('.ui.modal.programRecord').modal('hide');
@@ -1146,6 +1146,7 @@ export default Ember.Component.extend({
         term.set('term', this.get('currentSelectedTermCode'));
         term.save();
         alert("Term successfully updated!");
+        Ember.$('.ui.modal.termEdit').modal('hide');
       }
       else {
         alert('You must select a term code');

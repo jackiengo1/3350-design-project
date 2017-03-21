@@ -235,7 +235,7 @@ export default Ember.Component.extend({
     openEditTermCodeForm(termCode){
       this.set('termCodeToEdit', termCode);
       this.set('termCodeNameEdit', termCode.get('name'));
-      Ember.$('.ui.modal.termCodeEdit').modal('show');
+      Ember.$('.ui.modal.termCodeEdit').modal({detachable: false,}).modal('show');
     },
     closeEditTermCodeForm(){
       Ember.$('.ui.modal.termCodeEdit').modal('hide');
@@ -249,7 +249,7 @@ export default Ember.Component.extend({
       this.set('planCodeToEdit', planCode);
       this.set('planCodeNameEdit', planCode.get('name'));
       console.log(this.get('planCodeToEdit'));
-      Ember.$('.ui.modal.planCodeEdit').modal('show');
+      Ember.$('.ui.modal.planCodeEdit').modal({detachable: false,}).modal('show');
     },
 
     closeEditPlanCodeForm(){
@@ -275,7 +275,7 @@ export default Ember.Component.extend({
       this.set('PRPlanEdit', programRecord.get('plan'));
 
       console.log(this.get('PRPlanEdit').get('length'));
-      Ember.$('.ui.modal.programRecordEdit').modal('show');
+      Ember.$('.ui.modal.programRecordEdit').modal({detachable: false,}).modal('show');
     },
 
     closeEditProgramRecordForm(){
