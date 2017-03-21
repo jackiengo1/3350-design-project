@@ -41,8 +41,18 @@ export default Ember.Component.extend({
       //after get the logical expression  from db, reassemble the demo for exp
       for(let i=0;i<records.get('length');i++)
       {
-
-        self.get('logicalDBDemoArray').pushObject()
+        let ExpTemp = records.objectAt(i).get('booleanExp');
+        let linkTemp = records.objectAt(i).get('logicalLink');
+        var combinedExpArray =[];
+        for(let j=0;j<ExpTemp.length;j++)
+        {
+          let combinedExp;
+          //combine exp and link to make demo array
+          combinedExp = linkTemp[j]+" "+ExpTemp[j];
+          //add the string to the combined array
+          combinedExpArray[combinedExpArray.length]=combinedExp;
+        }
+        self.get('logicalDBDemoArray').pushObject(combinedExpArray);
       }
     });
   },
@@ -141,7 +151,6 @@ export default Ember.Component.extend({
 
     deleteOneExp(oneDemo){
       //first search throught the demo array to find the index
-      {
         var demoTemp = this.get('logicalDemoArray');
         for(let i=0;i<demoTemp.get('length');i++)
         {
@@ -151,15 +160,28 @@ export default Ember.Component.extend({
             this.get('logicalDemoArray').removeAt(i);
             this.get('logicalExpArray').removeAt(i);
             //if the index is not zero remove the link array i-1, since link array always has one element less then the other two (first round doesn't add the link)
-            if(i!==0)
-            {
-              this.get('logicalLinkArray').removeAt(i-1);
-            }
+            this.get('logicalLinkArray').removeAt(i);
             //only find the first one if there is a duplication, after that break out the loop
             break;
           }
         }
-      }
+    },
+
+    //function used to delete the logical expression from the db
+    deleteDBExp(oneDemo){
+      //first search throught the demo array to find the index
+        var demoTemp = this.get('logicalDBDemoArray');
+        for(let i=0;i<demoTemp.get('length');i++)
+        {
+          if(oneDemo == demoTemp.objectAt(i))
+          {
+            let templogicholder =this.get('logicalExpArray').objectAt(i);
+            templogicholder.deleteRecord();
+            templogicholder.save();
+            this.get('logicalDBDemoArray').removeAt(i);
+            break;
+          }
+        }
     },
 
     saveExpOnDB()
