@@ -23,8 +23,9 @@ Router.map(function() {
   this.route('import');
   this.route('admin-portal');
   this.route('home');
-  this.route('login',{path: '/'});
+  this.route('login', {path: '/'});
   this.route('user');
+    this.route('no-path', {path: "*path" });
 });
 
 export default Router;

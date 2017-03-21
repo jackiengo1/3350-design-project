@@ -10,6 +10,7 @@ export default Ember.Service.extend({
 
   getName: Ember.computed(function () {
     var identity = localStorage.getItem('sas-session-id');
+    console.log(identity !== null);
     if (identity) {
       return this.decrypt(identity);
     } else {

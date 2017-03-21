@@ -1,4 +1,164 @@
-.ui.icon.button:hover {
-    background-color: #7382b5;
-    color: azure;
+/* General */
+#zeroMargin {
+    margin: 0;
 }
+
+#zeroPadding {
+    padding: 0;
+}
+/* END of General */
+
+/* student-data-entry.hbs */
+#studentRecordsDataEntryHeader {
+    margin-bottom: 20px;
+}
+
+#studentRecordsDataEntryTab {
+    font-size: 16px;
+}
+
+#studentRecordsDataEntryTabHeader {
+    margin-bottom: 30px;
+}
+
+#findStudentRecordRow {
+    padding-bottom: 0;
+}
+
+#allStudentRecordsHeader {
+    margin-bottom: 20px;
+}
+
+#studentRecordsDataEntryNavbarButton {
+    color: #4E2683;
+    background-color: #C0C0C0;
+}
+
+#studentRecordsDataEntryNavbarButton:hover {
+    background-color: #4E2683;
+    color: whitesmoke;
+}
+
+#studentRecordsDataEntryTabContent {
+    padding-right: 50px;
+    padding-left: 50px;
+    padding-top: 35px;
+    padding-bottom: 35px;
+    background-color: #e2e0e2;
+}
+
+#basicInfoTopRow {
+    padding-right: 40px;
+}
+
+#studentRecordsDataEntryLeftContent {
+    padding-left: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-right: 25px;
+}
+
+#studentRecordsDataEntryRightContent {
+    padding-left: 25px;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-right: 0;
+}
+
+#accordionFirstElement {
+    padding-bottom: 0;
+}
+
+#listText {
+    padding-top: 15px;
+}
+
+#listDeleteButton {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+/* END of student-data-entry.hbs */
+
+/* home-page.hbs */
+#mainNavbar {
+    background-color: #4E2683;
+    margin: 0;
+}
+
+#mainNavbarButton {
+    width: 19%;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+    padding-left: 2.5%;
+    color: whitesmoke;
+}
+
+#mainNavbarLogoutButton {
+    width: 5%;
+    font-size: 16px;
+    font-weight: bold;
+    padding-left: 1.5%;
+    margin: 0;
+    color: whitesmoke;
+}
+
+#mainNavbarButton:hover {
+    background-color: #6D499C;
+}
+
+#mainNavbarLogoutButton:hover {
+    background-color: #6D499C;
+}
+
+#westernLogo {
+    width: 80px;
+    height: 80px;
+}
+
+#logoTitleSegment {
+    background-color: #EEE;
+}
+
+#titleHeader {
+    font-size: 40px;
+    margin-top: 0;
+    color: #4E2683;
+}
+
+#mainContent {
+    background-color: #EEE;
+    padding-left: 60px;
+    padding-right: 60px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+/* END of home-page.hbs */
+
+/* application.hbs */
+#footerStyle {
+    text-align: center;
+    color: whitesmoke;
+    background-color: #4E2683;
+}
+/* END of application.hbs */
+
+/* welcome-page.hbs */
+#welcomeHeader {
+    font-size: 40px;
+    text-align: center;
+}
+/* END of welcome-page.hbs */
+
+/* authenticate-user.hbs */
+html {
+    background-repeat: no-repeat;
+    background-size: 500px;
+    background-position: center;
+    background-image: URL("/assets/images/UWO Stacked.png");
+}
+
+#loginFormBox {
+    
+}
+/* END of authenticate-user.hbs */

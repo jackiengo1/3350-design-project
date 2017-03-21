@@ -1,91 +1,75 @@
 
-<div class="ui pointing secondary three item menu" style="font-size: 16px;">
 
-  <a class="active item" data-tab="logical-expression" >Create logical expression</a>
-  <a class="item" data-tab="Edit logical-expression">edit</a>
+<div class="ui grid">
+  <div class="row">
 
-</div>
-
-<div class = "ui bottom attached active tab " data-tab="logical-expression" >
-  <div class="ui grid">
-    <div class="twelve wide column" style="padding-right: 20px;">
+    <div class="eight wide column" style="padding-right: 20px;">
       <div class="ui center aligned header" style="margin-bottom: 30px;">
-        <h2>Logical Expression</h2>
+        <h2>Logical Expression List</h2>
       </div>
-      <div class ="ui grid">
-        <div class="four wide column" style="padding-right: 20px;">
-          <div class="field">
-            <select class="ui search dropdown"onchange={{action 'selectCourse' value="target.value"}}>
-              <option selected = "selected" value = null> Select a course </option>
-              {{#each courseModel as |oneCourse|}}
-              <option value={{oneCourse.id}}> {{oneCourse.name}} </option>
-              {{/each}}
-            </select>
-          </div>
-        </div>
+    </div>
 
-        <div class="two wide column" style="padding-right: 20px;">
-          <div class="field">
-            <select class="ui search dropdown" onchange={{action 'selectBool' value="target.value"}}>
-              <option selected = "selected" value = null> Select a operator </option>
-              {{#each boolExpression as |oneOperator|}}
-              <option value={{oneOperator}}> {{oneOperator}} </option>
+    <div class="eight wide column" style="padding-right: 20px;">
+      <div class="ui center aligned header" style="margin-bottom: 30px;">
+        <h2>Add Logical Expression</h2>
+      </div>
+
+      <div class ="ui grid">
+        <div class="row">
+
+          <div class="four wide column" >
+            {{#if showLogic}}
+            <select class="ui search dropdown">
+              <option selected = "selected" value = null> Select a logic </option>
+              {{#each logicalLink as |oneLogicalLink| }}
+                <option value={{oneLogicalLink}}> {{oneLogicalLink}} </option>
               {{/each}}
             </select>
+            {{/if}}
           </div>
+
+
+
+          <div class="four wide column" >
+            <div class="field">
+              <select class="ui search dropdown"onchange={{action 'selectCourse' value="target.value"}}>
+                <option selected = "selected" value = null> Select a course </option>
+                {{#each courseModel as |oneCourse|}}
+                <option value={{oneCourse.id}}> {{oneCourse.name}} </option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+
+          <div class="four wide column" >
+            <div class="field">
+              <select class="ui search dropdown" onchange={{action 'selectBool' value="target.value"}}>
+                <option selected = "selected" value = null> Select a operator </option>
+                {{#each boolExpression as |oneOperator|}}
+                <option value={{oneOperator}}> {{oneOperator}} </option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+
+          {{#if numberFieldVisable}}
+          <div class="four wide column">
+            {{input type = "number" value=inputValue}}
+          </div>
+          {{/if}}
         </div>
-        {{#if numberFieldVisable}}
-        <div class="two wide column" style="padding-right: 20px;">
-          {{input type = "number" value=inputValue}}
-        </div>
-        {{/if}}
       </div>
+
+
+      <div class="ui center aligned header" style="margin-bottom: 30px;">
+        <button class="positive ui button" {{action 'addExpression'}}>
+          Add
+        </button>
+      </div>
+
     </div>
+
+
+
   </div>
-  <div class="ui grid">
-    <div class="twelve wide column" style="padding-right: 20px;">
-      <div class="four wide column" style="padding-right: 20px;">
-        <div class="field">
-          <select class="ui search dropdown"onchange={{action 'selectAssessmentcode' value="target.value"}}>
-            <option selected = "selected" value = null> Select an Assessment Code </option>
-            {{#each assessmentCodeModel as |oneAssessment|}}
-            <option value={{oneAssessment.id}}> {{oneAssessment.name}} </option>
-            {{/each}}
-          </select>
-        </div>
-      </div>
-    </div>
-  </div>
-  <button class="positive ui button" {{action 'toggleShowLogic'}}>
-    Link to existing expression
-  </button>
-  {{#if showLogic}}
-  <div class="ui grid">
-    <div class="twelve wide column" style="padding-right: 20px;">
-      <div class="two wide column" style="padding-right: 20px;">
-        <div class="field">
-          <select class="ui dropdown" onchange={{action 'selectlogicLink' value="target.value"}}>
-            <option selected = "selected" value = null> Select a logicalLink </option>
-            {{#each logicalLink as |oneLink|}}
-            <option value={{oneLink}}> {{oneLink}} </option>
-            {{/each}}
-          </select>
-        </div>
-      </div>
-      <div class="four wide column" style="padding-right: 20px;">
-        <div class="field">
-          <select class="ui search dropdown"onchange={{action 'selectLogicalExp' value="target.value"}}>
-            <option selected = "selected" value = null> Select an existing expression </option>
-            {{#each logicalExpModel as |oneExp|}}
-            <option value={{oneExp.id}}> {{oneExp.booleanExp}} </option>
-            {{/each}}
-          </select>
-        </div>
-      </div>
-    </div>
-  </div>
-  {{/if}}
-  <button class="positive ui button" {{action 'addExpression'}}>
-    Add
-  </button>
 </div>

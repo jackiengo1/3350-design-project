@@ -8,16 +8,17 @@ var parseJSON = bodyParser.json();
 router.route('/')
     .post(parseUrlencoded, parseJSON, function (request, response) {
         var hsCourseGrade = new models.HsCourseGrades(request.body.hscourseGrade);
+        console.log(hsCourseGrade);
         hsCourseGrade.save(function (error) {
             if (error) response.send(error);
             response.json({hscourseGrade: hsCourseGrade});
         });
     })
     .get(parseUrlencoded, parseJSON, function (request, response) {
-
         var hsCourseGradeFilter = request.query.filter;
         if (!hsCourseGradeFilter) {
             models.HsCourseGrades.find(function (error, hsCourseGrades) {
+                console.log(hsCourseGrades);
                 if (error) response.send(error);
                 response.json({hscourseGrade: hsCourseGrades});
             });

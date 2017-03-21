@@ -1,118 +1,96 @@
+<div class="ui secondary center aligned grid padded segment" id="logoTitleSegment">
+  <div class="two wide column" id="zeroPadding">
 
-
-
-
-<!--  <div class="ui secondary center aligned grid padded segment" style="background-color: #EEE3FD;"> -->
-
-
-
-  <div class="ui secondary center aligned grid padded segment" style="background-color: #EEE3FD;">
-
-    <div class="two wide column" style="padding: 0;">
-      <a href="#" {{action "home"}}>
-        <img class="ui right aligned container image" src="/assets/images/UWO Stacked.png" style="width: 80px; height: 80px; padding: 0;">
-      </a>
-    </div>
-
-    <div class="fourteen wide column">
-      <h2 style="font-size: 40px; margin-top: 0; color: #4e2683;">Western Engineering Student Adjudication System</h2>
-    </div>
-
+    <a href="#" {{action "home"}}>
+      <img class="ui right aligned container image" src="/assets/images/UWO Stacked.png" id="westernLogo">
+    </a>
   </div>
 
-<div class="ui grid secondary menu" style="background-color: #CEB1F4; margin-top: 0;">
+  <div class="fourteen wide column">
+    <h2 id="titleHeader">Western Engineering Student Adjudication System</h2>
+  </div>
 
-  <a class="three wide column item active" {{action "home"}} style="font-size: 16px; font-weight: bold; margin: 0; padding-left: 5%;">
+</div>
+
+<div class="ui grid secondary menu" id="mainNavbar">
+
+  <a class="item active" {{action "home"}} id="mainNavbarButton">
     <i class="large home icon"></i> Home
   </a>
-  <a class="three wide column item" {{action "studentsDataEntry"}} style="font-size: 16px; font-weight: bold; margin: 0; padding-left: 5%;">
+  <a class="item" {{action "studentsDataEntry"}} id="mainNavbarButton">
     <i class="large leanpub icon"></i> Students Records
   </a>
 
-  <div class="three wide column ui dropdown item" style="font-size: 16px; font-weight: bold; margin: 0; padding-left: 5%;">
-    <i class="large setting icon"></i> Configure
-    <i class="dropdown icon"></i>
-      <div class="menu">
-        <a class="item configureItem" {{action "addResidency"}} style="font-size: 16px; font-weight: bold;">
-          Configure Residency
-        </a>
-        <a class="item configureItem" {{action "addGender"}} style="font-size: 16px; font-weight: bold;">
-          Configure Gender
-        </a>
-        <a class="item configureItem" {{action "addHighSchoolInfo"}} style="font-size: 16px; font-weight: bold;">
-          Configure High School Information
-        </a>
-        <a class="item configureItem" {{action "addProgramRecord"}} style="font-size: 16px; font-weight: bold;">
-          Configure Program Record Information
-        </a>
-      </div>
-  </div>
-
-  <a class="three wide column item" {{action "studentAssessment"}} style="font-size: 16px; font-weight: bold; margin: 0; padding-left: 5%;">
+  <a class="item" {{action "studentAssessment"}} id="mainNavbarButton">
     <i class="large user icon"></i> Student Assessment
   </a>
 
-  <a class="four wide column item" {{action "about"}} style="font-size: 16px; font-weight: bold; margin: 0; padding-left: 5%;">
-    <i class="large user icon"></i> About
+  <div class="ui dropdown item" id="mainNavbarButton">
+    <i class="large setting icon"></i> Configure
+    <i class="dropdown icon"></i>
+    <div class="menu">
+      <a class="item configureItem" {{action "addResidency"}}>
+          Configure Residency
+        </a>
+      <a class="item configureItem" {{action "addGender"}}>
+          Configure Gender
+        </a>
+      <a class="item configureItem" {{action "addHighSchoolInfo"}}>
+          Configure High School Information
+        </a>
+      <a class="item configureItem" {{action "addProgramRecord"}}>
+          Configure Program Record Information
+        </a>
+    </div>
+  </div>
+
+  <div class="ui dropdown item" id="mainNavbarButton">
+    <i class="large setting icon"></i> User Settings
+    <i class="dropdown icon"></i>
+    <div class="menu">
+      <a class="item configureItem" {{action "userProfile"}}>
+          User Profile
+        </a>
+      <a class="item configureItem" {{action "adminPortal"}}>
+          Admin Portal
+        </a>
+    </div>
+  </div>
+
+  <a class="item" {{action "logout"}} id="mainNavbarLogoutButton">
+    <i class="large power icon"></i>
   </a>
 </div>
 
-
-
-{{!--<div class="ui seven item menu" style="background-color: #CEB1F4;">
-  <a class="item active" {{action "home"}} style="font-size: 16px; font-weight: bold;">
-    <i class="large home icon"></i> Home
-  </a>
-  <a class="item" {{action "studentsDataEntry"}} style="font-size: 16px; font-weight: bold;">
-    <i class="large leanpub icon"></i> Students Records
-  </a>
-  <a class="item " {{action "addResidency"}} style="font-size: 16px; font-weight: bold;">
-    <i class="large setting icon"></i> Configure Residency
-  </a>
-  <a class="item " {{action "addGender"}} style="font-size: 16px; font-weight: bold;">
-    <i class="large setting icon"></i> Configure Gender
-  </a>
-  <a class="item " {{action "addHighSchoolInfo"}} style="font-size: 16px; font-weight: bold;">
-    <i class="large setting icon"></i> Configure High School Information
-  </a>
-  <a class="item " {{action "addProgramRecord"}} style="font-size: 16px; font-weight: bold;">
-    <i class="large setting icon"></i> Configure Program Record Information
-  </a>
-  <a class="item " {{action "about"}} style="font-size: 16px; font-weight: bold;">
-    <i class="large user icon"></i> About
-  </a>
-</div>--}}
-
-<br/>
-
-<div class="ui grid">
-
-    <div class="sixteen wide column" style="background-color: #EEE3FD;">
-        <div class="ui segment" style="background-color: #CEB1F4; padding-left: 60px; padding-right: 60px; padding-top: 25px; padding-bottom: 35px;">
-            {{#if isHomeShowing}}
-                {{welcome-page}}
-            {{/if}}
-            {{#if isStudentsRecordsDataEntry}}
-                {{student-data-entry}}
-            {{/if}}
-            {{#if isAboutShowing}}
-                {{about-us}}
-            {{/if}}
-            {{#if isAddResidencyShowing}}
-                {{add-residency}}
-            {{/if}}
-          {{#if isAddGenderShowing}}
-            {{add-gender}}
-          {{/if}}
-          {{#if isAddHighSchoolInfoShowing}}
-            {{add-highschoolrecord}}
-          {{/if}}
-          {{#if isAddProgramRecordShowing}}
-            {{add-program-record-2}}
-          {{/if}}
-          {{#if isStudentAssessmentShowing}}
-            {{student-assessment}}
-          {{/if}}
-        </div>
+<div class="ui grid" id="zeroMargin">
+  <div class="sixteen wide column" id="zeroPadding">
+    <div class="ui segment" id="mainContent">
+      {{#if isHomeShowing}} {{welcome-page}}
+      {{/if}}
+      {{#if isStudentsRecordsDataEntry}}
+      {{student-data-entry}}
+      {{/if}}
+      {{#if isAddResidencyShowing}}
+      {{add-residency}}
+      {{/if}}
+      {{#if isAddGenderShowing}}
+      {{add-gender}}
+      {{/if}}
+      {{#if isAddHighSchoolInfoShowing}}
+      {{add-highschoolrecord}}
+      {{/if}}
+      {{#if isAddProgramRecordShowing}}
+      {{add-program-record-2}}
+      {{/if}}
+      {{#if isStudentAssessmentShowing}}
+      {{student-assessment}}
+      {{/if}}
+      {{#if isUserSettingsShowing}}
+      {{user-settings}}
+      {{/if}}
+      {{#if isLogoutShowing}}
+      {{log-out}}
+      {{/if}}
     </div>
+  </div>
 </div>
