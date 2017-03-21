@@ -21,14 +21,14 @@
             </div>
             <div class="six wide column">
               <div class="ui center aligned header" style="margin-bottom: 30px;">
-                <h2>Accessment Code</h2>
+                <h2>Assessment Code</h2>
               </div>
             </div>
             <div class="five wide column" style="text-align: left;">
               <button class="teal ui button" {{action 'openLogicalExpModal'}}>
                 Add Expression
               </button>
-              <button class="positive ui button" {{action 'saveOnDB'}}>
+              <button class="positive ui button" {{action 'saveExpOnDB'}}>
                 Save Expression
               </button>
             </div>
@@ -71,6 +71,26 @@
 
 
 <div class = "ui tab" data-tab="adjudicationTab" >
+
+  <div class="ui center aligned header" style="margin-bottom: 30px;">
+    <h2>Logical Expressions</h2>
+  </div>
+
+  <div class="ui middle aligned divided list" style = "width: 50%; margin-left: 25%;">
+    {{#each logicalDBDemoArray as |oneLogicalExp|}}
+    <div class="item">
+      <div class="right floated content" id="listDeleteButton">
+        <div class="negative ui button" onclick={{action 'deleteOneExp' oneDemo}}>Delete</div>
+      </div>
+      <div class="content" id="listText">
+        {{oneLogicalExp}}
+      </div>
+    </div>
+    {{/each}}
+  </div>
+
+
+
 </div>
 
 
