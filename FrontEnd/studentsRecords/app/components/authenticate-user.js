@@ -8,7 +8,6 @@ export default Ember.Component.extend({
   tempPassword: null,
   error: null,
 
-
   errorMessage: Ember.computed ('error', function(){
     return this.get('error');
   }),
@@ -58,6 +57,7 @@ export default Ember.Component.extend({
         });
       }
 
+      Ember.$("body").css("background-color", "#EEE");
     },
 
     save(){
@@ -79,5 +79,10 @@ export default Ember.Component.extend({
         });
       });
     }
-  }
+  },
+});
+
+Ember.$(document).ready(function(){
+  Ember.$("html").css("background-image", 'URL("/assets/images/wallpaper_1LG.png")');
+  Ember.$("body").css("background-color", "transparent");
 });
