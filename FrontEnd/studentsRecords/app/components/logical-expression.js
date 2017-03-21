@@ -18,6 +18,7 @@ export default Ember.Component.extend({
   showLogic:false,
   logicalExpArray:Ember.A(),
   logicalLinkArray:Ember.A(),
+  logicalDemoArray:Ember.A(),
 
   init() {
     this._super(...arguments);
@@ -75,17 +76,25 @@ export default Ember.Component.extend({
       //after adding the first expression, show the logical link area
       this.get('showLogic',true);
        var booleanValue = this.get('selectedBool');
-       var courseValue = this.get('selectedCourse');
+       var courseValue = this.get('selectedCourse').get('name');
        //combine the course boolean value into a single string
        var booleanExpString = courseValue+" "+booleanValue+" "+numberFieldValue;
-       //add the expession string into logical expression array
-       this.get('logicalExpArray').pushObject(booleanExpString);
        //if this is not the first run, add the logic link to the logical link array
        if(this.get('showLogic'))
        {
          let logiclinktemp = this.get('selectedlogicalLink');
          this.get('logicalLinkArray').pushObject(logiclinktemp);
+         let expDemostring = logiclinktemp+" "+booleanExpString;
+         this.get('logicalDemoArray').pushObject(expDemostring);
        }
+
+       if(!this.get('showLogic'))
+       {
+         //for first expression only add the expression to the demo array
+         this.get('logicalDemoArray').pushObject(booleanExpString);
+       }
+       //add the expession string into logical expression array
+       this.get('logicalExpArray').pushObject(booleanExpString);
        //after adding the existing data into the array, clean all data
        this.set('inputValue',null);
        this.set('selectedBool',null);
