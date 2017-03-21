@@ -41,6 +41,7 @@ export default Ember.Component.extend({
   isUnitSelected: false,
   isGradeValid: false,
   highSchoolCourseChoice: null,
+  adjudicationModel: null,
 
   //undo
   //the stack store the data
@@ -139,6 +140,7 @@ export default Ember.Component.extend({
   programRecordTemp: null,
   selectedTermInProgramRecord: null,
 
+  currentStudentAdjudications: null,
 
 
   studentModel: Ember.observer('offset', function () { //observes the offset variable. When it changes run code.
@@ -237,7 +239,6 @@ export default Ember.Component.extend({
       // Show first student data
       self.set('currentIndex', self.get('firstIndex'));
     });
-
   },
 
   showStudentData: function (index) {
@@ -268,6 +269,9 @@ export default Ember.Component.extend({
 
     this.get('store').query('hscourse-grade', { filter: { studentInfo: this.get('currentStudent').get('id') } });
     this.set('currentStudentHSGrades', this.get('currentStudent').get('hsCourseGrade'));
+
+    this.get('store').query('adjudication', { filter: { studentInfo: this.get('currentStudent').get('id') } });
+    this.set('currentStudentAdjudications', this.get('currentStudent').get('adjudicationInfo'));
   },
 
   didRender() {
@@ -1276,6 +1280,11 @@ export default Ember.Component.extend({
       this.set('termForAddingProgramRecord', studentTerm);
       console.log(this.get('termForAddingProgramRecord'));
     },
+
+    getAdjudicationInformation(){
+      console.log(this.get('currentStudentAdjudications').objectAt(0).get('termAVG'));
+
+    }
   }
 
 });

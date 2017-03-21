@@ -20,6 +20,13 @@ export default Ember.Component.extend({
   logicalLinkArray:Ember.A(),
   logicalDemoArray:Ember.A(),
   logicalDBDemoArray:Ember.A(),
+  logicalDBExpArray:Ember.A(),
+  logicalDBLinkArray:Ember.A(),
+  editDemo:null,
+  editDemoArray:Ember.A(),
+  editDBExp:null,
+  editDBLink:null,
+  editDBAssess:null,
 
   errorMsg: "",
 
@@ -39,10 +46,26 @@ export default Ember.Component.extend({
     this.get('store').findAll('logical-expression').then(function(records){
       self.set('logicalExpModel',records);
       //after get the logical expression  from db, reassemble the demo for exp
-      for(let i=0;i<records.get('length');i++)
-      {
+      if(records.get('length')>0){
+        for(let i=0;i<records.get('length');i++)
+        {
+          let ExpTemp = records.objectAt(i).get('booleanExp');
+          let linkTemp = records.objectAt(i).get('logicalLink');
+          //add exp array and link array to local list
+          self.get('logicalDBExpArray').pushObject(ExpTemp);
+          self.get('logicalDBLinkArray').pushObject(linkTemp);
 
-        self.get('logicalDBDemoArray').pushObject()
+          var combinedExpArray =[];
+          for(let j=0;j<ExpTemp.length;j++)
+          {
+            let combinedExp;
+            //combine exp and link to make demo array
+            combinedExp = linkTemp[j]+" "+ExpTemp[j];
+            //add the string to the combined array
+            combinedExpArray[combinedExpArray.length]=combinedExp;
+          }
+          self.get('logicalDBDemoArray').pushObject(combinedExpArray);
+        }
       }
     });
   },
@@ -141,7 +164,6 @@ export default Ember.Component.extend({
 
     deleteOneExp(oneDemo){
       //first search throught the demo array to find the index
-      {
         var demoTemp = this.get('logicalDemoArray');
         for(let i=0;i<demoTemp.get('length');i++)
         {
@@ -151,13 +173,65 @@ export default Ember.Component.extend({
             this.get('logicalDemoArray').removeAt(i);
             this.get('logicalExpArray').removeAt(i);
             //if the index is not zero remove the link array i-1, since link array always has one element less then the other two (first round doesn't add the link)
-            if(i!==0)
-            {
-              this.get('logicalLinkArray').removeAt(i-1);
-            }
+            this.get('logicalLinkArray').removeAt(i);
             //only find the first one if there is a duplication, after that break out the loop
             break;
           }
+        }
+    },
+
+    //function used to delete the logical expression from the db
+    deleteDBExp(oneDemo){
+      //first search throught the demo array to find the index
+        var demoTemp = this.get('logicalDBDemoArray');
+        for(let i=0;i<demoTemp.get('length');i++)
+        {
+          if(oneDemo == demoTemp.objectAt(i))
+          {
+            let templogicholder =this.get('logicalExpArray').objectAt(i);
+            templogicholder.deleteRecord();
+            templogicholder.save();
+            this.get('logicalDBDemoArray').removeAt(i);
+            break;
+          }
+        }
+    },
+
+    //function used to edit the logical expression
+    editExp(oneDemo){
+      //first search throught the demo array to find the index
+      var demoTemp = this.get('logicalDBDemoArray');
+      for(let i=0;i<demoTemp.get('length');i++)
+      {
+        if(oneDemo == demoTemp.objectAt(i))
+        {
+          //get all exp and link corresponding to the selected index
+          let tempExp = this.get('logicalDBExpArray').objectAt(i);
+          let tempLink = this.get('logicalDBLinkArray').objectAt(i);
+          //get the logical exp
+          
+          this.set('editDBAssess',);
+          for(let j=0;j<tempExp.length;j++)
+          {
+            let combinedExp;
+            //combine exp and link to make demo array
+            combinedExp = tempLink[j]+" "+tempExp[j];
+            //add the string to the combined array
+            this.get('editDemoArray').pushObject('combinedExp');
+          }
+          break;
+        }
+      }
+    },
+
+    editDBExp(oneDemo){
+      //search throught the list of combined edit demo array find the index of the selected object
+      var demoTemp = this.get('editDemoArray');
+      for(let i=0;i<demoTemp.get('length');i++)
+      {
+        if(oneDemo == demoTemp.objectAt(i))
+        {
+
         }
       }
     },
