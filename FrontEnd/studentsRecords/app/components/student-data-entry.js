@@ -567,6 +567,7 @@ export default Ember.Component.extend({
         studenthold.set('resInfo', res);
       }
       studenthold.save().then(() => {
+        alert("Successfully saved!");
         //     this.set('isStudentFormEditing', false);
       });
 
