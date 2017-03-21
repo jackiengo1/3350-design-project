@@ -940,7 +940,6 @@ export default Ember.Component.extend({
 
     closeEditScholForm() {
       Ember.$('.ui.modal.scholEdit').modal('hide');
-      Ember.$('.ui.modal.scholEdit').remove();
     },
 
     backToEntryForm() {
