@@ -15,7 +15,7 @@ export default Ember.Component.extend({
 
     //get the assessment code model
     this.get('store').findAll('assessment-code').then(function(records){
-      self.set('assessment-codeModel', records);
+      self.set('assessmentcodeModel', records);
     });
 
     var self = this;
@@ -24,12 +24,13 @@ export default Ember.Component.extend({
   actions: {
 
 //for each adjudication code, determine if an adjudication should be assigned that code
-adjudicate(){
+adjudicate(specifiedTerm){
 
 //Iterate over all adjudications
 for(let i=0;i<this.get('adjudicationModel').get('length');i++)
 {
 
+  //store current adjudication in temp
   var temp = this.get('adjudicationModel').objectAt(i);
   var studentNumber = temp.studentInfo.number;
 
@@ -37,12 +38,12 @@ for(let i=0;i<this.get('adjudicationModel').get('length');i++)
   var term = temp.semester;
   var courses = term.courseInfo;
 
-  //only use those with the specified term
-  if(temp.term == "specifiedTerm"){
+  //only use those with the specified term - i.e all of them lol
+  if(1+1 == 2){
 
     //iterate over each assessment code
-    for (let l = 0; l < this.get('assessment-codeModel').get('length'); l++){
-      var temp2 = this.get('assessment-codeModel').objectAt(l);
+    for (let l = 0; l < this.get('assessmentcodeModel').get('length'); l++){
+      var temp2 = this.get('assessmentcodeModel').objectAt(l);
 
       //get the array of leafs and the array of links
       var leafArray = temp2.testExpression.leaf;
@@ -62,24 +63,19 @@ for(let i=0;i<this.get('adjudicationModel').get('length');i++)
       var results3;
       //go through the leaf array and split each index into 3 arrays
       for(let k = 0; k < leafArray.get('length'); k++){
-        var sp = leafArray[l].split(" ");
+        var sp = leafArray[k].split(" ");
 
         //put operatora, b, and operand into correct array
-        for (let j = 0; j < sp.get('length'); j++){
-          if(j == 1){
-            if(sp[j] != "r"){
-            operand.push(sp[j]);
-          }
-          else operand.push(0);
-          }
-          else if(j == 2){
-            operatorB.push(sp[j]);
-          }
-          else{
-            operatorA.push[sp[j]];
-          }
+        operatorA.push(sp[0]);
+        if(sp[1]=='r'){
+          operatorB.push("0");
         }
+        else{
+          operatorB.push(sp[2]);
+        }
+        operand.push(sp[1]);
       }
+
       //for each group of operatora, operand, operatorb check if statement is true or false
       for(let n = 0; n < operatorA.get('length'); n++){
         var theCourse;
@@ -102,7 +98,7 @@ for(let i=0;i<this.get('adjudicationModel').get('length');i++)
         //otherwise a certain mark was required
         else{
           //evaluate that mark vs the requirement
-          var a =eval("theCourse.mark operand[n] operatorB[n]");
+          var a = eval("theCourse.mark operand[n] operatorB[n]");
           if (a){
             results.push(1);
           }
@@ -113,6 +109,7 @@ for(let i=0;i<this.get('adjudicationModel').get('length');i++)
 
       }
 
+      //compute results2 ie store result of leaf logicallink leaf
       for(let x = 0; x + 1 < results.get('length'); x++){
         if(logicalLinks[x] == "AND"){
           if(results[x] && results[x+1]){
@@ -134,19 +131,18 @@ for(let i=0;i<this.get('adjudicationModel').get('length');i++)
 
       //check if everything is true
       for(let a = 0; a < results2.get('length'); a++){
-        if(results2[a] == 1){
-          results3 = true;
-        }
-        else{
+        results3 = true;
+        if(results2[a]!= 1){
           results3 = false;
           break;
         }
       }
 
-      //if it is, set this code
+      //if it is, set this code and break the loop
       if(results3)
       {
         temp.set('comment', temp2);
+        break;
       }
     }
   }
