@@ -17,6 +17,10 @@
     font-size: 16px;
 }
 
+#programRecordTab.active {
+    background-color: #e2e0e2 !important;
+}
+
 #studentRecordsDataEntryTabHeader {
     margin-bottom: 30px;
 }
