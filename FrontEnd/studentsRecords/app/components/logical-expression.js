@@ -39,21 +39,25 @@ export default Ember.Component.extend({
     this.get('store').findAll('logical-expression').then(function(records){
       self.set('logicalExpModel',records);
       //after get the logical expression  from db, reassemble the demo for exp
-      for(let i=0;i<records.get('length');i++)
-      {
-        let ExpTemp = records.objectAt(i).get('booleanExp');
-        let linkTemp = records.objectAt(i).get('logicalLink');
-        var combinedExpArray =[];
-        for(let j=0;j<ExpTemp.length;j++)
+      console.log(records);
+      if(records.get('length')>0){
+        for(let i=0;i<records.get('length');i++)
         {
-          let combinedExp;
-          //combine exp and link to make demo array
-          combinedExp = linkTemp[j]+" "+ExpTemp[j];
-          //add the string to the combined array
-          combinedExpArray[combinedExpArray.length]=combinedExp;
+          let ExpTemp = records.objectAt(i).get('booleanExp');
+          let linkTemp = records.objectAt(i).get('logicalLink');
+          var combinedExpArray =[];
+          for(let j=0;j<ExpTemp.length;j++)
+          {
+            let combinedExp;
+            //combine exp and link to make demo array
+            combinedExp = linkTemp[j]+" "+ExpTemp[j];
+            //add the string to the combined array
+            combinedExpArray[combinedExpArray.length]=combinedExp;
+          }
+          self.get('logicalDBDemoArray').pushObject(combinedExpArray);
         }
-        self.get('logicalDBDemoArray').pushObject(combinedExpArray);
       }
+
     });
   },
 
