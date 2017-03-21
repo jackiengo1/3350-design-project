@@ -989,7 +989,7 @@ export default Ember.Component.extend({
                               {
                                 var hscourse = allHighSchoolCourses.objectAt(l);
                                 var newhsCourseGrade = self.get('store').createRecord('hscourse-grade', {
-                                  mark:grade,
+                                  mark:gradeArray[k],
                                   source: hscourse,
                                   studentInfo: studentRecord,
                                 });
