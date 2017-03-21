@@ -21,6 +21,8 @@ export default Ember.Component.extend({
   logicalDemoArray:Ember.A(),
   logicalDBDemoArray:Ember.A(),
 
+  errorMsg: "",
+
   init() {
     this._super(...arguments);
     // load Residency data model
@@ -87,15 +89,18 @@ export default Ember.Component.extend({
        var booleanValue = this.get('selectedBool');
        if(booleanValue == "null")
        {
-         alert("You must select an operator!");
+         //alert("You must select an operator!");
+         this.set('errorMsg',"You must select an operator!" );
        }
        else if (this.get('numberFieldVisable') && this.get('inputValue')==null && this.get('inputValue')=="")
        {
-         alert("Number field can not be empty!");
+         //alert("Number field can not be empty!");
+         this.set('errorMsg',"Number field can not be empty!");
        }
        else if(this.get('showLogic')&& this.get('selectedlogicalLink')=="")
        {
-         alert("Logical Link can not be empty!");
+         //alert("Logical Link can not be empty!");
+         this.set('errorMsg',"Logical Link can not be empty!");
        }
        else{
          var courseValue = this.get('store').peekRecord('course-code',this.get('selectedCourse')).get('name');
@@ -119,6 +124,8 @@ export default Ember.Component.extend({
          }
          //add the expession string into logical expression array
          this.get('logicalExpArray').pushObject(booleanExpString);
+         this.set('errorMsg',"");
+         Ember.$('.ui.modal.logicalExp').modal('hide');
        }
 
     },
