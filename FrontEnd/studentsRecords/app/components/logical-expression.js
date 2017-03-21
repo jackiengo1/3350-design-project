@@ -96,5 +96,13 @@ export default Ember.Component.extend({
        this.set('selectedCourse',null);
        this.set('selectedlogicalLink',null);
     },
+
+    openLogicalExpModal(){
+      Ember.$('.ui.modal.logicalExp').modal('show');
+    },
+
+    closeLogicalExpModal(){
+      Ember.$('.ui.modal.logicalExp').modal('hide');
+    },
   }
 });

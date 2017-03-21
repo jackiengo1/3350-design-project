@@ -30,17 +30,20 @@
     <i class="dropdown icon"></i>
     <div class="menu">
       <a class="item configureItem" {{action "addResidency"}}>
-          Configure Residency
-        </a>
+        Residency
+      </a>
       <a class="item configureItem" {{action "addGender"}}>
-          Configure Gender
-        </a>
+        Gender
+      </a>
       <a class="item configureItem" {{action "addHighSchoolInfo"}}>
-          Configure High School Information
-        </a>
+        High School Information
+      </a>
       <a class="item configureItem" {{action "addProgramRecord"}}>
-          Configure Program Record Information
-        </a>
+        Program Record Information
+      </a>
+      <a class="item configureItem" {{action "addLogicalExp"}}>
+        Logical Expressions
+      </a>
     </div>
   </div>
 
@@ -49,11 +52,11 @@
     <i class="dropdown icon"></i>
     <div class="menu">
       <a class="item configureItem" {{action "userProfile"}}>
-          User Profile
-        </a>
+        User Profile
+      </a>
       <a class="item configureItem" {{action "adminPortal"}}>
-          Admin Portal
-        </a>
+        Admin Portal
+      </a>
     </div>
   </div>
 
@@ -90,6 +93,9 @@
       {{/if}}
       {{#if isLogoutShowing}}
       {{log-out}}
+      {{/if}}
+      {{#if isLogicalExpShowing}}
+      {{logical-expression}}
       {{/if}}
     </div>
   </div>
