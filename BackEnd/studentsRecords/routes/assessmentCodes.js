@@ -52,7 +52,8 @@ router.route('/:assessmentCode_id')
                 assessmentCode.name = request.body.assessmentCode.name;
                 assessmentCode.adjudicationInfo = request.body.assessmentCode.adjudicationInfo;
                 assessmentCode.testExpression = request.body.assessmentCode.testExpression;
-                assessmentCode.faculty = request.body.assessmentCode.faculty;
+                //assessmentCode.faculty = request.body.assessmentCode.faculty;
+                assessmentCode.dept = request.body.assessmentCode.dept;
 
                 assessmentCode.save(function (error) {
                     if (error) {

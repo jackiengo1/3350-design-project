@@ -39,10 +39,14 @@ export default Ember.Component.extend({
       //after get the logical expression  from db, reassemble the demo for exp
       for(let i=0;i<records.get('length');i++)
       {
-        
+
         self.get('logicalDBDemoArray').pushObject()
       }
     });
+  },
+
+  didRender() {
+    Ember.$('.menu .item').tab();
   },
 
   actions:{
@@ -169,6 +173,14 @@ export default Ember.Component.extend({
         });
        newExpression.save();
       }
-    }
+    },
+
+    openLogicalExpModal(){
+      Ember.$('.ui.modal.logicalExp').modal('show');
+    },
+
+    closeLogicalExpModal(){
+      Ember.$('.ui.modal.logicalExp').modal('hide');
+    },
   }
 });
