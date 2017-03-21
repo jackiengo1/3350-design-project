@@ -24,7 +24,7 @@ router.route('/')
             console.log("no filter");
         } else {
           console.log("filter");
-            models.LogicalExpressions.find({"stlogicalExpressionudent": request.query.logicalExpression}, function (error, logicalExpressions) {
+            models.LogicalExpressions.find({"logicalExpression": request.query.logicalExpression}, function (error, logicalExpressions) {
                 if (error) response.send(error);
                 response.json({logicalExpression: logicalExpressions});
             });

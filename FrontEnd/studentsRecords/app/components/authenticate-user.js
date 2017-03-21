@@ -12,6 +12,16 @@ export default Ember.Component.extend({
     return this.get('error');
   }),
 
+  didRender() {
+    this._super(...arguments);
+    Ember.$('.ui.modal')
+      .modal({
+        closable: false,
+        transition: 'horizontal flip'
+      })
+      .modal('show');
+  },
+
   actions: {
     login(){
       var authentication = this.get('oudaAuth');
@@ -64,6 +74,8 @@ export default Ember.Component.extend({
           self.get('oudaAuth').close();
           self.set('isPasswordChanging', false);
           //self.get('routing').transitionTo('login');
+          Ember.$('.ui.modal').modal('hide');
+          Ember.$('.ui.modal').remove();
         });
       });
     }

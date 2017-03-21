@@ -51,7 +51,8 @@ router.route('/:department_id')
 
                 department.name = request.body.department.name;
                 department.faculty = request.body.department.faculty;
-                department.programAdministrationInfo = request.body.department.programAdministrationInfo;
+                //department.programAdministrationInfo = request.body.department.programAdministrationInfo;
+                department.comment = request.body.department.comment;
 
                 department.save(function (error) {
                     if (error) {

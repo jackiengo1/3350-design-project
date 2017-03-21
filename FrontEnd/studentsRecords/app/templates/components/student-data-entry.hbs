@@ -157,13 +157,14 @@
 
 
 <!-- Show data entry form -->
-<div class="ui pointing secondary five item menu" id="studentRecordsDataEntryTab">
+<div class="ui pointing secondary six item menu" id="studentRecordsDataEntryTab">
 
   <a class="active item {{if backToBasicInfo 'active'}}" data-tab="basics">{{tabInfoText}}</a>
   <a class="item {{if scholarshipTabIsDisabled 'disabled'}}" data-tab="scholarshipAndAward" style="{{addStudentStyles}}">Scholarships and Awards</a>
   <a class="item {{if scholarshipTabIsDisabled 'disabled'}}" data-tab="advancedStanding" style="{{addStudentStyles}}">Advanced Standings</a>
   <a class="item {{if scholarshipTabIsDisabled 'disabled'}}" data-tab="HSCourses" style="{{addStudentStyles}}"> High School Courses</a>
   <a class="item {{if scholarshipTabIsDisabled 'disabled'}}" data-tab="programRecord" style="{{addStudentStyles}}"> Program Record</a>
+  <a class="item {{if scholarshipTabIsDisabled 'disabled'}}" data-tab="adjudicationTab" style="{{addStudentStyles}}"> Adjudication</a>
 
 </div>
 
@@ -1010,10 +1011,8 @@
 </div>
 
 
-
-
-
-
+  <div class="ui bottom attached tab segment" data-tab="adjudicationTab" style="background-color: #eee3fd; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">
+  </div>
 
 
 
