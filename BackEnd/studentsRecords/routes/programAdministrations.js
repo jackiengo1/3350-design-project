@@ -64,10 +64,10 @@ router.route('/:programAdministration_id')
         });
     })
     .delete(parseUrlencoded, parseJSON, function (request, response) {
-        models.ScholarshipAwards.findByIdAndRemove(request.params.scholarshipAward_id,
+        models.ProgramAdministrations.findByIdAndRemove(request.params.programAdministrationd_id,
             function (error, deleted) {
                 if (!error) {
-                    response.json({scholarshipAward: deleted});
+                    response.json({programAdministration: deleted});
                 }
             }
         );
