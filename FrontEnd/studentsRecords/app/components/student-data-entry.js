@@ -108,9 +108,11 @@ export default Ember.Component.extend({
   selectedTermToEdit: null,
   selectedCourseToEdit: null,
   selectedGradeToEdit: null,
+  selectedScholToEdit: null,
 
   gradeEdit: null,
   noteEdit: null,
+  scholNoteEdit: null,
 
   termCodeModel: null,
   termCode: null,
@@ -919,6 +921,23 @@ export default Ember.Component.extend({
       newScholarShipAndAward.save();
 
       this.set('scholarshipAndAwardNote', null);
+    },
+
+    openScholarShipAndAwardsEdit(scholID) {
+      var currentScholAward = this.get('store').peekRecord('scholarship-award', scholID);
+      this.set('selectedScholToEdit', currentScholAward);
+      this.set('scholNoteEdit', currentScholAward.get('note'));
+      Ember.$('.ui.modal.scholEdit').modal('show');
+    },
+
+    editScholarShipAndAwards() {
+      var currentScholAward = this.get('selectedScholToEdit');
+      currentScholAward.set('note', this.get('scholNoteEdit'));      
+      currentScholAward.save();
+    },
+
+    closeEditScholForm() {
+      Ember.$('.ui.modal.scholEdit').modal('hide');
     },
 
     backToEntryForm() {

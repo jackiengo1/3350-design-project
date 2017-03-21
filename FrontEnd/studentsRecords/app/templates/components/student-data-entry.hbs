@@ -352,8 +352,9 @@
       <div class="ui middle aligned divided list">
         {{#each scholarShipAndAwardList as |userScholarShipAndAwardList|}} {{#unless userScholarShipAndAwardList.isDeleted}}
         <div class="item">
-          <div class="right floated content" id="listDeleteButton">
-            <div class="negative ui button" onclick={{action 'deleteScholarshipAward' userScholarShipAndAwardList}}>Delete</div>
+          <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
+            <div class="teal ui button" style="width: 55px;" onclick={{action 'openScholarShipAndAwardsEdit' userScholarShipAndAwardList.id}}><i class="large edit icon"></i></div>
+            <div class="negative ui button" style="width: 55px;" onclick={{action 'deleteScholarshipAward' userScholarShipAndAwardList}}><i class="large remove icon"></i></div>
           </div>
           <div class="content" id="listText">
             Note: {{userScholarShipAndAwardList.note}}
@@ -961,7 +962,30 @@
 </div>
 
 
+<div class="ui modal scholEdit">
+  <div class="header">
+    Edit Note
+  </div>
+  <div class="content">
+    <form class="ui form">
+      <div class="one field">
+        <div class="field">
+          <label>Note</label> {{input type="text" value = scholNoteEdit}}
+        </div>
+      </div>
+    </form>
+  </div>
 
+  <div class="actions">
+    <button class="ui cprimary button" {{action 'closeEditScholForm'}}>
+        Exit
+      </button>
+    <button class="ui primary button" {{action 'editScholarShipAndAwards'}}>
+        Update
+    </button>
+  </div>
+
+</div>
 
 <!--Modal to add student program record-->
 <div class="ui modal programRecord">
