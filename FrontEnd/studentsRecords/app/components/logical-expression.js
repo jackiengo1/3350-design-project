@@ -115,22 +115,10 @@ export default Ember.Component.extend({
     deleteExpression()
     {
       //clear all element in the expression and link arrrys
-      var tempExp = this.get('logicalExpArray');
-      var tempLink = this.get('logicalLinkArray');
-      var tempDemo = this.get('logicalDemoArray');
-      for(let i=0;i<tempExp.get('length');i++)
-      {
-        tempExp.popObject();
-      }
-      for(let i=0;i<tempLink.get('length');i++)
-      {
-        tempLink.popObject();
-      }
-      //pop out everthing for the demo array as well
-      for(let i=0;i<tempDemo.get('length');i++)
-      {
-        tempDemo.popObject();
-      }
+      this.get('logicalExpArray').clear();
+      this.get('logicalLinkArray').clear();
+      this.get('logicalDemoArray').clear();
+
     },
 
     saveExpOnDB()
@@ -143,11 +131,13 @@ export default Ember.Component.extend({
       else{
         var tempExp = this.get('logicalExpArray');
         var tempLink = this.get('logicalLinkArray');
-        this.get('store').createRecord('logical-expression',{
+        var tempCode = this.get('store').peekRecord('assessment-code',tempAssessment);
+        var newExpression = this.get('store').createRecord('logical-expression',{
           booleanExp: tempExp,
           logicalLink: tempLink,
-          comment:tempAssessment,
+          comment:tempCode,
         });
+       newExpression.save();
       }
     }
   }
