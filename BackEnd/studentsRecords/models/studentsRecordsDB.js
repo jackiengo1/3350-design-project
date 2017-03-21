@@ -166,7 +166,9 @@ var assessmentCodeSchema = mongoose.Schema(
     name: String,
     adjudicationInfo: [{type: mongoose.Schema.ObjectId, ref: 'Adjudications'}],
     testExpression: [{type: mongoose.Schema.ObjectId, ref: 'LogicalExpressions'}],
-    faculty: [{type: mongoose.Schema.ObjectId, ref: 'Faculties'}]
+    //SCHEMA CHANGE, FACULTY not needed
+    //faculty: [{type: mongoose.Schema.ObjectId, ref: 'Faculties'}]
+    dept: [{type: mongoose.Schema.ObjectId, ref: 'Departments'}]
   }
 );
 
@@ -190,8 +192,10 @@ var facultySchema = mongoose.Schema(
 var departmentSchema = mongoose.Schema(
   {
     name: String,
-    faculty: {type: mongoose.Schema.ObjectId, ref: 'Faculties'},
-    programAdministrationInfo: [{type: mongoose.Schema.ObjectId, ref: 'ProgramAdministrations'}]
+    //SCHEMA CHANGE, FACULTY not needed
+    //faculty: {type: mongoose.Schema.ObjectId, ref: 'Faculties'},
+    programAdministrationInfo: [{type: mongoose.Schema.ObjectId, ref: 'ProgramAdministrations'}],
+    comment: {type: mongoose.Schema.ObjectId, ref: 'AssessmentCodes'}
   }
 );
 
