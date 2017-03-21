@@ -39,7 +39,6 @@ export default Ember.Component.extend({
     this.get('store').findAll('logical-expression').then(function(records){
       self.set('logicalExpModel',records);
       //after get the logical expression  from db, reassemble the demo for exp
-      console.log(records);
       if(records.get('length')>0){
         for(let i=0;i<records.get('length');i++)
         {
