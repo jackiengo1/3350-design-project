@@ -15,18 +15,25 @@ router.route('/')
         });
     })
     .get(parseUrlencoded, parseJSON, function (request, response) {
-        console.log("heheheh");
         var hsCourseGradeFilter = request.query.filter;
-        if (!hsCourseGradeFilter) {
+        if (!hsCourseGradeFilter)
+        {
             models.HsCourseGrades.find(function (error, hsCourseGrades) {
-                console.log(hsCourseGrades);
-                if (error) response.send(error);
+                if (error)
+                {
+                    response.send(error);
+                }
                 response.json({hscourseGrade: hsCourseGrades});
             });
-        } else {
+        }
+        else
+        {
           console.log("filter");
-            models.HsCourseGrades.find({"studentInfo": request.query.student}, function (error, hsCourseGrades) {
-                if (error) response.send(error);
+            models.HsCourseGrades.find({"studentInfo": request.query.filter.studentInfo}, function (error, hsCourseGrades) {
+                if (error)
+                {
+                    response.send(error);
+                }
                 response.json({hscourseGrade: hsCourseGrades});
             });
         }
@@ -49,9 +56,10 @@ router.route('/:hsCourseGrade_id')
                 response.send({error: error});
             }
             else {
-                hsCourseGrade.mark = request.body.hsCourseGrade.mark;
-                hsCourseGrade.source = request.body.hsCourseGrade.source;
-                hsCourseGrade.studentInfo = request.body.hsCourseGrade.studentInfo;
+                console.log(request.body);
+                hsCourseGrade.mark = request.body.hscourseGrade.mark;
+                hsCourseGrade.source = request.body.hscourseGrade.source;
+                hsCourseGrade.studentInfo = request.body.hscourseGrade.studentInfo;
 
                 hsCourseGrade.save(function (error) {
                     if (error) {

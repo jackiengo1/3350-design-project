@@ -1543,7 +1543,7 @@ export default Ember.Component.extend({
         counter++;
         self.set('count',counter);
         //set the label to genders
-        label = "Please upload Faculties.xlsx";
+        label = "Please upload Departments.xlsx";
         self.set('filetobeloaded',label);
 
         sheet_name_list.forEach(function (sheetName) {
@@ -1567,33 +1567,33 @@ export default Ember.Component.extend({
         });
       }
 
-      else if(file.name === "Faculties.xlsx")
-      {
-        //by here the file name is residency
-        //increment the counter
-        counter++;
-        self.set('count',counter);
-        //set the label to genders
-        label = "Please upload Departments.xlsx";
-        self.set('filetobeloaded',label);
-
-        sheet_name_list.forEach(function (sheetName) {
-          var worksheet = workbook.Sheets[sheetName];
-
-          // //get the range of the worksheet
-          var range = XLSX.utils.decode_range(worksheet["!ref"]);
-          // //loop from start of the range to the end of the range
-          for(var R = (range.s.r+1); R <= range.e.r; R++)
-          {
-            var name1 =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})].v;
-
-            let newFaculty = self.get('store').createRecord('faculty',{
-              name:name1,
-            });
-            newFaculty.save();
-          }
-        });
-      }
+      // else if(file.name === "Faculties.xlsx")
+      // {
+      //   //by here the file name is residency
+      //   //increment the counter
+      //   counter++;
+      //   self.set('count',counter);
+      //   //set the label to genders
+      //   label = "Please upload Departments.xlsx";
+      //   self.set('filetobeloaded',label);
+      //
+      //   sheet_name_list.forEach(function (sheetName) {
+      //     var worksheet = workbook.Sheets[sheetName];
+      //
+      //     // //get the range of the worksheet
+      //     var range = XLSX.utils.decode_range(worksheet["!ref"]);
+      //     // //loop from start of the range to the end of the range
+      //     for(var R = (range.s.r+1); R <= range.e.r; R++)
+      //     {
+      //       var name1 =  worksheet[XLSX.utils.encode_cell({c: 0, r:R})].v;
+      //
+      //       let newFaculty = self.get('store').createRecord('faculty',{
+      //         name:name1,
+      //       });
+      //       newFaculty.save();
+      //     }
+      //   });
+      // }
 
       else if(file.name === "Departments.xlsx")
       {
@@ -1617,25 +1617,30 @@ export default Ember.Component.extend({
             var faculty1 = worksheet[XLSX.utils.encode_cell({c: 1, r:R})].v;
             nameArray[nameArray.length] = name1;
             facultyArray[facultyArray.length] = faculty1;
+
+            var newDepartment = self.get('store').createRecord('department',{
+              name:name1,
+            });
+            newDepartment.save();
           }
 
+
           //start finding the faculty from cache
-          var allfaculty = self.get('store').peekAll('faculty');
-          for (let i=0;i<facultyArray.length;i++)
-          {
-            for(let j=0;j<allfaculty.get('length');j++)
-            {
-              if(allfaculty.objectAt(j).get('name')== facultyArray[i])
-              {
-                let currentfaculty = allfaculty.objectAt(j);
-                let newDepartment = self.get('store').createRecord('department',{
-                  name:nameArray[i],
-                  faculty:currentfaculty,
-                });
-                newDepartment.save();
-              }
-            }
-          }
+          // var allfaculty = self.get('store').peekAll('faculty');
+          // for (let i=0;i<facultyArray.length;i++)
+          // {
+          //   for(let j=0;j<allfaculty.get('length');j++)
+          //   {
+          //     if(allfaculty.objectAt(j).get('name')== facultyArray[i])
+          //     {
+          //       let currentfaculty = allfaculty.objectAt(j);
+          //       let newDepartment = self.get('store').createRecord('department',{
+          //         name:nameArray[i],
+          //       });
+          //       newDepartment.save();
+          //     }
+          //   }
+          // }
         });
       }
 

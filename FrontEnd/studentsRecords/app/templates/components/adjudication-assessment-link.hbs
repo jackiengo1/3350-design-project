@@ -1,0 +1,19 @@
+<h2>Assessment Adjudication Link</h2>
+
+<select onchange={{action 'selectAssessment' value="target.value"}}>
+  <option value = null> Select Assessment </option>
+  {{#each assessmentCodeModel as |oneassessmentCode|}}
+    <option value={{oneassessmentCode.id}}>{{oneassessmentCode.name}}</option>
+  {{/each}}
+</select>
+
+<select onchange={{action 'selectAdjudication' value="target.value"}}>
+  <option value = null> Select Adjudication </option>
+  {{#each adjudicationModel as |oneAdjudication|}}
+    <option value={{oneAdjudication.id}}>TermAVG: {{oneAdjudication.termAVG}} Note: {{oneAdjudication.note}}</option>
+  {{/each}}
+</select>
+
+<button class="ui secondary button" {{action 'linkAssessmentAdjudication'}}>
+  Link
+</button>
