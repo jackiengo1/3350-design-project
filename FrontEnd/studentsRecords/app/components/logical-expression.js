@@ -188,7 +188,7 @@ export default Ember.Component.extend({
         {
           if(oneDemo == demoTemp.objectAt(i))
           {
-            let templogicholder =this.get('logicalExpArray').objectAt(i);
+            let templogicholder =this.get('logicalExpModel').objectAt(i);
             templogicholder.deleteRecord();
             templogicholder.save();
             this.get('logicalDBDemoArray').removeAt(i);
@@ -197,44 +197,45 @@ export default Ember.Component.extend({
         }
     },
 
-    //function used to edit the logical expression
-    editExp(oneDemo){
-      //first search throught the demo array to find the index
-      var demoTemp = this.get('logicalDBDemoArray');
-      for(let i=0;i<demoTemp.get('length');i++)
-      {
-        if(oneDemo == demoTemp.objectAt(i))
-        {
-          //get all exp and link corresponding to the selected index
-          let tempExp = this.get('logicalDBExpArray').objectAt(i);
-          let tempLink = this.get('logicalDBLinkArray').objectAt(i);
-          //get the logical exp
-          
-          this.set('editDBAssess',);
-          for(let j=0;j<tempExp.length;j++)
-          {
-            let combinedExp;
-            //combine exp and link to make demo array
-            combinedExp = tempLink[j]+" "+tempExp[j];
-            //add the string to the combined array
-            this.get('editDemoArray').pushObject('combinedExp');
-          }
-          break;
-        }
-      }
-    },
+    // //function used to edit the logical expression
+    // editExp(oneDemo){
+    //   //first search throught the demo array to find the index
+    //   var demoTemp = this.get('logicalDBDemoArray');
+    //   for(let i=0;i<demoTemp.get('length');i++)
+    //   {
+    //     if(oneDemo == demoTemp.objectAt(i))
+    //     {
+    //       //get all exp and link corresponding to the selected index
+    //       let tempExp = this.get('logicalDBExpArray').objectAt(i);
+    //       let tempLink = this.get('logicalDBLinkArray').objectAt(i);
+    //       //get the logical exp
+    //       let tempassess = this.get('logicalExpModel').objectAt(i).get('comment');
+    //       this.set('editDBAssess',tempassess);
+    //       for(let j=0;j<tempExp.length;j++)
+    //       {
+    //         let combinedExp;
+    //         //combine exp and link to make demo array
+    //         combinedExp = tempLink[j]+" "+tempExp[j];
+    //         //add the string to the combined array
+    //         this.get('editDemoArray').pushObject('combinedExp');
+    //       }
+    //       break;
+    //     }
+    //   }
+    // },
 
-    editDBExp(oneDemo){
-      //search throught the list of combined edit demo array find the index of the selected object
-      var demoTemp = this.get('editDemoArray');
-      for(let i=0;i<demoTemp.get('length');i++)
-      {
-        if(oneDemo == demoTemp.objectAt(i))
-        {
 
-        }
-      }
-    },
+    // editDBExp(oneDemo){
+    //   //search throught the list of combined edit demo array find the index of the selected object
+    //   var demoTemp = this.get('editDemoArray');
+    //   for(let i=0;i<demoTemp.get('length');i++)
+    //   {
+    //     if(oneDemo == demoTemp.objectAt(i))
+    //     {
+    //       let splited = oneDemo.split(" ");
+    //     }
+    //   }
+    // },
 
     saveExpOnDB()
     {
