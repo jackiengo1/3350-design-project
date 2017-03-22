@@ -1,14 +1,13 @@
-<label>{{filetobeloaded}}</label>
-<button class="ui button" >
-  {{#file-picker fileLoaded="fileLoaded" accept=".xlsx" readAs="readAsBinaryString"}}
-  Upload Student Data
-  {{/file-picker}}</button>
-  <button class="positive ui button" {{action 'deleteall'}}>
-    Deleteall
+<h2 style="text-align: center;">Upload Files</h2>
+<h4 style="text-align: center; color:red;">{{filetobeloaded}}</h4>
+<div style="text-align: center;">
+  <button class="primary ui button">
+    {{#file-picker fileLoaded="fileLoaded" accept=".xlsx" readAs="readAsBinaryString"}}
+    Upload File
+    {{/file-picker}}
   </button>
-  <div class="ui segment">
-    <div class="ui active dimmer">
-      <div class="ui text loader">Loading</div>
-    </div>
-    <p></p>
-  </div>
+
+  <button class="negative ui button" {{action 'deleteall'}}>
+    Delete All Records
+  </button>
+</div>
