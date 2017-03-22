@@ -1,3 +1,4 @@
+{{file-upload}}
 <div class="ui pointing secondary two item menu">
 
   <a class="active item" data-tab="createLogicalExp"> Create  Logical Expressions</a>
@@ -20,14 +21,14 @@
             </div>
             <div class="six wide column">
               <div class="ui center aligned header" style="margin-bottom: 30px;">
-                <h2>Accessment Code</h2>
+                <h2>Assessment Code</h2>
               </div>
             </div>
             <div class="five wide column" style="text-align: left;">
               <button class="teal ui button" {{action 'openLogicalExpModal'}}>
                 Add Expression
               </button>
-              <button class="positive ui button" {{action 'saveOnDB'}}>
+              <button class="positive ui button" {{action 'saveExpOnDB'}}>
                 Save Expression
               </button>
             </div>
@@ -70,6 +71,27 @@
 
 
 <div class = "ui tab" data-tab="adjudicationTab" >
+
+  <div class="ui center aligned header" style="margin-bottom: 30px;">
+    <h2>Logical Expressions</h2>
+  </div>
+
+  <div class="ui middle aligned divided list" style = "width: 50%; margin-left: 25%;">
+    {{#each logicalDBDemoArray as |oneLogicalExp|}}
+    <div class="item">
+      <div class="right floated content" id="listDeleteButton">
+
+        <div class="negative ui button" onclick={{action 'deleteDBExp' oneLogicalExp}}>Delete</div>
+      </div>
+      <div class="content" id="listText">
+        {{oneLogicalExp}}
+      </div>
+    </div>
+    {{/each}}
+  </div>
+
+
+
 </div>
 
 
@@ -142,6 +164,103 @@
 
     <button class="green ui button" {{action 'addExpression'}}>
       Add
+    </button>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<!--modal to Edit logical expression-->
+<div class="ui modal logicalExpEdit">
+  <div class="header">
+    Edit Logical Expression
+  </div>
+
+  <div class="content">
+    <div class="ui center aligned header" style="margin-bottom: 30px;">
+      <h2>{{errorMsg}}</h2>
+    </div>
+
+    <div class="ui middle aligned divided list" style = "width: 50%; margin-left: 25%;">
+      {{#each editDemoArray as |editDemo|}}
+      <div class="item">
+        <div class="right floated content" id="listDeleteButton">
+          <div class="teal ui button" onclick={{action 'editDBExp' oneLogicalExp}}>Edit</div>
+        </div>
+        <div class="content" id="listText">
+          {{editDemo}}
+        </div>
+      </div>
+      {{/each}}
+    </div>
+
+    <div class="ui grid">
+      <div class="row">
+
+        <div class="four wide column">
+
+          <select class="ui search dropdown" onchange={{action 'selectlogicLink' value="target.value"}}>
+            <option selected = "selected" value = null> Select a logic </option>
+            {{#each logicalLink as |oneLogicalLink| }}
+            <option value={{oneLogicalLink}}> {{oneLogicalLink}} </option>
+            {{/each}}
+          </select>
+
+        </div>
+
+
+        <div class="four wide column">
+          <div class="field">
+            <select class="ui search dropdown"onchange={{action 'selectCourse' value="target.value"}}>
+              <option selected = "selected" value = null> Select a course </option>
+              {{#each courseModel as |oneCourse|}}
+              <option value={{oneCourse.id}}> {{oneCourse.name}} </option>
+              {{/each}}
+            </select>
+          </div>
+        </div>
+
+
+        <div class="four wide column">
+          <div class="field">
+            <select class="ui search dropdown" onchange={{action 'selectBool' value="target.value"}}>
+              <option selected = "selected" value = null> Select a operator </option>
+              {{#each boolExpression as |oneOperator|}}
+              <option value={{oneOperator}} selected={{eq selectedBool oneOperator}}> {{oneOperator}} </option>
+              {{/each}}
+            </select>
+          </div>
+        </div>
+
+
+        <div class="four wide column">
+          {{#if numberFieldVisable}}
+          <div class="four wide column">
+            {{input type = "number" value=inputValue}}
+          </div>
+          {{/if}}
+        </div>
+
+      </div>
+    </div>
+
+
+
+
+
+  </div>
+
+
+  <div class="actions">
+    <button class="teal ui button" {{action 'closeLogicalExpEditModal'}}>
+      Cancel
     </button>
   </div>
 

@@ -68,7 +68,8 @@
 <div class="ui grid" id="zeroMargin">
   <div class="sixteen wide column" id="zeroPadding">
     <div class="ui segment" id="mainContent">
-      {{#if isHomeShowing}} {{welcome-page}}
+      {{#if isHomeShowing}}
+      {{assign-adjudication}}
       {{/if}}
       {{#if isStudentsRecordsDataEntry}}
       {{student-data-entry}}

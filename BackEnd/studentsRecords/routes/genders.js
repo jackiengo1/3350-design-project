@@ -44,11 +44,13 @@ router.route('/:gender_id')
         })
     })
     .put(parseUrlencoded, parseJSON, function (request, response) {
-        models.Genders.findById(request.params._id, function (error, gender) {
+      console.log(request.params);
+        models.Genders.findById(request.params.gender_id, function (error, gender) {
             if (error) {
                 response.send({error: error});
             }
             else {
+              console.log(gender);
                 gender.name = request.body.gender.name;
                 gender.students = request.body.gender.students;
 

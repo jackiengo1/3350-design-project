@@ -9,6 +9,7 @@
         {{#each residencyModel as |oneResidency|}}
         <div class="item">
           <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
+            <div class="teal ui button" onclick={{action 'openEditResidencyForm' oneResidency}}>Edit</div>
             <div class="negative ui button" onclick={{action 'deleteResidency' oneResidency}}>Delete</div>
           </div>
           <div class="content" style="padding-top: 10px; font-size: 16px;">
@@ -42,41 +43,40 @@
 
 
 
-{{!--
-<div class="ui center aligned header">
-  <h2>Modify Residency</h2>
-</div>
 
-<div class="ui middle aligned divided list">
-  {{#each residencyModel as |oneResidency|}}
-    <div class="item">
-      <div class="content">
-        <div class="header">
-          <h3>
-            {{oneResidency.name}} <button class="negative ui button" onclick={{action 'deleteResidency' oneResidency}} style = "float: right;">Delete</button>
-          </h3>
+
+
+
+
+
+
+
+  <!--modal to edit residency-->
+  <div class="ui modal residencyEdit">
+    <div class="header">
+      Edit Residency
+    </div>
+
+    <div class="content">
+      <div class="ui form">
+        <div class="field">
+          <label>Residency</label>
+          {{input type="text"  value = residencyNameEdit}}
         </div>
-
       </div>
+
     </div>
-  {{/each}}
-
-</div>
 
 
-<div class="ui grid">
-  <div class="ui middle aligned sixteen wide column">
-    <div class="ui form">
-      <div class="inline field">
-        <label style= "font-size: 20px;">Residency</label>
-        {{input type="text"  value = residencyName}}
-      </div>
+    <div class="actions">
+      <button class="ui primary button" {{action 'closeEditResidencyForm'}} >
+        Exit
+      </button>
+      <button class="ui primary button" {{action 'editResidency'}} >
+        Update
+      </button>
     </div>
+
+
+
   </div>
-</div>
-
-<div class="ui center aligned header">
-  <button class="positive ui button" {{action 'addResidency'}}>
-    Add Residency
-  </button>
-</div>--}}

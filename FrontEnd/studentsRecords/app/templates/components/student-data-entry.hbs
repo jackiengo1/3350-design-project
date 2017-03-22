@@ -1139,7 +1139,7 @@
 
   </div>
   <div class="actions">
-    <button class="ui primary button" {{action 'closeEditGradeForm'}}>
+    <button class="ui cprimary button" {{action 'closeEditGradeForm'}}>
         Exit
       </button>
     <button class="ui primary button" {{action 'editGrade'}}>
@@ -1147,8 +1147,6 @@
       </button>
   </div>
 </div>
-
-
 
 
 
@@ -1201,6 +1199,14 @@
 
 
 <div class="ui bottom attached tab segment" data-tab="adjudicationTab" style="background-color: #eee3fd; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">
+  {{#each currentStudentAdjudications as |curAdj|}}
+  <h3>Date: {{curAdj.date}}</h3>
+  <p>Term Average: {{curAdj.termAVG}}</p>
+  <p>Term Units Passed: {{curAdj.termUnitsPassed}}</p>
+  <p>Total Term Units: {{curAdj.termUnitsTotal}}</p>
+  <p>Note: {{curAdj.note}}</p>
+  <br/>
+  {{/each}}
 </div>
 
 
