@@ -20,6 +20,13 @@ export default Ember.Component.extend({
   logicalLinkArray:Ember.A(),
   logicalDemoArray:Ember.A(),
   logicalDBDemoArray:Ember.A(),
+  logicalDBExpArray:Ember.A(),
+  logicalDBLinkArray:Ember.A(),
+  editDemo:null,
+  editDemoArray:Ember.A(),
+  editDBExp:null,
+  editDBLink:null,
+  editDBAssess:null,
 
   errorMsg: "",
 
@@ -44,6 +51,9 @@ export default Ember.Component.extend({
         {
           let ExpTemp = records.objectAt(i).get('booleanExp');
           let linkTemp = records.objectAt(i).get('logicalLink');
+          //add exp array and link array to local list
+          self.get('logicalDBExpArray').pushObject(ExpTemp);
+          self.get('logicalDBLinkArray').pushObject(linkTemp);
           var combinedExpArray =[];
           for(let j=0;j<ExpTemp.length;j++)
           {
@@ -56,7 +66,6 @@ export default Ember.Component.extend({
           self.get('logicalDBDemoArray').pushObject(combinedExpArray);
         }
       }
-
     });
   },
 
@@ -118,7 +127,7 @@ export default Ember.Component.extend({
        else{
          var courseValue = this.get('store').peekRecord('course-code',this.get('selectedCourse')).get('name');
          //combine the course boolean value into a single string
-         var booleanExpString = courseValue+" "+booleanValue+" "+numberFieldValue;
+         var booleanExpString = courseValue+"-"+booleanValue+"-"+numberFieldValue;
          //after adding the first expression, show the logical link area
          this.set('showLogic',true);
          //if this is not the first run, add the logic link to the logical link array
@@ -126,7 +135,7 @@ export default Ember.Component.extend({
          {
            let logiclinktemp = this.get('selectedlogicalLink');
            this.get('logicalLinkArray').pushObject(logiclinktemp);
-           let expDemostring = logiclinktemp+" "+booleanExpString;
+           let expDemostring = logiclinktemp+"-"+booleanExpString;
            this.get('logicalDemoArray').pushObject(expDemostring);
          }
 
@@ -178,7 +187,7 @@ export default Ember.Component.extend({
         {
           if(oneDemo == demoTemp.objectAt(i))
           {
-            let templogicholder =this.get('logicalExpArray').objectAt(i);
+            let templogicholder =this.get('logicalExpModel').objectAt(i);
             templogicholder.deleteRecord();
             templogicholder.save();
             this.get('logicalDBDemoArray').removeAt(i);
@@ -186,6 +195,46 @@ export default Ember.Component.extend({
           }
         }
     },
+
+    // //function used to edit the logical expression
+    // editExp(oneDemo){
+    //   //first search throught the demo array to find the index
+    //   var demoTemp = this.get('logicalDBDemoArray');
+    //   for(let i=0;i<demoTemp.get('length');i++)
+    //   {
+    //     if(oneDemo == demoTemp.objectAt(i))
+    //     {
+    //       //get all exp and link corresponding to the selected index
+    //       let tempExp = this.get('logicalDBExpArray').objectAt(i);
+    //       let tempLink = this.get('logicalDBLinkArray').objectAt(i);
+    //       //get the logical exp
+    //       let tempassess = this.get('logicalExpModel').objectAt(i).get('comment');
+    //       this.set('editDBAssess',tempassess);
+    //       for(let j=0;j<tempExp.length;j++)
+    //       {
+    //         let combinedExp;
+    //         //combine exp and link to make demo array
+    //         combinedExp = tempLink[j]+" "+tempExp[j];
+    //         //add the string to the combined array
+    //         this.get('editDemoArray').pushObject('combinedExp');
+    //       }
+    //       break;
+    //     }
+    //   }
+    // },
+
+
+    // editDBExp(oneDemo){
+    //   //search throught the list of combined edit demo array find the index of the selected object
+    //   var demoTemp = this.get('editDemoArray');
+    //   for(let i=0;i<demoTemp.get('length');i++)
+    //   {
+    //     if(oneDemo == demoTemp.objectAt(i))
+    //     {
+    //       let splited = oneDemo.split(" ");
+    //     }
+    //   }
+    // },
 
     saveExpOnDB()
     {

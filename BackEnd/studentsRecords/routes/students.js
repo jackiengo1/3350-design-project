@@ -160,6 +160,7 @@ router.route('/')
         student.resInfo = request.body.student.resInfo;
         student.highSchoolCourse = request.body.student.highSchoolCourse;
         student.semester = request.body.student.semester;
+        student.adjudicationInfo = request.body.adjudicationInfo;
 
         student.save(function (error) {
           if (error) {
