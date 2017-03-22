@@ -27,6 +27,8 @@ export default Ember.Component.extend({
   hsCourseGradeModel: null,
   hsCourseModel: null,
   hsCourseModel2: null,
+  hsCourseModel3: null,
+  hsCourseModel4: null,
   highSchoolCourseModel: null,
   secondarySchoolModel: null,
   hsSubjectModel: null,
@@ -41,6 +43,7 @@ export default Ember.Component.extend({
   isUnitSelected: false,
   isGradeValid: false,
   highSchoolCourseChoice: null,
+  highSchoolCourseChoice2: null,
 
   //undo
   //the stack store the data
@@ -107,7 +110,7 @@ export default Ember.Component.extend({
   selectedTermToEdit: null,
   selectedCourseToEdit: null,
   selectedGradeToEdit: null,
-  selectedCourseToEdit: null,
+  selectedHsCourseToEdit: null,
 
   gradeEdit: null,
   noteEdit: null,
@@ -280,6 +283,12 @@ export default Ember.Component.extend({
     this.set('currentStudentCourseCodes', null);
     this.set('currentStudentProgramRecords', null);
     this.set('selectedTermTemp', null);
+
+    Ember.$("#gradeField").val(0);
+    Ember.$("#levelSelect").attr('disabled', true);
+    Ember.$("#unitSelect").attr('disabled', true);
+    Ember.$("#courseSelect").attr('disabled', true);
+    Ember.$("#addCourseGradeButton").attr('disabled', true);
   },
 
   didRender() {
@@ -756,6 +765,7 @@ export default Ember.Component.extend({
     },
 
     selectCourse(courseInfo) {
+      console.log(courseInfo);
       if (courseInfo != "null") {
         var self = this;
         this.get('store').query('high-school-course', { filter: { id: courseInfo } }).then(function (records) {
@@ -779,6 +789,7 @@ export default Ember.Component.extend({
     },
 
     selectLevel(courseId) {
+      console.log(courseId);
       if (courseId != "null") {
         this.set('isLevelSelected', true);
         if (this.get('isUnitSelected')) {
@@ -799,6 +810,7 @@ export default Ember.Component.extend({
     },
 
     selectUnit(courseId) {
+      console.log(courseId);
       if (courseId != "null") {
         this.set('isUnitSelected', true);
         if (this.get('isLevelSelected')) {
@@ -868,7 +880,7 @@ export default Ember.Component.extend({
     addhsMark() {
       var grade = Ember.$("#gradeField").val();
 
-      if (grade >= 0 && grade <= 100) {
+      if ((grade >= 0 && grade <= 100) || grade == "NMR") {
         this.set('isGradeValid', true);
       }
       else {
@@ -1032,7 +1044,6 @@ export default Ember.Component.extend({
         var courseCode = self.get('programCourseCode');
         courseCode.set('mark', savedNewGrade);
         courseCode.save();
-
       });
 
     },
@@ -1046,22 +1057,120 @@ export default Ember.Component.extend({
     },
 
     openEditHighSchoolCourseForm(course) {
-      this.set('selectedCourseToEdit', course);
-      //Ember.$('#schoolSelect').attr('selected', course.get('source').get('school').get('id'));
-      // Ember.$('courseSelect')
-      // Ember.$('levelSelect')
-      // Ember.$('unitSelect')
-      // Ember.$('gradeField')
+      this.set('selectedHsCourseToEdit', course);
+      this.set('highSchoolCourseChoice2', this.get('store').find('high-school-course', course.get('source').get('id')));
 
-      Ember.$('.ui.modal.hsCourseEdit').modal({detachable: false,}).modal('show');
+      console.log(course.get('source').get('school').get('id'));
+
+      Ember.$("#schoolSelect2Label").append(" -> <em style='color: red'>" + course.get('source').get('school').get('name') + "</em>");
+      Ember.$("#courseSelect2Label").append(" -> <em style='color: red'>" + course.get('source').get('course').get('name') + " (" + course.get('source').get('course').get('description') + ") " + "- " + course.get('source').get('source') + "</em>");
+      Ember.$("#levelSelect2Label").append(" -> <em style='color: red'>" + course.get('source').get('level') + "</em>");
+      Ember.$("#unitSelect2Label").append(" -> <em style='color: red'>" + course.get('source').get('unit') + "</em>");
+
+      Ember.$("#gradeField2").attr('disabled', false);
+      Ember.$("#levelSelect2").attr('disabled', false);
+      Ember.$("#unitSelect2").attr('disabled', false);
+      Ember.$("#gradeField2").attr('disabled', false);
+      Ember.$("#courseSelect2").attr('disabled', false);
+
+      Ember.$('.ui.modal.hsCourseEdit').modal({detachable: false,closable: false}).modal('show');
     },
 
     closeEditHighSchoolCourseForm() {
+      Ember.$("#schoolSelect2Label").text("High School");
+      Ember.$("#courseSelect2Label").text("Subject (Description) - Source");
+      Ember.$("#levelSelect2Label").text("Level");
+      Ember.$("#unitSelect2Label").text("Unit");
+
       Ember.$('.ui.modal.hsCourseEdit').modal('hide');
     },
 
     edithsMark() {
+      var grade = Ember.$("#gradeField2").val();
+      var validGrade = false;
 
+      if ((grade >= 0 && grade <= 100) || grade == "NMR")
+      {
+        validGrade = true;
+      }
+      else
+      {
+        validGrade = false;
+      }
+
+      if (validGrade)
+      {
+        console.log("valid");
+
+        var hsGrade = this.get('selectedHsCourseToEdit');
+
+        hsGrade.set('source', this.get('highSchoolCourseChoice2'));
+        hsGrade.set('mark', Ember.$("#gradeField2").val());
+        hsGrade.save().then(function(grade){
+        });
+        // var newhsMark = this.get('store').createRecord('hscourse-grade', {
+        //   mark: Ember.$("#gradeField2").val(),
+        //   studentInfo: this.get('currentStudent'),
+        //   source: this.get('highSchoolCourseChoice2'),
+        // });
+      }
+      else {
+        console.log("invalid");
+      }
+    },
+
+    selectHighSchool2(highSchool) {
+      var self = this;
+      if (highSchool != "null")
+      {
+        this.get('store').query('high-school-course', { filter: { school: highSchool } }).then(function (records) {
+          self.set('hsCourseModel3', records);
+        });
+      }
+      else
+      {
+        this.get('store').query('high-school-course', { filter: { school: this.get('selectedHsCourseToEdit').get('source').get('school').get('id') } }).then(function (records) {
+          self.set('hsCourseModel3', records);
+        });
+      }
+    },
+
+    selectCourse2(courseInfo) {
+      var self = this;
+      if (courseInfo != "null")
+      {
+        this.get('store').query('high-school-course', { filter: { id: courseInfo } }).then(function (records) {
+          self.set('hsCourseModel4', records);
+        });
+      }
+      else
+      {
+        this.get('store').query('high-school-course', { filter: { id: this.get('selectedHsCourseToEdit').get('source').get('id') } }).then(function (records) {
+          self.set('hsCourseModel4', records);
+        });
+      }
+    },
+
+    selectLevel2(courseId) {
+      if (courseId != "null")
+      {
+        this.set('highSchoolCourseChoice2', this.get('store').find('high-school-course', courseId));
+      }
+      else
+      {
+        this.set('highSchoolCourseChoice2', this.get('store').find('high-school-course', this.get('selectedHsCourseToEdit').get('source').get('id')));
+      }
+    },
+
+    selectUnit2(courseId) {
+      if (courseId != "null")
+      {
+        this.set('highSchoolCourseChoice2', this.get('store').find('high-school-course', courseId));
+      }
+      else
+      {
+        this.set('highSchoolCourseChoice2', this.get('store').find('high-school-course', this.get('selectedHsCourseToEdit').get('source').get('id')));
+      }
     },
 
     deleteGrade(gradeID, courseCode) {
