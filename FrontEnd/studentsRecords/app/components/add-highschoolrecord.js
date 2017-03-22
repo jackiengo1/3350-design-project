@@ -9,11 +9,20 @@ export default Ember.Component.extend({
 
   subjectTemp: null,
   schoolTemp: null,
+
   selectedsecSchoolToEdit: null,
   secSchoolsNameToEdit: null,
+
   selectedhsSubjectToEdit: null,
   hsSubjectNameToEdit: null,
   hsSubjectDescriptionToEdit: null,
+
+  selectedHSToEdit: null,
+  levelToEdit: null,
+  sourceToEdit: null,
+  unitToEdit:null,
+  courseToEdit: null,
+  schoolToEdit: null,
 
   secondarySchoolTab: true,
   subjectTab: false,
@@ -68,21 +77,33 @@ export default Ember.Component.extend({
     },
 
     openhsEdit(hsID){
-      // var currentHS = this.get('store').peekRecord('high-school-course', hsID);
-      // this.set('selectedHSToEdit', currentHS);
-      //
-      // this.set('levelToEdit', currentHS.get('level'));
-      // this.set('sourceToEdit', currentHS.get('source'));
-      // this.set('unitToEdit', currentHS.get('unit'));
-      // this.set('levelToEdit', currentHS.get('level'));
-      // this.set('levelToEdit', currentHS.get('level'));
-      // this.set('levelToEdit', currentHS.get('level'));
-      //
-      // Ember.$('.ui.modal.hsEditModal').modal({detachable: false,}).modal('show');
+      var currentHS = this.get('store').peekRecord('high-school-course', hsID);
+
+      this.set('selectedHSToEdit', currentHS);
+
+      this.set('levelToEdit', currentHS.get('level'));
+      this.set('sourceToEdit', currentHS.get('source'));
+      this.set('unitToEdit', currentHS.get('unit'));
+      this.set('courseToEdit', currentHS.get('course'));
+      this.set('schoolToEdit', currentHS.get('school'));
+
+      Ember.$('.ui.modal.hsEditModal').modal({detachable: false,}).modal('show');
     },
 
     edithsCourse(){
+      var currentHS = this.get('selectedHSToEdit');
 
+      currentHS.set('level', this.get('levelToEdit'));
+      currentHS.set('source', this.get('sourceToEdit'));
+      currentHS.set('unit', this.get('unitToEdit'));
+      currentHS.set('course', this.get('subjectTemp'));
+      currentHS.set('school', this.get('schoolTemp'));
+
+      currentHS.save();
+    },
+
+    closehsCourseEdit(){
+      Ember.$('.ui.modal.hsEditModal').modal('hide');
     },
 
     //Add a secondary school
