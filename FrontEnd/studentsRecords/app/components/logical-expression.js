@@ -54,7 +54,6 @@ export default Ember.Component.extend({
           //add exp array and link array to local list
           self.get('logicalDBExpArray').pushObject(ExpTemp);
           self.get('logicalDBLinkArray').pushObject(linkTemp);
-
           var combinedExpArray =[];
           for(let j=0;j<ExpTemp.length;j++)
           {
@@ -128,7 +127,7 @@ export default Ember.Component.extend({
        else{
          var courseValue = this.get('store').peekRecord('course-code',this.get('selectedCourse')).get('name');
          //combine the course boolean value into a single string
-         var booleanExpString = courseValue+" "+booleanValue+" "+numberFieldValue;
+         var booleanExpString = courseValue+"-"+booleanValue+"-"+numberFieldValue;
          //after adding the first expression, show the logical link area
          this.set('showLogic',true);
          //if this is not the first run, add the logic link to the logical link array
@@ -136,7 +135,7 @@ export default Ember.Component.extend({
          {
            let logiclinktemp = this.get('selectedlogicalLink');
            this.get('logicalLinkArray').pushObject(logiclinktemp);
-           let expDemostring = logiclinktemp+" "+booleanExpString;
+           let expDemostring = logiclinktemp+"-"+booleanExpString;
            this.get('logicalDemoArray').pushObject(expDemostring);
          }
 
