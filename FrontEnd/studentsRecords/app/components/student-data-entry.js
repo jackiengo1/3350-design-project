@@ -27,6 +27,8 @@ export default Ember.Component.extend({
   hsCourseGradeModel: null,
   hsCourseModel: null,
   hsCourseModel2: null,
+  hsCourseModel3: null,
+  hsCourseModel4: null,
   highSchoolCourseModel: null,
   secondarySchoolModel: null,
   hsSubjectModel: null,
@@ -41,6 +43,7 @@ export default Ember.Component.extend({
   isUnitSelected: false,
   isGradeValid: false,
   highSchoolCourseChoice: null,
+  highSchoolCourseChoice2: null,
   adjudicationModel: null,
 
   //undo
@@ -108,9 +111,13 @@ export default Ember.Component.extend({
   selectedTermToEdit: null,
   selectedCourseToEdit: null,
   selectedGradeToEdit: null,
+  selectedHsCourseToEdit: null,
+  selectedScholToEdit: null,
+  selectedASToEdit: null,
 
   gradeEdit: null,
   noteEdit: null,
+  scholNoteEdit: null,
 
   termCodeModel: null,
   termCode: null,
@@ -195,6 +202,10 @@ export default Ember.Component.extend({
       self.set('genderModel', records);
     });
 
+    this.get('store').findAll('high-school-course').then(function (records) {
+      self.set('courseModel', records);
+    });
+
     this.get('store').findAll('term-code').then(function (records) {
       self.set('termCodeModel', records);
     });
@@ -244,28 +255,44 @@ export default Ember.Component.extend({
   showStudentData: function (index) {
     this.set('currentStudent', this.get('studentsRecords').objectAt(index));
     this.set('studentPhoto', this.get('currentStudent').get('photo'));
+
     var date = this.get('currentStudent').get('DOB');
+
     var datestring = date.toISOString().substring(0, 10);
     this.set('selectedDate', datestring);
-    var gender = this.get('currentStudent').get('genderInfo');
 
+    var gender = this.get('currentStudent').get('genderInfo');
     this.set('selectedGender', gender);
+
     var res = this.get('currentStudent').get('resInfo');
     this.set('selectedResidency', res);
+
     console.log("here");
+
     this.get('store').query('advanced-standing', { filter: { studentInfo: this.get('currentStudent').get('id') } });
     this.set('listAS', this.get('currentStudent').get('advInfo'));
+
     console.log("here1");
+
     this.get('store').query('scholarship-award', { filter: { studentInfo: this.get('currentStudent').get('id') } });
     this.set('scholarShipAndAwardList', this.get('currentStudent').get('scholInfo'));
 
     this.get('store').query('term', { filter: { studentInfo: this.get('currentStudent').get('id') } });
     this.set('currentStudentTerms', this.get('currentStudent').get('semester'));
 
+    this.get('store').query('hscourse-grade', { filter: { studentInfo: this.get('currentStudent').get('id') } });
+    this.set('currentStudentHSGrades', this.get('currentStudent').get('hsCourseGrade'));
+
     this.set('studentCourseCodeForGrade', null);
     this.set('currentStudentCourseCodes', null);
     this.set('currentStudentProgramRecords', null);
     this.set('selectedTermTemp', null);
+
+    Ember.$("#gradeField").val(0);
+    Ember.$("#levelSelect").attr('disabled', true);
+    Ember.$("#unitSelect").attr('disabled', true);
+    Ember.$("#courseSelect").attr('disabled', true);
+    Ember.$("#addCourseGradeButton").attr('disabled', true);
 
     this.get('store').query('hscourse-grade', { filter: { studentInfo: this.get('currentStudent').get('id') } });
     this.set('currentStudentHSGrades', this.get('currentStudent').get('hsCourseGrade'));
@@ -749,6 +776,7 @@ export default Ember.Component.extend({
     },
 
     selectCourse(courseInfo) {
+      console.log(courseInfo);
       if (courseInfo != "null") {
         var self = this;
         this.get('store').query('high-school-course', { filter: { id: courseInfo } }).then(function (records) {
@@ -772,6 +800,7 @@ export default Ember.Component.extend({
     },
 
     selectLevel(courseId) {
+      console.log(courseId);
       if (courseId != "null") {
         this.set('isLevelSelected', true);
         if (this.get('isUnitSelected')) {
@@ -792,6 +821,7 @@ export default Ember.Component.extend({
     },
 
     selectUnit(courseId) {
+      console.log(courseId);
       if (courseId != "null") {
         this.set('isUnitSelected', true);
         if (this.get('isLevelSelected')) {
@@ -885,7 +915,7 @@ editScholarshipAward(scholAward){
     addhsMark() {
       var grade = Ember.$("#gradeField").val();
 
-      if (grade >= 0 && grade <= 100) {
+      if ((grade >= 0 && grade <= 100) || grade == "NMR") {
         this.set('isGradeValid', true);
       }
       else {
@@ -905,7 +935,7 @@ editScholarshipAward(scholAward){
       }
     },
 
-    deleteHsMark(hsGrade){
+    deleteHsMark(hsGrade) {
       var index = this.get('hsCourseGradeModel').indexOf(hsGrade);
       this.set('currentHsGradeIndex', index);
       var indexTemp = this.get('currentHsGradeIndex');
@@ -923,6 +953,37 @@ editScholarshipAward(scholAward){
       temp.deleteRecord();
       temp.save();
     },
+
+
+    openASEdit(asID) {
+      var currentAS = this.get('store').peekRecord('advanced-standing', asID);
+      this.set('selectedASToEdit', currentAS);
+
+      this.set('courseToEdit', currentAS.get('course'));
+      this.set('descriptionToEdit', currentAS.get('description'));
+      this.set('unitsToEdit', currentAS.get('units'));
+      this.set('gradeToEdit', currentAS.get('grade'));
+      this.set('fromToEdit', currentAS.get('from'));
+
+      Ember.$('.ui.modal.asEditModal').modal({ detachable: false, }).modal('show');
+    },
+
+    editAS() {
+      var currentAS = this.get('selectedASToEdit');
+
+      currentAS.set('course', this.get('courseToEdit'));
+      currentAS.set('description', this.get('descriptionToEdit'));
+      currentAS.set('units', this.get('unitsToEdit'));
+      currentAS.set('grade', this.get('gradeToEdit'));
+      currentAS.set('from', this.get('fromToEdit'));
+
+      currentAS.save();
+    },
+
+    closeEditASForm() {
+      Ember.$('.ui.modal.asEditModal').modal('hide');
+    },
+
 
     deleteScholarshipAward(scholAward) {
       var index = this.get('scholarshipAwardModel').indexOf(scholAward);
@@ -944,6 +1005,24 @@ editScholarshipAward(scholAward){
       newScholarShipAndAward.save();
 
       this.set('scholarshipAndAwardNote', null);
+    },
+
+    openScholarShipAndAwardsEdit(scholID) {
+      var currentScholAward = this.get('store').peekRecord('scholarship-award', scholID);
+      this.set('selectedScholToEdit', currentScholAward);
+      this.set('scholNoteEdit', currentScholAward.get('note'));
+
+      Ember.$('.ui.modal.scholEdit').modal({ detachable: false, }).modal('show');
+    },
+
+    editScholarShipAndAwards() {
+      var currentScholAward = this.get('selectedScholToEdit');
+      currentScholAward.set('note', this.get('scholNoteEdit'));
+      currentScholAward.save();
+    },
+
+    closeEditScholForm() {
+      Ember.$('.ui.modal.scholEdit').modal('hide');
     },
 
     backToEntryForm() {
@@ -1049,12 +1128,113 @@ editScholarshipAward(scholAward){
         var courseCode = self.get('programCourseCode');
         courseCode.set('mark', savedNewGrade);
         courseCode.save();
-
       });
 
     },
 
+    openHighSchoolCourseForm() {
+      Ember.$('.ui.modal.hsCourseAdd').modal({ detachable: false, }).modal('show');
+    },
 
+    closeHighSchoolCourseForm() {
+      Ember.$('.ui.modal.hsCourseAdd').modal('hide');
+    },
+
+    openEditHighSchoolCourseForm(course) {
+      this.set('selectedHsCourseToEdit', course);
+      this.set('highSchoolCourseChoice2', this.get('store').peekRecord('high-school-course', course.get('source').get('id')));
+
+      Ember.$("#schoolSelect2Label").append(" -> <em style='color: red'>" + course.get('source').get('school').get('name') + "</em>");
+      Ember.$("#courseSelect2Label").append(" -> <em style='color: red'>" + course.get('source').get('course').get('name') + " (" + course.get('source').get('course').get('description') + ") " + "- " + course.get('source').get('source') + "</em>");
+      Ember.$("#levelSelect2Label").append(" -> <em style='color: red'>" + course.get('source').get('level') + "</em>");
+      Ember.$("#unitSelect2Label").append(" -> <em style='color: red'>" + course.get('source').get('unit') + "</em>");
+
+      Ember.$("#gradeField2").attr('disabled', false);
+      Ember.$("#levelSelect2").attr('disabled', false);
+      Ember.$("#unitSelect2").attr('disabled', false);
+      Ember.$("#gradeField2").attr('disabled', false);
+      Ember.$("#courseSelect2").attr('disabled', false);
+
+      Ember.$('.ui.modal.hsCourseEdit').modal({ detachable: false, closable: false }).modal('show');
+    },
+
+    closeEditHighSchoolCourseForm() {
+      Ember.$("#schoolSelect2Label").text("High School");
+      Ember.$("#courseSelect2Label").text("Subject (Description) - Source");
+      Ember.$("#levelSelect2Label").text("Level");
+      Ember.$("#unitSelect2Label").text("Unit");
+
+      Ember.$('.ui.modal.hsCourseEdit').modal('hide');
+    },
+
+    edithsMark() {
+      var grade = Ember.$("#gradeField2").val();
+      var validGrade = false;
+
+      if ((grade >= 0 && grade <= 100) || grade == "NMR") {
+        validGrade = true;
+      }
+      else {
+        validGrade = false;
+      }
+
+      if (validGrade) {
+        console.log("valid");
+
+        var hsGrade = this.get('selectedHsCourseToEdit');
+
+        hsGrade.set('source', this.get('highSchoolCourseChoice2'));
+        hsGrade.set('mark', Ember.$("#gradeField2").val());
+        hsGrade.save().then(function (grade) {
+        });
+      }
+      else {
+        console.log("invalid");
+      }
+    },
+
+    selectHighSchool2(highSchool) {
+      var model = [];
+      this.get('store').peekAll('high-school-course').filter((records) => {
+        if (records.get('school').get('id') == highSchool) {
+          model.push(records);
+        }
+      });
+
+      this.set('hsCourseModel3', model);
+    },
+
+    selectCourse2(courseInfo) {
+      var self = this;
+      if (courseInfo != "null") {
+        var model = [];
+        this.get('store').peekAll('high-school-course').filter((records) => {
+          if (records.get('id') == courseInfo) {
+            model.push(records);
+          }
+        });
+
+        this.set('hsCourseModel4', model);
+      }
+    },
+
+    selectLevel2(courseId) {
+      if (courseId != "null") {
+        this.set('highSchoolCourseChoice2', this.get('store').peekRecord('high-school-course', courseId));
+      }
+      else {
+        this.set('highSchoolCourseChoice2', this.get('store').peekRecord('high-school-course', this.get('selectedHsCourseToEdit').get('source').get('id')));
+      }
+    },
+
+    selectUnit2(courseId) {
+      if (courseId != "null") {
+        this.set('highSchoolCourseChoice2', this.get('store').peekRecord('high-school-course', courseId));
+      }
+      else {
+        this.set('highSchoolCourseChoice2', this.get('store').peekRecord('high-school-course', this.get('selectedHsCourseToEdit').get('source').get('id')));
+      }
+    },
 
     deleteGrade(gradeID, courseCode) {
       console.log(gradeID);
@@ -1080,7 +1260,7 @@ editScholarshipAward(scholAward){
 
 
     openTermForm() {
-      Ember.$('.ui.modal.term').modal('show');
+      Ember.$('.ui.modal.term').modal({ detachable: false, }).modal('show');
     },
 
     closeTermForm() {
@@ -1090,7 +1270,7 @@ editScholarshipAward(scholAward){
     openEditTermForm(term) {
       this.set('selectedTermToEdit', term);
       this.set('currentSelectedTermCode', term.get('term'));
-      Ember.$('.ui.modal.termEdit').modal('show');
+      Ember.$('.ui.modal.termEdit').modal({ detachable: false, }).modal('show');
     },
 
     closeEditTermForm() {
@@ -1098,7 +1278,7 @@ editScholarshipAward(scholAward){
     },
 
     openCourseCodeForm() {
-      Ember.$('.ui.modal.courseCode').modal('show');
+      Ember.$('.ui.modal.courseCode').modal({ detachable: false, }).modal('show');
     },
 
     closeCourseCodeForm() {
@@ -1111,7 +1291,7 @@ editScholarshipAward(scholAward){
       this.set('courseLetterEdit', courseCode.get('courseLetter'));
       this.set('courseNumEdit', courseCode.get('courseNumber'));
       this.set('courseUnitEdit', courseCode.get('unit'));
-      Ember.$('.ui.modal.courseCodeEdit').modal('show');
+      Ember.$('.ui.modal.courseCodeEdit').modal({ detachable: false, }).modal('show');
     },
 
     closeEditCourseForm() {
@@ -1119,7 +1299,7 @@ editScholarshipAward(scholAward){
     },
 
     openGradeForm() {
-      Ember.$('.ui.modal.grade').modal('show');
+      Ember.$('.ui.modal.grade').modal({ detachable: false, }).modal('show');
     },
 
     closeGradeForm() {
@@ -1132,7 +1312,7 @@ editScholarshipAward(scholAward){
       this.set('gradeEdit', grade.get('mark'));
       this.set('noteEdit', grade.get('note'));
 
-      Ember.$('.ui.modal.gradeEdit').modal('show');
+      Ember.$('.ui.modal.gradeEdit').modal({ detachable: false, }).modal('show');
 
     },
 
@@ -1140,19 +1320,12 @@ editScholarshipAward(scholAward){
       Ember.$('.ui.modal.gradeEdit').modal('hide');
     },
 
-
-
-
     openProgramRecordForm() {
-      Ember.$('.ui.modal.programRecord').modal('show');
+      Ember.$('.ui.modal.programRecord').modal({ detachable: false, }).modal('show');
     },
     closeProgramRecordForm() {
       Ember.$('.ui.modal.programRecord').modal('hide');
     },
-
-
-
-
 
     addTerm() {
       if (this.get('currentSelectedTermCode') !== null) {
@@ -1174,6 +1347,7 @@ editScholarshipAward(scholAward){
         term.set('term', this.get('currentSelectedTermCode'));
         term.save();
         alert("Term successfully updated!");
+        Ember.$('.ui.modal.termEdit').modal('hide');
       }
       else {
         alert('You must select a term code');
@@ -1304,7 +1478,7 @@ editScholarshipAward(scholAward){
       console.log(this.get('termForAddingProgramRecord'));
     },
 
-    getAdjudicationInformation(){
+    getAdjudicationInformation() {
       console.log(this.get('currentStudentAdjudications').objectAt(0).get('termAVG'));
 
     }

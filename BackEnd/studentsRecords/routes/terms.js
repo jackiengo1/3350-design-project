@@ -29,7 +29,6 @@ router.route('/')
           else{
             models.Terms.find({"studentInfo": term.studentInfo}, function (error, terms) {
                 if (error) response.send(error);
-                console.log(terms);
                 response.json({term: terms});
               });
           }

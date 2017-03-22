@@ -1087,7 +1087,7 @@ export default Ember.Component.extend({
         counter++;
         self.set('count',counter);
         //set the label to genders
-        label = "Done!";
+        label = "Please upload the AssessmentCodes.xlsx";
         self.set('filetobeloaded',label);
 
         sheet_name_list.forEach(function (sheetName) {

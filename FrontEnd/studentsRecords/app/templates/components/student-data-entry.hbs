@@ -556,7 +556,7 @@
 
 <!-- program record tab-->
 <div class="ui tab" data-tab="programRecord">
-  
+
   <div class="ui top attached tabular menu" id="studentRecordsDataEntryTab">
 
     <a class="active item" data-tab="grades" id="programRecordTab">Grades</a>
@@ -709,7 +709,7 @@
 
   <div class="ui bottom attached tab segment" data-tab="studentProgramRecord">
     <div class="ui grid" id="studentRecordsDataEntryTabContent">
-      
+
     <div class="eight wide column" id="studentRecordsDataEntryLeftContent">
       <div class="ui center aligned header" id="studentRecordsDataEntryTabHeader">
           <h2>Student's Program Records</h2>
@@ -1061,10 +1061,12 @@
   <p>Term Average: {{curAdj.termAVG}}</p>
   <p>Term Units Passed: {{curAdj.termUnitsPassed}}</p>
   <p>Total Term Units: {{curAdj.termUnitsTotal}}</p>
-  <p>Note: {{curAdj.note}}</p>
+  <p>Comment: {{curAdj.comment}}</p>
   <br/>
   {{/each}}
-
+  <button class="ui primary button" {{action 'adjudicate'}}>
+    adjudicate
+  </button>
 </div>
 
 {{/if}}

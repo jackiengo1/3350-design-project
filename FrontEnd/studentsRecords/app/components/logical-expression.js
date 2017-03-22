@@ -196,6 +196,7 @@ export default Ember.Component.extend({
         }
     },
 
+
     // //function used to edit the logical expression
     // editExp(oneDemo){
     //   //first search throught the demo array to find the index
@@ -222,6 +223,7 @@ export default Ember.Component.extend({
     //     }
     //   }
     // },
+
 
 
     // editDBExp(oneDemo){
@@ -263,6 +265,14 @@ export default Ember.Component.extend({
 
     closeLogicalExpModal(){
       Ember.$('.ui.modal.logicalExp').modal('hide');
+    },
+
+    openLogicalExpEditModal(){
+      Ember.$('.ui.modal.logicalExpEdit').modal({detachable: false,}).modal('show');
+    },
+
+    closeLogicalExpEditModal(){
+      Ember.$('.ui.modal.logicalExpEdit').modal('hide');
     },
   }
 });
