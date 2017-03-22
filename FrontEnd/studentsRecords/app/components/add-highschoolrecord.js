@@ -129,7 +129,7 @@ export default Ember.Component.extend({
       this.set('selectedhsSubjectToEdit', currenthsSubject);
       this.set('hsSubjectNameToEdit', currenthsSubject.get('name'));
       this.set('hsSubjectDescriptionToEdit', currenthsSubject.get('description'));
-      Ember.$('.ui.modal.hsSubjectEditModal').modal({detachable: false}).modal('show');
+      Ember.$('.ui.modal.hsSubjectEditModal').modal({detachable: false,}).modal('show');
     },
 
     edithsSubject(){
