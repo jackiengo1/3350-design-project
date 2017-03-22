@@ -287,6 +287,7 @@
           <div class="one column row" id="zeroPadding">
             <div class="column">
               <div class="ui center aligned header">
+                <div class="teal ui button" style="width: 55px;" onclick={{action 'openASEdit' userListAS.id}}><i class="large edit icon"></i></div>
                 <button class="negative ui button" onclick={{action 'deleteAS' userListAS}}>Delete</button>
               </div>
             </div>
@@ -512,7 +513,7 @@
 
 <!-- program record tab-->
 <div class="ui tab" data-tab="programRecord">
-  
+
   <div class="ui top attached tabular menu" id="studentRecordsDataEntryTab">
 
     <a class="active item" data-tab="grades" id="programRecordTab">Grades</a>
@@ -665,7 +666,7 @@
 
   <div class="ui bottom attached tab segment" data-tab="studentProgramRecord">
     <div class="ui grid" id="studentRecordsDataEntryTabContent">
-      
+
     <div class="eight wide column" id="studentRecordsDataEntryLeftContent">
       <div class="ui center aligned header" id="studentRecordsDataEntryTabHeader">
           <h2>Student's Program Records</h2>
@@ -976,10 +977,53 @@
   </div>
 
   <div class="actions">
-    <button class="ui cprimary button" {{action 'closeEditScholForm'}}>
+    <button class="ui primary button" {{action 'closeEditScholForm'}}>
         Exit
       </button>
     <button class="ui primary button" {{action 'editScholarShipAndAwards'}}>
+        Update
+    </button>
+  </div>
+
+</div>
+
+<div class="ui modal asEditModal">
+  <div class="header">
+    Edit Advanced Standing
+  </div>
+  <div class="content">
+    <form class="ui form">
+      <div class="five fields">
+
+        <div class="field">
+          <label>Name: </label> {{input type="text" value = courseToEdit}}
+        </div>
+
+        <div class="field">
+          <label>Description: </label> {{input type="text" value = descriptionToEdit}}
+        </div>
+
+        <div class="field">
+          <label>Units: </label> {{input type="number" value = unitsToEdit}}
+        </div>
+
+        <div class="field">
+          <label>Grade: </label> {{input type="number" value = gradeToEdit}}
+        </div>
+
+        <div class="field">
+          <label>From: </label> {{input type="text" value = fromToEdit}}
+        </div>
+
+      </div>
+    </form>
+  </div>
+
+  <div class="actions">
+    <button class="ui primary button" {{action 'closeEditASForm'}}>
+        Exit
+      </button>
+    <button class="ui primary button" {{action 'editAS'}}>
         Update
     </button>
   </div>

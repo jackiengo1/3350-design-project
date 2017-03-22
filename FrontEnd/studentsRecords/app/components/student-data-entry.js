@@ -109,6 +109,7 @@ export default Ember.Component.extend({
   selectedCourseToEdit: null,
   selectedGradeToEdit: null,
   selectedScholToEdit: null,
+  selectedASToEdit: null,
 
   gradeEdit: null,
   noteEdit: null,
@@ -902,6 +903,37 @@ export default Ember.Component.extend({
       temp.save();
     },
 
+
+    openASEdit(asID) {
+      var currentAS = this.get('store').peekRecord('advanced-standing', asID);
+      this.set('selectedASToEdit', currentAS);
+
+      this.set('courseToEdit', currentAS.get('course'));
+      this.set('descriptionToEdit', currentAS.get('description'));
+      this.set('unitsToEdit', currentAS.get('units'));
+      this.set('gradeToEdit', currentAS.get('grade'));
+      this.set('fromToEdit', currentAS.get('from'));
+
+      Ember.$('.ui.modal.asEditModal').modal({detachable: false,}).modal('show');
+    },
+
+    editAS() {
+      var currentAS = this.get('selectedASToEdit');
+
+      currentAS.set('course', this.get('courseToEdit'));
+      currentAS.set('description', this.get('descriptionToEdit'));
+      currentAS.set('units', this.get('unitsToEdit'));
+      currentAS.set('grade', this.get('gradeToEdit'));
+      currentAS.set('from', this.get('fromToEdit'));
+
+      currentAS.save();
+    },
+
+    closeEditASForm() {
+      Ember.$('.ui.modal.asEditModal').modal('hide');
+    },
+
+
     deleteScholarshipAward(scholAward) {
       var index = this.get('scholarshipAwardModel').indexOf(scholAward);
       this.set('currentScholIndex', index);
@@ -1136,19 +1168,12 @@ export default Ember.Component.extend({
       Ember.$('.ui.modal.gradeEdit').modal('hide');
     },
 
-
-
-
     openProgramRecordForm() {
       Ember.$('.ui.modal.programRecord').modal({detachable: false,}).modal('show');
     },
     closeProgramRecordForm() {
       Ember.$('.ui.modal.programRecord').modal('hide');
     },
-
-
-
-
 
     addTerm() {
       if (this.get('currentSelectedTermCode') !== null) {
