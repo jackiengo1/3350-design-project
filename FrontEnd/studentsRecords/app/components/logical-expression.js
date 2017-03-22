@@ -209,7 +209,7 @@ export default Ember.Component.extend({
           let tempExp = this.get('logicalDBExpArray').objectAt(i);
           let tempLink = this.get('logicalDBLinkArray').objectAt(i);
           //get the logical exp
-          
+
           this.set('editDBAssess',);
           for(let j=0;j<tempExp.length;j++)
           {
@@ -263,6 +263,14 @@ export default Ember.Component.extend({
 
     closeLogicalExpModal(){
       Ember.$('.ui.modal.logicalExp').modal('hide');
+    },
+
+    openLogicalExpEditModal(){
+      Ember.$('.ui.modal.logicalExpEdit').modal({detachable: false,}).modal('show');
+    },
+
+    closeLogicalExpEditModal(){
+      Ember.$('.ui.modal.logicalExpEdit').modal('hide');
     },
   }
 });
