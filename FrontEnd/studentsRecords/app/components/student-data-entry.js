@@ -197,7 +197,7 @@ export default Ember.Component.extend({
       self.set('genderModel', records);
     });
 
-    this.get('store').findAll('highSchoolCourse').then(function(records){
+    this.get('store').findAll('high-school-course').then(function(records){
       self.set('courseModel', records);
     });
 
@@ -1058,9 +1058,7 @@ export default Ember.Component.extend({
 
     openEditHighSchoolCourseForm(course) {
       this.set('selectedHsCourseToEdit', course);
-      this.set('highSchoolCourseChoice2', this.get('store').find('high-school-course', course.get('source').get('id')));
-
-      console.log(course.get('source').get('school').get('id'));
+      this.set('highSchoolCourseChoice2', this.get('store').peekRecord('high-school-course', course.get('source').get('id')));
 
       Ember.$("#schoolSelect2Label").append(" -> <em style='color: red'>" + course.get('source').get('school').get('name') + "</em>");
       Ember.$("#courseSelect2Label").append(" -> <em style='color: red'>" + course.get('source').get('course').get('name') + " (" + course.get('source').get('course').get('description') + ") " + "- " + course.get('source').get('source') + "</em>");
@@ -1108,11 +1106,6 @@ export default Ember.Component.extend({
         hsGrade.set('mark', Ember.$("#gradeField2").val());
         hsGrade.save().then(function(grade){
         });
-        // var newhsMark = this.get('store').createRecord('hscourse-grade', {
-        //   mark: Ember.$("#gradeField2").val(),
-        //   studentInfo: this.get('currentStudent'),
-        //   source: this.get('highSchoolCourseChoice2'),
-        // });
       }
       else {
         console.log("invalid");
@@ -1120,56 +1113,52 @@ export default Ember.Component.extend({
     },
 
     selectHighSchool2(highSchool) {
-      var self = this;
-      if (highSchool != "null")
-      {
-        this.get('store').query('high-school-course', { filter: { school: highSchool } }).then(function (records) {
-          self.set('hsCourseModel3', records);
-        });
-      }
-      else
-      {
-        this.get('store').query('high-school-course', { filter: { school: this.get('selectedHsCourseToEdit').get('source').get('school').get('id') } }).then(function (records) {
-          self.set('hsCourseModel3', records);
-        });
-      }
+      var model = [];
+      this.get('store').peekAll('high-school-course').filter((records) => {
+        if (records.get('school').get('id') == highSchool)
+        {
+          model.push(records);
+        }
+      });
+
+      this.set('hsCourseModel3', model);
     },
 
     selectCourse2(courseInfo) {
       var self = this;
       if (courseInfo != "null")
       {
-        this.get('store').query('high-school-course', { filter: { id: courseInfo } }).then(function (records) {
-          self.set('hsCourseModel4', records);
+        var model = [];
+        this.get('store').peekAll('high-school-course').filter((records) => {
+          if (records.get('id') == courseInfo)
+          {
+            model.push(records);
+          }
         });
-      }
-      else
-      {
-        this.get('store').query('high-school-course', { filter: { id: this.get('selectedHsCourseToEdit').get('source').get('id') } }).then(function (records) {
-          self.set('hsCourseModel4', records);
-        });
+
+        this.set('hsCourseModel4', model);
       }
     },
 
     selectLevel2(courseId) {
       if (courseId != "null")
       {
-        this.set('highSchoolCourseChoice2', this.get('store').find('high-school-course', courseId));
+        this.set('highSchoolCourseChoice2', this.get('store').peekRecord('high-school-course', courseId));
       }
       else
       {
-        this.set('highSchoolCourseChoice2', this.get('store').find('high-school-course', this.get('selectedHsCourseToEdit').get('source').get('id')));
+        this.set('highSchoolCourseChoice2', this.get('store').peekRecord('high-school-course', this.get('selectedHsCourseToEdit').get('source').get('id')));
       }
     },
 
     selectUnit2(courseId) {
       if (courseId != "null")
       {
-        this.set('highSchoolCourseChoice2', this.get('store').find('high-school-course', courseId));
+        this.set('highSchoolCourseChoice2', this.get('store').peekRecord('high-school-course', courseId));
       }
       else
       {
-        this.set('highSchoolCourseChoice2', this.get('store').find('high-school-course', this.get('selectedHsCourseToEdit').get('source').get('id')));
+        this.set('highSchoolCourseChoice2', this.get('store').peekRecord('high-school-course', this.get('selectedHsCourseToEdit').get('source').get('id')));
       }
     },
 

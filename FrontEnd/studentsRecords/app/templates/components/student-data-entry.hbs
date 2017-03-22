@@ -418,6 +418,7 @@
         <tbody>
           {{#each currentStudentHSGrades as |oneHSGrade|}} {{#unless oneHSGrade.isDeleted}}
           <tr>
+            {{!--{{log oneHSGrade.source.school}}--}}
             <td>{{oneHSGrade.source.school.name}}</td>
             <td>{{oneHSGrade.source.course.name}}</td>
             <td>{{oneHSGrade.source.source}}</td>
