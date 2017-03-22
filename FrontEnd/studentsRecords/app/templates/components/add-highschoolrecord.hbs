@@ -22,11 +22,20 @@
           <div class="title" style="border-color: #6435c9">
             School Name: {{oneSecondarySchool.name}}
           </div>
+          <div class="ui form">
+            <div class="field">
+              <label>School Name</label>
+              {{input type="text"  value = ssName}}
+            </div>
+          </div>
           <div class="content">
             <div class="ui vertically divided grid">
-              <div class="one column row" style="padding: 0;">
+              <div class="two column row" style="padding: 0;">
                 <div class="column">
                   <p style="text-align: center;"><button class="negative ui button" onclick={{action 'deleteSecondarySchool' oneSecondarySchool}}>Delete</button></p>
+                </div>
+                <div class="column">
+                  <p style="text-align: center;"><button class="positive ui button" onclick={{action 'editSecondarySchool' oneSecondarySchool}}>Edit</button></p>
                 </div>
               </div>
             </div>
@@ -100,9 +109,52 @@
                   <p>Unit: {{oneCourse.unit}}</p>
                 </div>
               </div>
-              <div class="one column row" style="padding: 0;">
+              <div class="ui sixteen wide column">
+                <form class="ui form" id="courseForm">
+
+                  <div class="two fields">
+                    <div class="field">
+                      <label>Subject</label>
+                      <select onchange={{action 'selectSubject' value="target.value"}}>
+                        <option value = null> Select A Subject </option>
+                        {{#each subjectModel as |oneSubject|}}
+                          <option value={{oneSubject.id}}>{{oneSubject.name}}</option>
+                        {{/each}}
+                      </select>
+                    </div>
+                    <div class="field">
+                      <label>Secondary School</label>
+                      <select onchange={{action 'selectSchool' value="target.value"}}>
+                        <option value = null> Select A School </option>
+                        {{#each secondarySchoolModel as |oneSchool|}}
+                          <option value={{oneSchool.id}}>{{oneSchool.name}}</option>
+                        {{/each}}
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="three fields">
+                    <div class="field">
+                      <label>Source</label>
+                      {{input type="text"  value = source}}
+                    </div>
+                    <div class="field">
+                      <label>Level</label>
+                      {{input type="text"  value = level}}
+                    </div>
+                    <div class="field">
+                      <label>Unit</label>
+                      {{input type="number" min=0 value = unit}}
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="two column row" style="padding: 0;">
                 <div class="column">
                   <p style="text-align: center;"><button class="negative ui button" onclick={{action 'deletehsCourse' oneCourse}}>Delete</button></p>
+                </div>
+                <div class="column">
+                  <p style="text-align: center;"><button class="positive ui button" onclick={{action 'edithsCourse' oneCourse}}>Edit</button></p>
                 </div>
               </div>
             </div>
@@ -193,9 +245,22 @@
                   <p>Description: {{onehsSubject.description}}</p>
                 </div>
               </div>
-              <div class="one column row" style="padding: 0;">
+              <div class="ui form">
+                <div class="field">
+                  <label>Subject Name</label>
+                  {{input type="text"  value = subjectName}}
+                </div>
+                <div class="field">
+                  <label>Description</label>
+                  {{input type="text"  value = description}}
+                </div>
+              </div>
+              <div class="two column row" style="padding: 0;">
                 <div class="column">
                   <p style="text-align: center;"><button class="negative ui button" onclick={{action 'deletehsSubject' onehsSubject}}>Delete</button></p>
+                </div>
+                <div class="column">
+                  <p style="text-align: center;"><button class="positive ui button" onclick={{action 'edithsSubject' onehsSubject}}>Edit</button></p>
                 </div>
               </div>
             </div>
