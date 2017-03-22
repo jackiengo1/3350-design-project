@@ -287,6 +287,7 @@
           <div class="one column row" id="zeroPadding">
             <div class="column">
               <div class="ui center aligned header">
+                <div class="teal ui button" style="width: 55px;" onclick={{action 'openASEdit' userListAS.id}}><i class="large edit icon"></i></div>
                 <button class="negative ui button" onclick={{action 'deleteAS' userListAS}}>Delete</button>
               </div>
             </div>
@@ -352,8 +353,9 @@
       <div class="ui middle aligned divided list">
         {{#each scholarShipAndAwardList as |userScholarShipAndAwardList|}} {{#unless userScholarShipAndAwardList.isDeleted}}
         <div class="item">
-          <div class="right floated content" id="listDeleteButton">
-            <div class="negative ui button" onclick={{action 'deleteScholarshipAward' userScholarShipAndAwardList}}>Delete</div>
+          <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
+            <div class="teal ui button" style="width: 55px;" onclick={{action 'openScholarShipAndAwardsEdit' userScholarShipAndAwardList.id}}><i class="large edit icon"></i></div>
+            <div class="negative ui button" style="width: 55px;" onclick={{action 'deleteScholarshipAward' userScholarShipAndAwardList}}><i class="large remove icon"></i></div>
           </div>
           <div class="content" id="listText">
             Note: {{userScholarShipAndAwardList.note}}
@@ -857,8 +859,8 @@
   <div class="ui bottom attached tab segment" data-tab="studentProgramRecord">
     <div class="ui grid" id="studentRecordsDataEntryTabContent">
 
-      <div class="eight wide column" id="studentRecordsDataEntryLeftContent">
-        <div class="ui center aligned header" id="studentRecordsDataEntryTabHeader">
+    <div class="eight wide column" id="studentRecordsDataEntryLeftContent">
+      <div class="ui center aligned header" id="studentRecordsDataEntryTabHeader">
           <h2>Student's Program Records</h2>
         </div>
 
@@ -1149,7 +1151,73 @@
 </div>
 
 
+<div class="ui modal scholEdit">
+  <div class="header">
+    Edit Note
+  </div>
+  <div class="content">
+    <form class="ui form">
+      <div class="one field">
+        <div class="field">
+          <label>Note</label> {{input type="text" value = scholNoteEdit}}
+        </div>
+      </div>
+    </form>
+  </div>
 
+  <div class="actions">
+    <button class="ui primary button" {{action 'closeEditScholForm'}}>
+        Exit
+      </button>
+    <button class="ui primary button" {{action 'editScholarShipAndAwards'}}>
+        Update
+    </button>
+  </div>
+
+</div>
+
+<div class="ui modal asEditModal">
+  <div class="header">
+    Edit Advanced Standing
+  </div>
+  <div class="content">
+    <form class="ui form">
+      <div class="five fields">
+
+        <div class="field">
+          <label>Name: </label> {{input type="text" value = courseToEdit}}
+        </div>
+
+        <div class="field">
+          <label>Description: </label> {{input type="text" value = descriptionToEdit}}
+        </div>
+
+        <div class="field">
+          <label>Units: </label> {{input type="number" value = unitsToEdit}}
+        </div>
+
+        <div class="field">
+          <label>Grade: </label> {{input type="number" value = gradeToEdit}}
+        </div>
+
+        <div class="field">
+          <label>From: </label> {{input type="text" value = fromToEdit}}
+        </div>
+
+      </div>
+    </form>
+  </div>
+
+  <div class="actions">
+    <button class="ui primary button" {{action 'closeEditASForm'}}>
+        Exit
+      </button>
+    <button class="ui primary button" {{action 'editAS'}}>
+        Update
+    </button>
+  </div>
+
+</div>
 
 <!--Modal to add student program record-->
 <div class="ui modal programRecord">

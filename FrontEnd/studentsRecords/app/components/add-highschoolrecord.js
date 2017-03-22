@@ -9,6 +9,11 @@ export default Ember.Component.extend({
 
   subjectTemp: null,
   schoolTemp: null,
+  selectedsecSchoolToEdit: null,
+  secSchoolsNameToEdit: null,
+  selectedhsSubjectToEdit: null,
+  hsSubjectNameToEdit: null,
+  hsSubjectDescriptionToEdit: null,
 
   secondarySchoolTab: true,
   subjectTab: false,
@@ -62,6 +67,24 @@ export default Ember.Component.extend({
       }
     },
 
+    openhsEdit(hsID){
+      // var currentHS = this.get('store').peekRecord('high-school-course', hsID);
+      // this.set('selectedHSToEdit', currentHS);
+      //
+      // this.set('levelToEdit', currentHS.get('level'));
+      // this.set('sourceToEdit', currentHS.get('source'));
+      // this.set('unitToEdit', currentHS.get('unit'));
+      // this.set('levelToEdit', currentHS.get('level'));
+      // this.set('levelToEdit', currentHS.get('level'));
+      // this.set('levelToEdit', currentHS.get('level'));
+      //
+      // Ember.$('.ui.modal.hsEditModal').modal({detachable: false,}).modal('show');
+    },
+
+    edithsCourse(){
+
+    },
+
     //Add a secondary school
     addSecondarySchool(){
       var newSecondarySchool = this.get('store').createRecord('secondary-school', {
@@ -69,6 +92,26 @@ export default Ember.Component.extend({
       });
       newSecondarySchool.save();
 
+    },
+
+    openSecSchoolEdit(secSchoolID){
+      var currentSS = this.get('store').peekRecord('secondary-school', secSchoolID);
+
+      this.set('selectedsecSchoolToEdit', currentSS);
+
+      this.set('secSchoolsNameToEdit', currentSS.get('name'));
+
+      Ember.$('.ui.modal.secSchoolEditModal').modal({detachable: false,}).modal('show');
+    },
+
+    editSecSchool(){
+      var currentSS = this.get('selectedsecSchoolToEdit');
+      currentSS.set('name', this.get('secSchoolsNameToEdit'));
+      currentSS.save();
+    },
+
+    closeSecSchoolEdit(){
+      Ember.$('.ui.modal.secSchoolEditModal').modal('hide');
     },
 
     //Add a high-school subject
@@ -79,6 +122,27 @@ export default Ember.Component.extend({
       });
       newhsSubject.save();
     },
+
+    openhsSubjectEdit(hsSubjectID){
+      var currenthsSubject = this.get('store').peekRecord('high-school-subject', hsSubjectID);
+
+      this.set('selectedhsSubjectToEdit', currenthsSubject);
+      this.set('hsSubjectNameToEdit', currenthsSubject.get('name'));
+      this.set('hsSubjectDescriptionToEdit', currenthsSubject.get('description'));
+      Ember.$('.ui.modal.hsSubjectEditModal').modal({detachable: false,}).modal('show');
+    },
+
+    edithsSubject(){
+      var currenthsSubject = this.get('selectedhsSubjectToEdit');
+      currenthsSubject.set('name', this.get('hsSubjectNameToEdit'));
+      currenthsSubject.set('description', this.get('hsSubjectDescriptionToEdit'));
+      currenthsSubject.save();
+    },
+
+    closehsSubjectEdit(){
+      Ember.$('.ui.modal.hsSubjectEditModal').modal('hide');
+    },
+
 
     deletehsMark(hscoursegrade){
       var choice = confirm('Are you sure you want to delete this?');
