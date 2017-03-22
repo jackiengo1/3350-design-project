@@ -80,7 +80,7 @@
     {{#each logicalDBDemoArray as |oneLogicalExp|}}
     <div class="item">
       <div class="right floated content" id="listDeleteButton">
-      <!--  <div class="teal ui button" onclick={{action 'openLogicalExpEditModal'}}>Edit</div>-->
+
         <div class="negative ui button" onclick={{action 'deleteDBExp' oneLogicalExp}}>Delete</div>
       </div>
       <div class="content" id="listText">
