@@ -15,18 +15,25 @@ router.route('/')
         });
     })
     .get(parseUrlencoded, parseJSON, function (request, response) {
-        console.log("heheheh");
         var hsCourseGradeFilter = request.query.filter;
-        if (!hsCourseGradeFilter) {
+        if (!hsCourseGradeFilter)
+        {
             models.HsCourseGrades.find(function (error, hsCourseGrades) {
-                console.log(hsCourseGrades);
-                if (error) response.send(error);
+                if (error)
+                {
+                    response.send(error);
+                }
                 response.json({hscourseGrade: hsCourseGrades});
             });
-        } else {
+        }
+        else
+        {
           console.log("filter");
-            models.HsCourseGrades.find({"studentInfo": request.query.student}, function (error, hsCourseGrades) {
-                if (error) response.send(error);
+            models.HsCourseGrades.find({"studentInfo": request.query.filter.studentInfo}, function (error, hsCourseGrades) {
+                if (error)
+                {
+                    response.send(error);
+                }
                 response.json({hscourseGrade: hsCourseGrades});
             });
         }

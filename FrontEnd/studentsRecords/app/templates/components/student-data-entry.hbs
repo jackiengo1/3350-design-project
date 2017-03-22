@@ -391,11 +391,56 @@
 
   <div class="ui grid" id="studentRecordsDataEntryTabContent">
 
-    <div class="eight wide column" id="studentRecordsDataEntryLeftContent">
+    <div class="sixteen wide column">
       <div class="ui center aligned header" id="studentRecordsDataEntryTabHeader">
         <h2>High School Course Information</h2>
       </div>
 
+
+
+      <div class="ui right floated primary labeled icon button" {{action 'openHighSchoolCourseForm'}}>
+        <i class="add icon"></i> Add High School Course Grade
+      </div>
+
+      <table class="ui compact celled definition table">
+        <thead>
+          <tr>
+            <th>School</th>
+            <th>Subject</th>
+            <th>Source</th>
+            <th>Description</th>
+            <th>Level</th>
+            <th>Units</th>
+            <th>Grade</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each currentStudentHSGrades as |oneHSGrade|}} {{#unless oneHSGrade.isDeleted}}
+          <tr>
+            <td>{{oneHSGrade.source.school.name}}</td>
+            <td>{{oneHSGrade.source.course.name}}</td>
+            <td>{{oneHSGrade.source.source}}</td>
+            <td>{{oneHSGrade.source.course.description}}</td>
+            <td>{{oneHSGrade.source.level}}</td>
+            <td>{{oneHSGrade.source.unit}}</td>
+            <td>{{oneHSGrade.mark}}</td>
+            <td class="collapsing">
+              <button class="ui button" onclick={{action 'openEditHighSchoolCourseForm' oneHSGrade}}>
+                Edit
+              </button>
+            </td>
+
+          </tr>
+          {{/unless}} {{/each}}
+        </tbody>
+      </table>
+
+
+
+
+
+      {{!--
       <!-- add #unless hsGrade.isDeleted -->
       {{#ui-accordion class="styled fluid"}} {{#each currentStudentHSGrades as |oneHSGrade|}} {{#unless oneHSGrade.isDeleted}}
       <div class="title">
@@ -440,9 +485,10 @@
           </div>
         </div>
       </div>
-      {{/unless}} {{/each}} {{/ui-accordion}}
+      {{/unless}} {{/each}} {{/ui-accordion}}--}}
     </div>
 
+    {{!--
     <div class="eight wide column" id="studentRecordsDataEntryRightContent">
       <div class="ui center aligned header" id="studentRecordsDataEntryTabHeader">
         <h2>Add High School Course Grade</h2>
@@ -502,16 +548,149 @@
       <div class="ui center aligned header">
         <button id="addCourseGradeButton" class="ui primary button" {{action 'addhsMark'}}>Add Course Grade</button>
       </div>
-    </div>
+    </div>--}}
 
   </div>
 
 </div>
 
 
+<!-- modal to add high school course grade -->
+<div class="ui modal hsCourseAdd">
+  <div class="header">
+    Add High School Course Grade
+  </div>
+  <div class="content">
+    <form class="ui form" id="highSchoolCourseForm">
+
+      <div class="field">
+        <label>High School</label>
+        <select id="schoolSelect" onchange={{action 'selectHighSchool' value="target.value" }}>
+              <option selected="selected" value="null">Select a High School</option>
+              {{#each secondarySchoolModel as |schoolChoice|}}
+              <option value={{schoolChoice.id}}> {{schoolChoice.name}} </option>
+              {{/each}}
+            </select>
+      </div>
+
+      <div class="field">
+        <label>Subject (Description) - Source</label>
+        <select id="courseSelect" onchange={{action 'selectCourse' value="target.value" }}>
+              <option selected="selected" value="null">Select a Course</option>
+              {{#each hsCourseModel as |courseChoice|}}
+              <option value={{courseChoice.id}}> {{courseChoice.course.name}} ({{courseChoice.course.description}}) - {{courseChoice.source}} </option>
+              {{/each}}
+            </select>
+      </div>
+
+      <div class="two fields">
+        <div class="field">
+          <label>Level</label>
+          <select id="levelSelect" onchange={{action 'selectLevel' value="target.value" }}>
+                <option selected="selected" value="null">Select a Level</option>
+                {{#each hsCourseModel2 as |levelChoice|}}
+                <option value={{levelChoice.id}}> {{levelChoice.level}} </option>
+                {{/each}}
+              </select>
+        </div>
+        <div class="field">
+          <label>Unit</label>
+          <select id="unitSelect" onchange={{action 'selectUnit' value="target.value" }}>
+                <option selected="selected" value="null">Select a Unit</option>
+                {{#each hsCourseModel2 as |unitChoice|}}
+                <option value={{unitChoice.id}}> {{unitChoice.unit}} </option>
+                {{/each}}
+              </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Grade</label> {{input disabled="true" type="number" value=hsGrade id="gradeField1"}}
+      </div>
+
+    </form>
+  </div>
+  <div class="actions">
+    <button class="ui primary button" {{action 'closeHighSchoolCourseForm'}}>
+        Exit
+      </button>
+    <button class="ui primary button" {{action 'addhsMark'}}>
+        Add High School Course
+      </button>
+  </div>
+</div>
+
+
+<!-- modal to edit high school course grade -->
+<div class="ui modal hsCourseEdit">
+  <div class="header">
+    Edit High School Course Grade
+  </div>
+  <div class="content">
+    <form class="ui form" id="highSchoolCourseForm">
+
+      <div class="field">
+        <label>High School</label>
+        <select id="schoolSelect" onchange={{action 'selectHighSchool' value="target.value" }}>
+              <option selected="selected" value="null">Select a High School</option>
+              {{#each secondarySchoolModel as |schoolChoice|}}
+              <option value={{schoolChoice.id}} selected={{eq selectedCourseToEdit.source.school.id schoolChoice.id}}> {{schoolChoice.name}} </option>
+              {{/each}}
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Subject (Description) - Source</label>
+        <select id="courseSelect" onchange={{action 'selectCourse' value="target.value" }}>
+              <option selected="selected" value="null">Select a Course</option>
+              {{#each hsCourseModel as |courseChoice|}}
+              <option value={{courseChoice.id}}> {{courseChoice.course.name}} ({{courseChoice.course.description}}) - {{courseChoice.source}} </option>
+              {{/each}}
+            </select>
+      </div>
+
+      <div class="two fields">
+        <div class="field">
+          <label>Level</label>
+          <select id="levelSelect" onchange={{action 'selectLevel' value="target.value" }}>
+                <option selected="selected" value="null">Select a Level</option>
+                {{#each hsCourseModel2 as |levelChoice|}}
+                <option value={{levelChoice.id}}> {{levelChoice.level}} </option>
+                {{/each}}
+              </select>
+        </div>
+        <div class="field">
+          <label>Unit</label>
+          <select id="unitSelect" onchange={{action 'selectUnit' value="target.value" }}>
+                <option selected="selected" value="null">Select a Unit</option>
+                {{#each hsCourseModel2 as |unitChoice|}}
+                <option value={{unitChoice.id}}> {{unitChoice.unit}} </option>
+                {{/each}}
+              </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Grade</label> {{input disabled="true" type="number" value=hsGrade id="gradeField2"}}
+      </div>
+
+    </form>
+  </div>
+  <div class="actions">
+    <button class="ui primary button" {{action 'closeEditHighSchoolCourseForm'}}>
+        Exit
+      </button>
+    <button class="ui primary button" {{action 'edithsMark'}}>
+        Save
+      </button>
+  </div>
+</div>
+
+
+
 <!-- program record tab-->
 <div class="ui tab" data-tab="programRecord">
-  
+
   <div class="ui top attached tabular menu" id="studentRecordsDataEntryTab">
 
     <a class="active item" data-tab="grades" id="programRecordTab">Grades</a>
@@ -525,8 +704,8 @@
 
     <div class="ui grid" id="studentRecordsDataEntryTabContent">
 
-    <div class="eight wide column" id="studentRecordsDataEntryLeftContent">
-      <div class="ui center aligned header" id="studentRecordsDataEntryTabHeader">
+      <div class="eight wide column" id="studentRecordsDataEntryLeftContent">
+        <div class="ui center aligned header" id="studentRecordsDataEntryTabHeader">
           <h2>Student's Grades</h2>
         </div>
 
@@ -574,8 +753,8 @@
 
     <div class="ui grid" id="studentRecordsDataEntryTabContent">
 
-    <div class="eight wide column" id="studentRecordsDataEntryLeftContent">
-      <div class="ui center aligned header" id="studentRecordsDataEntryTabHeader">
+      <div class="eight wide column" id="studentRecordsDataEntryLeftContent">
+        <div class="ui center aligned header" id="studentRecordsDataEntryTabHeader">
           <h2>Student's Course Codes</h2>
         </div>
 
@@ -628,8 +807,8 @@
 
     <div class="ui grid" id="studentRecordsDataEntryTabContent">
 
-    <div class="eight wide column" id="studentRecordsDataEntryLeftContent">
-      <div class="ui center aligned header" id="studentRecordsDataEntryTabHeader">
+      <div class="eight wide column" id="studentRecordsDataEntryLeftContent">
+        <div class="ui center aligned header" id="studentRecordsDataEntryTabHeader">
           <h2>Student's Terms</h2>
         </div>
 
@@ -664,9 +843,9 @@
 
   <div class="ui bottom attached tab segment" data-tab="studentProgramRecord">
     <div class="ui grid" id="studentRecordsDataEntryTabContent">
-      
-    <div class="eight wide column" id="studentRecordsDataEntryLeftContent">
-      <div class="ui center aligned header" id="studentRecordsDataEntryTabHeader">
+
+      <div class="eight wide column" id="studentRecordsDataEntryLeftContent">
+        <div class="ui center aligned header" id="studentRecordsDataEntryTabHeader">
           <h2>Student's Program Records</h2>
         </div>
 
@@ -809,9 +988,6 @@
       </button>
   </div>
 </div>
-
-
-
 
 
 
@@ -1011,8 +1187,8 @@
 </div>
 
 
-  <div class="ui bottom attached tab segment" data-tab="adjudicationTab" style="background-color: #eee3fd; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">
-  </div>
+<div class="ui bottom attached tab segment" data-tab="adjudicationTab" style="background-color: #eee3fd; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">
+</div>
 
 
 

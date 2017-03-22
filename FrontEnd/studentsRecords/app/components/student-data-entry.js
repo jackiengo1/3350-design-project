@@ -107,6 +107,7 @@ export default Ember.Component.extend({
   selectedTermToEdit: null,
   selectedCourseToEdit: null,
   selectedGradeToEdit: null,
+  selectedCourseToEdit: null,
 
   gradeEdit: null,
   noteEdit: null,
@@ -193,6 +194,10 @@ export default Ember.Component.extend({
       self.set('genderModel', records);
     });
 
+    this.get('store').findAll('highSchoolCourse').then(function(records){
+      self.set('courseModel', records);
+    });
+
     this.get('store').findAll('term-code').then(function (records) {
       self.set('termCodeModel', records);
     });
@@ -243,31 +248,38 @@ export default Ember.Component.extend({
   showStudentData: function (index) {
     this.set('currentStudent', this.get('studentsRecords').objectAt(index));
     this.set('studentPhoto', this.get('currentStudent').get('photo'));
+
     var date = this.get('currentStudent').get('DOB');
+
     var datestring = date.toISOString().substring(0, 10);
     this.set('selectedDate', datestring);
-    var gender = this.get('currentStudent').get('genderInfo');
 
+    var gender = this.get('currentStudent').get('genderInfo');
     this.set('selectedGender', gender);
+
     var res = this.get('currentStudent').get('resInfo');
     this.set('selectedResidency', res);
+
     console.log("here");
+
     this.get('store').query('advanced-standing', { filter: { studentInfo: this.get('currentStudent').get('id') } });
     this.set('listAS', this.get('currentStudent').get('advInfo'));
+
     console.log("here1");
+
     this.get('store').query('scholarship-award', { filter: { studentInfo: this.get('currentStudent').get('id') } });
     this.set('scholarShipAndAwardList', this.get('currentStudent').get('scholInfo'));
 
     this.get('store').query('term', { filter: { studentInfo: this.get('currentStudent').get('id') } });
     this.set('currentStudentTerms', this.get('currentStudent').get('semester'));
 
+    this.get('store').query('hscourse-grade', { filter: { studentInfo: this.get('currentStudent').get('id') } });
+    this.set('currentStudentHSGrades', this.get('currentStudent').get('hsCourseGrade'));
+
     this.set('studentCourseCodeForGrade', null);
     this.set('currentStudentCourseCodes', null);
     this.set('currentStudentProgramRecords', null);
     this.set('selectedTermTemp', null);
-
-    this.get('store').query('hscourse-grade', { filter: { studentInfo: this.get('currentStudent').get('id') } });
-    this.set('currentStudentHSGrades', this.get('currentStudent').get('hsCourseGrade'));
   },
 
   didRender() {
@@ -1025,7 +1037,32 @@ export default Ember.Component.extend({
 
     },
 
+    openHighSchoolCourseForm() {
+      Ember.$('.ui.modal.hsCourseAdd').modal({detachable: false,}).modal('show');
+    },
 
+    closeHighSchoolCourseForm() {
+      Ember.$('.ui.modal.hsCourseAdd').modal('hide');
+    },
+
+    openEditHighSchoolCourseForm(course) {
+      this.set('selectedCourseToEdit', course);
+      //Ember.$('#schoolSelect').attr('selected', course.get('source').get('school').get('id'));
+      // Ember.$('courseSelect')
+      // Ember.$('levelSelect')
+      // Ember.$('unitSelect')
+      // Ember.$('gradeField')
+
+      Ember.$('.ui.modal.hsCourseEdit').modal({detachable: false,}).modal('show');
+    },
+
+    closeEditHighSchoolCourseForm() {
+      Ember.$('.ui.modal.hsCourseEdit').modal('hide');
+    },
+
+    edithsMark() {
+
+    },
 
     deleteGrade(gradeID, courseCode) {
       console.log(gradeID);
