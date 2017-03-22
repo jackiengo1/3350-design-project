@@ -7,6 +7,21 @@ export default Ember.Component.extend({
   selectedAssessment:null,
   selectedDepartment:null,
 
+  init() {
+    this._super(...arguments);
+    // load Residency data model
+    var self = this;
+    //get the course-code object to local
+    this.get('store').findAll('department').then(function (records) {
+      self.set('departmentModel', records);
+    });
+    //get the assessment-code object to local
+    this.get('store').findAll('assessment-code').then(function(records){
+      self.set('assessmentCodeModel',records);
+    });
+  },
+
+
   actions:{
     selectAssessment(assessment){
       this.set('selectedAssessment',assessment);
@@ -17,8 +32,8 @@ export default Ember.Component.extend({
     },
 
     linkAssessmentDepartment(){
-      var currentDept = this.get('selectedDepartment');
-      var currentAssessmentCode = this.get('selectedAssessment');
+      var currentDept = this.get('store').peekRecord('department',this.get('selectedDepartment'));
+      var currentAssessmentCode = this.get('store').peekRecord('assessment-code',this.get('selectedAssessment'));
       if(currentDept == "null" || currentDept == null)
       {
         alert("Please select a department!");
@@ -31,7 +46,7 @@ export default Ember.Component.extend({
       }
       else{
         //at this point two input are selected
-        currentDept.set('assessmentInfo',currentAssessmentCode);
+        currentDept.set('comment',currentAssessmentCode);
         currentDept.save();
       }
     },

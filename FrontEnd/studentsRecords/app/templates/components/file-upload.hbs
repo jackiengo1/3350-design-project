@@ -1,4 +1,5 @@
-<h2 style="text-align: center;">Upload Files</h2>
+{{#if true}}
+<h2 style="text-align: center;" id="uploader">Upload Files</h2>
 <h4 style="text-align: center; color:red;">{{filetobeloaded}}</h4>
 <div style="text-align: center;">
   <button class="primary ui button">
@@ -10,4 +11,11 @@
   <button class="negative ui button" {{action 'deleteall'}}>
     Delete All Records
   </button>
+</div>
+{{/if}}
+<div class="ui segment">
+  <div class="ui active dimmer">
+    <div class="ui indeterminate text loader">Preparing Files</div>
+  </div>
+  <p></p>
 </div>

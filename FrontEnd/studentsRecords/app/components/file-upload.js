@@ -1617,25 +1617,30 @@ export default Ember.Component.extend({
             var faculty1 = worksheet[XLSX.utils.encode_cell({c: 1, r:R})].v;
             nameArray[nameArray.length] = name1;
             facultyArray[facultyArray.length] = faculty1;
+
+            var newDepartment = self.get('store').createRecord('department',{
+              name:name1,
+            });
+            newDepartment.save();
           }
 
+
           //start finding the faculty from cache
-          var allfaculty = self.get('store').peekAll('faculty');
-          for (let i=0;i<facultyArray.length;i++)
-          {
-            for(let j=0;j<allfaculty.get('length');j++)
-            {
-              if(allfaculty.objectAt(j).get('name')== facultyArray[i])
-              {
-                let currentfaculty = allfaculty.objectAt(j);
-                let newDepartment = self.get('store').createRecord('department',{
-                  name:nameArray[i],
-                  faculty:currentfaculty,
-                });
-                newDepartment.save();
-              }
-            }
-          }
+          // var allfaculty = self.get('store').peekAll('faculty');
+          // for (let i=0;i<facultyArray.length;i++)
+          // {
+          //   for(let j=0;j<allfaculty.get('length');j++)
+          //   {
+          //     if(allfaculty.objectAt(j).get('name')== facultyArray[i])
+          //     {
+          //       let currentfaculty = allfaculty.objectAt(j);
+          //       let newDepartment = self.get('store').createRecord('department',{
+          //         name:nameArray[i],
+          //       });
+          //       newDepartment.save();
+          //     }
+          //   }
+          // }
         });
       }
 
