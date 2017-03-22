@@ -14,7 +14,7 @@
 
     <div class="eight wide column" style="padding-right: 20px;">
       <div class="ui center aligned header" style="margin-bottom: 30px;">
-        <h2>Delete Secondary School</h2>
+        <h2>Secondary School</h2>
       </div>
 
         {{#ui-accordion class="styled fluid"}}
@@ -24,9 +24,12 @@
           </div>
           <div class="content">
             <div class="ui vertically divided grid">
-              <div class="one column row" style="padding: 0;">
+              <div class="two column row" style="padding: 0;">
                 <div class="column">
                   <p style="text-align: center;"><button class="negative ui button" onclick={{action 'deleteSecondarySchool' oneSecondarySchool}}>Delete</button></p>
+                </div>
+                <div class="column">
+                  <div class="teal ui button" style="width: 55px;" onclick={{action 'openSecSchoolEdit' oneSecondarySchool.id}}><i class="large edit icon"></i></div>
                 </div>
               </div>
             </div>
@@ -34,6 +37,7 @@
           {{/each}}
         {{/ui-accordion}}
     </div>
+
 
     <div class="eight wide column" style="padding-left: 20px;">
       <div class="ui center aligned header" style="margin-bottom: 30px;">
@@ -58,6 +62,57 @@
 
 </div>
 
+
+<div class="ui modal secSchoolEditModal">
+  <div class="header">
+    Edit Secondary School
+  </div>
+  <div class="content">
+    <form class="ui form">
+      <div class="one field">
+        <div class="field">
+          <label>Name: </label> {{input type="text" value = secSchoolsNameToEdit}}
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="actions">
+    <button class="ui primary button" {{action 'closeSecSchoolEdit'}}>
+        Exit
+      </button>
+    <button class="ui primary button" {{action 'editSecSchool'}}>
+        Update
+    </button>
+  </div>
+</div>
+
+<div class="ui modal hsSubjectEditModal">
+  <div class="header">
+    Edit Subject
+  </div>
+  <div class="content">
+    <form class="ui form">
+      <div class="two fields">
+        <div class="field">
+          <label>Name: </label> {{input type="text" value = hsSubjectNameToEdit}}
+        </div>
+        <div class="field">
+          <label>Description: </label> {{input type="text" value = hsSubjectDescriptionToEdit}}
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="actions">
+    <button class="ui primary button" {{action 'closehsSubjectEdit'}}>
+        Exit
+      </button>
+    <button class="ui primary button" {{action 'edithsSubject'}}>
+        Update
+    </button>
+  </div>
+</div>
 
 <!-- Course tab -->
 <div class = "ui tab" data-tab="addCourse" style="background-color: #eee3fd; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">
@@ -193,9 +248,12 @@
                   <p>Description: {{onehsSubject.description}}</p>
                 </div>
               </div>
-              <div class="one column row" style="padding: 0;">
+              <div class="two column row" style="padding: 0;">
                 <div class="column">
                   <p style="text-align: center;"><button class="negative ui button" onclick={{action 'deletehsSubject' onehsSubject}}>Delete</button></p>
+                </div>
+                <div class="column">
+                  <div class="teal ui button" style="width: 55px;" onclick={{action 'openhsSubjectEdit' onehsSubject.id}}><i class="large edit icon"></i></div>
                 </div>
               </div>
             </div>
