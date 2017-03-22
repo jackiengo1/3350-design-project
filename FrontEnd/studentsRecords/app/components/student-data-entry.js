@@ -202,7 +202,7 @@ export default Ember.Component.extend({
       self.set('genderModel', records);
     });
 
-    this.get('store').findAll('high-school-course').then(function(records){
+    this.get('store').findAll('high-school-course').then(function (records) {
       self.set('courseModel', records);
     });
 
@@ -911,7 +911,7 @@ export default Ember.Component.extend({
       }
     },
 
-    deleteHsMark(hsGrade){
+    deleteHsMark(hsGrade) {
       var index = this.get('hsCourseGradeModel').indexOf(hsGrade);
       this.set('currentHsGradeIndex', index);
       var indexTemp = this.get('currentHsGradeIndex');
@@ -941,7 +941,7 @@ export default Ember.Component.extend({
       this.set('gradeToEdit', currentAS.get('grade'));
       this.set('fromToEdit', currentAS.get('from'));
 
-      Ember.$('.ui.modal.asEditModal').modal({detachable: false,}).modal('show');
+      Ember.$('.ui.modal.asEditModal').modal({ detachable: false, }).modal('show');
     },
 
     editAS() {
@@ -988,7 +988,7 @@ export default Ember.Component.extend({
       this.set('selectedScholToEdit', currentScholAward);
       this.set('scholNoteEdit', currentScholAward.get('note'));
 
-      Ember.$('.ui.modal.scholEdit').modal({detachable: false,}).modal('show');
+      Ember.$('.ui.modal.scholEdit').modal({ detachable: false, }).modal('show');
     },
 
     editScholarShipAndAwards() {
@@ -1109,7 +1109,7 @@ export default Ember.Component.extend({
     },
 
     openHighSchoolCourseForm() {
-      Ember.$('.ui.modal.hsCourseAdd').modal({detachable: false,}).modal('show');
+      Ember.$('.ui.modal.hsCourseAdd').modal({ detachable: false, }).modal('show');
     },
 
     closeHighSchoolCourseForm() {
@@ -1131,7 +1131,7 @@ export default Ember.Component.extend({
       Ember.$("#gradeField2").attr('disabled', false);
       Ember.$("#courseSelect2").attr('disabled', false);
 
-      Ember.$('.ui.modal.hsCourseEdit').modal({detachable: false,closable: false}).modal('show');
+      Ember.$('.ui.modal.hsCourseEdit').modal({ detachable: false, closable: false }).modal('show');
     },
 
     closeEditHighSchoolCourseForm() {
@@ -1147,24 +1147,21 @@ export default Ember.Component.extend({
       var grade = Ember.$("#gradeField2").val();
       var validGrade = false;
 
-      if ((grade >= 0 && grade <= 100) || grade == "NMR")
-      {
+      if ((grade >= 0 && grade <= 100) || grade == "NMR") {
         validGrade = true;
       }
-      else
-      {
+      else {
         validGrade = false;
       }
 
-      if (validGrade)
-      {
+      if (validGrade) {
         console.log("valid");
 
         var hsGrade = this.get('selectedHsCourseToEdit');
 
         hsGrade.set('source', this.get('highSchoolCourseChoice2'));
         hsGrade.set('mark', Ember.$("#gradeField2").val());
-        hsGrade.save().then(function(grade){
+        hsGrade.save().then(function (grade) {
         });
       }
       else {
@@ -1175,8 +1172,7 @@ export default Ember.Component.extend({
     selectHighSchool2(highSchool) {
       var model = [];
       this.get('store').peekAll('high-school-course').filter((records) => {
-        if (records.get('school').get('id') == highSchool)
-        {
+        if (records.get('school').get('id') == highSchool) {
           model.push(records);
         }
       });
@@ -1186,12 +1182,10 @@ export default Ember.Component.extend({
 
     selectCourse2(courseInfo) {
       var self = this;
-      if (courseInfo != "null")
-      {
+      if (courseInfo != "null") {
         var model = [];
         this.get('store').peekAll('high-school-course').filter((records) => {
-          if (records.get('id') == courseInfo)
-          {
+          if (records.get('id') == courseInfo) {
             model.push(records);
           }
         });
@@ -1201,23 +1195,19 @@ export default Ember.Component.extend({
     },
 
     selectLevel2(courseId) {
-      if (courseId != "null")
-      {
+      if (courseId != "null") {
         this.set('highSchoolCourseChoice2', this.get('store').peekRecord('high-school-course', courseId));
       }
-      else
-      {
+      else {
         this.set('highSchoolCourseChoice2', this.get('store').peekRecord('high-school-course', this.get('selectedHsCourseToEdit').get('source').get('id')));
       }
     },
 
     selectUnit2(courseId) {
-      if (courseId != "null")
-      {
+      if (courseId != "null") {
         this.set('highSchoolCourseChoice2', this.get('store').peekRecord('high-school-course', courseId));
       }
-      else
-      {
+      else {
         this.set('highSchoolCourseChoice2', this.get('store').peekRecord('high-school-course', this.get('selectedHsCourseToEdit').get('source').get('id')));
       }
     },
@@ -1246,7 +1236,7 @@ export default Ember.Component.extend({
 
 
     openTermForm() {
-      Ember.$('.ui.modal.term').modal({detachable: false,}).modal('show');
+      Ember.$('.ui.modal.term').modal({ detachable: false, }).modal('show');
     },
 
     closeTermForm() {
@@ -1256,7 +1246,7 @@ export default Ember.Component.extend({
     openEditTermForm(term) {
       this.set('selectedTermToEdit', term);
       this.set('currentSelectedTermCode', term.get('term'));
-      Ember.$('.ui.modal.termEdit').modal({detachable: false,}).modal('show');
+      Ember.$('.ui.modal.termEdit').modal({ detachable: false, }).modal('show');
     },
 
     closeEditTermForm() {
@@ -1264,7 +1254,7 @@ export default Ember.Component.extend({
     },
 
     openCourseCodeForm() {
-      Ember.$('.ui.modal.courseCode').modal({detachable: false,}).modal('show');
+      Ember.$('.ui.modal.courseCode').modal({ detachable: false, }).modal('show');
     },
 
     closeCourseCodeForm() {
@@ -1277,7 +1267,7 @@ export default Ember.Component.extend({
       this.set('courseLetterEdit', courseCode.get('courseLetter'));
       this.set('courseNumEdit', courseCode.get('courseNumber'));
       this.set('courseUnitEdit', courseCode.get('unit'));
-      Ember.$('.ui.modal.courseCodeEdit').modal({detachable: false,}).modal('show');
+      Ember.$('.ui.modal.courseCodeEdit').modal({ detachable: false, }).modal('show');
     },
 
     closeEditCourseForm() {
@@ -1285,7 +1275,7 @@ export default Ember.Component.extend({
     },
 
     openGradeForm() {
-      Ember.$('.ui.modal.grade').modal({detachable: false,}).modal('show');
+      Ember.$('.ui.modal.grade').modal({ detachable: false, }).modal('show');
     },
 
     closeGradeForm() {
@@ -1298,7 +1288,7 @@ export default Ember.Component.extend({
       this.set('gradeEdit', grade.get('mark'));
       this.set('noteEdit', grade.get('note'));
 
-      Ember.$('.ui.modal.gradeEdit').modal({detachable: false,}).modal('show');
+      Ember.$('.ui.modal.gradeEdit').modal({ detachable: false, }).modal('show');
 
     },
 
@@ -1307,7 +1297,7 @@ export default Ember.Component.extend({
     },
 
     openProgramRecordForm() {
-      Ember.$('.ui.modal.programRecord').modal({detachable: false,}).modal('show');
+      Ember.$('.ui.modal.programRecord').modal({ detachable: false, }).modal('show');
     },
     closeProgramRecordForm() {
       Ember.$('.ui.modal.programRecord').modal('hide');
@@ -1464,7 +1454,7 @@ export default Ember.Component.extend({
       console.log(this.get('termForAddingProgramRecord'));
     },
 
-    getAdjudicationInformation(){
+    getAdjudicationInformation() {
       console.log(this.get('currentStudentAdjudications').objectAt(0).get('termAVG'));
 
     }
