@@ -1,1 +1,15 @@
-{{yield}}
+<h2>Assessment Department Link</h2>
+
+<select onchange={{action 'selectAssessment' value="target.value"}}>
+  <option value = null> Select Assessment </option>
+  {{#each assessmentCodeModel as |oneassessmentCode|}}
+    <option value={{oneassessmentCode.id}}>{{oneassessmentCode.name}}</option>
+  {{/each}}
+</select>
+
+<select onchange={{action 'selectDepartment' value="target.value"}}>
+  <option value = null> Select Department </option>
+  {{#each departmentModel as |oneDepartment|}}
+    <option value={{oneDepartment.id}}>{{oneDepartment.name}}</option>
+  {{/each}}
+</select>
