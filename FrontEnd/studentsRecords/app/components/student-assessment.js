@@ -47,7 +47,14 @@ export default Ember.Component.extend({
         for(let j = 0; j < this.get('currentStudentAdjudications').get('length'); j++){
           col = [];
           col.pushObject(this.get('studentModel').objectAt(i).get('number'));
-          col.pushObject(this.get('currentStudentAdjudications').objectAt(j).get('termAVG'));
+          if(this.get('currentStudentAdjudications').objectAt(j).get('comment').get('name') == undefined){
+            col.pushObject("undefined");
+          }
+          else{
+            col.pushObject(this.get('currentStudentAdjudications').objectAt(j).get('comment').get('name'));
+          }
+
+          console.log(this.get('currentStudentAdjudications').objectAt(j).get('comment').get('name'));
           body.pushObject(col);
         }
       }
@@ -99,7 +106,14 @@ export default Ember.Component.extend({
         for(let j = 0; j < this.get('currentStudentAdjudications').get('length'); j++){
           col = [];
           col.pushObject(this.get('studentModel').objectAt(i).get('number'));
-          col.pushObject(this.get('currentStudentAdjudications').objectAt(j).get('termAVG'));
+          if(this.get('currentStudentAdjudications').objectAt(j).get('comment').get('name') == undefined){
+            col.pushObject(null);
+          }
+          else{
+            col.pushObject(this.get('currentStudentAdjudications').objectAt(j).get('comment').get('name'));
+          }
+
+          console.log(this.get('currentStudentAdjudications').objectAt(j).get('comment').get('name'));
           body.pushObject(col);
         }
       }
