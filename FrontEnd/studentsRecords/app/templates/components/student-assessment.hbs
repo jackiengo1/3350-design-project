@@ -1,12 +1,16 @@
-
 <div class="ui center aligned header" style="margin-bottom: 20px;">
   <h2>StudentAssessment</h2>
 </div>
 
-<button class="ui primary button" {{action 'generatePDFs'}} >
-  Generate sample PDFs
-</button>
-
-<button class="ui primary button" {{action 'generateExcelFiles'}}>
-  Generate sample excel files
-</button>
+<div class="ui grid">
+  <div class="row">
+    <div class="sixteen column wide" style="text-align: center;">
+      <button class="ui primary button" {{action 'generatePDFs'}}>
+        Generate sample PDFs
+      </button>
+      <button class="ui primary button" {{action 'generateExcelFiles'}}>
+        Generate sample excel files
+      </button>    
+    </div>
+  </div>
+</div>
