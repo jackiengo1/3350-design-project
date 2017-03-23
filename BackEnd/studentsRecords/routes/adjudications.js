@@ -21,14 +21,27 @@ router.route('/')
                 if (error) response.send(error);
                 response.json({adjudication: adjudications});
             });
-            console.log("no filter");
-        } else {
-          console.log("filter");
+            console.log("noooooo filter");
+        } else {//if(adjudicationFilter == "student"){
+          console.log("student filter");
             models.Adjudications.find({"student": request.query.student}, function (error, adjudications) {
                 if (error) response.send(error);
                 response.json({adjudication: adjudications});
             });
         }
+        // else if(request.query.semester){
+        //         console.log("adjudication filter");
+        //   models.Adjudications.find({"semester": request.query.semester}, function (error, adjudications) {
+        //       if (error) response.send(error);
+        //       response.json({adjudication: adjudications});
+        //   });
+
+          /*else{
+            models.Adjudications.find({"semester": request.query.semester}, function (error, adjudications) {
+                if (error) response.send(error);
+                response.json({adjudication: adjudications});
+            });
+          }*/
     });
 
 router.route('/:adjudication_id')

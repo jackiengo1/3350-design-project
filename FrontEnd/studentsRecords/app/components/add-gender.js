@@ -44,7 +44,6 @@ export default Ember.Component.extend({
       }
     },
 
-<<<<<<< HEAD
     editGender(){
       if(this.get('editGenderName').length !== 0){
         var updatedGender = this.get('editGenderTemp');
@@ -56,15 +55,7 @@ export default Ember.Component.extend({
       else{
         alert('Textbox cannot be empty');
       }
-=======
-    editGender(gender){
-      var index = this.get('genderModel').indexOf(gender);
-      this.set('genderIndex', index);
-      var indextemp = this.get('genderIndex');
-      var restemp = this.get('genderModel').objectAt(indextemp);
-      restemp.set('name', this.get('genderName'));
-      restemp.save();
->>>>>>> 16a5a1a50af1ab95f0f97e9f87768106f2d91f43
+
     },
 
     //used to show the list of gender for delete function
@@ -72,7 +63,7 @@ export default Ember.Component.extend({
       var index = this.get('genderModel').indexOf(gender);
       this.set('genderIndex', index);
     },
-
+    
     openEditGenderModal(gender){
       console.log(gender);
       this.set('editGenderTemp', gender);

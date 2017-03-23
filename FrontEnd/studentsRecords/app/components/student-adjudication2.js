@@ -18,34 +18,41 @@ export default Ember.Component.extend({
       self.set('assessmentcodeModel', records);
     });
 
+
     var self = this;
   },
 
   actions: {
 
 //for each adjudication code, determine if an adjudication should be assigned that code
-adjudicate(specifiedTerm){
+adjudicate(){
 
 //Iterate over all adjudications
-for(let i=0;i<this.get('adjudicationModel').get('length');i++)
+for(let i=0;i<this.get('studentModel').get('length');i++)
 {
 
   //store current adjudication in temp
-  var temp = this.get('adjudicationModel').objectAt(i);
-  var studentNumber = temp.studentInfo.number;
+  var temp = this.get('studentModel').objectAt(i);
+  var term = temp.term
 
   //get the courses and grades for the term related to that adjudication
   var term = temp.semester;
   var courses = term.courseInfo;
 
-  //only use those with the specified term - i.e all of them lol
-  if(1+1 == 2){
-
     //iterate over each assessment code
     for (let l = 0; l < this.get('assessmentcodeModel').get('length'); l++){
       var temp2 = this.get('assessmentcodeModel').objectAt(l);
+      var a = eval(temp2.testExpression);
 
-      //get the array of leafs and the array of links
+      if (a){
+        temp.set('comment', temp2);
+        break;
+      }
+}
+}
+}
+
+    /*  //get the array of leafs and the array of links
       var leafArray = temp2.testExpression.leaf;
       var logicalLinks = temp2.testExpression.links;
 
@@ -98,12 +105,14 @@ for(let i=0;i<this.get('adjudicationModel').get('length');i++)
         //otherwise a certain mark was required
         else{
           //evaluate that mark vs the requirement
-          var a = eval("theCourse.mark operand[n] operatorB[n]");
-          if (a){
-            results.push(1);
-          }
-          else{
-            results.push(0);
+          if(operand[n] == ">"){
+            var a = eval("thecourse.mark > operatorB[n]");
+            if(a){
+              results.push(1);
+            }
+            else{
+              results.push(0);
+            }
           }
         }
 
@@ -141,13 +150,14 @@ for(let i=0;i<this.get('adjudicationModel').get('length');i++)
       //if it is, set this code and break the loop
       if(results3)
       {
+        //set + save
         temp.set('comment', temp2);
+        temp.save();
         break;
       }
-    }
-  }
+    }//end of for assessment loop
+}//end of for adjudication loop
+*/
 }
 
-  }
-}
 });

@@ -13,6 +13,7 @@ export default Ember.Component.extend({
   selectedResidency: null,
   selectedGender: null,
   selectedDate: null,
+  assessmentcodeModel: null,
   studentsRecords: null,
   currentStudent: null,
   currentIndex: null,
@@ -45,7 +46,9 @@ export default Ember.Component.extend({
   highSchoolCourseChoice: null,
   highSchoolCourseChoice2: null,
   adjudicationModel: null,
-
+  stuModel: null,
+  termModel: null,
+  currentAdjudication: null,
   //undo
   //the stack store the data
   undoStack: Ember.A(),
@@ -64,7 +67,6 @@ export default Ember.Component.extend({
   tempAdvInfo: null,
   //tempGenderInfo:null,
   tempScholInfo: null,
-
 
   //advanced standing
   listAS: Ember.A(),
@@ -184,6 +186,22 @@ export default Ember.Component.extend({
     // load Residency data model
     this.get('store').findAll('residency').then(function (records) {
       self.set('residencyModel', records);
+    });
+
+    this.get('store').findAll('adjudication').then(function (records) {
+      self.set('adjudicationModel', records);
+    });
+
+    this.get('store').findAll('student').then(function(records){
+      self.set('stuModel', records);
+    });
+
+    this.get('store').findAll('assessment-code').then(function(records){
+      self.set('assessmentcodeModel', records);
+    });
+
+    this.get('store').findAll('term').then(function(records){
+      self.set('termModel', records);
     });
 
     // load advanced standing model
@@ -645,6 +663,162 @@ export default Ember.Component.extend({
       this.set('endOfRecords', false);
     },
 
+    adjudicate(){
+
+      var term = this.get('termModel');
+      var length = term.get('length');
+
+      //Term Loop
+      for(let i = 0; i < length; i++){
+
+        var tester = term.objectAt(i);
+      //  console.log('working');
+        var adj = tester.get('adjudicationInfo');
+      //  console.log('working');
+        var courses = tester.get('courseInfo');
+      //  console.log('working');
+
+        //Adjudication Loop
+        for(let j = 0; j < adj.get('length'); j++){
+
+  //      console.log('working');
+        var temp = adj.objectAt(j);
+//              console.log('working');
+
+            for (let l = 0; l < this.get('assessmentcodeModel').get('length'); l++){
+            //  console.log('working');
+              var temp2 = this.get('assessmentcodeModel').objectAt(l);
+            //  console.log(temp2.get('id'));
+              var leafArray = [];
+              var logicalLinks = [];
+             //get the array of leafs and the array of links
+              var ok = temp2.get('testExpression');
+
+
+              this.get('store').query('logical-expression', { filter: { comment: temp2.get('id') } }).then(function(records){
+                console.log("records: " + records.get('length'));
+              });
+              var test22 = temp2.get('testExpression');
+              //console.log("OK: " + test22);
+              //console.log("OK: " + test22.get('length'));
+
+              for (let n = 0; n < ok.get('length'); n++){
+
+                console.log("HELLOOOOOOO")
+                var theExpression = ok.objectAt(n);
+
+                leafArray.push(theExpression.get('booleanExp'));
+                logicalLinks.push(theExpression.get('logicalLink'));
+
+              }
+
+              //declare array to hold operators and operand for each leaf
+              var operatorA = [];//courses
+              var operatorB = [];//mark required
+              var operand = [];
+              //array of 1s and 0s based on meeting a particular leaf requirement
+              var results = [];
+              console.log('working!!!!!!');
+              //array storing result of applying logical links to successive results
+              var results2 = [];
+
+              //bool storing whether results2 is all true or not
+              var results3;
+
+              console.log(leafArray.get('length'));
+              console.log('length^');
+              //go through the leaf array and split each index into 3 arrays
+              for(let k = 0; k < leafArray.get('length'); k++){
+                var sp = leafArray[k].split(" ");
+                console.log('999999');
+                //put operatora, b, and operand into correct array
+                operatorA.push(sp[0]);
+                if(sp[1]=='r'){
+                  operatorB.push("0");
+                }
+                else{
+                  operatorB.push(sp[2]);
+                }
+                operand.push(sp[1]);
+              }
+
+              //for each group of operatora, operand, operatorb check if statement is true or false
+              for(let n = 0; n < operatorA.get('length'); n++){
+                var theCourse;
+                //set theCourse to the sent course
+                for(let b = 0; b < courses.get('length'); b++){
+                  if(courses[b].name == operatorA){
+                    theCourse = courses[b];
+                    break;
+                  }
+                }
+                //if course was required
+                if(operand[n] == "0"){
+                  if(theCourse.mark >= 50){
+                    results.push(1);
+                  }
+                  else{
+                    results.push(0);
+                  }
+                }
+                //otherwise a certain mark was required
+                else{
+                  //evaluate that mark vs the requirement
+                  if(operand[n] == ">"){
+                    var a = eval("thecourse.mark > operatorB[n]");
+                    if(a){
+                      results.push(1);
+                    }
+                    else{
+                      results.push(0);
+                    }
+                  }
+                }
+
+              }
+
+              //compute results2 ie store result of leaf logicallink leaf
+              for(let x = 0; x + 1 < results.get('length'); x++){
+                if(logicalLinks[x] == "AND"){
+                  if(results[x] && results[x+1]){
+                    results2[x] = 1;
+                  }
+                  else{
+                    results2[x] = 0;
+                  }
+                }
+                else{
+                  if(results[x] || results[x+1]){
+                    results2[x] = 1;
+                  }
+                  else{
+                    results2[x] = 0;
+                  }
+                }
+              }
+
+              //check if everything is true
+              for(let a = 0; a < results2.get('length'); a++){
+                results3 = true;
+                if(results2[a]!= 1){
+                  results3 = false;
+                  break;
+                }
+              }
+
+              //if it is, set this code and break the loop
+              if(results3)
+              {
+                //set + save
+                temp.set('comment', temp2);
+                temp.save();
+                break;
+              }
+            }
+          }
+        }
+
+},
     deleteStudent() {
       var choice = confirm('Are you sure you want to delete this?');
       if (choice) {
