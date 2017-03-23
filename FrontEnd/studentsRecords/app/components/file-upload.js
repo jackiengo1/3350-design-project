@@ -14,7 +14,6 @@ export default Ember.Component.extend({
       //each time the loader is called, show loading and hide loader
       this.set('showLoader',true);
       this.set('showUpload',false);
-
       //each time the fileLoaded function is called, update the counter and lable name
       //and according to the given sequence determine if the file should be accepted
       var counter = this.get('count');
@@ -24,155 +23,192 @@ export default Ember.Component.extend({
       var workbook = XLSX.read(file.data, {type: 'binary'});
       var sheet_name_list = workbook.SheetNames;
 
-      // if(counter === 0)
-      // {
-      //   //counter =0 means the delete is not called, return anyway
-      //   return;
-      // }
-      //
-      // if(counter===1)
-      // {
-      //   if(file.name!== "residencies.xlsx")
-      //   {
-      //     //if file name is not residency don't accept
-      //     return;
-      //   }
-      // }
-      //
-      // if(counter ===2)
-      // {
-      //   if(file.name!== "genders.xlsx")
-      //   {
-      //     //if file name is not residency don't accept
-      //     return;
-      //   }
-      // }
-      //
-      // if(counter ===3)
-      // {
-      //   if(file.name!== "students.xlsx")
-      //   {
-      //     //if file name is not residency don't accept
-      //     return;
-      //   }
-      // }
-      //
-      // if(counter ===4)
-      // {
-      //   if(file.name!== "AdvancedStanding.xlsx")
-      //   {
-      //     //if file name is not residency don't accept
-      //     return;
-      //   }
-      // }
-      //
-      // if(counter ===5)
-      // {
-      //   if(file.name!== "AdmissionAverages.xlsx")
-      //   {
-      //     //if file name is not residency don't accept
-      //     return;
-      //   }
-      // }
-      //
-      // if(counter ===6)
-      // {
-      //   if(file.name!== "AdmissionComments.xlsx")
-      //   {
-      //     //if file name is not residency don't accept
-      //     return;
-      //   }
-      // }
-      //
-      // if(counter ===7)
-      // {
-      //   if(file.name!== "BasisOfAdmission.xlsx")
-      //   {
-      //     //if file name is not residency don't accept
-      //     return;
-      //   }
-      // }
-      //
-      // if(counter ===8)
-      // {
-      //   if(file.name!== "RegistrationComments.xlsx")
-      //   {
-      //     //if file name is not residency don't accept
-      //     return;
-      //   }
-      // }
-      //
-      // if(counter ===9)
-      // {
-      //   if(file.name!== "scholarshipsAndAwards.xlsx")
-      //   {
-      //     //if file name is not residency don't accept
-      //     return;
-      //   }
-      // }
-      //
-      // if(counter ===10)
-      // {
-      //   if(file.name!== "HighSchools.xlsx")
-      //   {
-      //     //if file name is not residency don't accept
-      //     return;
-      //   }
-      // }
-      //
-      // if(counter ===11)
-      // {
-      //   if(file.name!== "HighSchoolCourseInformation.xlsx")
-      //   {
-      //     //if file name is not residency don't accept
-      //     return;
-      //   }
-      // }
-      //
-      // if(counter ===12)
-      // {
-      //   if(file.name!== "termcodes.xlsx")
-      //   {
-      //     //if file name is not residency don't accept
-      //     return;
-      //   }
-      // }
-      //
-      // if(counter ===14)
-      // {
-      //   if(file.name!== "UndergraduateCourses.xlsx")
-      //   {
-      //     //if file name is not residency don't accept
-      //     return;
-      //   }
-      // }
-      //
-      // if(counter ===13)
-      // {
-      //   if(file.name!== "UndergraduateRecordCourses.xlsx")
-      //   {
-      //     //if file name is not residency don't accept
-      //     return;
-      //   }
-      // }
-      //
-      // if(counter ===15)
-      // {
-      //   if(file.name!== "UndergraduateRecordPlans.xlsx")
-      //   {
-      //     //if file name is not residency don't accept
-      //     return;
-      //   }
-      // }
-      //
-      // if(counter>16)
-      // {
-      //   //counter goes beyond 14, it shouldn't upload any files
-      //   return;
-      // }
+      if(counter === 0)
+      {
+        //counter =0 means the delete is not called, return anyway
+        return;
+      }
+
+      if(counter===1)
+      {
+        if(file.name!== "residencies.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===2)
+      {
+        if(file.name!== "genders.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===3)
+      {
+        if(file.name!== "students.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===4)
+      {
+        if(file.name!== "AdvancedStanding.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===5)
+      {
+        if(file.name!== "AdmissionAverages.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===6)
+      {
+        if(file.name!== "AdmissionComments.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===7)
+      {
+        if(file.name!== "BasisOfAdmission.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===8)
+      {
+        if(file.name!== "RegistrationComments.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===9)
+      {
+        if(file.name!== "scholarshipsAndAwards.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===10)
+      {
+        if(file.name!== "HighSchools.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===11)
+      {
+        if(file.name!== "HighSchoolCourseInformation.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===12)
+      {
+        if(file.name!== "termcodes.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===14)
+      {
+        if(file.name!== "UndergraduateCourses.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===13)
+      {
+        if(file.name!== "UndergraduateRecordCourses.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===15)
+      {
+        if(file.name!== "UndergraduateRecordPlans.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===16)
+      {
+        if(file.name!== "AssessmentCodes.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===17)
+      {
+        if(file.name!== "Departments.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===18)
+      {
+        if(file.name!== "ProgramAdministrations.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter ===19)
+      {
+        if(file.name!== "UndergraduateRecordAdjudications.xlsx")
+        {
+          //if file name is not residency don't accept
+          return;
+        }
+      }
+
+      if(counter>19)
+      {
+        //counter goes beyond 14, it shouldn't upload any files
+        return;
+      }
 
       if(file.name === "genders.xlsx")
       {
+        setTimeout(function(){self.set('showLoader',false);self.set('showUpload',true);}, 1000);
         //by here the file name is residency
         //increment the counter
         counter++;
@@ -202,6 +238,7 @@ export default Ember.Component.extend({
 
       else if (file.name ==="residencies.xlsx")
       {
+        setTimeout(function(){self.set('showLoader',false);self.set('showUpload',true);}, 1000);
         //by here the file name is residency
         //increment the counter
         counter++;
@@ -232,6 +269,7 @@ export default Ember.Component.extend({
 
       else if (file.name ==="termcodes.xlsx")
       {
+        setTimeout(function(){self.set('showLoader',false);self.set('showUpload',true);}, 1000);
         //by here the file name is residency
         //increment the counter
         counter++;
@@ -262,6 +300,7 @@ export default Ember.Component.extend({
 
       else if(file.name ==="AdmissionComments.xlsx")
       {
+        setTimeout(function(){self.set('showLoader',false);self.set('showUpload',true);}, 1000);
         //by here the file name is residency
         //increment the counter
         counter++;
@@ -346,6 +385,7 @@ export default Ember.Component.extend({
 
       else if(file.name === "HighSchools.xlsx")
       {
+        setTimeout(function(){self.set('showLoader',false);self.set('showUpload',true);}, 2000);
         //by here the file name is residency
         //increment the counter
         counter++;
@@ -376,6 +416,7 @@ export default Ember.Component.extend({
 
       else if(file.name ==="students.xlsx")
       {
+        setTimeout(function(){self.set('showLoader',false);self.set('showUpload',true);}, 3000);
         //by here the file name is residency
         //increment the counter
         counter++;
@@ -568,7 +609,16 @@ export default Ember.Component.extend({
                   from: from,
                   studentInfo: studentRecord,
                 });
-                newASRecord.save();
+                if(j==allStudentRecord.get('length')-1)
+                {
+                  newASRecord.save().then(function(){
+                    self.set('showLoader',false);
+                    self.set('showUpload',true);
+                  });
+                }
+                else{
+                  newASRecord.save();
+                }
               }
             }
           }
@@ -628,7 +678,17 @@ export default Ember.Component.extend({
                   note: note,
                   studentInfo: studentRecord,
                 });
-                newAwardRecord.save();
+
+                if(j==allStudentRecord.get('length')-1)
+                {
+                  newAwardRecord.save().then(function(){
+                    self.set('showLoader',false);
+                    self.set('showUpload',true);
+                  });
+                }
+                else{
+                  newAwardRecord.save();
+                }
               }
             }
           }
@@ -678,7 +738,17 @@ export default Ember.Component.extend({
                 let curretCourseCode = allCourseCode.objectAt(j);
                 curretCourseCode.set('name',nameArray[i]);
                 curretCourseCode.set('unit',unitArray[i]);
-                curretCourseCode.save();
+
+                if(j==allCourseCode.get('length')-1)
+                {
+                  curretCourseCode.save().then(function(){
+                    self.set('showLoader',false);
+                    self.set('showUpload',true);
+                  });
+                }
+                else{
+                  curretCourseCode.save();
+                }
               }
             }
           }
@@ -747,7 +817,17 @@ export default Ember.Component.extend({
 
                 studentRecord.set('basisOfAdmission',updatednote);
                 //how to walk around here except ajax
-                studentRecord.save();
+                if(j==allStudentRecord.get('length')-1)
+                {
+                  studentRecord.save().then(function(){
+                    self.set('showLoader',false);
+                    self.set('showUpload',true);
+                  });
+                }
+                else{
+                  studentRecord.save();
+                }
+
               }
             }
           }
@@ -756,6 +836,7 @@ export default Ember.Component.extend({
 
       else if(file.name ==="RegistrationComments.xlsx")
       {
+        setTimeout(function(){self.set('showLoader',false);self.set('showUpload',true);}, 2000);
         //by here the file name is residency
         //increment the counter
         counter++;
@@ -999,7 +1080,17 @@ export default Ember.Component.extend({
                                   source: hscourse,
                                   studentInfo: studentRecord,
                                 });
-                                newhsCourseGrade.save();
+
+                                if(l==allHighSchoolCourses.get('length')-1)
+                                {
+                                  newhsCourseGrade.save().then(function(){
+                                    self.set('showLoader',false);
+                                    self.set('showUpload',true);
+                                  });
+                                }
+                                else{
+                                  newhsCourseGrade.save();
+                                }
                               }
                             }
                           }
@@ -1079,7 +1170,17 @@ export default Ember.Component.extend({
 
                 studentRecord.set('admissionAverage',updatednote);
                 //how to walk around here except ajax
-                studentRecord.save();
+
+                if(j==allStudentRecord.get('length')-1)
+                {
+                  studentRecord.save().then(function(){
+                    self.set('showLoader',false);
+                    self.set('showUpload',true);
+                  });
+                }
+                else{
+                  studentRecord.save();
+                }
               }
             }
           }
@@ -1317,7 +1418,17 @@ export default Ember.Component.extend({
                                 //add the current plan code to the array
                                 programarray.pushObject(currentProgramobj);
                               }
-                              currentterm.save();
+
+                              if(x==allProgram.get('length')-1)
+                              {
+                                currentterm.save().then(function(){
+                                  self.set('showLoader',false);
+                                  self.set('showUpload',true);
+                                });
+                              }
+                              else{
+                                currentterm.save();
+                              }
                             }
                           });
                         }
@@ -1523,7 +1634,17 @@ export default Ember.Component.extend({
                               mark: currentgrade,
                               semester: currenttermobj
                             });
-                            currentcourse.save();
+
+                            if(k==courseLetterArray.get('length')-1)
+                            {
+                              currentcourse.save().then(function(){
+                                self.set('showLoader',false);
+                                self.set('showUpload',true);
+                              });
+                            }
+                            else{
+                              currentcourse.save();
+                            }
                           }
                         });
                       }
@@ -1544,6 +1665,7 @@ export default Ember.Component.extend({
       }
       else if(file.name === "AssessmentCodes.xlsx")
       {
+        setTimeout(function(){self.set('showLoader',false);self.set('showUpload',true);}, 2000);
         //by here the file name is residency
         //increment the counter
         counter++;
@@ -1603,6 +1725,7 @@ export default Ember.Component.extend({
 
       else if(file.name === "Departments.xlsx")
       {
+        setTimeout(function(){self.set('showLoader',false);self.set('showUpload',true);}, 1000);
         //by here the file name is residency
         //increment the counter
         counter++;
@@ -1690,7 +1813,16 @@ export default Ember.Component.extend({
                   position:positionArray[i],
                   dept: currentdepartment,
                 });
-                newProgramAdministration.save();
+                if(j==alldepartment.get('length')-1)
+                {
+                  newProgramAdministration.save().then(function(){
+                    self.set('showLoader',false);
+                    self.set('showUpload',true);
+                  });
+                }
+                else{
+                  newProgramAdministration.save();
+                }
               }
             }
           }
@@ -1762,16 +1894,6 @@ export default Ember.Component.extend({
                 currentTerm = allterm.objectAt(j);
               }
             }
-            //after getting the term start getting the student assessment-code
-            //checking this part
-            // var currentAssessmentCode;
-            // for(let j=0;j<allassessmentcode.get('length');j++)
-            // {
-            //   if(allassessmentcode.objectAt(j).get('term') == termArray[i] && allassessmentcode.objectAt(j).get('studentInfo').get('number') == studentnumArray[i] )
-            //   {
-            //     currentAssessmentCode = allassessmentcode.objectAt(j);
-            //   }
-            // }
 
 
 
@@ -1785,7 +1907,16 @@ export default Ember.Component.extend({
               semester: currentTerm,
               //comment:DS.belongsTo('assessment-code'),
             });
-            newAdjudication.save();
+            if(i==studentnumArray.get('length')-1)
+            {
+              newAdjudication.save().then(function(){
+                self.set('showLoader',false);
+                self.set('showUpload',true);
+              });
+            }
+            else{
+              newAdjudication.save();
+            }
           }
         });
       }
@@ -1798,233 +1929,231 @@ export default Ember.Component.extend({
       //each time the delete is called, show loading and hide loader
       this.set('showLoader',true);
       this.set('showUpload',false);
-      setTimeout(function(){
-        self.set('showLoader',false);
-        self.set('showUpload',true);}, 5000);
-        //delete has to be called before uploading
-        //when delete is call, increment the counter so the uploading will work
-        var counter = this.get('count');
-        counter=1;
-        this.set('count',counter);
-        var label = this.get('filetobeloaded');
-        label = "Please upload residencies.xlsx";
-        this.set('filetobeloaded',label);
-        //when user start uploading the file, delete all original data in the db
-        //delete all student record
-        this.get('store').query('student', {
-          limit: 9007199254740992, //this is the max int in javascript
-          offset: 0
-        }).then(function (record) {
-          record.content.forEach(function(rec) {
-            Ember.run.once(this, function() {
-              rec.deleteRecord();
-              rec.save();
-            });
-          }, this);
-        });
+      setTimeout(function(){self.set('showLoader',false);self.set('showUpload',true);}, 20000);
+      //delete has to be called before uploading
+      //when delete is call, increment the counter so the uploading will work
+      var counter = this.get('count');
+      counter=1;
+      this.set('count',counter);
+      var label = this.get('filetobeloaded');
+      label = "Please upload residencies.xlsx";
+      this.set('filetobeloaded',label);
+      //when user start uploading the file, delete all original data in the db
+      //delete all student record
+      this.get('store').query('student', {
+        limit: 9007199254740992, //this is the max int in javascript
+        offset: 0
+      }).then(function (record) {
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
 
-        //delete all gender record
-        this.get('store').findAll('gender').then(function(record){
-          record.content.forEach(function(rec) {
-            Ember.run.once(this, function() {
-              rec.deleteRecord();
-              rec.save();
-            });
-          }, this);
-        });
+      //delete all gender record
+      this.get('store').findAll('gender').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
 
-        //delete all residency record
-        this.get('store').findAll('residency').then(function(record){
-          record.content.forEach(function(rec) {
-            Ember.run.once(this, function() {
-              rec.deleteRecord();
-              rec.save();
-            });
-          }, this);
-        });
+      //delete all residency record
+      this.get('store').findAll('residency').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
 
-        //delete all scholarship-award record
-        this.get('store').findAll('scholarship-award').then(function(record){
-          record.content.forEach(function(rec) {
-            Ember.run.once(this, function() {
-              rec.deleteRecord();
-              rec.save();
-            });
-          }, this);
-        });
+      //delete all scholarship-award record
+      this.get('store').findAll('scholarship-award').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
 
-        //delete all advanced-standing record
-        this.get('store').findAll('advanced-standing').then(function(record){
-          record.content.forEach(function(rec) {
-            Ember.run.once(this, function() {
-              rec.deleteRecord();
-              rec.save();
-            });
-          }, this);
-        });
+      //delete all advanced-standing record
+      this.get('store').findAll('advanced-standing').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
 
-        //delete all high-school-course record
-        this.get('store').findAll('high-school-course').then(function(record){
-          record.content.forEach(function(rec) {
-            Ember.run.once(this, function() {
-              rec.deleteRecord();
-              rec.save();
-            });
-          }, this);
-        });
+      //delete all high-school-course record
+      this.get('store').findAll('high-school-course').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
 
-        //delete all high-school-subject record
-        this.get('store').findAll('high-school-subject').then(function(record){
-          record.content.forEach(function(rec) {
-            Ember.run.once(this, function() {
-              rec.deleteRecord();
-              rec.save();
-            });
-          }, this);
-        });
+      //delete all high-school-subject record
+      this.get('store').findAll('high-school-subject').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
 
-        //delete all hscourse-grade record
-        this.get('store').findAll('hscourse-grade').then(function(record){
-          record.content.forEach(function(rec) {
-            Ember.run.once(this, function() {
-              rec.deleteRecord();
-              rec.save();
-            });
-          }, this);
-        });
+      //delete all hscourse-grade record
+      this.get('store').findAll('hscourse-grade').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
 
-        //delete all secondary-school record
-        this.get('store').findAll('secondary-school').then(function(record){
-          record.content.forEach(function(rec) {
-            Ember.run.once(this, function() {
-              rec.deleteRecord();
-              rec.save();
-            });
-          }, this);
-        });
+      //delete all secondary-school record
+      this.get('store').findAll('secondary-school').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
 
-        //delete all plan-code record
-        this.get('store').findAll('plan-code').then(function(record){
-          record.content.forEach(function(rec) {
-            Ember.run.once(this, function() {
-              rec.deleteRecord();
-              rec.save();
-            });
-          }, this);
-        });
+      //delete all plan-code record
+      this.get('store').findAll('plan-code').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
 
-        //delete all program-record record
-        this.get('store').findAll('program-record').then(function(record){
-          record.content.forEach(function(rec) {
-            Ember.run.once(this, function() {
-              rec.deleteRecord();
-              rec.save();
-            });
-          }, this);
-        });
+      //delete all program-record record
+      this.get('store').findAll('program-record').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
 
 
-        //delete all term-code record
-        this.get('store').findAll('term-code').then(function(record){
-          record.content.forEach(function(rec) {
-            Ember.run.once(this, function() {
-              rec.deleteRecord();
-              rec.save();
-            });
-          }, this);
-        });
+      //delete all term-code record
+      this.get('store').findAll('term-code').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
 
-        //delete all course-code record
-        this.get('store').findAll('course-code').then(function(record){
-          record.content.forEach(function(rec) {
-            Ember.run.once(this, function() {
-              rec.deleteRecord();
-              rec.save();
-            });
-          }, this);
-        });
+      //delete all course-code record
+      this.get('store').findAll('course-code').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
 
-        //delete all grade record
-        this.get('store').findAll('grade').then(function(record){
-          record.content.forEach(function(rec) {
-            Ember.run.once(this, function() {
-              rec.deleteRecord();
-              rec.save();
-            });
-          }, this);
-        });
+      //delete all grade record
+      this.get('store').findAll('grade').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
 
-        //delete all term record
-        this.get('store').findAll('term').then(function(record){
-          record.content.forEach(function(rec) {
-            Ember.run.once(this, function() {
-              rec.deleteRecord();
-              rec.save();
-            });
-          }, this);
-        });
+      //delete all term record
+      this.get('store').findAll('term').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
 
-        //delete all program administration
-        this.get('store').findAll('program-administration').then(function(record){
-          record.content.forEach(function(rec) {
-            Ember.run.once(this, function() {
-              rec.deleteRecord();
-              rec.save();
-            });
-          }, this);
-        });
+      //delete all program administration
+      this.get('store').findAll('program-administration').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
 
-        //delete all department
-        this.get('store').findAll('department').then(function(record){
-          record.content.forEach(function(rec) {
-            Ember.run.once(this, function() {
-              rec.deleteRecord();
-              rec.save();
-            });
-          }, this);
-        });
+      //delete all department
+      this.get('store').findAll('department').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
 
-        //delete all faculty
-        this.get('store').findAll('faculty').then(function(record){
-          record.content.forEach(function(rec) {
-            Ember.run.once(this, function() {
-              rec.deleteRecord();
-              rec.save();
-            });
-          }, this);
-        });
+      //delete all faculty
+      this.get('store').findAll('faculty').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
 
-        //delete all assessment code
-        this.get('store').findAll('assessment-code').then(function(record){
-          record.content.forEach(function(rec) {
-            Ember.run.once(this, function() {
-              rec.deleteRecord();
-              rec.save();
-            });
-          }, this);
-        });
+      //delete all assessment code
+      this.get('store').findAll('assessment-code').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
 
-        //delete all logical expression
-        this.get('store').findAll('logical-expression').then(function(record){
-          record.content.forEach(function(rec) {
-            Ember.run.once(this, function() {
-              rec.deleteRecord();
-              rec.save();
-            });
-          }, this);
-        });
+      //delete all logical expression
+      this.get('store').findAll('logical-expression').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
 
-        //delete all adjudication
-        this.get('store').findAll('adjudication').then(function(record){
-          record.content.forEach(function(rec) {
-            Ember.run.once(this, function() {
-              rec.deleteRecord();
-              rec.save();
-            });
-          }, this);
-        });
-      },
+      //delete all adjudication
+      this.get('store').findAll('adjudication').then(function(record){
+        record.content.forEach(function(rec) {
+          Ember.run.once(this, function() {
+            rec.deleteRecord();
+            rec.save();
+          });
+        }, this);
+      });
+    },
 
-    }
-    //end of actions
-  });
+  }
+  //end of actions
+});
