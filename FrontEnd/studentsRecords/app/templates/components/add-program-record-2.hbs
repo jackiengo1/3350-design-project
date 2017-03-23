@@ -21,8 +21,8 @@
             {{onePlanCode.name}}
           </div>
           <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
-            <div class="teal ui button" onclick={{action 'openEditPlanCodeForm' onePlanCode}}>Edit</div>
-            <div class="negative ui button" onclick={{action 'deletePlanCode' onePlanCode}}>Delete</div>
+            <div class="teal ui button" style="width: 55px;" onclick={{action 'openEditPlanCodeForm' onePlanCode}}><i class="large edit icon"></i></div>
+            <div class="negative ui button" style="width: 55px;" onclick={{action 'deletePlanCode' onePlanCode}}><i class="large delete icon"></i></div>
           </div>
 
         </div>
@@ -70,8 +70,8 @@
             {{oneTermCode.name}}
           </div>
           <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
-            <div class="teal ui button" onclick={{action 'openEditTermCodeForm' oneTermCode}}>Edit</div>
-            <div class="negative ui button" onclick={{action 'deleteTermCode' oneTermCode}}>Delete</div>
+            <div class="teal ui button" style="width: 55px;" onclick={{action 'openEditTermCodeForm' oneTermCode}}><i class="large edit icon"></i></div>
+            <div class="negative ui button" style="width: 55px;" onclick={{action 'deleteTermCode' oneTermCode}}><i class="large delete icon"></i></div>
           </div>
 
         </div>
@@ -127,8 +127,8 @@
           </div>
           <div class="one column row" style="padding: 0;">
             <div class="column">
-              <p style="text-align: center;"><button class="teal ui button" onclick={{action 'openEditProgramRecordForm' oneprogramRecord}}>Edit</button></p>
-              <p style="text-align: center;"><button class="negative ui button" onclick={{action 'deleteProgramRecord' oneprogramRecord}}>Delete</button></p>
+              <p style="text-align: center;"><button class="teal ui button" style="width: 55px;" onclick={{action 'openEditProgramRecordForm' oneprogramRecord}}><i class="large edit icon"></i></button></p>
+              <p style="text-align: center;"><button class="negative ui button" style="width: 55px;" onclick={{action 'deleteProgramRecord' oneprogramRecord}}><i class="large delete icon"></i></button></p>
             </div>
           </div>
         </div>
@@ -170,7 +170,7 @@
                     {{onePlanCode.name}}
                   </div>
                   <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
-                    <div class="negative ui button" onclick={{action 'deleteFromPlanCodeArray' onePlanCode}}>Delete</div>
+                    <div class="negative ui button" style="width: 55px;" onclick={{action 'deleteFromPlanCodeArray' onePlanCode}}><i class="large delete icon"></i></div>
                   </div>
 
                 </div>
@@ -323,6 +323,7 @@
       <div class="ui grid">
         <div class="ui sixteen wide column">
 
+
           <div class="ui middle aligned divided list" style="margin-top: 22px; margin-bottom: 22px;">
             {{#each PRPlanEdit as |onePlanCode|}}
             <div class="item">
@@ -330,7 +331,7 @@
                 {{onePlanCode.name}}
               </div>
               <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
-                <div class="negative ui button" onclick={{action 'removePlanCodeEdit' onePlanCode}}>Delete</div>
+                <div class="negative ui button" style=" width: 55px;" onclick={{action 'removePlanCodeEdit' onePlanCode}}><i class="large delete icon"></i></div>
               </div>
 
             </div>

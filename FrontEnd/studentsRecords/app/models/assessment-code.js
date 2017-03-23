@@ -5,5 +5,5 @@ export default DS.Model.extend({
   name: DS.attr(),
   adjudicationInfo: DS.hasMany('adjudication'),
   testExpression: DS.hasMany('logical-expression'),
-  faculty: DS.hasMany('faculty'),
+  departmentInfo: DS.hasMany('department'),
 });

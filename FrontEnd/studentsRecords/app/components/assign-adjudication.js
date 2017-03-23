@@ -12,6 +12,8 @@ export default Ember.Component.extend({
   assessmentCodeModel:null,
   logicalExpModel:null,
 
+  test: null,
+
   //array used to organize local data
   studentTermArray:Ember.A(),
 
@@ -49,8 +51,9 @@ export default Ember.Component.extend({
       self.set('logicalExpModel',records);
     });
 
+
     this.get('store').query('student', {
-      limit: 999999,
+      limit: 10,
       offset: 0,
     }).then(function (records) {
       self.set('studentModel', records);
@@ -62,20 +65,23 @@ export default Ember.Component.extend({
     orgainzeStudentCourses(){
       var allStudents = this.get('studentModel');
       var allterms = this.get('termModel');
-      for(let i=0;i<allStudents.get('length');i++)
-      {
-        //variable used to store the all courses for a sinle student
+      //for(let i=0;i<allStudents.get('length');i++)
+      //{
+        //variable used to store the all courses for a single student
         var studentcourseArray = [];
         //search through the term with the student number
-        for(let j=0;j<allterms.get('length');j++)
-        {
-          console.log(allterms.objectAt(j).get('studentInfo').get('firstName'));
+      //  for(let j=0;j<allterms.get('length');j++)
+    //    {
+          this.get('store').query('term', allStudents.objectAt(0).get('id'));
+          this.set('test', allStudents.objectAt(0).get('semester'));
+
+          console.log(this.get('test'));
 //!<<<<<<<<<<<this part need debug, allterms.objectAt(j).get('studentInfo') is always null
 //in addition, if i do this.get('student').get('semester') the returned array has zero length
 
 
           //if the student object equal to the student reference in term
-            if(allStudents.objectAt(i).get('id')== allterms.objectAt(j).get('studentInfo').get('id'))
+      /*      if(allStudents.objectAt(i).get('id')== allterms.objectAt(j).get('studentInfo').get('id'))
             {
               console.log(1);
               //get all courses in that term
@@ -85,13 +91,13 @@ export default Ember.Component.extend({
               {
                 //always append the termcourse obj to the end of student course array
                 studentcourseArray[studentcourseArray.get('length')] = termCourses.objectAt(k);
-                console.log(termCourses.objectAt(k));
+              //  console.log(termCourses.objectAt(k));
               }
-            }
-        }
+            }*/
+        //}
         //after checking through all terms for the current student, add the student course array (including all courses cross terms) to the ember course array
-        this.get('studentTermArray').pushObject(studentcourseArray);
-      }
+        //this.get('studentTermArray').pushObject(studentcourseArray);
+    //  }
       //for(let i=0;i<this.get('studentTermArray').get('length');i++)
       //{console.log(this.get('studentTermArray').objectAt(i));}
       //after this function call, call the adjudicationStudent function

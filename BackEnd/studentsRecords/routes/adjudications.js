@@ -23,7 +23,7 @@ router.route('/')
             });
             console.log("no filter");
         } else {
-          console.log("filter");
+          console.log("filter: " + request.query.student);
             models.Adjudications.find({"student": request.query.student}, function (error, adjudications) {
                 if (error) response.send(error);
                 response.json({adjudication: adjudications});

@@ -4,30 +4,123 @@ import pdfMake from 'ember-pdfmake';
 export default Ember.Component.extend({
   /*global XLSX*/
   store: Ember.inject.service(),
+  studentModel: null,
+  adjudicationModel: null,
+  currentStudentAdjudications: null,
 
   init() {
     this._super(...arguments);
+    var self = this;
+
+    this.get('store').query('student', {
+      limit: 1000,
+      offset: 0
+    }).then(function (records) {
+      self.set('studentModel', records);
+    });
+
+    this.get('store').findAll('adjudication').then(function(records){
+      self.set('adjudicationModel', records);
+    });
+
   },
 
   actions: {
 
+
     generatePDFs(){
-      var docDefinition = {
+
+      var body = [];
+      var col = [];
+
+      col.pushObject("Student Number");
+      col.pushObject("Assessment Code");
+      body.pushObject(col);
+
+      col = [];
+
+      for(let i = 0; i < this.get('studentModel').get('length'); i++){
+
+        this.get('store').query('adjudication', { filter: { student: this.get('studentModel').objectAt(i).get('id') } });
+        this.set('currentStudentAdjudications', this.get('studentModel').objectAt(i).get('adjudicationInfo'));
+
+        for(let j = 0; j < this.get('currentStudentAdjudications').get('length'); j++){
+          col = [];
+          col.pushObject(this.get('studentModel').objectAt(i).get('number'));
+          if(this.get('currentStudentAdjudications').objectAt(j).get('comment').get('name') == undefined){
+            col.pushObject("undefined");
+          }
+          else{
+            col.pushObject(this.get('currentStudentAdjudications').objectAt(j).get('comment').get('name'));
+          }
+
+          console.log(this.get('currentStudentAdjudications').objectAt(j).get('comment').get('name'));
+          body.pushObject(col);
+        }
+      }
+
+
+      var pdfBody = body;
+
+
+      var softwareDocDefinition = {
         info: {
-          title: 'awesome Document',
-          author: 'john doe',
-          subject: 'subject of document',
-          keywords: 'keywords for document',
+          title: 'Assessment Results',
+          author: 'Genesis Ideas',
+          subject: 'Student Assessment',
+          keywords: 'Assessment',
         },
-        content: 'This is an sample PDF printed with pdfMake'
+        content: [
+          {
+            layout: 'lightHorizontalLines', // optional
+            table: {
+              // headers are automatically repeated if the table spans over multiple pages
+              // you can declare how many rows should be treated as headers
+              headerRows: 1,
+              widths: [ '*', '*'],
+
+              body: pdfBody
+            }
+          }
+        ]
       };
-      pdfMake.createPdf(docDefinition).open();
+      pdfMake.createPdf(softwareDocDefinition).open();
     },
 
     generateExcelFiles(){
 
+      var body = [];
+      var col = [];
+
+      col.pushObject("Student Number");
+      col.pushObject("Assessment Code");
+      body.pushObject(col);
+
+      col = [];
+
+      for(let i = 0; i < this.get('studentModel').get('length'); i++){
+
+        this.get('store').query('adjudication', { filter: { student: this.get('studentModel').objectAt(i).get('id') } });
+        this.set('currentStudentAdjudications', this.get('studentModel').objectAt(i).get('adjudicationInfo'));
+
+        for(let j = 0; j < this.get('currentStudentAdjudications').get('length'); j++){
+          col = [];
+          col.pushObject(this.get('studentModel').objectAt(i).get('number'));
+          if(this.get('currentStudentAdjudications').objectAt(j).get('comment').get('name') == undefined){
+            col.pushObject(null);
+          }
+          else{
+            col.pushObject(this.get('currentStudentAdjudications').objectAt(j).get('comment').get('name'));
+          }
+
+          console.log(this.get('currentStudentAdjudications').objectAt(j).get('comment').get('name'));
+          body.pushObject(col);
+        }
+      }
+
       /* original data */
-      var data = [[1,2,3],[true, false, null, "sheetjs"],["foo","bar","0.3"], ["baz", null, "qux"]]
+      var data = body;
+
       var ws_name = "SheetJS";
 
       /* set up workbook objects -- some of these will not be required in the future */
@@ -76,14 +169,16 @@ export default Ember.Component.extend({
       /* write file */
       var wbout = XLSX.write(wb, wopts);
 
-      saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), "hello123.xlsx");
+      saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), "Assessment Result.xlsx");
 
 
-  },
+    },
 
-}
+  }
 
 });
+
+
 
 
 function s2ab(s) {
