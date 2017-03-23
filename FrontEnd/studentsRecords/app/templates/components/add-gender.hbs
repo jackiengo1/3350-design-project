@@ -2,15 +2,15 @@
 
     <div class="eight wide column" style="padding-right: 20px;">
       <div class="ui center aligned header" style="margin-bottom: 30px;">
-        <h2>Delete Gender</h2>
+        <h2>Modify Gender</h2>
       </div>
 
       <div class="ui middle aligned divided list" style="margin-top: 22px; margin-bottom: 22px;">
         {{#each genderModel as |oneGender|}}
         <div class="item">
           <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
-            <div class="teal ui button" onclick={{action 'openEditGenderModal' oneGender}}>Edit</div>
-            <div class="negative ui button" onclick={{action 'deleteGender' oneGender}}>Delete</div>
+            <div class="teal ui button" style = "width: 55px;" onclick={{action 'openEditGenderModal' oneGender}}><i class="large edit icon"></i></div>
+            <div class="negative ui button" style = "width: 55px;" onclick={{action 'deleteGender' oneGender}}><i class="large delete icon"></i></div>
           </div>
           <div class="content" style="padding-top: 10px; font-size: 16px;">
             {{oneGender.name}}

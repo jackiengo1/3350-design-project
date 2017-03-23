@@ -25,6 +25,7 @@ export default Ember.Component.extend({
 
       if(counter === 0)
       {
+        self.set('showLoader',false);self.set('showUpload',true);
         //counter =0 means the delete is not called, return anyway
         return;
       }
@@ -33,6 +34,7 @@ export default Ember.Component.extend({
       {
         if(file.name!== "residencies.xlsx")
         {
+          self.set('showLoader',false);self.set('showUpload',true);
           //if file name is not residency don't accept
           return;
         }
@@ -42,6 +44,7 @@ export default Ember.Component.extend({
       {
         if(file.name!== "genders.xlsx")
         {
+          self.set('showLoader',false);self.set('showUpload',true);
           //if file name is not residency don't accept
           return;
         }
@@ -51,6 +54,7 @@ export default Ember.Component.extend({
       {
         if(file.name!== "students.xlsx")
         {
+          self.set('showLoader',false);self.set('showUpload',true);
           //if file name is not residency don't accept
           return;
         }
@@ -60,6 +64,7 @@ export default Ember.Component.extend({
       {
         if(file.name!== "AdvancedStanding.xlsx")
         {
+          self.set('showLoader',false);self.set('showUpload',true);
           //if file name is not residency don't accept
           return;
         }
@@ -69,6 +74,7 @@ export default Ember.Component.extend({
       {
         if(file.name!== "AdmissionAverages.xlsx")
         {
+          self.set('showLoader',false);self.set('showUpload',true);
           //if file name is not residency don't accept
           return;
         }
@@ -78,6 +84,7 @@ export default Ember.Component.extend({
       {
         if(file.name!== "AdmissionComments.xlsx")
         {
+          self.set('showLoader',false);self.set('showUpload',true);
           //if file name is not residency don't accept
           return;
         }
@@ -87,6 +94,7 @@ export default Ember.Component.extend({
       {
         if(file.name!== "BasisOfAdmission.xlsx")
         {
+          self.set('showLoader',false);self.set('showUpload',true);
           //if file name is not residency don't accept
           return;
         }
@@ -96,6 +104,7 @@ export default Ember.Component.extend({
       {
         if(file.name!== "RegistrationComments.xlsx")
         {
+          self.set('showLoader',false);self.set('showUpload',true);
           //if file name is not residency don't accept
           return;
         }
@@ -105,6 +114,7 @@ export default Ember.Component.extend({
       {
         if(file.name!== "scholarshipsAndAwards.xlsx")
         {
+          self.set('showLoader',false);self.set('showUpload',true);
           //if file name is not residency don't accept
           return;
         }
@@ -114,6 +124,7 @@ export default Ember.Component.extend({
       {
         if(file.name!== "HighSchools.xlsx")
         {
+          self.set('showLoader',false);self.set('showUpload',true);
           //if file name is not residency don't accept
           return;
         }
@@ -123,6 +134,7 @@ export default Ember.Component.extend({
       {
         if(file.name!== "HighSchoolCourseInformation.xlsx")
         {
+          self.set('showLoader',false);self.set('showUpload',true);
           //if file name is not residency don't accept
           return;
         }
@@ -132,6 +144,7 @@ export default Ember.Component.extend({
       {
         if(file.name!== "termcodes.xlsx")
         {
+          self.set('showLoader',false);self.set('showUpload',true);
           //if file name is not residency don't accept
           return;
         }
@@ -141,6 +154,7 @@ export default Ember.Component.extend({
       {
         if(file.name!== "UndergraduateCourses.xlsx")
         {
+          self.set('showLoader',false);self.set('showUpload',true);
           //if file name is not residency don't accept
           return;
         }
@@ -150,6 +164,7 @@ export default Ember.Component.extend({
       {
         if(file.name!== "UndergraduateRecordCourses.xlsx")
         {
+          self.set('showLoader',false);self.set('showUpload',true);
           //if file name is not residency don't accept
           return;
         }
@@ -159,6 +174,7 @@ export default Ember.Component.extend({
       {
         if(file.name!== "UndergraduateRecordPlans.xlsx")
         {
+          self.set('showLoader',false);self.set('showUpload',true);
           //if file name is not residency don't accept
           return;
         }
@@ -168,6 +184,7 @@ export default Ember.Component.extend({
       {
         if(file.name!== "AssessmentCodes.xlsx")
         {
+          self.set('showLoader',false);self.set('showUpload',true);
           //if file name is not residency don't accept
           return;
         }
@@ -177,6 +194,7 @@ export default Ember.Component.extend({
       {
         if(file.name!== "Departments.xlsx")
         {
+          self.set('showLoader',false);self.set('showUpload',true);
           //if file name is not residency don't accept
           return;
         }
@@ -186,6 +204,7 @@ export default Ember.Component.extend({
       {
         if(file.name!== "ProgramAdministrations.xlsx")
         {
+          self.set('showLoader',false);self.set('showUpload',true);
           //if file name is not residency don't accept
           return;
         }
@@ -195,6 +214,7 @@ export default Ember.Component.extend({
       {
         if(file.name!== "UndergraduateRecordAdjudications.xlsx")
         {
+          self.set('showLoader',false);self.set('showUpload',true);
           //if file name is not residency don't accept
           return;
         }
@@ -202,6 +222,7 @@ export default Ember.Component.extend({
 
       if(counter>19)
       {
+        self.set('showLoader',false);self.set('showUpload',true);
         //counter goes beyond 14, it shouldn't upload any files
         return;
       }

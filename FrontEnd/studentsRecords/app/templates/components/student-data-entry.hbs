@@ -288,7 +288,7 @@
             <div class="column">
               <div class="ui center aligned header">
                 <div class="teal ui button" style="width: 55px;" onclick={{action 'openASEdit' userListAS.id}}><i class="large edit icon"></i></div>
-                <button class="negative ui button" onclick={{action 'deleteAS' userListAS}}>Delete</button>
+                <button class="negative ui button" style ="width: 55px;" onclick={{action 'deleteAS' userListAS}}><i class="large delete icon"></i></button>
               </div>
             </div>
           </div>
@@ -430,11 +430,11 @@
             <td>{{oneHSGrade.source.unit}}</td>
             <td>{{oneHSGrade.mark}}</td>
             <td class="collapsing">
-              <button class="ui button" onclick={{action 'openEditHighSchoolCourseForm' oneHSGrade}}>
-                Edit
+              <button class="teal ui button" style = "width: 55px;" onclick={{action 'openEditHighSchoolCourseForm' oneHSGrade}}>
+                <i class="large edit icon"></i>
               </button>
-              <button class="ui negative button" onclick={{action 'deleteHsMark' oneHSGrade}}>
-                Delete
+              <button class="ui negative button" style = "width: 55px;" onclick={{action 'deleteHsMark' oneHSGrade}}>
+                <i class="large delete icon"></i>
               </button>
             </td>
 
