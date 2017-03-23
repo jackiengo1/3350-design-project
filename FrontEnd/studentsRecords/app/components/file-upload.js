@@ -6,9 +6,15 @@ export default Ember.Component.extend({
 
   filetobeloaded: "Please Click Delete first",
   count:0,
+  showLoader:false,
+  showUpload:true,
 
   actions:{
     fileLoaded: function(file) {
+      //each time the loader is called, show loading and hide loader
+      this.set('showLoader',true);
+      this.set('showUpload',false);
+
       //each time the fileLoaded function is called, update the counter and lable name
       //and according to the given sequence determine if the file should be accepted
       var counter = this.get('count');
@@ -1788,230 +1794,237 @@ export default Ember.Component.extend({
     //end of the read file function
 
     deleteall:function(){
-      //delete has to be called before uploading
-      //when delete is call, increment the counter so the uploading will work
-      var counter = this.get('count');
-      counter=1;
-      this.set('count',counter);
-      var label = this.get('filetobeloaded');
-      label = "Please upload residencies.xlsx";
-      this.set('filetobeloaded',label);
-      //when user start uploading the file, delete all original data in the db
-      //delete all student record
-      this.get('store').query('student', {
-        limit: 9007199254740992, //this is the max int in javascript
-        offset: 0
-      }).then(function (record) {
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
-      });
+      var self = this;
+      //each time the delete is called, show loading and hide loader
+      this.set('showLoader',true);
+      this.set('showUpload',false);
+      setTimeout(function(){
+        self.set('showLoader',false);
+        self.set('showUpload',true);}, 5000);
+        //delete has to be called before uploading
+        //when delete is call, increment the counter so the uploading will work
+        var counter = this.get('count');
+        counter=1;
+        this.set('count',counter);
+        var label = this.get('filetobeloaded');
+        label = "Please upload residencies.xlsx";
+        this.set('filetobeloaded',label);
+        //when user start uploading the file, delete all original data in the db
+        //delete all student record
+        this.get('store').query('student', {
+          limit: 9007199254740992, //this is the max int in javascript
+          offset: 0
+        }).then(function (record) {
+          record.content.forEach(function(rec) {
+            Ember.run.once(this, function() {
+              rec.deleteRecord();
+              rec.save();
+            });
+          }, this);
+        });
 
-      //delete all gender record
-      this.get('store').findAll('gender').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
-      });
+        //delete all gender record
+        this.get('store').findAll('gender').then(function(record){
+          record.content.forEach(function(rec) {
+            Ember.run.once(this, function() {
+              rec.deleteRecord();
+              rec.save();
+            });
+          }, this);
+        });
 
-      //delete all residency record
-      this.get('store').findAll('residency').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
-      });
+        //delete all residency record
+        this.get('store').findAll('residency').then(function(record){
+          record.content.forEach(function(rec) {
+            Ember.run.once(this, function() {
+              rec.deleteRecord();
+              rec.save();
+            });
+          }, this);
+        });
 
-      //delete all scholarship-award record
-      this.get('store').findAll('scholarship-award').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
-      });
+        //delete all scholarship-award record
+        this.get('store').findAll('scholarship-award').then(function(record){
+          record.content.forEach(function(rec) {
+            Ember.run.once(this, function() {
+              rec.deleteRecord();
+              rec.save();
+            });
+          }, this);
+        });
 
-      //delete all advanced-standing record
-      this.get('store').findAll('advanced-standing').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
-      });
+        //delete all advanced-standing record
+        this.get('store').findAll('advanced-standing').then(function(record){
+          record.content.forEach(function(rec) {
+            Ember.run.once(this, function() {
+              rec.deleteRecord();
+              rec.save();
+            });
+          }, this);
+        });
 
-      //delete all high-school-course record
-      this.get('store').findAll('high-school-course').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
-      });
+        //delete all high-school-course record
+        this.get('store').findAll('high-school-course').then(function(record){
+          record.content.forEach(function(rec) {
+            Ember.run.once(this, function() {
+              rec.deleteRecord();
+              rec.save();
+            });
+          }, this);
+        });
 
-      //delete all high-school-subject record
-      this.get('store').findAll('high-school-subject').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
-      });
+        //delete all high-school-subject record
+        this.get('store').findAll('high-school-subject').then(function(record){
+          record.content.forEach(function(rec) {
+            Ember.run.once(this, function() {
+              rec.deleteRecord();
+              rec.save();
+            });
+          }, this);
+        });
 
-      //delete all hscourse-grade record
-      this.get('store').findAll('hscourse-grade').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
-      });
+        //delete all hscourse-grade record
+        this.get('store').findAll('hscourse-grade').then(function(record){
+          record.content.forEach(function(rec) {
+            Ember.run.once(this, function() {
+              rec.deleteRecord();
+              rec.save();
+            });
+          }, this);
+        });
 
-      //delete all secondary-school record
-      this.get('store').findAll('secondary-school').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
-      });
+        //delete all secondary-school record
+        this.get('store').findAll('secondary-school').then(function(record){
+          record.content.forEach(function(rec) {
+            Ember.run.once(this, function() {
+              rec.deleteRecord();
+              rec.save();
+            });
+          }, this);
+        });
 
-      //delete all plan-code record
-      this.get('store').findAll('plan-code').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
-      });
+        //delete all plan-code record
+        this.get('store').findAll('plan-code').then(function(record){
+          record.content.forEach(function(rec) {
+            Ember.run.once(this, function() {
+              rec.deleteRecord();
+              rec.save();
+            });
+          }, this);
+        });
 
-      //delete all program-record record
-      this.get('store').findAll('program-record').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
-      });
+        //delete all program-record record
+        this.get('store').findAll('program-record').then(function(record){
+          record.content.forEach(function(rec) {
+            Ember.run.once(this, function() {
+              rec.deleteRecord();
+              rec.save();
+            });
+          }, this);
+        });
 
 
-      //delete all term-code record
-      this.get('store').findAll('term-code').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
-      });
+        //delete all term-code record
+        this.get('store').findAll('term-code').then(function(record){
+          record.content.forEach(function(rec) {
+            Ember.run.once(this, function() {
+              rec.deleteRecord();
+              rec.save();
+            });
+          }, this);
+        });
 
-      //delete all course-code record
-      this.get('store').findAll('course-code').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
-      });
+        //delete all course-code record
+        this.get('store').findAll('course-code').then(function(record){
+          record.content.forEach(function(rec) {
+            Ember.run.once(this, function() {
+              rec.deleteRecord();
+              rec.save();
+            });
+          }, this);
+        });
 
-      //delete all grade record
-      this.get('store').findAll('grade').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
-      });
+        //delete all grade record
+        this.get('store').findAll('grade').then(function(record){
+          record.content.forEach(function(rec) {
+            Ember.run.once(this, function() {
+              rec.deleteRecord();
+              rec.save();
+            });
+          }, this);
+        });
 
-      //delete all term record
-      this.get('store').findAll('term').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
-      });
+        //delete all term record
+        this.get('store').findAll('term').then(function(record){
+          record.content.forEach(function(rec) {
+            Ember.run.once(this, function() {
+              rec.deleteRecord();
+              rec.save();
+            });
+          }, this);
+        });
 
-      //delete all program administration
-      this.get('store').findAll('program-administration').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
-      });
+        //delete all program administration
+        this.get('store').findAll('program-administration').then(function(record){
+          record.content.forEach(function(rec) {
+            Ember.run.once(this, function() {
+              rec.deleteRecord();
+              rec.save();
+            });
+          }, this);
+        });
 
-      //delete all department
-      this.get('store').findAll('department').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
-      });
+        //delete all department
+        this.get('store').findAll('department').then(function(record){
+          record.content.forEach(function(rec) {
+            Ember.run.once(this, function() {
+              rec.deleteRecord();
+              rec.save();
+            });
+          }, this);
+        });
 
-      //delete all faculty
-      this.get('store').findAll('faculty').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
-      });
+        //delete all faculty
+        this.get('store').findAll('faculty').then(function(record){
+          record.content.forEach(function(rec) {
+            Ember.run.once(this, function() {
+              rec.deleteRecord();
+              rec.save();
+            });
+          }, this);
+        });
 
-      //delete all assessment code
-      this.get('store').findAll('assessment-code').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
-      });
+        //delete all assessment code
+        this.get('store').findAll('assessment-code').then(function(record){
+          record.content.forEach(function(rec) {
+            Ember.run.once(this, function() {
+              rec.deleteRecord();
+              rec.save();
+            });
+          }, this);
+        });
 
-      //delete all logical expression
-      this.get('store').findAll('logical-expression').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
-      });
+        //delete all logical expression
+        this.get('store').findAll('logical-expression').then(function(record){
+          record.content.forEach(function(rec) {
+            Ember.run.once(this, function() {
+              rec.deleteRecord();
+              rec.save();
+            });
+          }, this);
+        });
 
-      //delete all adjudication
-      this.get('store').findAll('adjudication').then(function(record){
-        record.content.forEach(function(rec) {
-          Ember.run.once(this, function() {
-            rec.deleteRecord();
-            rec.save();
-          });
-        }, this);
-      });
-    },
+        //delete all adjudication
+        this.get('store').findAll('adjudication').then(function(record){
+          record.content.forEach(function(rec) {
+            Ember.run.once(this, function() {
+              rec.deleteRecord();
+              rec.save();
+            });
+          }, this);
+        });
+      },
 
-  }
-  //end of actions
-});
+    }
+    //end of actions
+  });

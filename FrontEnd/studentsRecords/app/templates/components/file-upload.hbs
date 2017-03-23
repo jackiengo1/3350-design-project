@@ -1,4 +1,4 @@
-{{#if true}}
+{{#if showUpload}}
 <h2 style="text-align: center;" id="uploader">Upload Files</h2>
 <h4 style="text-align: center; color:red;">{{filetobeloaded}}</h4>
 <div style="text-align: center;">
@@ -13,9 +13,11 @@
   </button>
 </div>
 {{/if}}
+{{#if showLoader}}
 <div class="ui segment">
-  <div class="ui active dimmer">
-    <div class="ui indeterminate text loader">Preparing Files</div>
+  <div class="ui active inverted dimmer">
+    <div class="ui massive text loader">Loading</div>
   </div>
   <p></p>
 </div>
+{{/if}}
