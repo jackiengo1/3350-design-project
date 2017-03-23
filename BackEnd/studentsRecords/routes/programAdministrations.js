@@ -64,7 +64,7 @@ router.route('/:programAdministration_id')
         });
     })
     .delete(parseUrlencoded, parseJSON, function (request, response) {
-        models.ProgramAdministrations.findByIdAndRemove(request.params.programAdministrationd_id,
+        models.ProgramAdministrations.findByIdAndRemove(request.params.programAdministration_id,
             function (error, deleted) {
                 if (!error) {
                     response.json({programAdministration: deleted});

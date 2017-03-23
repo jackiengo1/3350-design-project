@@ -3,17 +3,17 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   store: Ember.inject.service(),
   assessmentCodeModel:null,
-  departmentModel:null,
+  adjudicationModel:null,
   selectedAssessment:null,
-  selectedDepartment:null,
+  selectedAdjudication:null,
 
   init() {
     this._super(...arguments);
     // load Residency data model
     var self = this;
     //get the course-code object to local
-    this.get('store').findAll('department').then(function (records) {
-      self.set('departmentModel', records);
+    this.get('store').findAll('adjudication').then(function (records) {
+      self.set('adjudicationModel', records);
     });
     //get the assessment-code object to local
     this.get('store').findAll('assessment-code').then(function(records){
@@ -27,16 +27,16 @@ export default Ember.Component.extend({
       this.set('selectedAssessment',assessment);
     },
 
-    selectDepartment(depart){
-      this.set('selectedDepartment',depart);
+    selectAdjudication(adjudication){
+      this.set('selectedAdjudication',adjudication);
     },
 
-    linkAssessmentDepartment(){
-      var currentDept = this.get('store').peekRecord('department',this.get('selectedDepartment'));
+    linkAssessmentAdjudication(){
+      var currentAjudication = this.get('store').peekRecord('adjudication',this.get('selectedAdjudication'));
       var currentAssessmentCode = this.get('store').peekRecord('assessment-code',this.get('selectedAssessment'));
-      if(currentDept == "null" || currentDept == null)
+      if(currentAjudication == "null" || currentAjudication == null)
       {
-        alert("Please select a department!");
+        alert("Please select a adjudication!");
         return;
       }
       else if(currentAssessmentCode == "null" || currentAssessmentCode == null)
@@ -46,8 +46,8 @@ export default Ember.Component.extend({
       }
       else{
         //at this point two input are selected
-        currentDept.set('comment',currentAssessmentCode);
-        currentDept.save();
+        currentAjudication.set('comment',currentAssessmentCode);
+        currentAjudication.save();
       }
     },
 
