@@ -1,15 +1,14 @@
-
 <div class="ui pointing secondary three item menu" style="font-size: 16px;">
 
-  <a class="active item" data-tab="planCode" >Plan Codes</a>
+  <a class="active item" data-tab="planCode">Plan Codes</a>
   <a class="item" data-tab="termCode">Term Codes</a>
   <a class="item " data-tab="programRecord">Program Records</a>
 
 </div>
 
-<div class = "ui bottom attached active tab " data-tab="planCode" >
+<div class="ui bottom attached active tab segment" data-tab="planCode" style="background-color: #e2e0e2; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">
 
-  <div class="ui grid">
+  <div class="ui grid" style="background-color: #e2e0e2;">
 
     <div class="eight wide column" style="padding-right: 20px;">
       <div class="ui center aligned header" style="margin-bottom: 30px;">
@@ -37,8 +36,7 @@
     <div class="eight wide column" style="padding-right: 20px;">
       <form class="ui form">
         <div class="field">
-          <label>Name: </label>
-          {{input type="text"  value = planCode}}
+          <label>Name: </label> {{input type="text" value = planCode}}
         </div>
       </form>
 
@@ -57,7 +55,11 @@
 
 
 
-<div class = "ui tab" data-tab="termCode" >
+<div class="ui bottom attached tab segment" data-tab="termCode" style="background-color: #e2e0e2; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">
+
+  <div class="ui grid" style="background-color: #e2e0e2;">
+
+    <div class="eight wide column" style="padding-right: 20px;">
       <div class="ui center aligned header" style="margin-bottom: 30px;">
         <h2>Term Codes</h2>
       </div>
@@ -75,35 +77,34 @@
         </div>
         {{/each}}
       </div>
+    </div>
 
-
-
+    <div class="eight wide column" style="padding-right: 20px;">
       <form class="ui form">
         <div class="field">
-          <label>Name: </label>
-          {{input type="text"  value = termCode}}
+          <label>Name: </label> {{input type="text" value = termCode}}
         </div>
       </form>
-
       <div class="ui center aligned header">
         <button class="positive ui button" {{action 'addTermCode'}}>
           Add Term code
         </button>
       </div>
+    </div>
+  </div>
 </div>
 
 
 
-<div class = "ui tab" data-tab="programRecord" >
-  <div class="ui grid">
+<div class="ui bottom attached tab segment" data-tab="programRecord" style="background-color: #e2e0e2; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">
+  <div class="ui grid" style="background-color: #e2e0e2;">
 
     <div class="eight wide column" style="padding-right: 20px;">
       <div class="ui center aligned header" style="margin-bottom: 30px;">
         <h2>Program Records</h2>
       </div>
 
-      {{#ui-accordion class="styled fluid"}}
-      {{#each programRecordModel as |oneprogramRecord|}}
+      {{#ui-accordion class="styled fluid"}} {{#each programRecordModel as |oneprogramRecord|}}
       <div class="title" style="border-color: #6435c9">
         {{oneprogramRecord.name}}
       </div>
@@ -132,8 +133,7 @@
           </div>
         </div>
       </div>
-      {{/each}}
-      {{/ui-accordion}}
+      {{/each}} {{/ui-accordion}}
     </div>
 
     <div class="eight wide column" style="padding-right: 20px;">
@@ -144,21 +144,17 @@
       <div class="ui sixteen wide column">
         <form class="ui form">
           <div class="field">
-            <label>Program Record Name</label>
-            {{input type="text"  value = programRecordName}}
+            <label>Program Record Name</label> {{input type="text" value = programRecordName}}
           </div>
           <div class="three fields">
             <div class="field">
-              <label>Level</label>
-              {{input type="text"  value = programRecordLevel}}
+              <label>Level</label> {{input type="text" value = programRecordLevel}}
             </div>
             <div class="field">
-              <label>Load</label>
-              {{input type="text"  value = programRecordLoad}}
+              <label>Load</label> {{input type="text" value = programRecordLoad}}
             </div>
             <div class="field">
-              <label>Status</label>
-              {{input type="text"  value = programRecordStatus}}
+              <label>Status</label> {{input type="text" value = programRecordStatus}}
             </div>
           </div>
 
@@ -178,16 +174,15 @@
                   </div>
 
                 </div>
-                {{else}}
-                You have not added any plan codes
-                {{/each}}
+                {{else}} You have not added any plan codes {{/each}}
 
 
               </div>
 
-              <div class="field">
-                <label>Plan Code</label>
-                <select onchange={{action 'selectPlanCode' value="target.value"}}>
+              <div class="two fields">
+                <div class="field">
+                  <label>Plan Code</label>
+                  <select onchange={{action 'selectPlanCode' value="target.value" }}>
                   <option selected = "selected" value = null> Select a plan code </option>
                   {{#each planCodeModel as |onePlanCode|}}
 
@@ -195,11 +190,14 @@
 
                   {{/each}}
                 </select>
+                </div>
+                <div class="field" style="align-self: flex-end;">
+                  <button class="positive ui button" {{action 'addToPlanCodeArray'}}>
+                    Add Plan Code
+                  </button>
+                </div>
               </div>
 
-              <button class="positive ui button" {{action 'addToPlanCodeArray'}}>
-                Add Plan Code
-              </button>
 
             </div>
           </div>
@@ -233,19 +231,18 @@
 
   <div class="content">
     <form class="ui form">
-    <div class = "field">
-    <label>Name</label>
-    {{input size="10" type="text"  value = planCodeNameEdit}}
-  </div>
-</form>
+      <div class="field">
+        <label>Name</label> {{input size="10" type="text" value = planCodeNameEdit}}
+      </div>
+    </form>
   </div>
 
 
   <div class="actions">
-    <button class="ui primary button" {{action 'closeEditPlanCodeForm'}} >
+    <button class="ui primary button" {{action 'closeEditPlanCodeForm'}}>
       Exit
     </button>
-    <button class="ui primary button" {{action 'editPlanCode'}} >
+    <button class="ui primary button" {{action 'editPlanCode'}}>
       Update
     </button>
   </div>
@@ -270,19 +267,18 @@
 
   <div class="content">
     <form class="ui form">
-    <div class = "field">
-    <label>Name</label>
-    {{input size="10" type="text"  value = termCodeNameEdit}}
-  </div>
-</form>
+      <div class="field">
+        <label>Name</label> {{input size="10" type="text" value = termCodeNameEdit}}
+      </div>
+    </form>
   </div>
 
 
   <div class="actions">
-    <button class="ui primary button" {{action 'closeEditTermCodeForm'}} >
+    <button class="ui primary button" {{action 'closeEditTermCodeForm'}}>
       Exit
     </button>
-    <button class="ui primary button" {{action 'editTermCode'}} >
+    <button class="ui primary button" {{action 'editTermCode'}}>
       Update
     </button>
   </div>
@@ -306,52 +302,46 @@
   </div>
 
   <div class="content">
-      <form class="ui form">
+    <form class="ui form">
+      <div class="field">
+        <label>Program Record Name</label> {{input type="text" value = PRNameEdit}}
+      </div>
+      <div class="three fields">
         <div class="field">
-          <label>Program Record Name</label>
-          {{input type="text"  value = PRNameEdit}}
+          <label>Level</label> {{input type="text" value = PRLevelEdit}}
         </div>
-        <div class="three fields">
-          <div class="field">
-            <label>Level</label>
-            {{input type="text"  value = PRLevelEdit}}
-          </div>
-          <div class="field">
-            <label>Load</label>
-            {{input type="text"  value = PRLoadEdit}}
-          </div>
-          <div class="field">
-            <label>Status</label>
-            {{input type="text"  value = PRStatusEdit}}
-          </div>
+        <div class="field">
+          <label>Load</label> {{input type="text" value = PRLoadEdit}}
         </div>
+        <div class="field">
+          <label>Status</label> {{input type="text" value = PRStatusEdit}}
+        </div>
+      </div>
 
 
 
-        <div class="ui grid">
-          <div class="ui sixteen wide column">
+      <div class="ui grid">
+        <div class="ui sixteen wide column">
 
-            <div class="ui middle aligned divided list" style="margin-top: 22px; margin-bottom: 22px;">
-              {{#each PRPlanEdit as |onePlanCode|}}
-              <div class="item">
-                <div class="content" style="padding-top: 10px; font-size: 16px;">
-                  {{onePlanCode.name}}
-                </div>
-                <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
-                  <div class="negative ui button" onclick={{action 'removePlanCodeEdit' onePlanCode}}>Delete</div>
-                </div>
-
+          <div class="ui middle aligned divided list" style="margin-top: 22px; margin-bottom: 22px;">
+            {{#each PRPlanEdit as |onePlanCode|}}
+            <div class="item">
+              <div class="content" style="padding-top: 10px; font-size: 16px;">
+                {{onePlanCode.name}}
               </div>
-              {{else}}
-              You have not added any plan codes
-              {{/each}}
-
+              <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
+                <div class="negative ui button" onclick={{action 'removePlanCodeEdit' onePlanCode}}>Delete</div>
+              </div>
 
             </div>
+            {{else}} You have not added any plan codes {{/each}}
 
-            <div class="field">
-              <label>Plan Code</label>
-              <select onchange={{action 'selectPlanCodeEdit' value="target.value"}}>
+
+          </div>
+
+          <div class="field">
+            <label>Plan Code</label>
+            <select onchange={{action 'selectPlanCodeEdit' value="target.value" }}>
                 <option selected = "selected" value = null> Select a plan code </option>
                 {{#each planCodeModel as |onePlanCode|}}
 
@@ -359,24 +349,24 @@
 
                 {{/each}}
               </select>
-            </div>
+          </div>
 
-            <button class="positive ui button" {{action 'addPlanCodeEdit' }}>
+          <button class="positive ui button" {{action 'addPlanCodeEdit' }}>
               Add Plan Code
             </button>
 
-          </div>
         </div>
+      </div>
 
-      </form>
+    </form>
   </div>
 
 
   <div class="actions">
-    <button class="ui primary button" {{action 'closeEditProgramRecordForm'}} >
+    <button class="ui primary button" {{action 'closeEditProgramRecordForm'}}>
       Exit
     </button>
-    <button class="ui primary button" {{action 'editProgramRecord'}} >
+    <button class="ui primary button" {{action 'editProgramRecord'}}>
       Update
     </button>
   </div>

@@ -8,7 +8,7 @@ export default Ember.Component.extend({
   tempPassword: null,
   error: null,
 
-  errorMessage: Ember.computed ('error', function(){
+  errorMessage: Ember.computed('error', function () {
     return this.get('error');
   }),
 
@@ -23,22 +23,27 @@ export default Ember.Component.extend({
   },
 
   actions: {
-    login(){
+    login() {
       var authentication = this.get('oudaAuth');
       var self = this;
-      if (this.get('name') === "root"){
+      var success = false;
+      if (this.get('name') === "root") {
         authentication.openRoot(this.get('password')).then(function (name) {
+          success = true;
           authentication.set('getName', name);
           self.get('routing').transitionTo('home');
+          Ember.$("body").css("background-color", "#EEE");
         }, function (error) {
-          console.log(error);
+          self.set('error', error);
         });
       } else {
         authentication.open(this.get('name'), this.get('password')).then(function () {
           authentication.set('getName', self.get('name'));
           self.set('error', null);
           self.get('routing').transitionTo('home');
+          Ember.$("body").css("background-color", "#EEE");
         }, function (error) {
+          self.set('error', error);
           if (error === "passwordReset") {
             self.set('isPasswordChanging', true);
           } else {
@@ -56,17 +61,16 @@ export default Ember.Component.extend({
           }
         });
       }
-
-      Ember.$("body").css("background-color", "#EEE");
+      console.log(success);
     },
 
-    save(){
+    save() {
       var authentication = this.get('oudaAuth');
       var myStore = this.get('store');
       var userName = this.get('name');
       var hashedPassword = authentication.hash(this.get('firstPassword'));
       var self = this;
-      myStore.queryRecord('password', {filter: {userName: userName}}).then(function (userShadow) {
+      myStore.queryRecord('password', { filter: { userName: userName } }).then(function (userShadow) {
         userShadow.set('encryptedPassword', hashedPassword);
         userShadow.set('passwordMustChanged', true);
         userShadow.set('passwordReset', false);
@@ -82,7 +86,7 @@ export default Ember.Component.extend({
   },
 });
 
-Ember.$(document).ready(function(){
+Ember.$(document).ready(function () {
   Ember.$("html").css("background-image", 'URL("/assets/images/wallpaper_1LG.png")');
   Ember.$("body").css("background-color", "transparent");
 });

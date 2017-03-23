@@ -48,7 +48,7 @@ router.route('/')
                     response: null
                 });
                 newLogin.save(function (error) {
-                    if (error) return console.error(error);
+                    if (error) return console.log(error);
                     response.json({root: newLogin});
                 });
             }
@@ -76,7 +76,6 @@ router.route('/')
                                 message4.sessionIsActive = true;
                                 message4.save(function (error) {
                                     if (error) return console.error(error);
-
                                     response.json({root: message4});
                                 });
                             }
