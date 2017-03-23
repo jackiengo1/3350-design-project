@@ -25,11 +25,11 @@
           <div class="content">
             <div class="ui vertically divided grid">
               <div class="two column row" style="padding: 0;">
-                <div class="column">
-                  <p style="text-align: center;"><button class="negative ui button" onclick={{action 'deleteSecondarySchool' oneSecondarySchool}}>Delete</button></p>
+                <div class=" column">
+                  <button class="teal ui button"  style="width: 55px;" onclick={{action 'openSecSchoolEdit' oneSecondarySchool.id}}><i class="large edit icon"></i></button>
                 </div>
                 <div class="column">
-                  <div class="teal ui button" style="width: 55px;" onclick={{action 'openSecSchoolEdit' oneSecondarySchool.id}}><i class="large edit icon"></i></div>
+                  <button class="negative ui button" style="width: 55px;" onclick={{action 'deleteSecondarySchool' oneSecondarySchool}}><i class="large delete icon"></i></button>
                 </div>
               </div>
             </div>
@@ -158,11 +158,12 @@
                 </div>
               </div>
               <div class="two column row" style="padding: 0;">
-                <div class="column">
-                  <p style="text-align: center;"><button class="negative ui button" onclick={{action 'deletehsCourse' oneCourse}}>Delete</button></p>
-                </div>
+
                 <div class="column">
                   <div class="teal ui button" style="width: 55px;" onclick={{action 'openhsEdit' oneCourse.id}}><i class="large edit icon"></i></div>
+                </div>
+                <div class="column">
+                  <p style="text-align: center;"><button class="negative ui button" style="width: 55px;" onclick={{action 'deletehsCourse' oneCourse}}><i class="large delete icon"></i></button></p>
                 </div>
               </div>
             </div>
@@ -299,11 +300,12 @@
               </div>
               <div class="two column row" style="padding: 0;">
                 <div class="column">
-                  <p style="text-align: center;"><button class="negative ui button" onclick={{action 'deletehsSubject' onehsSubject}}>Delete</button></p>
-                </div>
-                <div class="column">
                   <div class="teal ui button" style="width: 55px;" onclick={{action 'openhsSubjectEdit' onehsSubject.id}}><i class="large edit icon"></i></div>
                 </div>
+                <div class="column">
+                  <p style="text-align: center;"><button class="negative ui button" style="width: 55px;" onclick={{action 'deletehsSubject' onehsSubject}}><i class="large delete icon"></i></button></p>
+                </div>
+
               </div>
             </div>
           </div>
