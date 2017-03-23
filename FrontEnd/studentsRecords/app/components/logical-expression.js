@@ -147,7 +147,7 @@ export default Ember.Component.extend({
          //add the expession string into logical expression array
          this.get('logicalExpArray').pushObject(booleanExpString);
          this.set('errorMsg',"");
-         Ember.$('.ui.modal.logicalExp').modal('hide');
+         Ember.$('.ui.modal.logicalExp').modal({ detachable: false, }).modal('hide');
        }
 
     },
@@ -260,7 +260,7 @@ export default Ember.Component.extend({
 
     openLogicalExpModal(){
       this.set('inputValue', null);
-      Ember.$('.ui.modal.logicalExp').modal('show');
+      Ember.$('.ui.modal.logicalExp').modal({ detachable: false, }).modal('show');
     },
 
     closeLogicalExpModal(){

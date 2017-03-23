@@ -12,7 +12,6 @@
 
 </div>
 
-
 {{#if (not-eq oudaAuth.getName "Root")}}
   {{#if EUP01IsPermitted }}
     <div class="ui segment">
@@ -72,6 +71,7 @@
     <button class="ui button"  {{action 'cancel'}}>Cancel</button>
 
   {{else}}
+  <button class="ui secondary button"  {{action 'cancel'}}>Back</button>
     <div class="ui center aligned raised segment">
       <div class="ui icon header">
         <i class="protect icon"></i>
@@ -86,6 +86,7 @@
 
   {{/if}}
 {{else}}
+<button class="ui secondary button"  {{action 'cancel'}}>Back</button>
   <div class="ui center aligned raised segment">
     <div class="ui icon header">
       <i class="protect icon"></i>
