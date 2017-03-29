@@ -150,20 +150,22 @@ export default Ember.Component.extend({
 
     adjudicateStudents(){
 
-
       for(var i = 0; i < this.get('studentModel').get('length'); i++){
         this.set('evalString', ""); //clear evalString for next student
+
         //takes in an index for a student in the student model.
-        this.getNextStudent(i); //puts the student's current courses and grades into separate arrays
+        //puts the student's current courses and grades into separate arrays
+        //also gets the student's adjudication and logical expressions for each assessment code
+        this.getNextStudent(i);
+
+        //need to call parseLogicalExpTree function here
 
       }//end for
 
-
       //at the very end, the evalString should look something like this
       console.log(eval("false&&true||false&&true(true||false||true)&&true||false"));
-
-
     },
+
 
 
     generatePDFs(){
