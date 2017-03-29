@@ -4,9 +4,20 @@ import pdfMake from 'ember-pdfmake';
 export default Ember.Component.extend({
   /*global XLSX*/
   store: Ember.inject.service(),
+
   studentModel: null,
+  currentStudent: null,
+  currentStudentTerms: null,
   adjudicationModel: null,
+
   currentStudentAdjudications: null,
+  currentStudentCourses: [],
+  currentStudentGrades: [],
+  currentStudentLogicalExp: null,
+
+  evalString: "",
+
+
 
   init() {
     this._super(...arguments);
@@ -23,9 +34,120 @@ export default Ember.Component.extend({
       self.set('adjudicationModel', records);
     });
 
+    this.get('store').findAll('term'); //load terms into the store
+    this.get('store').findAll('course-code'); //load course codes into the store
+    this.get('store').findAll('grade'); //load grades into the store
+    this.get('store').findAll('assessment-code') //load assessment codes into the store
+
+
   },
 
+//go to the next student, and loads all of there courses, grades, and adjudications
+  getNextStudent: function(index){
+    var self = this;
+    this.set('currentStudent', this.get('studentModel').objectAt(index));
+    this.set('currentStudentTerms', this.get('currentStudent').get('semester'));
+    this.set('currentStudentAdjudications', this.get('currentStudent').get('adjudicationInfo'));
+
+    this.get('currentStudentTerms').forEach(function (term) {
+      term.get('courseInfo').forEach(function (course) {
+        self.get('currentStudentCourses').push(course);
+        self.get('currentStudentGrades').push(course.get('mark').get('mark'));
+      });
+
+    });
+    this.get('currentStudentAdjudications').forEach(function (adjudication){
+    });
+
+
+  },
+
+
+  parseLogicalExpTree: function(logicalExpTree){
+
+    var firstExp = true; //this determines if we are working with the first logical exp
+    var expString = logicalExpTree.get('booleanExp'); //logical exp string
+    var logicalLink = logicalExpTree.get('logicalLink'); //AND or OR
+    expString = expString.split(" ");
+    var expArray = logicalExpTree.get('link'); //array of logical exps
+    var criteria = expString[0]; // course or w.e to be evaluated
+    var operator = expString[1];
+    var inputValue = expString[2]; //input value
+
+    this.get('currentStudentCourses').forEach(function(course){ //loop through student courses
+      if(criteria[0] == course.get('name')){ //if course name matches
+        if(operator == "="){ //check operator
+          if(course.get('mark').get('mark') == inputValue){
+            this.set('evalString', this.get('evalString') + "true"); //appends true to the evalString
+          }
+        }
+        else if(operator == "<"){
+          if(course.get('mark').get('mark') < inputValue){
+            this.set('evalString', this.get('evalString') + "true");
+          }
+        }
+        else if(operator == "<="){
+          if(course.get('mark').get('mark') <= inputValue){
+            this.set('evalString', this.get('evalString') + "true");
+          }
+        }
+        else if(operator == ">"){
+          if(course.get('mark').get('mark') > inputValue){
+            this.set('evalString', this.get('evalString') + "true");
+          }
+        }
+        else if(operator == ">="){
+          if(course.get('mark').get('mark') >= inputValue){
+            this.set('evalString', this.get('evalString') + "true");
+          }
+        }
+        else if(operator == "REQUIRED"){
+          this.set('evalString', this.get('evalString') + "true");
+        }//end else if
+      }//end if
+    });//end forEach
+
+    if(logicalLink == "AND"){
+      this.set('evalString', this.get('evalString') + "&&");
+    }
+    else if(logicalLink == "OR"){
+      this.set('evalString', this.get('evalString') + "||");
+    }
+
+
+    if(expArray != null){ //if there is a logical exp array
+      if(firstExp){ //if it is the first logical exp, don't warp in brackets
+        firstExp = false;
+        expArray.forEach(function(logicalExp){ //recursively loop through logical exps
+          this.parseLogicalExpTree(logicalExp);
+        });
+      }//end if
+      else{ //if we are not dealing with the first logcial exp, warp in brackets
+        this.set('evalString', this.get('evalString') + "(");
+        expArray.forEach(function(logicalExp){ //recursively loop through logical exps
+          this.parseLogicalExpTree(logicalExp);
+        });
+        this.set('evalString', this.get('evalString') + ")");
+      }//end else
+    }//end if
+  },
+
+
   actions: {
+
+    adjudicateStudents(){
+
+      for(var i = 0; i < this.get('studentModel').get('length'); i++){
+        //takes in an index for a student in the student model.
+        this.getNextStudent(i); //puts the student's current courses and grades into separate arrays
+      }
+
+
+      //at the very end, the evalString should look something like this
+      console.log(eval("false&&true||false&&true(true||false||true)&&true||false"));
+
+
+    },
 
 
     generatePDFs(){
@@ -177,6 +299,9 @@ export default Ember.Component.extend({
   }
 
 });
+
+
+
 
 
 
