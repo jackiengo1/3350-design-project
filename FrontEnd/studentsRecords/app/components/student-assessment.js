@@ -14,6 +14,7 @@ export default Ember.Component.extend({
   currentStudentCourses: [],
   currentStudentGrades: [],
   currentStudentLogicalExp: null,
+  currentStudentAssessmentCodeList: [],
 
   evalString: "",
 
@@ -42,6 +43,9 @@ export default Ember.Component.extend({
 
   },
 
+
+
+
 //go to the next student, and loads all of there courses, grades, and adjudications
   getNextStudent: function(index){
     var self = this;
@@ -49,18 +53,23 @@ export default Ember.Component.extend({
     this.set('currentStudentTerms', this.get('currentStudent').get('semester'));
     this.set('currentStudentAdjudications', this.get('currentStudent').get('adjudicationInfo'));
 
-    this.get('currentStudentTerms').forEach(function (term) {
-      term.get('courseInfo').forEach(function (course) {
-        self.get('currentStudentCourses').push(course);
-        self.get('currentStudentGrades').push(course.get('mark').get('mark'));
+    this.get('currentStudentTerms').forEach(function (term) { //for each term get the course info
+      term.get('courseInfo').forEach(function (course) {  //for each course
+        self.get('currentStudentCourses').push(course); //push it into an array
+        self.get('currentStudentGrades').push(course.get('mark').get('mark')); //push mark into the array
       });
-
     });
+
+    //get all the logical expressions for the current student
     this.get('currentStudentAdjudications').forEach(function (adjudication){
+      this.get('currentStudentAssessmentCodeList').push(adjudication.get('comment').get('testExpression'));
     });
-
 
   },
+
+
+
+
 
 
   parseLogicalExpTree: function(logicalExpTree){
@@ -133,14 +142,21 @@ export default Ember.Component.extend({
   },
 
 
+
+
+
+
   actions: {
 
     adjudicateStudents(){
 
+
       for(var i = 0; i < this.get('studentModel').get('length'); i++){
+        this.set('evalString', ""); //clear evalString for next student
         //takes in an index for a student in the student model.
         this.getNextStudent(i); //puts the student's current courses and grades into separate arrays
-      }
+
+      }//end for
 
 
       //at the very end, the evalString should look something like this
