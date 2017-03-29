@@ -1,0 +1,48 @@
+<h1>Logical expression</h1>
+<div class="ui grid">
+  <div class="row">
+
+    <div class="ui six wide column">
+      <form class="ui form">
+        <div class="field">
+          <select onchange={{action 'selectCourse' value="target.value" }}>
+            <option selected = "selected" value = null> Select a course </option>
+            {{#each courseModel as |oneCourse|}}
+            <option value={{oneCourse.id}}> {{oneCourse.name}} </option>
+            {{/each}}
+          </select>
+        </div>
+      </form>
+    </div>
+
+
+    <div class="ui four wide column">
+      <form class="ui form">
+        <div class="field">
+          <select onchange={{action 'selectOperator' value="target.value" }}>
+            <option selected = "selected" value = null> Select an operator </option>
+            {{#each boolOperators as |oneOperator|}}
+            <option value={{oneOperator}}> {{oneOperator}} </option>
+            {{/each}}
+          </select>
+        </div>
+      </form>
+    </div>
+
+
+    <div class="ui six wide column">
+      <form class="ui form">
+        <div class="field">
+          <select onchange={{action 'getInputValue' value="target.value" }}>
+            <option selected = "selected" value = null> Select an operator </option>
+            {{#each boolOperators as |oneOperator|}}
+            <option value={{oneOperator}}> {{oneOperator}} </option>
+            {{/each}}
+          </select>
+        </div>
+      </form>
+    </div>
+
+  </div>
+
+</div>
