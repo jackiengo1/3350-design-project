@@ -17,6 +17,7 @@ export default Ember.Component.extend({
   currentStudentAssessmentCodeList: [],
 
   evalString: "",
+  firstExp: true,
 
 
 
@@ -74,7 +75,7 @@ export default Ember.Component.extend({
 
   parseLogicalExpTree: function(logicalExpTree){
 
-    var firstExp = true; //this determines if we are working with the first logical exp
+    var courseFound = false;
     var expString = logicalExpTree.get('booleanExp'); //logical exp string
     var logicalLink = logicalExpTree.get('logicalLink'); //AND or OR
     expString = expString.split("  ");
@@ -84,7 +85,8 @@ export default Ember.Component.extend({
     var inputValue = expString[2]; //input value
 
     this.get('currentStudentCourses').forEach(function(course){ //loop through student courses
-      if(criteria[0] == course.get('name')){ //if course name matches
+      if(criteria[0] == course.get('name') && courseFound == false){ //if course name matches
+        courseFound = true;
         if(operator == "="){ //check operator
           if(course.get('mark').get('mark') == inputValue){
             this.set('evalString', this.get('evalString') + "true"); //appends true to the evalString
@@ -94,20 +96,32 @@ export default Ember.Component.extend({
           if(course.get('mark').get('mark') < inputValue){
             this.set('evalString', this.get('evalString') + "true");
           }
+          else{
+            this.set('evalString', this.get('evalString') + "false");
+          }
         }
         else if(operator == "<="){
           if(course.get('mark').get('mark') <= inputValue){
             this.set('evalString', this.get('evalString') + "true");
+          }
+          else{
+            this.set('evalString', this.get('evalString') + "false");
           }
         }
         else if(operator == ">"){
           if(course.get('mark').get('mark') > inputValue){
             this.set('evalString', this.get('evalString') + "true");
           }
+          else{
+            this.set('evalString', this.get('evalString') + "false");
+          }
         }
         else if(operator == ">="){
           if(course.get('mark').get('mark') >= inputValue){
             this.set('evalString', this.get('evalString') + "true");
+          }
+          else{
+            this.set('evalString', this.get('evalString') + "false");
           }
         }
         else if(operator == "REQUIRED"){
@@ -115,6 +129,12 @@ export default Ember.Component.extend({
         }//end else if
       }//end if
     });//end forEach
+
+    if(courseFound == false && operator == "REQUIRED"){
+      this.set('evalString', this.get('evalString') + "false");
+    }
+
+
 
     if(logicalLink == "AND"){
       this.set('evalString', this.get('evalString') + "&&");
@@ -125,8 +145,8 @@ export default Ember.Component.extend({
 
 
     if(expArray != null){ //if there is a logical exp array
-      if(firstExp){ //if it is the first logical exp, don't warp in brackets
-        firstExp = false;
+      if(this.get("firstExp")){ //if it is the first logical exp, don't warp in brackets
+        this.set('firstExp', false);
         expArray.forEach(function(logicalExp){ //recursively loop through logical exps
           this.parseLogicalExpTree(logicalExp);
         });
@@ -152,7 +172,7 @@ export default Ember.Component.extend({
 
       for(var i = 0; i < this.get('studentModel').get('length'); i++){
         this.set('evalString', ""); //clear evalString for next student
-
+        this.set('firstExp', true);
         //takes in an index for a student in the student model.
         //puts the student's current courses and grades into separate arrays
         //also gets the student's adjudication and logical expressions for each assessment code
