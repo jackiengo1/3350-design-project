@@ -129,30 +129,30 @@ export default Ember.Component.extend({
       {
         numberFieldValue = this.get('inputValue');
       }
-       var booleanValue = this.get('selectedBool');
-       if(booleanValue == "null" || booleanValue == null)
-       {
-         alert("You must select an operator!");
-         //this.set('errorMsg',"You must select an operator!" );
-       }
-       else if (this.get('numberFieldVisable') && this.get('inputValue')==null && this.get('inputValue')=="")
-       {
-         alert("Number field can not be empty!");
-         //this.set('errorMsg',"Number field can not be empty!");
-       }
-       else if (this.get('selectedCourse')==null || this.get('selectedCourse') =="")
-       {
-         alert("Course can not be empty!");
-         //this.set('errorMsg',"Logical Link can not be empty!");
-       }
-       else{
-         //if all mandantory infomation is filled, then proceed
-         //compress the couse name + boolean operator + mark if mark exist
-         let combinedExp = this.get('selectedCourse')+this.get('selectedBool')+numberFieldValue;
-         let logicalLink = this.get('selectedlogicalLink');
-         let logicalExpRefArray = this.get('selectedLogicalExpArray');
-           //if selectedAessmentCode is not null find the object in local cache, if null tempcode will be null as well since nothing found
-           let tempCode = this.get('store').peekRecord('assessment-code',this.get('selectedAessmentCode'));
+      var booleanValue = this.get('selectedBool');
+      if(booleanValue == "null" || booleanValue == null)
+      {
+        alert("You must select an operator!");
+        //this.set('errorMsg',"You must select an operator!" );
+      }
+      else if (this.get('numberFieldVisable') && this.get('inputValue')==null && this.get('inputValue')=="")
+      {
+        alert("Number field can not be empty!");
+        //this.set('errorMsg',"Number field can not be empty!");
+      }
+      else if (this.get('selectedCourse')==null || this.get('selectedCourse') =="")
+      {
+        alert("Course can not be empty!");
+        //this.set('errorMsg',"Logical Link can not be empty!");
+      }
+      else{
+        //if all mandantory infomation is filled, then proceed
+        //compress the couse name + boolean operator + mark if mark exist
+        let combinedExp = this.get('selectedCourse')+"  "+this.get('selectedBool')+"  "+numberFieldValue;
+        let logicalLink = this.get('selectedlogicalLink');
+        let logicalExpRefArray = this.get('selectedLogicalExpArray');
+        //if selectedAessmentCode is not null find the object in local cache, if null tempcode will be null as well since nothing found
+        let tempCode = this.get('store').peekRecord('assessment-code',this.get('selectedAessmentCode'));
 
         let newExpression = this.get('store').createRecord('logical-expression',{
           booleanExp: combinedExp,
@@ -160,7 +160,7 @@ export default Ember.Component.extend({
           link: logicalExpRefArray,
           comment: tempCode,
         });
-       newExpression.save();
+        //newExpression.save();
       }
     },
   },

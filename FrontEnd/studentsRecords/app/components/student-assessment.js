@@ -77,7 +77,7 @@ export default Ember.Component.extend({
     var firstExp = true; //this determines if we are working with the first logical exp
     var expString = logicalExpTree.get('booleanExp'); //logical exp string
     var logicalLink = logicalExpTree.get('logicalLink'); //AND or OR
-    expString = expString.split(" ");
+    expString = expString.split("  ");
     var expArray = logicalExpTree.get('link'); //array of logical exps
     var criteria = expString[0]; // course or w.e to be evaluated
     var operator = expString[1];
