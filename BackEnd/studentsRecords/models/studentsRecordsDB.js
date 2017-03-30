@@ -164,7 +164,7 @@ var assessmentCodeSchema = mongoose.Schema(
   {
     code: String,
     name: String,
-    adjudicationInfo: [{type: mongoose.Schema.ObjectId, ref: 'Adjudications'}],
+    adjudicationInfo: [{type: mongoose.Schema.ObjectId, ref: 'AdjudicationResults'}],
     testExpression: [{type: mongoose.Schema.ObjectId, ref: 'LogicalExpressions'}],
     //SCHEMA CHANGE, FACULTY not needed
     //faculty: [{type: mongoose.Schema.ObjectId, ref: 'Faculties'}]
@@ -238,7 +238,7 @@ var LogicalExpressions = mongoose.model('logicalexpression', logicalExpressionSc
 var Faculties = mongoose.model('faculty', facultySchema);
 var Departments = mongoose.model('department', departmentSchema);
 var ProgramAdministrations = mongoose.model('programadministration', programAdministrationSchema);
-var AdjudicationResults = mongoose.model('adjudicationResult', programAdministrationSchema);
+var AdjudicationResults = mongoose.model('adjudicationResult', adjudicationResultSchema);
 
 mongoose.connect('mongodb://localhost/studentsRecords');
 var db = mongoose.connection;
