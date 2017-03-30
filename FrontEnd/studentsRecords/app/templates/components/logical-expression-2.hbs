@@ -1,0 +1,85 @@
+<h1>Logical expression</h1>
+<div class="ui grid">
+  <div class="row">
+
+    <div class="ui six wide column">
+      <form class="ui form">
+        <div class="field">
+          <select onchange={{action 'selectLogicalExp' value="target.value" }}>
+            <option selected = "selected" value = null> Select a logical expression </option>
+            {{#each currentLogicExpList as |oneExp|}}
+            <option value={{oneExp.id}}> {{oneExp.booleanExp}} </option>
+            {{/each}}
+          </select>
+        </div>
+      </form>
+    </div>
+
+    <div class="ui six wide column">
+      <form class="ui form">
+        <div class="field">
+          <select>
+            <option selected = "selected" value = null> Select a logical expression </option>
+            {{#each selectedLogicalExpArray as |oneCurrentExp|}}
+            <option value={{oneCurrentExp.id}}> {{oneCurrentExp.booleanExp}} </option>
+            {{/each}}
+          </select>
+        </div>
+      </form>
+    </div>
+
+    <div class="ui six wide column">
+      <form class="ui form">
+        <div class="field">
+          <select onchange={{action 'selectCourse' value="target.value" }}>
+            <option selected = "selected" value = null> Select a course </option>
+            {{#each courseModel as |oneCourse|}}
+            <option value={{oneCourse}}> {{oneCourse}} </option>
+            {{/each}}
+          </select>
+        </div>
+      </form>
+    </div>
+
+
+    <div class="ui four wide column">
+      <form class="ui form">
+        <div class="field">
+          <select onchange={{action 'selectBool' value="target.value" }}>
+            <option selected = "selected" value = null> Select an operator </option>
+            {{#each boolOperators as |oneOperator|}}
+            <option value={{oneOperator}}> {{oneOperator}} </option>
+            {{/each}}
+          </select>
+        </div>
+      </form>
+    </div>
+
+    {{#if numberFieldVisable}}
+    <div class="four wide column">
+      {{input type = "number" value=inputValue}}
+    </div>
+    {{/if}}
+
+
+    <div class="four wide column" >
+      {{#if showLogic}}
+      <select class="ui search dropdown" onchange={{action 'selectlogicLink' value="target.value"}}>
+        <option selected = "selected" value = null> Select a logic </option>
+        {{#each logicalLink as |oneLogicalLink| }}
+        <option value={{oneLogicalLink}}> {{oneLogicalLink}} </option>
+        {{/each}}
+      </select>
+      {{/if}}
+    </div>
+
+    <button class="green ui button" {{action 'addLogicalExp'}}>
+      Add
+    </button>
+
+    <button class="green ui button" {{action 'postLogicalExp'}}>
+      post
+    </button>
+  </div>
+
+</div>
