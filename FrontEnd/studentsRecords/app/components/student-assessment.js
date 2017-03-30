@@ -39,7 +39,9 @@ export default Ember.Component.extend({
     this.get('store').findAll('term'); //load terms into the store
     this.get('store').findAll('course-code'); //load course codes into the store
     this.get('store').findAll('grade'); //load grades into the store
-    this.get('store').findAll('assessment-code') //load assessment codes into the store
+    this.get('store').findAll('assessment-code'); //load assessment codes into the store
+    this.get('store').findAll('logical-expression'); //load logical expressions
+    
 
 
   },
