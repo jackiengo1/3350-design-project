@@ -160,8 +160,22 @@ export default Ember.Component.extend({
           link: logicalExpRefArray,
           comment: tempCode,
         });
-        //newExpression.save();
+        newExpression.save();
       }
+    },
+
+    deleteSelectedExp(selectedExp){
+        //delete the selectedExp from the selectedLogicalExpArray
+        this.get('selectedLogicalExpArray').removeObject(selectedExp);
+        //after deleted from the selected array add it back to the option array
+        this.get('currentLogicExpList').pushObject(selectedExp);
+    },
+
+    openEditLogicalExpForm(selectedExp){
+      // this.set('planCodeToEdit', planCode);
+      // this.set('planCodeNameEdit', planCode.get('name'));
+      // console.log(this.get('planCodeToEdit'));
+      // Ember.$('.ui.modal.planCodeEdit').modal({detachable: false,}).modal('show');
     },
   },
 

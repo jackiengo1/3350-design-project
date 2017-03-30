@@ -15,17 +15,24 @@
       </form>
     </div>
 
-    <div class="ui six wide column">
-      <form class="ui form">
-        <div class="field">
-          <select>
-            <option selected = "selected" value = null> Select a logical expression </option>
-            {{#each selectedLogicalExpArray as |oneCurrentExp|}}
-            <option value={{oneCurrentExp.id}}> {{oneCurrentExp.booleanExp}} </option>
-            {{/each}}
-          </select>
+    <div class="eight wide column" style="padding-right: 20px;">
+      <div class="ui center aligned header" style="margin-bottom: 30px;">
+        <h2>Logical Expression</h2>
+      </div>
+      <div class="ui middle aligned divided list" style="margin-top: 22px; margin-bottom: 22px;">
+        {{#each selectedLogicalExpArray as |oneCurrentExp|}}
+        <div class="item">
+          <div class="content" style="padding-top: 10px; font-size: 16px;">
+            {{oneCurrentExp.booleanExp}}
+          </div>
+          <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
+            <div class="teal ui button" style="width: 55px;" onclick={{action 'openEditLogicalExpForm' oneCurrentExp}}><i class="large edit icon"></i></div>
+            <div class="negative ui button" style="width: 55px;" onclick={{action 'deleteSelectedExp' oneCurrentExp}}><i class="large delete icon"></i></div>
+          </div>
+
         </div>
-      </form>
+        {{/each}}
+      </div>
     </div>
 
     <div class="ui six wide column">
