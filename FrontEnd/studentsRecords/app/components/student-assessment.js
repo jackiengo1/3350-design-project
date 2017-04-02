@@ -15,7 +15,7 @@ export default Ember.Component.extend({
   currentStudentAdjudications: null,
   currentStudentCourses: [],
   currentStudentGrades: [],
-  currentStudentAdjudicationResult:null,
+  currentStudentAdjudicationCategory: null,
   currentStudentLogicalExp: null,
   currentStudentAssessmentCode: null,
 
@@ -195,19 +195,20 @@ export default Ember.Component.extend({
 
         //need to call parseLogicalExpTree function here
         this.get('currentStudentAdjudications').forEach(function(adjudication){
-          var assessmentCode = adjudication.get('assessmentCode');
+          var adjudicationCategory = adjudication.get('adjudicationCategory');
+          var assessmentCode = adjudicationCategory.get('assessmentCode');
           var logicalExp = assessmentCode.get('testExpression');
 
           this.parseLogicalExpTree(logicalExp);
 
           if(eval(this.get('evalString'))){
-            adjudication.set('adjudicationResult', "PASS");
-            adjudication.save();
+            adjudicationCategory.set('result', "PASS");
+            adjudicationCategory.save();
 
           }
           else{
-            adjudication.set('adjudicationResult', "FAIL");
-            adjudication.save();
+            adjudicationCategory.set('result', "FAIL");
+            adjudicationCategory.save();
           }
 
         });
