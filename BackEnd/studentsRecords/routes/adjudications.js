@@ -53,9 +53,11 @@ router.route('/:adjudication_id')
                 adjudication.termUnitPassed = request.body.adjudication.termUnitPassed;
                 adjudication.termUnitsTotal = request.body.adjudication.termUnitsTotal;
                 adjudication.note = request.body.adjudication.note;
+                adjudication.adjudicationResult = request.body.adjudication.adjudicationResult;
                 adjudication.studentInfo = request.body.adjudication.studentInfo;
                 adjudication.semester = request.body.adjudication.semester;
-                adjudication.comment = request.body.adjudication.comment;
+                adjudication.adjudicatonCategory = request.body.adjudication.adjudicatonCategory;
+                adjudication.category = request.body.adjudication.category;
 
                 adjudication.save(function (error) {
                     if (error) {
