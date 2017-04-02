@@ -9,15 +9,27 @@ export default Ember.Component.extend({
   currentStudent: null,
   currentStudentTerms: null,
   adjudicationModel: null,
+  categoryModel: null,
+  assessmentCodeModel: null,
 
   currentStudentAdjudications: null,
   currentStudentCourses: [],
   currentStudentGrades: [],
+  currentStudentAdjudicationResult:null,
   currentStudentLogicalExp: null,
-  currentStudentAssessmentCodeList: [],
+  currentStudentAssessmentCode: null,
+
 
   evalString: "",
   firstExp: true,
+
+  categoryName: null,
+  categoryCode: null,
+
+  categoryEditObj: null,
+  categoryNameEdit: null,
+  categoryCodeEdit: null,
+  selectedCode: null,
 
 
 
@@ -36,14 +48,21 @@ export default Ember.Component.extend({
       self.set('adjudicationModel', records);
     });
 
+    this.get('store').findAll('category').then(function(records){
+      self.set('categoryModel', records);
+    });
+
     this.get('store').findAll('term'); //load terms into the store
     this.get('store').findAll('course-code'); //load course codes into the store
     this.get('store').findAll('grade'); //load grades into the store
     this.get('store').findAll('assessment-code'); //load assessment codes into the store
     this.get('store').findAll('logical-expression'); //load logical expressions
-    
+
+  },
 
 
+  didRender() {
+    Ember.$('.menu .item').tab();
   },
 
 
@@ -62,12 +81,6 @@ export default Ember.Component.extend({
         self.get('currentStudentGrades').push(course.get('mark').get('mark')); //push mark into the array
       });
     });
-
-    //get all the logical expressions for the current student
-    this.get('currentStudentAdjudications').forEach(function (adjudication){
-      this.get('currentStudentAssessmentCodeList').push(adjudication.get('comment').get('testExpression'));
-    });
-
   },
 
 
@@ -181,11 +194,78 @@ export default Ember.Component.extend({
         this.getNextStudent(i);
 
         //need to call parseLogicalExpTree function here
+        this.get('currentStudentAdjudications').forEach(function(adjudication){
+          var assessmentCode = adjudication.get('assessmentCode');
+          var logicalExp = assessmentCode.get('testExpression');
+
+          this.parseLogicalExpTree(logicalExp);
+
+          if(eval(this.get('evalString'))){
+            adjudication.set('adjudicationResult', "PASS");
+            adjudication.save();
+
+          }
+          else{
+            adjudication.set('adjudicationResult', "FAIL");
+            adjudication.save();
+          }
+
+        });
 
       }//end for
 
       //at the very end, the evalString should look something like this
-      console.log(eval("false&&true||false&&true(true||false||true)&&true||false"));
+      //console.log(eval("false&&true||false&&true(true||false||true)&&true||false"));
+    },
+
+
+    openCategoryAdd(){
+      Ember.$('.ui.modal.categoryAdd').modal({ detachable: false, closable: false }).modal('show');
+    },
+
+    closeCategoryAdd(){
+      Ember.$('.ui.modal.categoryAdd').modal('hide');
+    },
+
+
+
+    openCategoryEdit(category){
+      this.set('categoryEditObj', category);
+      this.set('categoryNameEdit', category.get('name'));
+      this.set('categoryCodeEdit', category.get('code'));
+      Ember.$('.ui.modal.categoryEdit').modal({ detachable: false, closable: false }).modal('show');
+    },
+
+    closeCategoryEdit(){
+      Ember.$('.ui.modal.categoryEdit').modal('hide');
+    },
+
+    addCategory(){
+      var newCategory = this.get('store').createRecord('category', { //create a new category record
+        name: this.get('categoryName'),
+        code: this.get('categoryCode'),
+      });
+
+      newCategory.save();
+      Ember.$('.ui.modal.categoryAdd').modal('hide');
+    },
+
+
+    editCategory(){
+      var updatedCategory = this.get('categoryEditObj');
+      updatedCategory.set('name', this.get('categoryNameEdit'));
+      updatedCategory.set('code', this.get('categoryCodeEdit'));
+      updatedCategory.save();
+      Ember.$('.ui.modal.categoryEdit').modal('hide');
+    },
+
+    deleteCategory(category){
+      category.deleteRecord();
+      category.save();
+    },
+
+    selectCode(code){
+      this.set('selectedCode', code);
     },
 
 
