@@ -9,15 +9,26 @@ export default Ember.Component.extend({
   currentStudent: null,
   currentStudentTerms: null,
   adjudicationModel: null,
+  adjudicationcategoryModel: null,
+  assessmentCodeModel: null,
 
   currentStudentAdjudications: null,
   currentStudentCourses: [],
   currentStudentGrades: [],
   currentStudentLogicalExp: null,
-  currentStudentAssessmentCodeList: [],
+  currentStudentAssessmentCode: null,
+
 
   evalString: "",
   firstExp: true,
+
+  categoryName: null,
+  categoryCode: null,
+
+  categoryEditObj: null,
+  categoryNameEdit: null,
+  categoryCodeEdit: null,
+  selectedCode: null,
 
 
 
@@ -36,14 +47,24 @@ export default Ember.Component.extend({
       self.set('adjudicationModel', records);
     });
 
+    this.get('store').findAll('adjudication-category').then(function(records){
+      self.set('adjudicationcategoryModel', records);
+    });
+
+    this.get('store').findAll('assessment-code').then(function(records){
+      self.set('assessmentCodeModel', records);
+    });
+
     this.get('store').findAll('term'); //load terms into the store
     this.get('store').findAll('course-code'); //load course codes into the store
     this.get('store').findAll('grade'); //load grades into the store
-    this.get('store').findAll('assessment-code'); //load assessment codes into the store
     this.get('store').findAll('logical-expression'); //load logical expressions
-    
+
+  },
 
 
+  didRender() {
+    Ember.$('.menu .item').tab();
   },
 
 
@@ -62,12 +83,6 @@ export default Ember.Component.extend({
         self.get('currentStudentGrades').push(course.get('mark').get('mark')); //push mark into the array
       });
     });
-
-    //get all the logical expressions for the current student
-    this.get('currentStudentAdjudications').forEach(function (adjudication){
-      this.get('currentStudentAssessmentCodeList').push(adjudication.get('comment').get('testExpression'));
-    });
-
   },
 
 
@@ -181,11 +196,80 @@ export default Ember.Component.extend({
         this.getNextStudent(i);
 
         //need to call parseLogicalExpTree function here
+        this.get('currentStudentAdjudications').forEach(function(adjudication){
+          var adjudicationCategory = adjudication.get('adjudicationCategory');
+          var assessmentCode = adjudicationCategory.get('assessmentCode');
+          var logicalExp = assessmentCode.get('testExpression');
+
+          this.parseLogicalExpTree(logicalExp);
+
+          if(eval(this.get('evalString'))){
+            adjudicationCategory.set('result', "PASS");
+            adjudicationCategory.save();
+
+          }
+          else{
+            adjudicationCategory.set('result', "FAIL");
+            adjudicationCategory.save();
+          }
+
+        });
 
       }//end for
 
       //at the very end, the evalString should look something like this
-      console.log(eval("false&&true||false&&true(true||false||true)&&true||false"));
+      //console.log(eval("false&&true||false&&true(true||false||true)&&true||false"));
+    },
+
+
+    openCategoryAdd(){
+      Ember.$('.ui.modal.categoryAdd').modal({ detachable: false, closable: false }).modal('show');
+    },
+
+    closeCategoryAdd(){
+      Ember.$('.ui.modal.categoryAdd').modal('hide');
+    },
+
+
+
+    openCategoryEdit(category){
+      this.set('categoryEditObj', category);
+      this.set('categoryNameEdit', category.get('name'));
+      Ember.$('.ui.modal.categoryEdit').modal({ detachable: false, closable: false }).modal('show');
+    },
+
+    closeCategoryEdit(){
+      Ember.$('.ui.modal.categoryEdit').modal('hide');
+    },
+
+    addCategory(){
+      var newCategory = this.get('store').createRecord('adjudication-category', { //create a new category record
+        name: this.get('categoryName'),
+        assessmentCode: this.get('selectedCode')
+      });
+
+      newCategory.save();
+      Ember.$('.ui.modal.categoryAdd').modal('hide');
+    },
+
+
+    editCategory(){
+      var updatedCategory = this.get('categoryEditObj');
+      updatedCategory.set('name', this.get('categoryNameEdit'));
+      updatedCategory.set('assessmentCode', this.get('selectedCode'));
+      updatedCategory.save();
+      Ember.$('.ui.modal.categoryEdit').modal('hide');
+    },
+
+    deleteCategory(category){
+      category.deleteRecord();
+      category.save();
+    },
+
+    selectCode(code){
+    var selectedCode = this.get('store').peekRecord('assessment-code', code);
+      this.set('selectedCode', selectedCode);
+      console.log(this.get('selectedCode'));
     },
 
 

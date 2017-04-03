@@ -50,11 +50,11 @@ router.route('/:assessmentCode_id')
             else {
                 assessmentCode.code = request.body.assessmentCode.code;
                 assessmentCode.name = request.body.assessmentCode.name;
-                assessmentCode.adjudicationInfo = request.body.assessmentCode.adjudicationInfo;
+                assessmentCode.adjudicationCategory = request.body.assessmentCode.adjudicationCategory;
                 assessmentCode.testExpression = request.body.assessmentCode.testExpression;
                 //assessmentCode.faculty = request.body.assessmentCode.faculty;
                 assessmentCode.dept = request.body.assessmentCode.dept;
-
+ 
                 assessmentCode.save(function (error) {
                     if (error) {
                         response.send({error: error});
