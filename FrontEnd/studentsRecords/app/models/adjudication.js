@@ -8,6 +8,6 @@ termUnitsTotal: DS.attr(),
 note: DS.attr(),
 studentInfo: DS.belongsTo('student'),
 semester: DS.belongsTo('term'),
-adjudicationCategory: DS.belongsTo('adjudication-category'),
+comment: DS.belongsTo('assessment-code'),
 category: DS.belongsTo('category')
 });
