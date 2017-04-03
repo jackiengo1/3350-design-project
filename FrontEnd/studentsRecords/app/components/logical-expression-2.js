@@ -182,6 +182,8 @@ export default Ember.Component.extend({
           {
             self.get('currentLogicExpList').pushObject(allLogic.objectAt(i));
           }
+          //clear the selectedLogicalExpArray
+          self.get('selectedLogicalExpArray').clear();
         });
       }
     },
@@ -201,13 +203,7 @@ export default Ember.Component.extend({
     },
 
     openEditLogicalExpForm(selectedExp){
-      //clear all selected values when start editing
-      this.set('selectedCourse',null);
-      this.set('selectedBool',null);
-      this.set('selectedAessmentCode',null);
-      this.set('selectedLogicalExp',null);
-      this.set('selectedlogicalLink',"");
-      this.set('inputValue',null);
+
       this.set('numberFieldVisable',false);
 
       //set the logcial expression for editing
@@ -231,6 +227,13 @@ export default Ember.Component.extend({
 
       //display the edit model
       Ember.$('.ui.modal.logicalExpEdit').modal({detachable: false,}).modal('show');
+
+      this.set('selectedCourse',splitedExp[0]);
+      this.set('selectedBool',splitedExp[1]);
+      this.set('selectedAessmentCode',selectedExp.get('comment'));
+      this.set('selectedLogicalExp',null);
+      this.set('selectedlogicalLink',selectedExp.get('logicalLink'));
+      this.set('inputValue',this.get('markForEdit'));
     },
 
 
@@ -264,19 +267,14 @@ export default Ember.Component.extend({
         //compress the couse name + boolean operator + mark if mark exist
         let combinedExp = this.get('selectedCourse')+"  "+this.get('selectedBool')+"  "+numberFieldValue;
         let logicalLink = this.get('selectedlogicalLink');
-        let logicalExpRefArray = this.get('ExpArrayForEdit');
         //if selectedAessmentCode is not null find the object in local cache, if null tempcode will be null as well since nothing found
         let tempCode = this.get('store').peekRecord('assessment-code',this.get('selectedAessmentCode'));
 
         let updatedExp = this.get('loigcalExpForEdit');
         updatedExp.set('booleanExp',combinedExp);
         updatedExp.set('logicalLink',logicalLink);
-        if(logicalExpRefArray!=null)
-        {
-          //if the link array is not null, update the link array
-          updatedExp.set('link',logicalExpRefArray);
-        }
         updatedExp.set('comment',tempCode);
+        console.log(updatedExp.get('link').get('length'));
         updatedExp.save().then(function(record){
 
           //clear all selected values
@@ -295,8 +293,8 @@ export default Ember.Component.extend({
           self.set('linkForEdit',null);
           self.set('assessmentForEdit',null);
           self.set('ExpArrayForEdit',null);
-          Ember.$('.ui.modal.logicalExpEdit').modal('hide');
-        });
+           Ember.$('.ui.modal.logicalExpEdit').modal('hide');
+         });
       }
     },
 
@@ -307,21 +305,21 @@ export default Ember.Component.extend({
 
     closeLogicalExpEditModal(){
       //clear all selected values
-      this.set('selectedCourse',null);
-      this.set('selectedBool',null);
-      this.set('selectedAessmentCode',null);
-      this.set('selectedLogicalExp',null);
-      this.set('selectedlogicalLink',"");
-      this.set('inputValue',null);
-      this.set('numberFieldVisable',false);
-
-      this.set('loigcalExpForEdit',null);
-      this.set('courseForEdit',null);
-      this.set('operatorForEdit',null);
-      this.set('markForEdit',null);
-      this.set('linkForEdit',null);
-      this.set('assessmentForEdit',null);
-      this.set('ExpArrayForEdit',null);
+      // this.set('selectedCourse',null);
+      // this.set('selectedBool',null);
+      // this.set('selectedAessmentCode',null);
+      // this.set('selectedLogicalExp',null);
+      // this.set('selectedlogicalLink',"");
+      // this.set('inputValue',null);
+      // this.set('numberFieldVisable',false);
+      //
+      // this.set('loigcalExpForEdit',null);
+      // this.set('courseForEdit',null);
+      // this.set('operatorForEdit',null);
+      // this.set('markForEdit',null);
+      // this.set('linkForEdit',null);
+      // this.set('assessmentForEdit',null);
+      // this.set('ExpArrayForEdit',null);
 
       Ember.$('.ui.modal.logicalExpEdit').modal('hide');
     },
