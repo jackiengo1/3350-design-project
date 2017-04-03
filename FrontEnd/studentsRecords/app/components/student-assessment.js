@@ -9,13 +9,12 @@ export default Ember.Component.extend({
   currentStudent: null,
   currentStudentTerms: null,
   adjudicationModel: null,
-  categoryModel: null,
+  adjudicationcategoryModel: null,
   assessmentCodeModel: null,
 
   currentStudentAdjudications: null,
   currentStudentCourses: [],
   currentStudentGrades: [],
-  currentStudentAdjudicationCategory: null,
   currentStudentLogicalExp: null,
   currentStudentAssessmentCode: null,
 
@@ -48,14 +47,17 @@ export default Ember.Component.extend({
       self.set('adjudicationModel', records);
     });
 
-    this.get('store').findAll('category').then(function(records){
-      self.set('categoryModel', records);
+    this.get('store').findAll('adjudication-category').then(function(records){
+      self.set('adjudicationcategoryModel', records);
+    });
+
+    this.get('store').findAll('assessment-code').then(function(records){
+      self.set('assessmentCodeModel', records);
     });
 
     this.get('store').findAll('term'); //load terms into the store
     this.get('store').findAll('course-code'); //load course codes into the store
     this.get('store').findAll('grade'); //load grades into the store
-    this.get('store').findAll('assessment-code'); //load assessment codes into the store
     this.get('store').findAll('logical-expression'); //load logical expressions
 
   },
@@ -233,7 +235,6 @@ export default Ember.Component.extend({
     openCategoryEdit(category){
       this.set('categoryEditObj', category);
       this.set('categoryNameEdit', category.get('name'));
-      this.set('categoryCodeEdit', category.get('code'));
       Ember.$('.ui.modal.categoryEdit').modal({ detachable: false, closable: false }).modal('show');
     },
 
@@ -242,9 +243,9 @@ export default Ember.Component.extend({
     },
 
     addCategory(){
-      var newCategory = this.get('store').createRecord('category', { //create a new category record
+      var newCategory = this.get('store').createRecord('adjudication-category', { //create a new category record
         name: this.get('categoryName'),
-        code: this.get('categoryCode'),
+        assessmentCode: this.get('selectedCode')
       });
 
       newCategory.save();
@@ -255,7 +256,7 @@ export default Ember.Component.extend({
     editCategory(){
       var updatedCategory = this.get('categoryEditObj');
       updatedCategory.set('name', this.get('categoryNameEdit'));
-      updatedCategory.set('code', this.get('categoryCodeEdit'));
+      updatedCategory.set('assessmentCode', this.get('selectedCode'));
       updatedCategory.save();
       Ember.$('.ui.modal.categoryEdit').modal('hide');
     },
@@ -266,7 +267,9 @@ export default Ember.Component.extend({
     },
 
     selectCode(code){
-      this.set('selectedCode', code);
+    var selectedCode = this.get('store').peekRecord('assessment-code', code);
+      this.set('selectedCode', selectedCode);
+      console.log(this.get('selectedCode'));
     },
 
 

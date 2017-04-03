@@ -35,13 +35,13 @@
   <div class="ui grid">
     <div class="row">
 
-      
+
       <div class="ui eight wide column">
         <div class="ui center aligned header" style="margin-bottom: 20px;">
           <h2>List of categories</h2>
         </div>
         <div class="ui middle aligned divided list">
-          {{#each categoryModel as |oneCategory|}}
+          {{#each adjudicationcategoryModel as |oneCategory|}}
           {{#unless oneCategory.isDeleted}}
           <div class="item">
             <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
@@ -87,8 +87,15 @@
           {{input type="text" value = categoryName}}
         </div>
         <div class="field">
-          <label>Code: </label>
-          {{input type="text" value = categoryCode}}
+          <label>Assessment Code: </label>
+          <form class="ui form">
+            <select onchange={{action 'selectCode' value="target.value" }}>
+                <option selected = "selected" value = null> Select assessment code </option>
+                {{#each assessmentCodeModel as |oneCode|}}
+                <option value={{oneCode.id}}> {{oneCode.name}} </option>
+                {{/each}}
+              </select>
+          </form>
         </div>
       </div>
     </form>
@@ -120,8 +127,15 @@
           {{input type="text" value = categoryNameEdit}}
         </div>
         <div class="field">
-          <label>Code: </label>
-          {{input type="text" value = categoryCodeEdit}}
+          <label>Assessment Code: </label>
+          <form class="ui form">
+            <select onchange={{action 'selectCode' value="target.value" }}>
+                <option selected = "selected" value = null> Select assessment code </option>
+                {{#each assessmentCodeModel as |oneCode|}}
+                <option value={{oneCode.id}}> {{oneCode.name}} </option>
+                {{/each}}
+              </select>
+          </form>
         </div>
       </div>
     </form>
