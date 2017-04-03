@@ -7,6 +7,7 @@ var parseJSON = bodyParser.json();
 
 router.route('/')
     .post(parseUrlencoded, parseJSON, function (request, response) {
+      console.log(request.body);
         var adjudicationCategory = new models.AdjudicationCategories(request.body.adjudicationCategory);
         adjudicationCategory.save(function (error) {
             if (error) response.send(error);

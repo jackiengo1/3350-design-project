@@ -157,8 +157,8 @@ var adjudicationSchema = mongoose.Schema(
     adjudicationResult: String,
     studentInfo: {type: mongoose.Schema.ObjectId, ref: 'Students'},
     semester: {type: mongoose.Schema.ObjectId, ref: 'Terms'},
-    //comment: {type: mongoose.Schema.ObjectId, ref: 'AssessmentCodes'},
-    adjudicationCategory: {type: mongoose.Schema.ObjectId, ref: 'AdjudicationCategories'},
+    comment: {type: mongoose.Schema.ObjectId, ref: 'AssessmentCodes'},
+    //adjudicationCategory: {type: mongoose.Schema.ObjectId, ref: 'AdjudicationCategories'},
     category: {type: mongoose.Schema.ObjectId, ref: 'Categories'}
   }
 );
@@ -167,7 +167,7 @@ var assessmentCodeSchema = mongoose.Schema(
   {
     code: String,
     name: String,
-    //adjudicationInfo: [{type: mongoose.Schema.ObjectId, ref: 'Adjudications'}],
+    adjudicationInfo: [{type: mongoose.Schema.ObjectId, ref: 'Adjudications'}],
     testExpression: [{type: mongoose.Schema.ObjectId, ref: 'LogicalExpressions'}],
     //SCHEMA CHANGE, FACULTY not needed
     //faculty: [{type: mongoose.Schema.ObjectId, ref: 'Faculties'}]
@@ -216,7 +216,7 @@ var adjudicationCategorySchema = mongoose.Schema(
     name: String,
     result: String,
     adjudication: [{type: mongoose.Schema.ObjectId, ref: 'Adjudications'}],
-    assessmentCode: {type: mongoose.Schema.ObjectId, ref: 'AssessmentCodes'},
+    assessmentCode: [{type: mongoose.Schema.ObjectId, ref: 'AssessmentCodes'}],
 
   }
 );

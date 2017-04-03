@@ -1,0 +1,93 @@
+<div class="ui grid" style="background-color: #e2e0e2;">
+
+  <div class="eight wide column" style="padding-right: 20px;">
+    <div class="ui center aligned header" style="margin-bottom: 30px;">
+      <h2>Adjudication Category</h2>
+    </div>
+
+    {{#ui-accordion class="styled fluid"}} {{#each adjudicationCategoryModel as |oneCategory|}}
+    <div class="title" style="border-color: #6435c9">
+      {{oneCategory.name}}
+    </div>
+    <div class="content">
+      <div class="ui vertically divided grid">
+        <div class="one column row" style="padding-bottom: 0;">
+          <div class="column">
+            Level: {{oneCategory.result}}
+          </div>
+        </div>
+        <div class="one column row" style="padding: 0;">
+          <div class="column">
+            <p style="text-align: center;"><button class="negative ui button" style="width: 55px;" onclick={{action 'deleteCategory' oneCategory}}><i class="large delete icon"></i></button></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}} {{/ui-accordion}}
+  </div>
+
+  <div class="eight wide column" style="padding-right: 20px;">
+    <div class="ui center aligned header" style="margin-bottom: 30px;">
+      <h2>Add Adjudication Category</h2>
+    </div>
+
+    <div class="ui sixteen wide column">
+      <form class="ui form">
+        <div class="field">
+          <label>Category Name</label> {{input type="text" value = selectedName}}
+        </div>
+
+        <div class="ui grid">
+          <div class="ui sixteen wide column">
+
+            <div class="ui middle aligned divided list" style="margin-top: 22px; margin-bottom: 22px;">
+              {{#each selectedAssessmentArray as |oneCode|}}
+              <div class="item">
+                <div class="content" style="padding-top: 10px; font-size: 16px;">
+                  {{oneCode.name}}
+                </div>
+                <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
+                  <div class="negative ui button" style="width: 55px;" onclick={{action 'deleteAssessmentFromArray' oneCode}}><i class="large delete icon"></i></div>
+                </div>
+
+              </div>
+              {{else}} You have not added any plan codes
+              {{/each}}
+
+
+            </div>
+
+            <div class="two fields">
+              <div class="field">
+                <label>Adjudication Category</label>
+                <select onchange={{action 'selectAssessment' value="target.value" }}>
+                  <option selected = "selected" value = null> Select a Assessment code </option>
+                  {{#each assessmentCodeModel as |oneAssessment|}}
+
+                  <option value={{oneAssessment.id}} >{{oneAssessment.name}}</option>
+
+                  {{/each}}
+                </select>
+              </div>
+              <div class="field" style="align-self: flex-end;">
+                <button class="positive ui button" {{action 'addToAssessmentCodeArray'}}>
+                  Add Assessment Code
+                </button>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+
+      </form>
+    </div>
+
+    <div class="ui center aligned header">
+      <button class="positive ui button" {{action 'addAdjudicationCategory'}}>
+        Add Adjudication Category
+      </button>
+    </div>
+  </div>
+
+</div>

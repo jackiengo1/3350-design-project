@@ -4,5 +4,5 @@ export default DS.Model.extend({
   name: DS.attr(),
   result: DS.attr(),
   adjudication: DS.hasMany('adjudication'),
-  assessmentCode: DS.belongsTo('assessment-code')
+  assessmentCode: DS.hasMany('assessment-code')
 });
