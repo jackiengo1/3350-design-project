@@ -44,6 +44,9 @@
       <a class="item configureItem" {{action "addLogicalExp"}}>
         Logical Expressions
       </a>
+      <a class="item configureItem" {{action "addAdjudicationCategory"}}>
+        Adjudication Category
+      </a>
       <a class="item configureItem" {{action "addDataLinking"}}>
         Data Linking
       </a>
@@ -100,6 +103,9 @@
       {{/if}}
       {{#if isLogicalExpShowing}}
       {{logical-expression-2}}
+      {{/if}}
+      {{#if isAdjudicationCategoryShowing}}
+      {{assessment-category-link}}
       {{/if}}
       {{#if isDataLinkingShowing}}
       <div class="ui grid" style="border-style: groove; margin-top: 30px; margin-bottom: 30px; padding: 20px;">

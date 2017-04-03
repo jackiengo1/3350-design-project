@@ -216,7 +216,7 @@ var adjudicationCategorySchema = mongoose.Schema(
     name: String,
     result: String,
     adjudication: [{type: mongoose.Schema.ObjectId, ref: 'Adjudications'}],
-    assessmentCode: {type: mongoose.Schema.ObjectId, ref: 'AssessmentCodes'},
+    assessmentCode: [{type: mongoose.Schema.ObjectId, ref: 'AssessmentCodes'}],
 
   }
 );

@@ -71,8 +71,9 @@ export default Ember.Component.extend({
       }
     });
 
-
-    this.set('assessmentCodeModel',this.get('store').findAll('assessment-code'));
+    this.get('store').findAll('assessment-code').then(function(records){
+      self.set('assessmentCodeModel',records);
+    });
   },
 
   didRender() {

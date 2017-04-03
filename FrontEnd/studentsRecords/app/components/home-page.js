@@ -27,6 +27,7 @@ export default Ember.Component.extend({
   isLogicalExpShowing: false,
   isLogoutShowing: false,
   isDataLinkingShowing: false,
+  isAdjudicationCategoryShowing:false,
 
   actions: {
     home () {
@@ -41,6 +42,7 @@ export default Ember.Component.extend({
       this.set('isLogicalExpShowing', false);
       this.set('isLogoutShowing', false);
       this.set('isDataLinkingShowing', false);
+      this.set('isAdjudicationCategoryShowing',false);
     },
 
     studentsDataEntry (){
@@ -55,6 +57,7 @@ export default Ember.Component.extend({
       this.set('isLogicalExpShowing', false);
       this.set('isLogoutShowing', false);
       this.set('isDataLinkingShowing', false);
+      this.set('isAdjudicationCategoryShowing',false);
     },
 
 
@@ -70,6 +73,7 @@ export default Ember.Component.extend({
       this.set('isLogicalExpShowing', false);
       this.set('isLogoutShowing', true);
       this.set('isDataLinkingShowing', false);
+      this.set('isAdjudicationCategoryShowing',false);
       Ember.$("body").css("background-color", "transparent");
     },
 
@@ -85,6 +89,7 @@ export default Ember.Component.extend({
       this.set('isLogicalExpShowing', false);
       this.set('isLogoutShowing', false);
       this.set('isDataLinkingShowing', false);
+      this.set('isAdjudicationCategoryShowing',false);
     },
     addGender(){
       this.set('isHomeShowing', false);
@@ -98,6 +103,7 @@ export default Ember.Component.extend({
       this.set('isLogicalExpShowing', false);
       this.set('isLogoutShowing', false);
       this.set('isDataLinkingShowing', false);
+      this.set('isAdjudicationCategoryShowing',false);
     },
     addHighSchoolInfo(){
       this.set('isHomeShowing', false);
@@ -111,6 +117,7 @@ export default Ember.Component.extend({
       this.set('isLogicalExpShowing', false);
       this.set('isLogoutShowing', false);
       this.set('isDataLinkingShowing', false);
+      this.set('isAdjudicationCategoryShowing',false);
     },
     addProgramRecord(){
       this.set('isHomeShowing', false);
@@ -124,6 +131,7 @@ export default Ember.Component.extend({
       this.set('isLogicalExpShowing', false);
       this.set('isLogoutShowing', false);
       this.set('isDataLinkingShowing', false);
+      this.set('isAdjudicationCategoryShowing',false);
     },
 
     studentAssessment(){
@@ -138,6 +146,7 @@ export default Ember.Component.extend({
       this.set('isLogicalExpShowing', false);
       this.set('isLogoutShowing', false);
       this.set('isDataLinkingShowing', false);
+      this.set('isAdjudicationCategoryShowing',false);
     },
 
     addLogicalExp(){
@@ -152,6 +161,22 @@ export default Ember.Component.extend({
       this.set('isLogicalExpShowing', true);
       this.set('isLogoutShowing', false);
       this.set('isDataLinkingShowing', false);
+      this.set('isAdjudicationCategoryShowing',false);
+    },
+
+    addAdjudicationCategory(){
+      this.set('isHomeShowing', false);
+      this.set('isStudentsRecordsDataEntry', false);
+      this.set('isAddResidencyShowing', false);
+      this.set('isAddGenderShowing', false);
+      this.set('isAddStudentShowing', false);
+      this.set('isAddHighSchoolInfoShowing', false);
+      this.set('isAddProgramRecordShowing', false);
+      this.set('isStudentAssessmentShowing', false);
+      this.set('isLogicalExpShowing', false);
+      this.set('isLogoutShowing', false);
+      this.set('isDataLinkingShowing', false);
+      this.set('isAdjudicationCategoryShowing',true);
     },
 
     addDataLinking() {
@@ -166,6 +191,7 @@ export default Ember.Component.extend({
       this.set('isLogicalExpShowing', false);
       this.set('isLogoutShowing', false);
       this.set('isDataLinkingShowing', true);
+      this.set('isAdjudicationCategoryShowing',false);
     },
 
     userProfile(){
