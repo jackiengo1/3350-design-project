@@ -5,18 +5,19 @@ export default Ember.Component.extend({
   /*global XLSX*/
   store: Ember.inject.service(),
 
-  studentModel: null,
-  currentStudent: null,
-  currentStudentTerms: null,
+  currentTerm: null,
   adjudicationModel: null,
   adjudicationcategoryModel: null,
   assessmentCodeModel: null,
 
   currentStudentAdjudications: null,
-  currentStudentCourses: [],
-  currentStudentGrades: [],
+  currentCourses: [],
+  currentGrades: [],
   currentStudentLogicalExp: null,
   currentStudentAssessmentCode: null,
+
+  currentAdjudication: null,
+  currentAdjudicationCategory: null,
 
 
   evalString: "",
@@ -36,13 +37,6 @@ export default Ember.Component.extend({
     this._super(...arguments);
     var self = this;
 
-    this.get('store').query('student', {
-      limit: 1000,
-      offset: 0
-    }).then(function (records) {
-      self.set('studentModel', records);
-    });
-
     this.get('store').findAll('adjudication').then(function(records){
       self.set('adjudicationModel', records);
     });
@@ -55,7 +49,7 @@ export default Ember.Component.extend({
       self.set('assessmentCodeModel', records);
     });
 
-    this.get('store').findAll('term'); //load terms into the store
+    //this.get('store').findAll('term'); //load terms into the store
     this.get('store').findAll('course-code'); //load course codes into the store
     this.get('store').findAll('grade'); //load grades into the store
     this.get('store').findAll('logical-expression'); //load logical expressions
@@ -71,17 +65,18 @@ export default Ember.Component.extend({
 
 
 //go to the next student, and loads all of there courses, grades, and adjudications
-  getNextStudent: function(index){
+  getNextAdjudication: function(index){
     var self = this;
-    this.set('currentStudent', this.get('studentModel').objectAt(index));
-    this.set('currentStudentTerms', this.get('currentStudent').get('semester'));
-    this.set('currentStudentAdjudications', this.get('currentStudent').get('adjudicationInfo'));
 
-    this.get('currentStudentTerms').forEach(function (term) { //for each term get the course info
-      term.get('courseInfo').forEach(function (course) {  //for each course
-        self.get('currentStudentCourses').push(course); //push it into an array
-        self.get('currentStudentGrades').push(course.get('mark').get('mark')); //push mark into the array
-      });
+
+    this.set('currentAdjudication', this.get('adjudicationModel').objectAt(index));
+  //  this.set('currentAdjudicationCategory', this.get('currentAdjudication').get('adjudicationCategory'));
+    //console.log(this.get('currentAdjudication'));
+    this.set('currentTerm', this.get('currentAdjudication').get('semester'));
+    //console.log(this.get('currentTerm'));
+    this.get('currentTerm').get('courseInfo').forEach(function(course){
+      self.get('currentCourses').push(course);
+      self.get('currentGrades').push(course.get('mark').get('mark'));
     });
   },
 
@@ -100,78 +95,88 @@ export default Ember.Component.extend({
     var criteria = expString[0]; // course or w.e to be evaluated
     var operator = expString[1];
     var inputValue = expString[2]; //input value
+    var self = this;
 
-    this.get('currentStudentCourses').forEach(function(course){ //loop through student courses
-      if(criteria[0] == course.get('name') && courseFound == false){ //if course name matches
+    console.log("operator: 1" + criteria + "1");
+    //console.log(operator.equals("<="));
+
+    this.get('currentCourses').forEach(function(course){ //loop through student courses
+      console.log(course.get('name') + " - " + course.get('mark').get('mark'));
+      if(criteria == course.get('name') && courseFound == false){ //if course name matches
         courseFound = true;
         if(operator == "="){ //check operator
           if(course.get('mark').get('mark') == inputValue){
-            this.set('evalString', this.get('evalString') + "true"); //appends true to the evalString
+            self.set('evalString', self.get('evalString') + "true"); //appends true to the evalString
           }
         }
         else if(operator == "<"){
           if(course.get('mark').get('mark') < inputValue){
-            this.set('evalString', this.get('evalString') + "true");
+            self.set('evalString', self.get('evalString') + "true");
           }
           else{
-            this.set('evalString', this.get('evalString') + "false");
+            self.set('evalString', self.get('evalString') + "false");
           }
         }
         else if(operator == "<="){
           if(course.get('mark').get('mark') <= inputValue){
-            this.set('evalString', this.get('evalString') + "true");
+            self.set('evalString', self.get('evalString') + "true");
           }
           else{
-            this.set('evalString', this.get('evalString') + "false");
+            self.set('evalString', self.get('evalString') + "false");
           }
         }
         else if(operator == ">"){
           if(course.get('mark').get('mark') > inputValue){
-            this.set('evalString', this.get('evalString') + "true");
+            self.set('evalString', self.get('evalString') + "true");
           }
           else{
-            this.set('evalString', this.get('evalString') + "false");
+            self.set('evalString', self.get('evalString') + "false");
           }
         }
         else if(operator == ">="){
-          if(course.get('mark').get('mark') >= inputValue){
-            this.set('evalString', this.get('evalString') + "true");
+          if(parseInt(course.get('mark').get('mark')) >= inputValue){
+            self.set('evalString', self.get('evalString') + "true");
           }
           else{
-            this.set('evalString', this.get('evalString') + "false");
+            self.set('evalString', self.get('evalString') + "false");
           }
         }
         else if(operator == "REQUIRED"){
-          this.set('evalString', this.get('evalString') + "true");
+          self.set('evalString', self.get('evalString') + "true");
         }//end else if
       }//end if
     });//end forEach
 
     if(courseFound == false && operator == "REQUIRED"){
-      this.set('evalString', this.get('evalString') + "false");
+      self.set('evalString', self.get('evalString') + "false");
     }
 
 
 
-    if(logicalLink == "AND"){
-      this.set('evalString', this.get('evalString') + "&&");
+    if(logicalLink == "and"){
+      self.set('evalString', self.get('evalString') + "&&");
     }
-    else if(logicalLink == "OR"){
-      this.set('evalString', this.get('evalString') + "||");
+    else if(logicalLink == "or"){
+      //var string = this.get('evalString') + "||";
+      self.set('evalString', self.get('evalString') + "||");
     }
 
+    console.log("eval string: " + this.get('evalString'));
 
-    if(expArray != null){ //if there is a logical exp array
+    console.log(expArray.get('length'));
+    //console.log(expArray.objectAt(0).get('booleanExp'));
+    if(expArray.get('length') != 0){ //if there is a logical exp array
       if(this.get("firstExp")){ //if it is the first logical exp, don't warp in brackets
         this.set('firstExp', false);
         expArray.forEach(function(logicalExp){ //recursively loop through logical exps
-          this.parseLogicalExpTree(logicalExp);
+          console.log('one');
+          self.parseLogicalExpTree(logicalExp);
         });
       }//end if
       else{ //if we are not dealing with the first logcial exp, warp in brackets
         this.set('evalString', this.get('evalString') + "(");
         expArray.forEach(function(logicalExp){ //recursively loop through logical exps
-          this.parseLogicalExpTree(logicalExp);
+          self.parseLogicalExpTree(logicalExp);
         });
         this.set('evalString', this.get('evalString') + ")");
       }//end else
@@ -187,13 +192,13 @@ export default Ember.Component.extend({
 
     adjudicateStudents(){
 
-      for(var i = 0; i < this.get('studentModel').get('length'); i++){
+      for(var i = 0; i < this.get('adjudicationModel').get('length'); i++){
         this.set('evalString', ""); //clear evalString for next student
         this.set('firstExp', true);
         //takes in an index for a student in the student model.
         //puts the student's current courses and grades into separate arrays
         //also gets the student's adjudication and logical expressions for each assessment code
-        this.getNextStudent(i);
+        this.getNextAdjudication(i);
 
         //need to call parseLogicalExpTree function here
         this.get('currentStudentAdjudications').forEach(function(adjudication){
@@ -219,6 +224,32 @@ export default Ember.Component.extend({
 
       //at the very end, the evalString should look something like this
       //console.log(eval("false&&true||false&&true(true||false||true)&&true||false"));
+    },
+
+
+    testAsssessmentCode(){
+      var self = this;
+      //var assessmentCode = this.get('assessmentCodeModel').objectAt(1);
+
+      for(var i = 0; i < this.get('adjudicationModel').get('length'); i++){
+        this.getNextAdjudication(i);
+        this.get('assessmentCodeModel').forEach(function(code){
+          code.get('testExpression').forEach(function(exp){
+            console.log(exp);
+            self.parseLogicalExpTree(exp);
+            console.log(self.get('evalString'));
+            console.log(eval(self.get('evalString')));
+            if(eval(self.get('evalString'))){
+              var currentAdj = this.get('currentAdjudication');
+              currentAdj.set('assessmentCode', code);
+              currentAdj.save();
+            }
+          });
+        });
+      }
+
+
+
     },
 
 
