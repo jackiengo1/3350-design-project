@@ -139,7 +139,7 @@ export default Ember.Component.extend({
         }
         else if(operator == ">"){
 
-          console.log(mark + " - " + inputValue);
+        //  console.log(mark + " - " + inputValue);
           if(parseInt(course.get('mark').get('mark')) > inputValue){
             self.set('evalString', self.get('evalString') + "true");
           }
