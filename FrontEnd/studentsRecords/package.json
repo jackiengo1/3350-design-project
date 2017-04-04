@@ -49,6 +49,7 @@
     "semantic-ui-ember": "2.0.0"
   },
   "dependencies": {
-    "ember-cli-sheetjs": "0.0.5"
+    "ember-cli-sheetjs": "0.0.5",
+    "xlsx": "^0.9.9"
   }
 }
