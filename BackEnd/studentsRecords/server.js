@@ -34,6 +34,8 @@ var logicalExpressions = require('./routes/logicalExpressions');
 var faculties = require('./routes/faculties');
 var departments = require('./routes/departments');
 var programAdministrations = require('./routes/programAdministrations');
+var adjudicationCategories = require('./routes/adjudicationCategories');
+var categories = require('./routes/categories');
 
 app.use(function (request, response, next) {
     response.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
@@ -66,6 +68,8 @@ app.use('/logicalExpressions', logicalExpressions);
 app.use('/faculties', faculties);
 app.use('/departments', departments);
 app.use('/programAdministrations', programAdministrations);
+app.use('/adjudicationCategories', adjudicationCategories);
+app.use('/categories', categories);
 
 
 app.use('/posts', posts);
@@ -78,6 +82,7 @@ app.use('/userRoles', userRoles);
 app.use('/rolePermissions', rolePermissions);
 app.use('/logins', logins);
 app.use('/roots', roots);
+
 
 
 app.listen(3700, function () {
