@@ -602,48 +602,61 @@
 
   <div class="ui bottom attached active tab segment" data-tab="grades">
 
-    <div class="ui grid" id="studentRecordsDataEntryTabContent">
+    <div class="ui one column grid" id="studentRecordsDataEntryTabContent">
 
-      <div class="eight wide column" id="studentRecordsDataEntryLeftContent">
+      <div class="column">
         <div class="ui center aligned header" id="studentRecordsDataEntryTabHeader">
           <h2>Student's Grades</h2>
         </div>
 
-        <form class="ui form">
-          <div class="field">
-            <select onchange={{action 'selectTermForGrade' value="target.value" }}>
-                <option selected = "selected" value = null> Select a Term </option>
-                {{#each currentStudentTerms as |oneTerm|}}
-                <option value={{oneTerm.id}}> {{oneTerm.term.name}} </option>
-                {{/each}}
+
+        <div class="ui two column grid">
+          <div class="column">
+            <form class="ui form">
+              <div class="field">
+                <select onchange={{action 'selectTermForGrade' value="target.value" }}>
+              <option selected = "selected" value = null> Select a Term </option>
+              {{#each currentStudentTerms as |oneTerm|}}
+              <option value={{oneTerm.id}}> {{oneTerm.term.name}} </option>
+              {{/each}}
             </select>
+              </div>
+            </form>
           </div>
-        </form>
-
-        <div class="ui middle aligned divided list" style="margin-top: 22px; margin-bottom: 22px;">
-          {{#each studentCourseCodeForGrade as |oneCourseCode|}} {{#unless oneCourseCode.isDeleted}} {{#if oneCourseCode.mark}}
-          <div class="item">
-            <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
-              <div class="teal ui button" style="width: 55px;" onclick={{action 'openEditGradeForm' oneCourseCode.mark.id}}><i class="large edit icon"></i></div>
-              <div class="negative ui button" style="width: 55px;" onclick={{action 'deleteGrade' oneCourseCode.mark.id oneCourseCode}}><i class="large remove icon"></i></div>
-
-            </div>
-            <div class="content" style="padding-top: 10px; font-size: 16px;">
-              Course code: {{oneCourseCode.name}} <br/> Grade: {{#if oneCourseCode.mark.mark}}{{oneCourseCode.mark.mark}}
-              {{else}} null {{/if}}<br/> Note: {{#if oneCourseCode.mark.note}}{{oneCourseCode.mark.note}} {{else}} null {{/if}}
+          <div class="column">
+            <div class="ui right floated primary labeled icon button" style="margin-bottom: 10px;" {{action 'openGradeForm'}}>
+              <i class="add icon"></i> Add Grade
             </div>
           </div>
-          {{/if}} {{/unless}} {{/each}}
         </div>
-      </div>
 
-      <div class="eight wide column" id="studentRecordsDataEntryRightContent">
-
-        <div class="ui center aligned header">
-          <button class="ui primary button" {{action 'openGradeForm'}}>
-              Add Grade
+        <table class="ui compact celled table">
+          <thead>
+            <tr>
+              <th>Course Code</th>
+              <th>Grade</th>
+              <th>Note</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each studentCourseCodeForGrade as |oneCourseCode|}} {{#unless oneCourseCode.isDeleted}} {{#if oneCourseCode.mark}}
+            <tr>
+              <td>{{oneCourseCode.name}}</td>
+              <td>{{#if oneCourseCode.mark.mark}}{{oneCourseCode.mark.mark}}{{else}} No Grade {{/if}}</td>
+              <td>{{oneCourseCode.mark.note}}</td>
+              <td class="collapsing">
+                <button class="teal ui button" style="width: 55px;" {{action 'openEditGradeForm' oneCourseCode.mark.id}}>
+              <i class="large edit icon"></i>
             </button>
-        </div>
+                <button class="ui negative button" style="width: 55px;" {{action 'deleteGrade' oneCourseCode.mark.id oneCourseCode}}>
+              <i class="large delete icon"></i>
+            </button>
+              </td>
+            </tr>
+            {{/if}} {{/unless}} {{/each}}
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -1002,8 +1015,6 @@
 
 
 
-
-
 <!--Modal to edit student grade-->
 
 <div class="ui modal gradeEdit">
@@ -1152,12 +1163,13 @@
   <table class="ui compact celled table">
     <thead>
       <tr>
-        <th>Date</th>
-        <th>Term Average</th>
+        <th>Date Edited</th>
+        <th>Term</th>
+        <th>Term Avg.</th>
         <th>Term Units Passed</th>
         <th>Total Term Units</th>
         <th>Note</th>
-        <th>Assessment Codes</th>
+        <th>Assessment Code</th>
         <th></th>
       </tr>
     </thead>
@@ -1165,6 +1177,7 @@
       {{#each currentStudentAdjudications as |curAdj|}}
       <tr>
         <td>{{curAdj.date}}</td>
+        <td>{{curAdj.semester.term.name}}</td>
         <td>{{curAdj.termAVG}}</td>
         <td>{{curAdj.termUnitPassed}}</td>
         <td>{{curAdj.termUnitsTotal}}</td>
@@ -1207,11 +1220,11 @@
         </div>
 
         <div class="field">
-          <label>Terms unit passed: </label> {{input type="number" value = adjTermUnitsPassedEdit}}
+          <label>Term Units Passed: </label> {{input type="number" value = adjTermUnitsPassedEdit}}
         </div>
 
         <div class="field">
-          <label>Term unit total: </label> {{input type="number" value = adjTermUnitTotalEdit}}
+          <label>Total Term Units: </label> {{input type="number" value = adjTermUnitTotalEdit}}
         </div>
 
         <div class="field">
@@ -1221,7 +1234,7 @@
       </div>
 
       <div class="field">
-        <label>Assessment code:</label>
+        <label>Assessment Code:</label>
         <select onchange={{action 'selectAssessmentCode' value="target.value" }}>
           <option selected = "selected" value = null> Select an assessment code </option>
           {{#each assessmentCodeModel as |oneCode|}}
