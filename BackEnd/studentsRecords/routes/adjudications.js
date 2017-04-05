@@ -56,7 +56,7 @@ router.route('/:adjudication_id')
                 adjudication.adjudicationResult = request.body.adjudication.adjudicationResult;
                 adjudication.studentInfo = request.body.adjudication.studentInfo;
                 adjudication.semester = request.body.adjudication.semester;
-                adjudication.adjudicatonCategory = request.body.adjudication.adjudicatonCategory;
+                adjudication.comment = request.body.adjudication.comment;
                 adjudication.category = request.body.adjudication.category;
 
                 adjudication.save(function (error) {

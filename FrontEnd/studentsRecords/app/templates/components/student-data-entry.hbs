@@ -288,7 +288,7 @@
             <div class="column">
               <div class="ui center aligned header">
                 <div class="teal ui button" style="width: 55px;" onclick={{action 'openASEdit' userListAS.id}}><i class="large edit icon"></i></div>
-                <button class="negative ui button" style ="width: 55px;" onclick={{action 'deleteAS' userListAS}}><i class="large delete icon"></i></button>
+                <button class="negative ui button" style="width: 55px;" onclick={{action 'deleteAS' userListAS}}><i class="large delete icon"></i></button>
               </div>
             </div>
           </div>
@@ -398,8 +398,6 @@
         <h2>High School Course Information</h2>
       </div>
 
-
-
       <div class="ui right floated primary labeled icon button" style="margin-bottom: 10px;" {{action
         'openHighSchoolCourseForm'}}>
         <i class="add icon"></i> Add High School Course Grade
@@ -421,7 +419,6 @@
         <tbody>
           {{#each currentStudentHSGrades as |oneHSGrade|}} {{#unless oneHSGrade.isDeleted}}
           <tr>
-            {{!--{{log oneHSGrade.source.school}}--}}
             <td>{{oneHSGrade.source.school.name}}</td>
             <td>{{oneHSGrade.source.course.name}}</td>
             <td>{{oneHSGrade.source.source}}</td>
@@ -430,10 +427,10 @@
             <td>{{oneHSGrade.source.unit}}</td>
             <td>{{oneHSGrade.mark}}</td>
             <td class="collapsing">
-              <button class="teal ui button" style = "width: 55px;" onclick={{action 'openEditHighSchoolCourseForm' oneHSGrade}}>
+              <button class="teal ui button" style="width: 55px;" onclick={{action 'openEditHighSchoolCourseForm' oneHSGrade}}>
                 <i class="large edit icon"></i>
               </button>
-              <button class="ui negative button" style = "width: 55px;" onclick={{action 'deleteHsMark' oneHSGrade}}>
+              <button class="ui negative button" style="width: 55px;" onclick={{action 'deleteHsMark' oneHSGrade}}>
                 <i class="large delete icon"></i>
               </button>
             </td>
@@ -443,120 +440,7 @@
         </tbody>
       </table>
 
-
-
-
-
-      {{!--
-      <!-- add #unless hsGrade.isDeleted -->
-      {{#ui-accordion class="styled fluid"}} {{#each currentStudentHSGrades as |oneHSGrade|}} {{#unless oneHSGrade.isDeleted}}
-      <div class="title">
-        School Name: {{oneHSGrade.source.school.name}}
-      </div>
-      <div class="content">
-        <div class="ui vertically divided grid">
-          <div class="one column row" id="accordionFirstElement">
-            <div class="column">
-              <p>Subject: {{oneHSGrade.source.course.name}}</p>
-            </div>
-          </div>
-          <div class="one column row" id="zeroPadding">
-            <div class="column">
-              <p>Source: {{oneHSGrade.source.source}}</p>
-            </div>
-          </div>
-          <div class="one column row" id="zeroPadding">
-            <div class="column">
-              <p>Description: {{oneHSGrade.source.course.description}}</p>
-            </div>
-          </div>
-          <div class="two column row" id="zeroPadding">
-            <div class="column">
-              <p>Level: {{oneHSGrade.source.level}}</p>
-            </div>
-            <div class="column">
-              <p>Units: {{oneHSGrade.source.unit}}</p>
-            </div>
-          </div>
-          <div class="one column row" id="zeroPadding">
-            <div class="column">
-              <p>Grade: {{oneHSGrade.mark}}</p>
-            </div>
-          </div>
-          <div class="one column row" id="zeroPadding">
-            <div class="column">
-              <div class="ui center aligned header">
-                <button class="negative ui button" onclick={{action 'deleteHsMark' oneHSGrade}}>Delete</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      {{/unless}} {{/each}} {{/ui-accordion}}--}}
     </div>
-
-    {{!--
-    <div class="eight wide column" id="studentRecordsDataEntryRightContent">
-      <div class="ui center aligned header" id="studentRecordsDataEntryTabHeader">
-        <h2>Add High School Course Grade</h2>
-      </div>
-
-      <div class="ui sixteen wide column">
-        <form class="ui form" id="highSchoolCourseForm">
-
-          <div class="field">
-            <label>High School</label>
-            <select id="schoolSelect" onchange={{action 'selectHighSchool' value="target.value" }}>
-              <option selected="selected" value="null">Select a High School</option>
-              {{#each secondarySchoolModel as |schoolChoice|}}
-              <option value={{schoolChoice.id}}> {{schoolChoice.name}} </option>
-              {{/each}}
-            </select>
-          </div>
-
-          <div class="field">
-            <label>Subject (Description) - Source</label>
-            <select id="courseSelect" onchange={{action 'selectCourse' value="target.value" }}>
-              <option selected="selected" value="null">Select a Course</option>
-              {{#each hsCourseModel as |courseChoice|}}
-              <option value={{courseChoice.id}}> {{courseChoice.course.name}} ({{courseChoice.course.description}}) - {{courseChoice.source}} </option>
-              {{/each}}
-            </select>
-          </div>
-
-          <div class="two fields">
-            <div class="field">
-              <label>Level</label>
-              <select id="levelSelect" onchange={{action 'selectLevel' value="target.value" }}>
-                <option selected="selected" value="null">Select a Level</option>
-                {{#each hsCourseModel2 as |levelChoice|}}
-                <option value={{levelChoice.id}}> {{levelChoice.level}} </option>
-                {{/each}}
-              </select>
-            </div>
-            <div class="field">
-              <label>Unit</label>
-              <select id="unitSelect" onchange={{action 'selectUnit' value="target.value" }}>
-                <option selected="selected" value="null">Select a Unit</option>
-                {{#each hsCourseModel2 as |unitChoice|}}
-                <option value={{unitChoice.id}}> {{unitChoice.unit}} </option>
-                {{/each}}
-              </select>
-            </div>
-          </div>
-
-          <div class="field">
-            <label>Grade</label> {{input disabled="true" type="number" value=hsGrade id="gradeField"}}
-          </div>
-
-        </form>
-      </div>
-
-      <div class="ui center aligned header">
-        <button id="addCourseGradeButton" class="ui primary button" {{action 'addhsMark'}}>Add Course Grade</button>
-      </div>
-    </div>--}}
-
   </div>
 
 </div>
@@ -1232,51 +1116,210 @@
         <div class="field">
           <label>Term</label>
           <select onchange={{action 'selectTermForProgramRecord' value="target.value" }}>
-                <option selected = "selected" value = null> Select a term </option>
-                {{#each currentStudentTerms as |oneTerm|}}
-                <option value={{oneTerm.id}} >{{oneTerm.term.name}}</option>
-                {{/each}}
-              </select>
+            <option selected = "selected" value = null> Select a term </option>
+            {{#each currentStudentTerms as |oneTerm|}}
+            <option value={{oneTerm.id}} >{{oneTerm.term.name}}</option>
+            {{/each}}
+          </select>
         </div>
 
         <div class="field">
           <label>Program record</label>
           <select onchange={{action 'selectProgramRecord' value="target.value" }}>
-                <option selected = "selected" value = null> Select a program record </option>
-                {{#each programRecordModel as |oneProgram|}}
-                <option value={{oneProgram.id}} >{{oneProgram.name}}</option>
-                {{/each}}
-              </select>
+            <option selected = "selected" value = null> Select a program record </option>
+            {{#each programRecordModel as |oneProgram|}}
+            <option value={{oneProgram.id}} >{{oneProgram.name}}</option>
+            {{/each}}
+          </select>
         </div>
 
-
       </div>
-
-
     </form>
-
   </div>
   <div class="actions">
-    <button class="ui primary button" {{action 'closeProgramRecordForm'}}>
-          Exit
-        </button>
-    <button class="ui primary button" {{action 'addProgramRecord'}}>
-          Add
-        </button>
+    <button class="ui primary button" {{action 'closeProgramRecordForm'}}>Exit</button>
+    <button class="ui primary button" {{action 'addProgramRecord'}}>Add</button>
   </div>
 </div>
 
 
 <div class="ui bottom attached tab segment" data-tab="adjudicationTab" style="background-color: #eee3fd; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">
-  {{#each currentStudentAdjudications as |curAdj|}}
-  <h3>Date: {{curAdj.date}}</h3>
-  <p>Term Average: {{curAdj.termAVG}}</p>
-  <p>Term Units Passed: {{curAdj.termUnitsPassed}}</p>
-  <p>Total Term Units: {{curAdj.termUnitsTotal}}</p>
-  <p>Note: {{curAdj.note}}</p>
-  <br/> {{/each}}
+
+  <div class="ui right floated primary labeled icon button" style="margin-bottom: 10px;" {{action 'openAdjudication'}}> {{!-- ADD action for Adding Adjudication --}}
+    <i class="add icon"></i> Add Adjudication Information
+  </div>
+
+  <table class="ui compact celled table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Term Average</th>
+        <th>Term Units Passed</th>
+        <th>Total Term Units</th>
+        <th>Note</th>
+        <th>Assessment Codes</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each currentStudentAdjudications as |curAdj|}}
+      <tr>
+        <td>{{curAdj.date}}</td>
+        <td>{{curAdj.termAVG}}</td>
+        <td>{{curAdj.termUnitPassed}}</td>
+        <td>{{curAdj.termUnitsTotal}}</td>
+        <td>{{curAdj.note}}</td>
+        <td>{{curAdj.comment.name}}</td>
+        <td class="collapsing">
+          <button class="teal ui button" style="width: 55px;" {{action 'openEditAdjudication' curAdj}}> {{!-- ADD action onclick for Editing Adjudication --}}
+            <i class="large edit icon"></i>
+          </button>
+          <button class="ui negative button" style="width: 55px;" {{action 'deleteAdjudication' curAdj}}> {{!-- ADD action onclick for Deleting Adjudication --}}
+            <i class="large delete icon"></i>
+          </button>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+
 </div>
 
 
+
+
+
+
+<div class="ui modal adjudicationEdit">
+  <div class="header">
+    Edit Adjudication
+  </div>
+  <div class="content">
+    <form class="ui form">
+      <div class="five fields">
+
+        <div class="field">
+          <label>Date: </label> {{input type="date" value = adjDateEdit}}
+        </div>
+
+        <div class="field">
+          <label>Average: </label> {{input type="text" value = adjAvgEdit}}
+        </div>
+
+        <div class="field">
+          <label>Terms unit passed: </label> {{input type="number" value = adjTermUnitsPassedEdit}}
+        </div>
+
+        <div class="field">
+          <label>Term unit total: </label> {{input type="number" value = adjTermUnitTotalEdit}}
+        </div>
+
+        <div class="field">
+          <label>Note: </label> {{input type="text" value = adjNoteEdit}}
+        </div>
+
+      </div>
+
+      <div class="field">
+        <label>Assessment code:</label>
+        <select onchange={{action 'selectAssessmentCode' value="target.value" }}>
+          <option selected = "selected" value = null> Select an assessment code </option>
+          {{#each assessmentCodeModel as |oneCode|}}
+          <option value={{oneCode.id}} selected = {{eq adjAssessmentCode.id oneCode.id}}>{{oneCode.name}}</option>
+          {{/each}}
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Term:</label>
+        <select onchange={{action 'selectAdjTerm' value="target.value" }}>
+          <option selected = "selected" value = null> Select a term </option>
+          {{#each currentStudentTerms as |oneTerm|}}
+          <option value={{oneTerm.id}} selected = {{eq adjTerm.id oneTerm.id}}>{{oneTerm.term.name}}</option>
+          {{/each}}
+        </select>
+      </div>
+    </form>
+  </div>
+
+  <div class="actions">
+    <button class="ui primary button" {{action 'closeAdjudicationEdit'}}>
+        Exit
+      </button>
+    <button class="ui primary button" {{action 'editAdjudication'}}>
+        Update
+    </button>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+<div class="ui modal adjudication">
+  <div class="header">
+    Add Adjudication
+  </div>
+  <div class="content">
+    <form class="ui form">
+      <div class="five fields">
+
+        <div class="field">
+          <label>Date: </label> {{input type="date" value = adjDate}}
+        </div>
+
+        <div class="field">
+          <label>Average: </label> {{input type="text" value = adjAvg}}
+        </div>
+
+        <div class="field">
+          <label>Terms unit passed: </label> {{input type="number" value = adjTermUnitsPassed}}
+        </div>
+
+        <div class="field">
+          <label>Term unit total: </label> {{input type="number" value = adjTermUnitTotal}}
+        </div>
+
+        <div class="field">
+          <label>Note: </label> {{input type="text" value = adjNote}}
+        </div>
+
+      </div>
+
+      <div class="field">
+        <label>Assessment code:</label>
+        <select onchange={{action 'selectAssessmentCode' value="target.value" }}>
+          <option selected = "selected" value = null> Select an assessment code </option>
+          {{#each assessmentCodeModel as |oneCode|}}
+          <option value={{oneCode.id}} >{{oneCode.name}}</option>
+          {{/each}}
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Term:</label>
+        <select onchange={{action 'selectAdjTerm' value="target.value" }}>
+          <option selected = "selected" value = null> Select a term </option>
+          {{#each currentStudentTerms as |oneTerm|}}
+          <option value={{oneTerm.id}} >{{oneTerm.term.name}}</option>
+          {{/each}}
+        </select>
+      </div>
+    </form>
+  </div>
+
+  <div class="actions">
+    <button class="ui primary button" {{action 'closeAdjudication'}}>
+        Exit
+      </button>
+    <button class="ui primary button" {{action 'addAdjudication'}}>
+        Add
+    </button>
+  </div>
+
+</div>
 
 {{/if}}

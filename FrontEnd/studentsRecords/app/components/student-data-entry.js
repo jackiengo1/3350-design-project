@@ -45,6 +45,7 @@ export default Ember.Component.extend({
   highSchoolCourseChoice: null,
   highSchoolCourseChoice2: null,
   adjudicationModel: null,
+  assessmentCodeModel: null,
 
   //undo
   //the stack store the data
@@ -149,6 +150,21 @@ export default Ember.Component.extend({
 
   currentStudentAdjudications: null,
 
+  adjudicationTemp: null,
+  adjAssessmentCode: null,
+  adjDateEdit: null,
+  adjAvgEdit: null,
+  adjTermUnitsPassedEdit: null,
+  adjTermUnitTotalEdit: null,
+  adjNoteEdit: null,
+  adjTerm: null,
+
+  adjDate: null,
+  adjAvg: null,
+  adjTermUnitsPassed: null,
+  adjTermUnitTotal: null,
+  adjNote: null,
+
 
   studentModel: Ember.observer('offset', function () { //observes the offset variable. When it changes run code.
     var self = this;
@@ -233,6 +249,12 @@ export default Ember.Component.extend({
     this.get('store').findAll('high-school-course').then(function (records) {
       self.set('highSchoolCourseModel', records);
     });
+
+    this.get('store').findAll('assessment-code').then(function (records) {
+      self.set('assessmentCodeModel', records);
+    });
+
+
 
     // load first page of the students records
     this.set('limit', 10);
@@ -1457,7 +1479,87 @@ export default Ember.Component.extend({
     getAdjudicationInformation() {
       console.log(this.get('currentStudentAdjudications').objectAt(0).get('termAVG'));
 
-    }
+    },
+
+    selectAssessmentCode(assessmentCode){
+      var code = this.get('store').peekRecord('assessment-code', assessmentCode);
+      this.set('adjAssessmentCode', code);
+    },
+
+    selectAdjTerm(term){
+      var termCode = this.get('store').peekRecord('term', term);
+      this.set('adjTerm', termCode);
+    },
+
+    openEditAdjudication(adjudication){
+      this.set('adjudicationTemp', adjudication);
+      this.set('adjDateEdit', adjudication.get('date'));
+      this.set('adjAvgEdit', adjudication.get('termAVG'));
+      this.set('adjTermUnitsPassedEdit', adjudication.get('termUnitPassed'));
+      this.set('adjTermUnitTotalEdit', adjudication.get('termUnitsTotal'));
+      this.set('adjNoteEdit', adjudication.get('note'));
+      this.set('adjAssessmentCode', adjudication.get('comment'));
+      this.set('adjTerm', adjudication.get('semester'));
+      console.log(adjudication.get('comment'));
+      Ember.$('.ui.modal.adjudicationEdit').modal({ detachable: false, }).modal('show');
+
+    },
+
+    editAdjudication(){
+      var adj = this.get('adjudicationTemp');
+
+      adj.set('date', this.get('adjDateEdit'));
+      adj.set('termAVG', this.get('adjAvgEdit'));
+      adj.set('termUnitPassed', this.get('adjTermUnitsPassedEdit'));
+      adj.set('termUnitsTotal', this.get('adjTermUnitTotalEdit'));
+      adj.set('note', this.get('adjNoteEdit'));
+      adj.set('studentInfo', this.get('currentStudent'));
+      adj.set('comment', this.get('adjAssessmentCode'));
+      adj.set('semester', this.get('adjTerm'));
+      adj.save();
+      Ember.$('.ui.modal.adjudicationEdit').modal('hide');
+    },
+
+    addAdjudication(){
+      var newAdj = this.get('store').createRecord('adjudication', {
+        date: this.get('adjDate'),
+        termAVG: this.get('adjAvg'),
+        termUnitPassed: this.get('adjTermUnitsPassed'),
+        termUnitsTotal: this.get('adjTermUnitTotal'),
+        note: this.get('adjNote'),
+        studentInfo: this.get('currentStudent'),
+        comment: this.get('adjAssessmentCode'),
+        semester: this.get('adjTerm'),
+
+      });
+
+      newAdj.save();
+      Ember.$('.ui.modal.adjudication').modal('hide');
+    },
+
+    deleteAdjudication(adjudication){
+      adjudication.deleteRecord();
+      adjudication.save();
+    },
+
+    closeAdjudicationEdit(){
+      Ember.$('.ui.modal.adjudicationEdit').modal('hide');
+    },
+
+    openAdjudication(){
+      this.set('adjDate', null);
+      this.set('adjAvg', null);
+      this.set('adjTermUnitsPassed', null);
+      this.set('adjTermUnitTotal', null);
+      this.set('adjNote', null);
+      this.set('adjAssessmentCode', null);
+      this.set('adjTerm', null);
+      Ember.$('.ui.modal.adjudication').modal({ detachable: false, }).modal('show');
+    },
+
+    closeAdjudication(){
+      Ember.$('.ui.modal.adjudication').modal('hide');
+    },
   }
 
 });
