@@ -305,21 +305,21 @@ export default Ember.Component.extend({
 
     closeLogicalExpEditModal(){
       //clear all selected values
-      // this.set('selectedCourse',null);
-      // this.set('selectedBool',null);
-      // this.set('selectedAessmentCode',null);
-      // this.set('selectedLogicalExp',null);
-      // this.set('selectedlogicalLink',"");
-      // this.set('inputValue',null);
-      // this.set('numberFieldVisable',false);
-      //
-      // this.set('loigcalExpForEdit',null);
-      // this.set('courseForEdit',null);
-      // this.set('operatorForEdit',null);
-      // this.set('markForEdit',null);
-      // this.set('linkForEdit',null);
-      // this.set('assessmentForEdit',null);
-      // this.set('ExpArrayForEdit',null);
+      this.set('selectedCourse',null);
+      this.set('selectedBool',null);
+      this.set('selectedAessmentCode',null);
+      this.set('selectedLogicalExp',null);
+      this.set('selectedlogicalLink',"");
+      this.set('inputValue',null);
+      this.set('numberFieldVisable',false);
+
+      this.set('loigcalExpForEdit',null);
+      this.set('courseForEdit',null);
+      this.set('operatorForEdit',null);
+      this.set('markForEdit',null);
+      this.set('linkForEdit',null);
+      this.set('assessmentForEdit',null);
+      this.set('ExpArrayForEdit',null);
 
       Ember.$('.ui.modal.logicalExpEdit').modal('hide');
     },
