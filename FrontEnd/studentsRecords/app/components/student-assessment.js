@@ -86,6 +86,9 @@ export default Ember.Component.extend({
       self.get('currentCourses').push(course);
       self.get('currentGrades').push(course.get('mark').get('mark'));
     });
+    this.get('currentCourses').forEach(function(course){
+      console.log(course.get('name'));
+    });
   },
 
 
@@ -112,9 +115,12 @@ export default Ember.Component.extend({
 
     this.get('currentCourses').forEach(function(course){ //loop through student courses
     //  console.log(course.get('name') + " - " + course.get('mark').get('mark'));
-      var mark = course.get('mark').get('mark');
-      console.log(mark + " - " + course.get('mark').get('mark'));
+      let mark = course.get('mark').get('mark');
+      //console.log(mark + " - " + course.get('mark').gets('mark'));
       if(criteria == course.get('name') && courseFound == false){ //if course name matches
+        console.log(course);
+        //console.log(mark + " - " + inputValue);
+        //console.log("hello: " + course.get('mark').get('mark') + " - " + inputValue);
         courseFound = true;
         if(operator == "="){ //check operator
           if(parseInt(course.get('mark').get('mark')) == inputValue){
@@ -249,8 +255,8 @@ export default Ember.Component.extend({
       for(var i = 0; i < this.get('adjudicationModel').get('length'); i++){
 
         this.getNextAdjudication(i);
-        var assessmentCodeList = this.get('assessmentCodeModel');
-        for(var j = 0; j < assessmentCodeList.get('length'); j++){
+      //  var assessmentCodeList = this.get('assessmentCodeModel');
+        /*for(var j = 0; j < assessmentCodeList.get('length'); j++){
           var testExp = assessmentCodeList.objectAt(j).get('testExpression');
           for(var k = 0; k < testExp.get('length'); k++){
             console.log('herer');
@@ -272,7 +278,7 @@ export default Ember.Component.extend({
               break;
             }
           }
-        }
+        }*/
 
       /*  this.getNextAdjudication(i);
         this.get('assessmentCodeModel').forEach(function(code){
