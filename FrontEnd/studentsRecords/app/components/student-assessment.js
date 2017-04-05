@@ -255,8 +255,8 @@ export default Ember.Component.extend({
       for(var i = 0; i < this.get('adjudicationModel').get('length'); i++){
 
         this.getNextAdjudication(i);
-      //  var assessmentCodeList = this.get('assessmentCodeModel');
-        /*for(var j = 0; j < assessmentCodeList.get('length'); j++){
+        var assessmentCodeList = this.get('assessmentCodeModel');
+        for(var j = 0; j < assessmentCodeList.get('length'); j++){
           var testExp = assessmentCodeList.objectAt(j).get('testExpression');
           for(var k = 0; k < testExp.get('length'); k++){
             console.log('herer');
@@ -278,7 +278,7 @@ export default Ember.Component.extend({
               break;
             }
           }
-        }*/
+        }
 
       /*  this.getNextAdjudication(i);
         this.get('assessmentCodeModel').forEach(function(code){
