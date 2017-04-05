@@ -1145,7 +1145,7 @@
 
 <div class="ui bottom attached tab segment" data-tab="adjudicationTab" style="background-color: #eee3fd; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">
 
-  <div class="ui right floated primary labeled icon button" style="margin-bottom: 10px;"> {{!-- ADD action for Adding Adjudication --}}
+  <div class="ui right floated primary labeled icon button" style="margin-bottom: 10px;" {{action 'openAdjudication'}}> {{!-- ADD action for Adding Adjudication --}}
     <i class="add icon"></i> Add Adjudication Information
   </div>
 
@@ -1166,15 +1166,15 @@
       <tr>
         <td>{{curAdj.date}}</td>
         <td>{{curAdj.termAVG}}</td>
-        <td>{{curAdj.termUnitsPassed}}</td>
+        <td>{{curAdj.termUnitPassed}}</td>
         <td>{{curAdj.termUnitsTotal}}</td>
         <td>{{curAdj.note}}</td>
-        <td>Assessment Codes Here</td>
+        <td>{{curAdj.comment.name}}</td>
         <td class="collapsing">
-          <button class="teal ui button" style="width: 55px;"> {{!-- ADD action onclick for Editing Adjudication --}}
+          <button class="teal ui button" style="width: 55px;" {{action 'openEditAdjudication' curAdj}}> {{!-- ADD action onclick for Editing Adjudication --}}
             <i class="large edit icon"></i>
           </button>
-          <button class="ui negative button" style="width: 55px;"> {{!-- ADD action onclick for Deleting Adjudication --}}
+          <button class="ui negative button" style="width: 55px;" {{action 'deleteAdjudication' curAdj}}> {{!-- ADD action onclick for Deleting Adjudication --}}
             <i class="large delete icon"></i>
           </button>
         </td>
@@ -1182,6 +1182,143 @@
       {{/each}}
     </tbody>
   </table>
+
+</div>
+
+
+
+
+
+
+<div class="ui modal adjudicationEdit">
+  <div class="header">
+    Edit Adjudication
+  </div>
+  <div class="content">
+    <form class="ui form">
+      <div class="five fields">
+
+        <div class="field">
+          <label>Date: </label> {{input type="date" value = adjDateEdit}}
+        </div>
+
+        <div class="field">
+          <label>Average: </label> {{input type="text" value = adjAvgEdit}}
+        </div>
+
+        <div class="field">
+          <label>Terms unit passed: </label> {{input type="number" value = adjTermUnitsPassedEdit}}
+        </div>
+
+        <div class="field">
+          <label>Term unit total: </label> {{input type="number" value = adjTermUnitTotalEdit}}
+        </div>
+
+        <div class="field">
+          <label>Note: </label> {{input type="text" value = adjNoteEdit}}
+        </div>
+
+      </div>
+
+      <div class="field">
+        <label>Assessment code:</label>
+        <select onchange={{action 'selectAssessmentCode' value="target.value" }}>
+          <option selected = "selected" value = null> Select an assessment code </option>
+          {{#each assessmentCodeModel as |oneCode|}}
+          <option value={{oneCode.id}} selected = {{eq adjAssessmentCode.id oneCode.id}}>{{oneCode.name}}</option>
+          {{/each}}
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Term:</label>
+        <select onchange={{action 'selectAdjTerm' value="target.value" }}>
+          <option selected = "selected" value = null> Select a term </option>
+          {{#each currentStudentTerms as |oneTerm|}}
+          <option value={{oneTerm.id}} selected = {{eq adjTerm.id oneTerm.id}}>{{oneTerm.term.name}}</option>
+          {{/each}}
+        </select>
+      </div>
+    </form>
+  </div>
+
+  <div class="actions">
+    <button class="ui primary button" {{action 'closeAdjudicationEdit'}}>
+        Exit
+      </button>
+    <button class="ui primary button" {{action 'editAdjudication'}}>
+        Update
+    </button>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+<div class="ui modal adjudication">
+  <div class="header">
+    Add Adjudication
+  </div>
+  <div class="content">
+    <form class="ui form">
+      <div class="five fields">
+
+        <div class="field">
+          <label>Date: </label> {{input type="date" value = adjDate}}
+        </div>
+
+        <div class="field">
+          <label>Average: </label> {{input type="text" value = adjAvg}}
+        </div>
+
+        <div class="field">
+          <label>Terms unit passed: </label> {{input type="number" value = adjTermUnitsPassed}}
+        </div>
+
+        <div class="field">
+          <label>Term unit total: </label> {{input type="number" value = adjTermUnitTotal}}
+        </div>
+
+        <div class="field">
+          <label>Note: </label> {{input type="text" value = adjNote}}
+        </div>
+
+      </div>
+
+      <div class="field">
+        <label>Assessment code:</label>
+        <select onchange={{action 'selectAssessmentCode' value="target.value" }}>
+          <option selected = "selected" value = null> Select an assessment code </option>
+          {{#each assessmentCodeModel as |oneCode|}}
+          <option value={{oneCode.id}} >{{oneCode.name}}</option>
+          {{/each}}
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Term:</label>
+        <select onchange={{action 'selectAdjTerm' value="target.value" }}>
+          <option selected = "selected" value = null> Select a term </option>
+          {{#each currentStudentTerms as |oneTerm|}}
+          <option value={{oneTerm.id}} >{{oneTerm.term.name}}</option>
+          {{/each}}
+        </select>
+      </div>
+    </form>
+  </div>
+
+  <div class="actions">
+    <button class="ui primary button" {{action 'closeAdjudication'}}>
+        Exit
+      </button>
+    <button class="ui primary button" {{action 'addAdjudication'}}>
+        Add
+    </button>
+  </div>
 
 </div>
 
