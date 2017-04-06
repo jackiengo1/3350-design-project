@@ -284,13 +284,14 @@ export default Ember.Component.extend({
         var assessmentCodeList = this.get('assessmentCodeModel');
         for(var j = 0; j < assessmentCodeList.get('length'); j++){
           var testExp = assessmentCodeList.objectAt(j).get('testExpression');
+          console.log(testExp.get('length'));
           for(var k = 0; k < testExp.get('length'); k++){
             self.set('evalString', ""); //clear evalString for next student
             self.set('firstExp', true);
             //console.log(testExp.objectAt(k));
             self.parseLogicalExpTree(testExp.objectAt(k), currentCourses);
             //console.log(self.get('evalString'));
-            //console.log(eval(self.get('evalString')));
+            console.log(eval(self.get('evalString')));
 
             // if(this.get('evaluationDone')){
 

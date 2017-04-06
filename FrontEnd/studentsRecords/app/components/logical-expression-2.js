@@ -36,7 +36,7 @@ export default Ember.Component.extend({
     this._super(...arguments);
     var self = this;
     //push the year weighted average to the front of the course model
-    this.get('courseModel').pushObject("YEAR WEIGHTED AVERAEG");
+    //this.get('courseModel').pushObject("YEAR WEIGHTED AVERAEG");
 
     this.get('store').findAll('course-code').then(function(records){
       //for each records, push the name to the coursemodel array, and remove and duplications

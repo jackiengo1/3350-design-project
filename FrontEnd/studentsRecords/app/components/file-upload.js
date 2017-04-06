@@ -1946,6 +1946,8 @@ export default Ember.Component.extend({
     //end of the read file function
 
     deleteall:function(){
+      var choice = confirm('Are you sure you want to clear entire Database?');
+      if (choice) {
       var self = this;
       //each time the delete is called, show loading and hide loader
       this.set('showLoader',true);
@@ -2173,6 +2175,7 @@ export default Ember.Component.extend({
           });
         }, this);
       });
+    }
     },
 
   }
