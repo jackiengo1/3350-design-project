@@ -175,7 +175,7 @@
             </div>
 
             {{#if numberFieldVisable}}
-            <div class="four wide column">
+            <div class="field">
               {{input type = "number" value=markForEdit}}
             </div>
             {{/if}}
@@ -213,10 +213,9 @@
           <row>
             <div class="ui center aligned header" style="margin-bottom: 20px;">
               <select class="ui search dropdown" onchange={{action 'selectAssessmentcode' value="target.value" }}>
-                <option selected = "selected" value = null> Select an assessment code </option>
                 {{#each assessmentCodeModel as |oneAssessmentCode| }}
-                <option value={{oneAssessmentCode.id}} selected={{eq assessmentForEdit
-                  oneAssessmentCode }}> {{oneAssessmentCode.name}} </option>
+                <option value={{oneAssessmentCode.id}} selected={{eq selectedAessmentCode.id
+                  oneAssessmentCode.id }}> {{oneAssessmentCode.name}} </option>
                 {{/each}}
               </select>
             </div>
