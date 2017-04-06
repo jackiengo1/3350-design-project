@@ -202,6 +202,14 @@ export default Ember.Component.extend({
       tempExp.save();
     },
 
+    openAddLogicalExpressionsForm() {
+      Ember.$('.ui.modal.addLogicalExpressionsForm').modal({detachable: false,}).modal('show');
+    },
+
+    closeAddLogicalExpressionsForm() {
+      Ember.$('.ui.modal.addLogicalExpressionsForm').modal('hide');
+    },
+
     openEditLogicalExpForm(selectedExp){
 
       this.set('numberFieldVisable',false);
