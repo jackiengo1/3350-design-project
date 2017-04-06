@@ -1,85 +1,178 @@
-<h1>Logical expression</h1>
-<div class="ui grid">
-  <div class="row">
+<div class="ui grid" id="studentRecordsDataEntryTabContent">
 
-    <div class="ui six wide column">
-      <form class="ui form">
-        <div class="field">
-          <select onchange={{action 'selectLogicalExp' value="target.value" }}>
-            <option selected = "selected" value = null> Select a logical expression </option>
-            {{#each currentLogicExpList as |oneExp|}}
-            <option value={{oneExp.id}}> {{oneExp.booleanExp}} </option>
-            {{/each}}
-          </select>
-        </div>
-      </form>
+  <div class="sixteen wide column" id="zeroPadding">
+    <div class="ui center aligned header" id="studentRecordsDataEntryTabHeader">
+      <h2>Logical Expressions</h2>
     </div>
 
-    <div class="ui six wide column">
-      <form class="ui form">
-        <div class="field">
-          <select>
-            <option selected = "selected" value = null> Select a logical expression </option>
-            {{#each selectedLogicalExpArray as |oneCurrentExp|}}
-            <option value={{oneCurrentExp.id}}> {{oneCurrentExp.booleanExp}} </option>
-            {{/each}}
-          </select>
-        </div>
-      </form>
+    <div class="ui right floated primary labeled icon button" style="margin-bottom: 10px;" {{action
+      'openAddLogicalExpressionsForm'}}>
+      <i class="add icon"></i>Add Logical Expression
     </div>
 
-    <div class="ui six wide column">
-      <form class="ui form">
+    <table class="ui compact celled table">
+      <thead>
+        <tr>
+          <th>Logical Expressions</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each logicalExpressionModel as |oneExp|}}
+        <tr>
+          <td>{{oneExp.booleanExp}}</td>
+          <td class="collapsing">
+            <button class="teal ui button" style="width: 55px;" {{action 'openEditLogicalExpForm' oneExp}}>
+                <i class="large edit icon"></i>
+              </button>
+            <button class="ui negative button" style="width: 55px;" {{action 'deleteRemoteExp' oneExp}}>
+                <i class="large delete icon"></i>
+              </button>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+<div class="ui modal addLogicalExpressionsForm">
+  <div class="header">
+    Add Logical Expression
+  </div>
+  <div class="content">
+    <form class="ui form">
+
+      <div class="three fields">
         <div class="field">
           <select onchange={{action 'selectCourse' value="target.value" }}>
-            <option selected = "selected" value = null> Select a course </option>
+            <option selected = "selected" value = null>Select a Course</option>
             {{#each courseModel as |oneCourse|}}
             <option value={{oneCourse}}> {{oneCourse}} </option>
             {{/each}}
           </select>
         </div>
-      </form>
-    </div>
 
-
-    <div class="ui four wide column">
-      <form class="ui form">
         <div class="field">
           <select onchange={{action 'selectBool' value="target.value" }}>
-            <option selected = "selected" value = null> Select an operator </option>
+            <option selected = "selected" value = null>Select an Operator</option>
             {{#each boolOperators as |oneOperator|}}
             <option value={{oneOperator}}> {{oneOperator}} </option>
             {{/each}}
           </select>
         </div>
-      </form>
-    </div>
 
-    {{#if numberFieldVisable}}
-    <div class="four wide column">
-      {{input type = "number" value=inputValue}}
-    </div>
-    {{/if}}
+        {{#if numberFieldVisable}}
+        <div class="field">
+          {{input type = "number" value=inputValue}}
+        </div>
+        {{/if}}
+      </div>
 
+      <div class="field">
+        <select class="ui search dropdown" onchange={{action 'selectlogicLink' value="target.value" }}>
+          <option selected = "selected" value = null>Select a Logic</option>
+          {{#each logicalLink as |oneLogicalLink| }}
+          <option value={{oneLogicalLink}}> {{oneLogicalLink}} </option>
+          {{/each}}
+        </select>
+      </div>
 
-    <div class="four wide column" >
-      {{#if showLogic}}
-      <select class="ui search dropdown" onchange={{action 'selectlogicLink' value="target.value"}}>
-        <option selected = "selected" value = null> Select a logic </option>
-        {{#each logicalLink as |oneLogicalLink| }}
-        <option value={{oneLogicalLink}}> {{oneLogicalLink}} </option>
-        {{/each}}
-      </select>
-      {{/if}}
-    </div>
+      <div class="field">
+        <select onchange={{action 'selectLogicalExp' value="target.value" }}>
+          <option selected = "selected" value = null>Select a Logical Expression</option>
+          {{#each currentLogicExpList as |oneExp|}}
+          <option value={{oneExp.id}}> {{oneExp.booleanExp}} </option>
+          {{/each}}
+        </select>
+      </div>
 
-    <button class="green ui button" {{action 'addLogicalExp'}}>
-      Add
+      <div class="field">
+        <div class="ui center aligned header" style="margin-bottom: 20px;">
+          <button class="green ui button" {{action 'addLogicalExp'}}>Add to List</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <select class="ui search dropdown" onchange={{action 'selectAssessmentcode' value="target.value" }}>
+          <option selected = "selected" value = null>Select an Assessment Code</option>
+          {{#each assessmentCodeModel as |oneAssessmentCode| }}
+          <option value={{oneAssessmentCode.id}}> {{oneAssessmentCode.name}} </option>
+          {{/each}}
+        </select>
+      </div>
+    </form>
+
+  </div>
+
+  <div class="actions">
+    <button class="ui primary button" {{action 'closeAddLogicalExpressionsForm'}}>
+      Exit
     </button>
-
-    <button class="green ui button" {{action 'postLogicalExp'}}>
-      post
+    <button class="ui primary button" {{action 'postLogicalExp'}}>
+      Add to Database
     </button>
+  </div>
+</div>
+
+
+
+<!--modal to Edit logical expression-->
+<div class="ui modal logicalExpEdit">
+  <div class="header">
+    Edit Logical Expression
+  </div>
+
+  <div class="content">
+
+    <div class="ui center aligned header" style="margin-bottom: 30px;">
+      <h2>{{errorMsg}}</h2>
+    </div>
+
+    <form class="ui form">
+
+      <div class="three fields">
+        <div class="field">
+          <select onchange={{action 'selectCourse' value="target.value" }}>
+            <option selected = "selected" value = null> Select a course </option>
+            {{#each courseModel as |oneCourse|}}
+            <option value={{oneCourse}} selected={{eq courseForEdit oneCourse }}>{{oneCourse}}</option>
+            {{/each}}
+          </select>
+        </div>
+
+        <div class="field">
+          <select onchange={{action 'selectBool' value="target.value" }}>
+            <option selected = "selected" value = null> Select an operator </option>
+            {{#each boolOperators as |oneOperator|}}
+            <option value={{oneOperator}} selected={{eq operatorForEdit oneOperator }}>{{oneOperator}}</option>
+            {{/each}}
+          </select>
+        </div>
+
+        {{#if numberFieldVisable}}
+        <div class="field">
+          {{input type = "number" value=markForEdit}}
+        </div>
+        {{/if}}
+      </div>
+
+      <div class="field">
+        <select class="ui search dropdown" onchange={{action 'selectlogicLink' value="target.value" }}>
+          <option selected = "selected" value = null> Select a logic </option>
+          {{#each logicalLink as |oneLogicalLink| }}
+          <option value={{oneLogicalLink}} selected={{eq linkForEdit oneLogicalLink }}> {{oneLogicalLink}} </option>
+          {{/each}}
+        </select>
+      </div>
+    </form>
+  </div>
+
+  <div class="actions">
+    <button class="ui primary button" {{action 'saveLogicalExpChanges'}}>Save</button>
+    <button class="ui primary button" {{action 'closeLogicalExpEditModal'}}>Cancel</button>
   </div>
 
 </div>

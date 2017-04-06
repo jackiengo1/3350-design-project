@@ -154,9 +154,12 @@ var adjudicationSchema = mongoose.Schema(
     termUnitPassed: String,
     termUnitsTotal: String,
     note: String,
+    adjudicationResult: String,
     studentInfo: {type: mongoose.Schema.ObjectId, ref: 'Students'},
     semester: {type: mongoose.Schema.ObjectId, ref: 'Terms'},
-    comment: {type: mongoose.Schema.ObjectId, ref: 'AdjudicationResults'}
+    comment: {type: mongoose.Schema.ObjectId, ref: 'AssessmentCodes'},
+    //adjudicationCategory: {type: mongoose.Schema.ObjectId, ref: 'AdjudicationCategories'},
+    category: {type: mongoose.Schema.ObjectId, ref: 'Categories'}
   }
 );
 
@@ -168,7 +171,8 @@ var assessmentCodeSchema = mongoose.Schema(
     testExpression: [{type: mongoose.Schema.ObjectId, ref: 'LogicalExpressions'}],
     //SCHEMA CHANGE, FACULTY not needed
     //faculty: [{type: mongoose.Schema.ObjectId, ref: 'Faculties'}]
-    dept: [{type: mongoose.Schema.ObjectId, ref: 'Departments'}]
+    dept: [{type: mongoose.Schema.ObjectId, ref: 'Departments'}],
+    adjudicationCategory: {type: mongoose.Schema.ObjectId, ref: 'AdjudicationCategories'},
   }
 );
 
@@ -207,14 +211,24 @@ var programAdministrationSchema = mongoose.Schema(
   }
 );
 
-var adjudicationResultSchema = mongoose.Schema(
+var adjudicationCategorySchema = mongoose.Schema(
   {
     name: String,
     result: String,
-    adjudication: {type: mongoose.Schema.ObjectId, ref: 'Adjudications'},
-    assessmentCode: {type: mongoose.Schema.ObjectId, ref: 'AssessmentCodes'}
+    adjudication: [{type: mongoose.Schema.ObjectId, ref: 'Adjudications'}],
+    assessmentCode: [{type: mongoose.Schema.ObjectId, ref: 'AssessmentCodes'}],
+
   }
 );
+
+var categorySchema = mongoose.Schema(
+  {
+    name: String,
+    code: String,
+    adjudicationList: [{type: mongoose.Schema.ObjectId, ref: 'Adjudications'}]
+  }
+);
+
 
 var ScholarshipAwards = mongoose.model('scholarshopAward', scholarshipAwardSchema);
 var AdvancedStandings = mongoose.model('advancedStanding', advancedStandingSchema);
@@ -238,7 +252,12 @@ var LogicalExpressions = mongoose.model('logicalexpression', logicalExpressionSc
 var Faculties = mongoose.model('faculty', facultySchema);
 var Departments = mongoose.model('department', departmentSchema);
 var ProgramAdministrations = mongoose.model('programadministration', programAdministrationSchema);
+<<<<<<< HEAD
 var AdjudicationResults = mongoose.model('adjudicationResult', adjudicationResultSchema);
+=======
+var AdjudicationCategories = mongoose.model('adjudicationcategory', adjudicationCategorySchema);
+var Categories = mongoose.model('category', categorySchema);
+>>>>>>> d823c7a1e923e5de7ffcf21f6a34841a2220b1e4
 
 mongoose.connect('mongodb://localhost/studentsRecords');
 var db = mongoose.connection;
@@ -267,5 +286,6 @@ db.once('open', function() {
     exports.Faculties = Faculties;
     exports.Departments = Departments;
     exports.ProgramAdministrations = ProgramAdministrations;
-    exports.AdjudicationResults = AdjudicationResults;
+    exports.AdjudicationCategories = AdjudicationCategories;
+    exports.Categories = Categories;
 });

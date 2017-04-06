@@ -1,82 +1,80 @@
-  <div class="ui grid">
+<div class="ui grid" id="zeroMargin" style="background-color: #e2e0e2; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px; border: 1px solid #D4D4D5;">
 
-    <div class="eight wide column" style="padding-right: 20px;">
-      <div class="ui center aligned header" style="margin-bottom: 30px;">
-        <h2>Modify Residency</h2>
-      </div>
+  <div class="eight wide column" style="padding-right: 20px; padding-top: 0;">
+    <div class="ui center aligned header" style="margin-bottom: 30px;">
+      <h2>Modify Residency</h2>
+    </div>
 
-      <div class="ui middle aligned divided list" style="margin-top: 22px; margin-bottom: 22px;">
-        {{#each residencyModel as |oneResidency|}}
-        <div class="item">
-          <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
-            <div class="teal ui button" onclick={{action 'openEditResidencyForm' oneResidency}}>Edit</div>
-            <div class="negative ui button" onclick={{action 'deleteResidency' oneResidency}}>Delete</div>
-          </div>
-          <div class="content" style="padding-top: 10px; font-size: 16px;">
-            {{oneResidency.name}}
-          </div>
+    <div class="ui middle aligned divided list" style="margin-top: 22px; margin-bottom: 22px;">
+      {{#each residencyModel as |oneResidency|}}
+      <div class="item">
+        <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
+          <div class="teal ui button" style="width: 55px;" onclick={{action 'openEditResidencyForm' oneResidency}}><i class="large edit icon"></i></div>
+          <div class="negative ui button" style="width: 55px;" onclick={{action 'deleteResidency' oneResidency}}><i class="large delete icon"></i></div>
         </div>
-        {{/each}}
+        <div class="content" style="padding-top: 10px; font-size: 16px;">
+          {{oneResidency.name}}
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+
+  <div class="eight wide column" style="padding-left: 20px; padding-top: 0;">
+    <div class="ui center aligned header" style="margin-bottom: 30px;">
+      <h2>Add Residency</h2>
+    </div>
+
+    <div class="ui form">
+      <div class="field">
+        <label>Residency</label> {{input type="text" value = residencyName}}
       </div>
     </div>
 
-    <div class="eight wide column" style="padding-left: 20px;">
-      <div class="ui center aligned header" style="margin-bottom: 30px;">
-        <h2>Add Residency</h2>
-      </div>
-
-      <div class="ui form">
-        <div class="field">
-          <label>Residency</label>
-          {{input type="text"  value = residencyName}}
-        </div>
-      </div>
-
-      <div class="ui center aligned header">
-        <button class="positive ui button" {{action 'addResidency'}}>
+    <div class="ui center aligned header">
+      <button class="positive ui button" {{action 'addResidency'}}>
           Add Residency
         </button>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<!--modal to edit residency-->
+<div class="ui modal residencyEdit">
+  <div class="header">
+    Edit Residency
+  </div>
+
+  <div class="content">
+    <div class="ui form">
+      <div class="field">
+        <label>Residency</label> {{input type="text" value = residencyNameEdit}}
       </div>
     </div>
 
   </div>
 
 
-
-
-
-
-
-
-
-
-
-  <!--modal to edit residency-->
-  <div class="ui modal residencyEdit">
-    <div class="header">
-      Edit Residency
-    </div>
-
-    <div class="content">
-      <div class="ui form">
-        <div class="field">
-          <label>Residency</label>
-          {{input type="text"  value = residencyNameEdit}}
-        </div>
-      </div>
-
-    </div>
-
-
-    <div class="actions">
-      <button class="ui primary button" {{action 'closeEditResidencyForm'}} >
+  <div class="actions">
+    <button class="ui primary button" {{action 'closeEditResidencyForm'}}>
         Exit
       </button>
-      <button class="ui primary button" {{action 'editResidency'}} >
+    <button class="ui primary button" {{action 'editResidency'}}>
         Update
       </button>
-    </div>
-
-
-
   </div>
+
+
+
+</div>

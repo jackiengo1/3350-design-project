@@ -26,14 +26,14 @@
   </a>
 
   <div class="ui dropdown item" id="mainNavbarButton">
-    <i class="large setting icon"></i> Configure
+    <i class="large configure icon"></i> Configure
     <i class="dropdown icon"></i>
     <div class="menu">
-      <a class="item configureItem" {{action "addResidency"}}>
-        Residency
-      </a>
       <a class="item configureItem" {{action "addGender"}}>
         Gender
+      </a>
+      <a class="item configureItem" {{action "addResidency"}}>
+        Residency
       </a>
       <a class="item configureItem" {{action "addHighSchoolInfo"}}>
         High School Information
@@ -47,6 +47,9 @@
       <a class="item configureItem" {{action "addDataLinking"}}>
         Data Linking
       </a>
+      {{!--<a class="item configureItem" {{action "addAdjudicationCategory"}}>
+        Adjudication Category
+      </a>--}}
     </div>
   </div>
 
@@ -72,7 +75,7 @@
   <div class="sixteen wide column" id="zeroPadding">
     <div class="ui segment" id="mainContent">
       {{#if isHomeShowing}}
-      {{student-assessment}}
+      {{welcome-page}}
       {{/if}}
       {{#if isStudentsRecordsDataEntry}}
       {{student-data-entry}}
@@ -101,6 +104,9 @@
       {{#if isLogicalExpShowing}}
       {{logical-expression-2}}
       {{/if}}
+      {{!--{{#if isAdjudicationCategoryShowing}}
+      {{assessment-category-link}}
+      {{/if}}--}}
       {{#if isDataLinkingShowing}}
       <div class="ui grid" style="border-style: groove; margin-top: 30px; margin-bottom: 30px; padding: 20px;">
         <div class="row">

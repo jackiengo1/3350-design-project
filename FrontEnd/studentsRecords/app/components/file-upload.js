@@ -4,7 +4,7 @@ export default Ember.Component.extend({
   store: Ember.inject.service(),
   /* global XLSX */
 
-  filetobeloaded: "Please Click Delete first",
+  filetobeloaded: 'Please Click "Delete All Records" First',
   count:0,
   showLoader:false,
   showUpload:true,
@@ -235,7 +235,7 @@ export default Ember.Component.extend({
         counter++;
         self.set('count',counter);
         //set the label to genders
-        label = "Please upload students.xlsx";
+        label = "Please Upload students.xlsx";
         self.set('filetobeloaded',label);
 
         sheet_name_list.forEach(function (sheetName) {
@@ -265,7 +265,7 @@ export default Ember.Component.extend({
         counter++;
         self.set('count',counter);
         //set the label to genders
-        label = "Please upload genders.xlsx";
+        label = "Please Upload genders.xlsx";
         self.set('filetobeloaded',label);
 
         sheet_name_list.forEach(function (sheetName) {
@@ -296,7 +296,7 @@ export default Ember.Component.extend({
         counter++;
         self.set('count',counter);
         //set the label to genders
-        label = "Please upload UndergraduateRecordCourses.xlsx";
+        label = "Please Upload UndergraduateRecordCourses.xlsx";
         self.set('filetobeloaded',label);
 
         sheet_name_list.forEach(function (sheetName) {
@@ -327,7 +327,7 @@ export default Ember.Component.extend({
         counter++;
         self.set('count',counter);
         //set the label to genders
-        label = "Please upload BasisOfAdmission.xlsx";
+        label = "Please Upload BasisOfAdmission.xlsx";
         self.set('filetobeloaded',label);
 
         sheet_name_list.forEach(function (sheetName) {
@@ -412,7 +412,7 @@ export default Ember.Component.extend({
         counter++;
         self.set('count',counter);
         //set the label to genders
-        label = "Please upload HighSchoolCourseInformation.xlsx";
+        label = "Please Upload HighSchoolCourseInformation.xlsx";
         self.set('filetobeloaded',label);
 
         sheet_name_list.forEach(function (sheetName) {
@@ -443,7 +443,7 @@ export default Ember.Component.extend({
         counter++;
         self.set('count',counter);
         //set the label to genders
-        label = "Please upload AdvancedStanding.xlsx";
+        label = "Please Upload AdvancedStanding.xlsx";
         self.set('filetobeloaded',label);
 
         sheet_name_list.forEach(function (sheetName) {
@@ -574,7 +574,7 @@ export default Ember.Component.extend({
         counter++;
         self.set('count',counter);
         //set the label to genders
-        label = "Please upload AdmissionAverages.xlsx";
+        label = "Please Upload AdmissionAverages.xlsx";
         self.set('filetobeloaded',label);
 
         sheet_name_list.forEach(function (sheetName) {
@@ -652,7 +652,7 @@ export default Ember.Component.extend({
         counter++;
         self.set('count',counter);
         //set the label to genders
-        label = "Please upload HighSchools.xlsx";
+        label = "Please Upload HighSchools.xlsx";
         self.set('filetobeloaded',label);
 
         sheet_name_list.forEach(function (sheetName) {
@@ -723,7 +723,7 @@ export default Ember.Component.extend({
         counter++;
         self.set('count',counter);
         //set the label to genders
-        label = "Please upload UndergraduateRecordPlans.xlsx";
+        label = "Please Upload UndergraduateRecordPlans.xlsx";
         self.set('filetobeloaded',label);
 
         sheet_name_list.forEach(function (sheetName) {
@@ -782,7 +782,7 @@ export default Ember.Component.extend({
         counter++;
         self.set('count',counter);
         //set the label to genders
-        label = "Please upload RegistrationComments.xlsx";
+        label = "Please Upload RegistrationComments.xlsx";
         self.set('filetobeloaded',label);
 
         sheet_name_list.forEach(function (sheetName) {
@@ -863,7 +863,7 @@ export default Ember.Component.extend({
         counter++;
         self.set('count',counter);
         //set the label to genders
-        label = "Please upload scholarshipsAndAwards.xlsx";
+        label = "Please Upload scholarshipsAndAwards.xlsx";
         self.set('filetobeloaded',label);
 
         sheet_name_list.forEach(function (sheetName) {
@@ -932,7 +932,7 @@ export default Ember.Component.extend({
         counter++;
         self.set('count',counter);
         //set the label to genders
-        label = "Please upload termcodes.xlsx";
+        label = "Please Upload termcodes.xlsx";
         self.set('filetobeloaded',label);
 
         sheet_name_list.forEach(function (sheetName) {
@@ -1142,7 +1142,7 @@ export default Ember.Component.extend({
         counter++;
         self.set('count',counter);
         //set the label to genders
-        label = "Please upload AdmissionComments.xlsx";
+        label = "Please Upload AdmissionComments.xlsx";
         self.set('filetobeloaded',label);
 
         sheet_name_list.forEach(function (sheetName) {
@@ -1215,7 +1215,7 @@ export default Ember.Component.extend({
         counter++;
         self.set('count',counter);
         //set the label to genders
-        label = "Please upload the AssessmentCodes.xlsx";
+        label = "Please Upload the AssessmentCodes.xlsx";
         self.set('filetobeloaded',label);
 
         sheet_name_list.forEach(function (sheetName) {
@@ -1479,7 +1479,7 @@ export default Ember.Component.extend({
         counter++;
         self.set('count',counter);
         //set the label to genders
-        label = "Please upload UndergraduateCourses.xlsx";
+        label = "Please Upload UndergraduateCourses.xlsx";
         self.set('filetobeloaded',label);
 
         sheet_name_list.forEach(function (sheetName) {
@@ -1692,7 +1692,7 @@ export default Ember.Component.extend({
         counter++;
         self.set('count',counter);
         //set the label to genders
-        label = "Please upload Departments.xlsx";
+        label = "Please Upload Departments.xlsx";
         self.set('filetobeloaded',label);
 
         sheet_name_list.forEach(function (sheetName) {
@@ -1723,7 +1723,7 @@ export default Ember.Component.extend({
       //   counter++;
       //   self.set('count',counter);
       //   //set the label to genders
-      //   label = "Please upload Departments.xlsx";
+      //   label = "Please Upload Departments.xlsx";
       //   self.set('filetobeloaded',label);
       //
       //   sheet_name_list.forEach(function (sheetName) {
@@ -1752,7 +1752,7 @@ export default Ember.Component.extend({
         counter++;
         self.set('count',counter);
         //set the label to genders
-        label = "Please upload ProgramAdministrations.xlsx";
+        label = "Please Upload ProgramAdministrations.xlsx";
         self.set('filetobeloaded',label);
 
         sheet_name_list.forEach(function (sheetName) {
@@ -1801,7 +1801,7 @@ export default Ember.Component.extend({
         counter++;
         self.set('count',counter);
         //set the label to genders
-        label = "Please upload UndergraduateRecordAdjudications.xlsx";
+        label = "Please Upload UndergraduateRecordAdjudications.xlsx";
         self.set('filetobeloaded',label);
 
         sheet_name_list.forEach(function (sheetName) {
@@ -1946,6 +1946,8 @@ export default Ember.Component.extend({
     //end of the read file function
 
     deleteall:function(){
+      var choice = confirm('Are you sure you want to clear entire Database?');
+      if (choice) {
       var self = this;
       //each time the delete is called, show loading and hide loader
       this.set('showLoader',true);
@@ -1957,7 +1959,7 @@ export default Ember.Component.extend({
       counter=1;
       this.set('count',counter);
       var label = this.get('filetobeloaded');
-      label = "Please upload residencies.xlsx";
+      label = "Please Upload residencies.xlsx";
       this.set('filetobeloaded',label);
       //when user start uploading the file, delete all original data in the db
       //delete all student record
@@ -2173,6 +2175,7 @@ export default Ember.Component.extend({
           });
         }, this);
       });
+    }
     },
 
   }

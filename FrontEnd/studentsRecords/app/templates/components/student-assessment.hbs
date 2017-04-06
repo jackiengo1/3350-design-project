@@ -1,15 +1,145 @@
-<div class="ui center aligned header" style="margin-bottom: 20px;">
-  <h2>StudentAssessment</h2>
+{{!--
+<div class="ui pointing secondary two item menu" style="font-size: 16px;">
+
+  <a class="active item" data-tab="studentAssessment">Student Assessment</a>
+  <a class="item" data-tab="category">Configure Categories</a>
+
+</div>--}} {{!--
+
+<div class="ui bottom attached active tab segment" data-tab="studentAssessment" style="background-color: #e2e0e2; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">--}}
+
+  <div class="ui one column grid" style="background-color: #e2e0e2; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px;">
+
+    <div class="column">
+      <div class="ui one column grid" style="background-color: #e2e0e2;">
+        <div class="column">
+          <div class="ui center aligned header" style="margin-bottom: 30px;">
+            <h2>Student Assessment</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui three column grid" style="margin: 0;">
+        <div class="column" style="padding-right: 20px; text-align: center;">
+          <button class="ui primary button" {{action 'testAsssessmentCode'}}>Adjudicate Students</button>
+        </div>
+        <div class="column" style="padding-right: 20px; text-align: center;">
+          <button class="ui primary button" {{action 'generatePDFs'}}>Generate Sample PDFs</button>
+        </div>
+        <div class="column" style="padding-right: 20px; text-align: center;">
+          <button class="ui primary button" {{action 'generateExcelFiles'}}>Generate Sample Excel Files</button>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+  {{!--</div>--}} {{!--
+
+
+<div class="ui bottom attached tab segment" data-tab="category" style="background-color: #e2e0e2; padding-bottom: 35px; padding-top: 35px; padding-left: 50px; padding-right: 50px; margin: 0;">
+
+  <div class="ui grid" style="background-color: #e2e0e2;">
+    <div class="sixteen wide column" style="text-align: center;">
+      <div class="ui center aligned header" style="margin-bottom: 30px;">
+        <h2>Categories</h2>
+      </div>
+      <div class="ui primary labeled icon button" {{action 'openCategoryAdd'}}>
+        <i class="add icon"></i> Add Category
+      </div>
+    </div>
+
+    <div class="sixteen wide column" style="padding-right: 20px; text-align: center;">
+      <div class="ui middle aligned divided list">
+        {{#each adjudicationcategoryModel as |oneCategory|}} {{#unless oneCategory.isDeleted}}
+        <div class="item">
+          <div class="right floated content" style="padding-top: 3px; padding-bottom: 3px;">
+            <div class="teal ui button" style="width: 55px;" onclick={{action 'openCategoryEdit' oneCategory}}><i class="large edit icon"></i></div>
+            <div class="negative ui button" style="width: 55px;" onclick={{action 'deleteCategory' oneCategory}}><i class="large remove icon"></i></div>
+          </div>
+          <div class="content" id="listText">
+            {{oneCategory.name}}
+          </div>
+        </div>
+        {{/unless}} {{/each}}
+      </div>
+    </div>
+  </div>
+
+</div>--}}
+
+
+
+<div class="ui modal categoryAdd">
+  <div class="header">
+    Add Category
+  </div>
+  <div class="content">
+    <form class="ui form">
+      <div class="two fields">
+        <div class="field">
+          <label>Name: </label> {{input type="text" value = categoryName}}
+        </div>
+        <div class="field">
+          <label>Assessment Code: </label>
+          <form class="ui form">
+            <select onchange={{action 'selectCode' value="target.value" }}>
+                <option selected = "selected" value = null> Select assessment code </option>
+                {{#each assessmentCodeModel as |oneCode|}}
+                <option value={{oneCode.id}}> {{oneCode.name}} </option>
+                {{/each}}
+              </select>
+          </form>
+        </div>
+      </div>
+    </form>
+
+  </div>
+  <div class="actions">
+    <button class="ui primary button" {{action 'closeCategoryAdd'}}>
+      Exit
+    </button>
+    <button class="ui primary button" {{action 'addCategory'}}>
+      Add
+    </button>
+  </div>
 </div>
 
-<button class="ui primary button" {{action 'adjudicateStudents'}} >
-  Adjudicate students
-</button>
 
-<button class="ui primary button" {{action 'generatePDFs'}} >
-  Generate sample PDFs
-</button>
 
-<button class="ui primary button" {{action 'generateExcelFiles'}}>
-  Generate sample excel files
-</button>
+
+
+<div class="ui modal categoryEdit">
+  <div class="header">
+    Edit Category
+  </div>
+  <div class="content">
+    <form class="ui form">
+      <div class="two fields">
+        <div class="field">
+          <label>Name: </label> {{input type="text" value = categoryNameEdit}}
+        </div>
+        <div class="field">
+          <label>Assessment Code: </label>
+          <form class="ui form">
+            <select onchange={{action 'selectCode' value="target.value" }}>
+                <option selected = "selected" value = null> Select assessment code </option>
+                {{#each assessmentCodeModel as |oneCode|}}
+                <option value={{oneCode.id}}> {{oneCode.name}} </option>
+                {{/each}}
+              </select>
+          </form>
+        </div>
+      </div>
+    </form>
+
+  </div>
+  <div class="actions">
+    <button class="ui primary button" {{action 'closeCategoryEdit'}}>
+      Exit
+    </button>
+    <button class="ui primary button" {{action 'editCategory'}}>
+      Update
+    </button>
+  </div>
+</div>
