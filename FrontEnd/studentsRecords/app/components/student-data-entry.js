@@ -952,6 +952,13 @@ export default Ember.Component.extend({
       temp.save();
     },
 
+    openAddAdvancedStandingForm() {
+      Ember.$('.ui.modal.advancedStandingAdd').modal({ detachable: false, }).modal('show');
+    },
+    
+    closeAddAdvancedStandingForm() {
+      Ember.$('.ui.modal.advancedStandingAdd').modal('hide');
+    },
 
     openASEdit(asID) {
       var currentAS = this.get('store').peekRecord('advanced-standing', asID);
@@ -1013,6 +1020,10 @@ export default Ember.Component.extend({
       Ember.$('.ui.modal.scholEdit').modal({ detachable: false, }).modal('show');
     },
 
+    openAddScholarshipAndAwardsForm() {
+      Ember.$('.ui.modal.scholarshipsAndAwardsAdd').modal({ detachable: false, }).modal('show');
+    },
+    
     editScholarShipAndAwards() {
       var currentScholAward = this.get('selectedScholToEdit');
       currentScholAward.set('note', this.get('scholNoteEdit'));
@@ -1021,6 +1032,10 @@ export default Ember.Component.extend({
 
     closeEditScholForm() {
       Ember.$('.ui.modal.scholEdit').modal('hide');
+    },
+
+    closeAddScholarshipAndAwardsForm() {
+      Ember.$('.ui.modal.scholarshipsAndAwardsAdd').modal('hide');
     },
 
     backToEntryForm() {

@@ -26,14 +26,14 @@
   </a>
 
   <div class="ui dropdown item" id="mainNavbarButton">
-    <i class="large setting icon"></i> Configure
+    <i class="large configure icon"></i> Configure
     <i class="dropdown icon"></i>
     <div class="menu">
-      <a class="item configureItem" {{action "addResidency"}}>
-        Residency
-      </a>
       <a class="item configureItem" {{action "addGender"}}>
         Gender
+      </a>
+      <a class="item configureItem" {{action "addResidency"}}>
+        Residency
       </a>
       <a class="item configureItem" {{action "addHighSchoolInfo"}}>
         High School Information
@@ -44,12 +44,12 @@
       <a class="item configureItem" {{action "addLogicalExp"}}>
         Logical Expressions
       </a>
-      {{!--<a class="item configureItem" {{action "addAdjudicationCategory"}}>
-        Adjudication Category
-      </a>--}}
       <a class="item configureItem" {{action "addDataLinking"}}>
         Data Linking
       </a>
+      {{!--<a class="item configureItem" {{action "addAdjudicationCategory"}}>
+        Adjudication Category
+      </a>--}}
     </div>
   </div>
 

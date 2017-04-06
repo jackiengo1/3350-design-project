@@ -12,7 +12,7 @@
 
     <div class="eight wide column" style="padding-right: 20px;">
       <div class="ui center aligned header" style="margin-bottom: 30px;">
-        <h2>Plan Code</h2>
+        <h2>Plan Codes</h2>
       </div>
       <div class="ui middle aligned divided list" style="margin-top: 22px; margin-bottom: 22px;">
         {{#each planCodeModel as |onePlanCode|}}
@@ -28,22 +28,26 @@
         </div>
         {{/each}}
       </div>
-
-
-
     </div>
 
     <div class="eight wide column" style="padding-right: 20px;">
-      <form class="ui form">
-        <div class="field">
-          <label>Name: </label> {{input type="text" value = planCode}}
-        </div>
-      </form>
 
-      <div class="ui center aligned header">
-        <button class="positive ui button" {{action 'addPlanCode'}}>
-          Add plan code
-        </button>
+      <div class="ui center aligned header" style="margin-bottom: 30px;">
+        <h2>Add Plan Code</h2>
+      </div>
+
+      <div class="ui sixteen wide column">
+        <form class="ui form">
+          <div class="field">
+            <label>Name</label> {{input type="text" value = planCode}}
+          </div>
+        </form>
+
+        <div class="ui center aligned header">
+          <button class="positive ui button" {{action 'addPlanCode'}}>
+            Add Plan Code
+          </button>
+        </div>
       </div>
     </div>
 
@@ -73,23 +77,29 @@
             <div class="teal ui button" style="width: 55px;" onclick={{action 'openEditTermCodeForm' oneTermCode}}><i class="large edit icon"></i></div>
             <div class="negative ui button" style="width: 55px;" onclick={{action 'deleteTermCode' oneTermCode}}><i class="large delete icon"></i></div>
           </div>
-
         </div>
         {{/each}}
       </div>
     </div>
 
     <div class="eight wide column" style="padding-right: 20px;">
-      <form class="ui form">
-        <div class="field">
-          <label>Name: </label> {{input type="text" value = termCode}}
-        </div>
-      </form>
-      <div class="ui center aligned header">
-        <button class="positive ui button" {{action 'addTermCode'}}>
-          Add Term code
-        </button>
+      <div class="ui center aligned header" style="margin-bottom: 30px;">
+        <h2>Add Term Code</h2>
       </div>
+
+      <div class="ui sixteen wide column">
+        <form class="ui form">
+          <div class="field">
+            <label>Name</label> {{input type="text" value = termCode}}
+          </div>
+        </form>
+        <div class="ui center aligned header">
+          <button class="positive ui button" {{action 'addTermCode'}}>
+            Add Term Code
+          </button>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -183,11 +193,9 @@
                 <div class="field">
                   <label>Plan Code</label>
                   <select onchange={{action 'selectPlanCode' value="target.value" }}>
-                  <option selected = "selected" value = null> Select a plan code </option>
+                  <option selected = "selected" value = null> Select a Plan Code </option>
                   {{#each planCodeModel as |onePlanCode|}}
-
                   <option value={{onePlanCode.id}} >{{onePlanCode.name}}</option>
-
                   {{/each}}
                 </select>
                 </div>
